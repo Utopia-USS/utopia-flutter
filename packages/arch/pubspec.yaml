@@ -1,0 +1,22 @@
+name: utopia_arch
+description: Utopia USS libs - generic architecture components
+version: 0.0.1
+homepage: https://github.com/Utopia-USS/utopia-flutter
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  utopia_utils: ^0.0.1
+  utopia_hooks: ^0.0.1
+
+  flutter_hooks: ^0.18.0
+  page_transition: ^2.0.2
+  shared_preferences: ^2.0.7
+  injector: ^2.0.0
+  logger: ^1.1.0
+  provider: ^6.0.0

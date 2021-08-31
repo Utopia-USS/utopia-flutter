@@ -1,0 +1,1 @@
+bool allTrue(List<bool> values) => values.every((it) => it);

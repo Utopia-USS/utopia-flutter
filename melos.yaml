@@ -1,0 +1,4 @@
+name: utopia_flutter
+
+packages:
+  - packages/**
