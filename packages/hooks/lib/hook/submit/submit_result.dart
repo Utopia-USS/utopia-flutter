@@ -1,11 +1,17 @@
 import 'package:utopia_hooks/hook/submit/submit_error.dart';
 
+// for convenience
+export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+
 abstract class SubmitResult<T, E> {
   const SubmitResult._();
 
   const factory SubmitResult.alreadySubmitting() = SubmitResultAlreadySubmitting;
+
   const factory SubmitResult.shouldNotSubmit() = SubmitResultShouldNotSubmit;
+
   const factory SubmitResult.error(SubmitError<E> error) = SubmitResultError;
+
   const factory SubmitResult.success(T value) = SubmitResultSuccess;
 }
 
@@ -28,4 +34,3 @@ class SubmitResultSuccess<T> extends SubmitResult<T, Never> {
 
   const SubmitResultSuccess(this.value) : super._();
 }
-

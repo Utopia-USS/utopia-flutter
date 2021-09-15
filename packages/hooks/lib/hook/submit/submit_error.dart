@@ -1,3 +1,6 @@
+// for convenience
+export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+
 abstract class SubmitError<E> {
   const SubmitError._();
 

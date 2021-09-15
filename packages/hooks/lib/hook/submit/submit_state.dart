@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:utopia_hooks/hook/submit/submit_error.dart';
 import 'package:utopia_hooks/hook/submit/submit_result.dart';
 
+// for convenience
+export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+
 abstract class SubmitState {
   bool get isSubmitInProgress;
   Stream<void> get unknownErrorStream;
@@ -18,8 +21,4 @@ class MutableSubmitState<I, T, E> implements SubmitState {
     required this.unknownErrorStream,
     required this.submitWithInput,
   });
-}
-
-extension MutableSubmitStateExtensions<T, E> on MutableSubmitState<void, T, E> {
-  Future<SubmitResult<T, E>> submit() => submitWithInput(null);
 }

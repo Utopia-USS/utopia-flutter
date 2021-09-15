@@ -6,6 +6,9 @@ import 'package:utopia_hooks/hook/submit/submit_result.dart';
 import 'package:utopia_hooks/hook/submit/submit_state.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
+// for convenience
+export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+
 MutableSubmitState<void, T, Never> useSubmitStateSimple<T>({
   FutureOr<bool> Function()? shouldSubmit,
   FutureOr<SubmitResult<T, Never>?> Function()? afterShouldNotSubmit,
