@@ -1,3 +1,7 @@
+## 0.0.2+1
+
+ - **FIX**: fix signature of FieldStateExtensions.validateAsync.
+
 ## 0.0.2
 
  - **FEAT**: Initial commit.
