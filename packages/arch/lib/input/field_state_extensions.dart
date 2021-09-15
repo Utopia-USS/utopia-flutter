@@ -8,7 +8,7 @@ extension FieldStateExtensions on FieldState {
     return result == null;
   }
 
-  Future<bool> validateAsync(Validator<String> validator) async {
+  Future<bool> validateAsync(AsyncValidator<String> validator) async {
     final result = await validator(value);
     errorMessage = result;
     return result == null;
