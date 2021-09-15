@@ -1,4 +1,5 @@
 import 'package:utopia_hooks/hook/compute/computed_state_value.dart';
+import 'package:utopia_hooks/utopia_hooks.dart';
 
 class ComputedState<T> {
   final ComputedStateValue<T> value;
@@ -49,7 +50,13 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
 
   // defined as a getter to conform to superclass' interface
   @override
-  Future<void> Function() get refresh => () => tryRefresh().then((_) => null, onError: (_) => null);
+  Future<void> Function() get refresh => () async {
+        try {
+          await tryRefresh();
+        } catch (e, s) {
+          UtopiaHooks.reporter?.error('Unhandled exception in ComputedState', e, s);
+        }
+      };
 
   @override
   ComputedStateValue<T> get value => getValue();
