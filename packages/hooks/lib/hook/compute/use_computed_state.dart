@@ -2,59 +2,56 @@ import 'dart:async';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_hooks/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/hook/compute/computed_state_value.dart';
 import 'package:utopia_hooks/hook/effect/use_simple_effect.dart';
 import 'package:utopia_hooks/hook/misc/use_value_wrapper.dart';
-import 'package:utopia_utils/extension/extensions.dart';
 
 MutableComputedState<T> useComputedState<T>({required Future<T> Function() compute}) {
-  final state = useState<T?>(null);
-  final modeState = useState<ComputedStateMode>(ComputedStateMode.notInitialized);
+  final state = useState<ComputedStateValue<T>>(ComputedStateValue.notInitialized);
   final computeWrapper = useValueWrapper(compute);
 
-  Future<T?> performCompute() async {
-    modeState.value = ComputedStateMode.inProgress;
-    try {
-      final value = await computeWrapper.value();
-      if (modeState.value != ComputedStateMode.inProgress) {
-        // computation has been interrupted by explicit setValue
-        return state.value;
-      } else {
-        state.value = value;
-        modeState.value = ComputedStateMode.ready;
-        return value;
+  Future<T> tryRefresh() {
+    final future = Future.microtask(() async {
+      try {
+        final result = await computeWrapper.value();
+        state.value.maybeWhen(
+          inProgress: (_) => state.value = ComputedStateValue.ready(result),
+          orElse: () {}, // computation has been interrupted
+        );
+        return result;
+      } catch (e) {
+        state.value = ComputedStateValue.failed(e);
+        rethrow;
       }
-    } catch (e) {
-      modeState.value = ComputedStateMode.failed;
-      rethrow;
-    }
+    });
+    state.value = ComputedStateValue.inProgress(future);
+    return future;
   }
 
-  Future<T?> performComputeOrWait() async {
-    if (modeState.value == ComputedStateMode.inProgress) {
-      await modeState.awaitSingle();
-      return state.value as T;
-    } else {
-      return await performCompute();
-    }
+  Future<T> tryRefreshOrWait() async {
+    return await state.value.maybeWhen(
+      inProgress: (future) async => await future,
+      orElse: () async => await tryRefresh(),
+    );
   }
 
   return useMemoized(
     () => MutableComputedState(
-      refresh: performComputeOrWait,
-      getMode: () => modeState.value,
+      tryRefresh: tryRefreshOrWait,
       getValue: () => state.value,
-      clear: () {
-        modeState.value = ComputedStateMode.notInitialized;
-        state.value = null;
-      },
-      updateValue: (value) {
-        modeState.value = ComputedStateMode.ready; // stop any pending computation
-        state.value = value;
-      },
+      clear: () => state.value = ComputedStateValue.notInitialized,
+      updateValue: (value) => state.value = ComputedStateValue.ready(value),
     ),
   );
 }
 
+/// Allows for automatic refreshing of [ComputedState] in response to changes in [keys].
+/// Refreshes also on first call.
+///
+/// [shouldCompute] can be passed to decide if [compute] should be called when [keys] change.
+/// **If [shouldCompute] returns `false`, state is cleared immediately.**
+///
+/// [debounceDuration] allows for setting a delay, which must pass between [keys] changes to trigger [compute].
 MutableComputedState<T> useAutoComputedState<T>({
   required Future<T> Function() compute,
   bool Function()? shouldCompute,
@@ -66,7 +63,6 @@ MutableComputedState<T> useAutoComputedState<T>({
   final timerState = useState<Timer?>(null);
 
   useSimpleEffect(() {
-    state.clear();
     if (shouldCompute == null || shouldCompute()) {
       timerState.value?.cancel();
       timerState.value = Timer(debounceDuration, () {
@@ -74,6 +70,7 @@ MutableComputedState<T> useAutoComputedState<T>({
         timerState.value = null;
       });
     } else {
+      state.clear();
       timerState.value?.cancel();
       timerState.value = null;
     }

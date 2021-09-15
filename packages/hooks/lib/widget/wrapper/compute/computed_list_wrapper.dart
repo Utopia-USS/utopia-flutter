@@ -19,17 +19,17 @@ class ComputedListWrapper<E> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state.mode == ComputedStateMode.failed) {
-      return _buildNonScrollableContent(failedBuilder(context));
-    } else if(state.mode == ComputedStateMode.ready) {
-      if(state.value!.isNotEmpty) {
-        return builder(context, state.value!);
-      } else {
-        return _buildNonScrollableContent(emptyBuilder(context));
-      }
-    } else {
-      return _buildNonScrollableContent(inProgressBuilder(context));
-    }
+    return state.value.maybeWhen(
+      failed: (_) => _buildNonScrollableContent(failedBuilder(context)),
+      ready: (value) {
+        if (value.isNotEmpty) {
+          return builder(context, value);
+        } else {
+          return _buildNonScrollableContent(emptyBuilder(context));
+        }
+      },
+      orElse: () => _buildNonScrollableContent(inProgressBuilder(context)),
+    );
   }
 
   Widget _buildNonScrollableContent(Widget child) {
