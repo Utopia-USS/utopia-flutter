@@ -1,6 +1,6 @@
 name: utopia_utils
 description: Utopia USS libs - generic utils (including extensions, and Reporter architecture)
-version: 0.0.2
+version: 0.1.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

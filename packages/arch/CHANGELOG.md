@@ -1,3 +1,7 @@
+## 0.0.3
+
+ - **FEAT**: update Reporter usages.
+
 ## 0.0.2+1
 
  - **FIX**: fix signature of FieldStateExtensions.validateAsync.

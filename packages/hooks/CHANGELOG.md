@@ -1,3 +1,7 @@
+## 0.1.1
+
+ - **FEAT**: update Reporter usages.
+
 ## 0.1.0
 
 > Note: This release has breaking changes.
