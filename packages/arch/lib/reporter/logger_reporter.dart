@@ -2,14 +2,17 @@ import 'package:logger/logger.dart';
 import 'package:utopia_utils/reporter/reporter.dart';
 
 class LoggerReporter extends Reporter {
-  final logger = Logger();
+  final _logger = Logger();
 
   @override
-  void error(String message, [Object? error, StackTrace? stackTrace]) => logger.e(message, error, stackTrace);
+  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _logger.e(message, error, s);
 
   @override
-  void warning(String message, [Object? error, StackTrace? stackTrace]) => logger.w(message, error, stackTrace);
+  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _logger.w(message, error, s);
 
   @override
-  void info(String message, [Object? error, StackTrace? stackTrace]) => logger.i(message, error, stackTrace);
+  void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _logger.i(message, error, s);
 }
