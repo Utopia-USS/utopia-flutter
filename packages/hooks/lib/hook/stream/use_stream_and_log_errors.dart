@@ -8,7 +8,7 @@ AsyncSnapshot<T> useStreamAndLogErrors<T>(Stream<T> stream, {required T initialD
       try {
         await for(final value in stream) yield value;
       } catch (e, s) {
-        UtopiaHooks.reporter?.error('Error in useStream', e, s);
+        UtopiaHooks.reporter?.error('Error in useStream', e: e, s: s);
       }
     }, [stream]),
     initialData: initialData,

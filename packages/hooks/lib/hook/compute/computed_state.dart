@@ -54,7 +54,7 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
         try {
           await tryRefresh();
         } catch (e, s) {
-          UtopiaHooks.reporter?.error('Unhandled exception in ComputedState', e, s);
+          UtopiaHooks.reporter?.error('Unhandled exception in ComputedState', e: e, s: s);
         }
       };
 

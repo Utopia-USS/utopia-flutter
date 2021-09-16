@@ -59,7 +59,7 @@ MutableSubmitState<I, T, E> useSubmitState<I, T, E>({
       final error = await mapError?.call(e) ?? SubmitError.unknown(e, s);
 
       if (error is SubmitErrorUnknown) {
-        UtopiaHooks.reporter?.error('Unknown error in SubmitState', e, s);
+        UtopiaHooks.reporter?.error('Unknown error in SubmitState', e: e, s: s);
         unknownErrorStream.add(error);
       }
 

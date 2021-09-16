@@ -7,7 +7,7 @@ void useAsyncEffect(Future<void> Function() effect, [List<Object?>? keys]) {
       try {
         await effect();
       } catch (e, s) {
-        UtopiaHooks.reporter?.error('Error in useAsyncEffect', e, s);
+        UtopiaHooks.reporter?.error('Error in useAsyncEffect', e: e, s: s);
       }
     }),
     keys,
