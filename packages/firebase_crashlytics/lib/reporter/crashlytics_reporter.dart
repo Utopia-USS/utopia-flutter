@@ -8,25 +8,29 @@ class CrashlyticsReporter extends Reporter {
 
   @override
   void flutterError(FlutterErrorDetails details) {
-    if(_isFirebaseInitialized) FirebaseCrashlytics.instance.recordFlutterError(details);
+    if (_isFirebaseInitialized) FirebaseCrashlytics.instance.recordFlutterError(details);
   }
 
   @override
-  void error(String message, [Object? error, StackTrace? stackTrace]) {
+  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
     if (_isFirebaseInitialized) {
-      FirebaseCrashlytics.instance.recordError(error ?? message, stackTrace, reason: message);
+      final effectiveMessage = sanitizedMessage ?? message;
+      FirebaseCrashlytics.instance.recordError(e ?? effectiveMessage, s, reason: effectiveMessage);
     }
   }
 
   @override
-  void warning(String message, [Object? error, StackTrace? stackTrace]) => _log(message);
+  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _log(message, sanitizedMessage);
 
   @override
-  void info(String message, [Object? error, StackTrace? stackTrace]) => _log(message);
+  void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _log(message, sanitizedMessage);
 
-  void _log(String message) {
+  void _log(String message, String? sanitizedMessage) {
     if (_isFirebaseInitialized) {
-      FirebaseCrashlytics.instance.log(message);
+      final effectiveMessage = sanitizedMessage ?? message;
+      FirebaseCrashlytics.instance.log(effectiveMessage);
     }
   }
 
