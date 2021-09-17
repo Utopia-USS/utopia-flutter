@@ -1,3 +1,9 @@
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Fix directory structure.
+
 ## 0.0.2+1
 
  - Update a dependency to the latest release.

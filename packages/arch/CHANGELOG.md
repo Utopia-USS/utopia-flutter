@@ -1,3 +1,7 @@
+## 0.1.0+1
+
+ - **FIX**: Adjust imports to new dependency versions.
+
 ## 0.1.0
 
 > Note: This release has breaking changes.

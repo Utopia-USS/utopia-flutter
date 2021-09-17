@@ -1,3 +1,7 @@
+## 0.0.3+1
+
+ - **FIX**: Fix imports from utopia_utils.
+
 ## 0.0.3
 
  - **FEAT**: create utopia_rest library.

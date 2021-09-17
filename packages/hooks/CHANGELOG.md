@@ -1,3 +1,9 @@
+## 0.2.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Fix directory structure.
+
 ## 0.1.1+1
 
  - **FIX**: improve import convenience.
