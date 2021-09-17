@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:utopia_hooks/hook/compute/computed_state.dart';
-import 'package:utopia_hooks/hook/compute/computed_state_value.dart';
-import 'package:utopia_hooks/hook/effect/use_simple_effect.dart';
-import 'package:utopia_hooks/hook/misc/use_value_wrapper.dart';
+import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/hook/compute/computed_state_value.dart';
+import 'package:utopia_hooks/src/hook/effect/use_simple_effect.dart';
+import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
 
 MutableComputedState<T> useComputedState<T>({required Future<T> Function() compute}) {
   final state = useState<ComputedStateValue<T>>(ComputedStateValue.notInitialized);

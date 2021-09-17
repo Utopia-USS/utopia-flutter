@@ -10,9 +10,7 @@ class TogglableBoolState {
   });
 }
 
-TogglableBoolState useTogglableBool(
-  bool initialValue
-) {
+TogglableBoolState useTogglableBool(bool initialValue) {
   final state = useState<bool>(initialValue);
 
   return TogglableBoolState(

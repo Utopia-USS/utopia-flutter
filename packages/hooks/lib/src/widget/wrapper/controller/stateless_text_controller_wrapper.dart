@@ -17,7 +17,7 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
     final controller = useTextEditingController();
     useEffect(() {
       final listener = () {
-        if(controller.text != value) onChanged?.call(controller.text);
+        if (controller.text != value) onChanged?.call(controller.text);
       };
 
       controller.addListener(listener);

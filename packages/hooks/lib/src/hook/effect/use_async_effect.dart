@@ -1,4 +1,4 @@
-import 'package:utopia_hooks/hook/effect/use_simple_effect.dart';
+import 'package:utopia_hooks/src/hook/effect/use_simple_effect.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 void useAsyncEffect(Future<void> Function() effect, [List<Object?>? keys]) {

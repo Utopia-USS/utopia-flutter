@@ -1,7 +1,7 @@
-import 'package:utopia_hooks/hook/submit/submit_error.dart';
+import 'submit_error.dart';
 
 // for convenience
-export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+export 'submit_state_extensions.dart';
 
 abstract class SubmitResult<T, E> {
   const SubmitResult._();

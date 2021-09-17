@@ -1,4 +1,4 @@
-import 'package:utopia_hooks/hook/compute/computed_state_value.dart';
+import 'package:utopia_hooks/src/hook/compute/computed_state_value.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class ComputedState<T> {

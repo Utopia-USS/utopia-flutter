@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:utopia_hooks/hook/submit/submit_error.dart';
-import 'package:utopia_hooks/hook/submit/submit_result.dart';
-import 'package:utopia_hooks/hook/submit/submit_state.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'submit_error.dart';
+import 'submit_result.dart';
+import 'submit_state.dart';
 
 // for convenience
-export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+export 'submit_state_extensions.dart';
 
 MutableSubmitState<void, T, Never> useSubmitStateSimple<T>({
   FutureOr<bool> Function()? shouldSubmit,

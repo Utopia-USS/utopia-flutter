@@ -1,5 +1,5 @@
 // for convenience
-export 'package:utopia_hooks/hook/submit/submit_state_extensions.dart';
+export 'submit_state_extensions.dart';
 
 abstract class SubmitError<E> {
   const SubmitError._();
@@ -9,8 +9,8 @@ abstract class SubmitError<E> {
 
   T when<T>({required T Function(Object exception) unknown, required T Function(E error) known}) {
     final value = this;
-    if(value is SubmitErrorUnknown) return unknown(value.exception);
-    if(value is SubmitErrorKnown<E>) return known(value.error);
+    if (value is SubmitErrorUnknown) return unknown(value.exception);
+    if (value is SubmitErrorKnown<E>) return known(value.error);
     throw StateError('Invalid SubmitError');
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:utopia_hooks/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
 
 class ComputedListWrapper<E> extends StatelessWidget {
   final ComputedState<List<E>> state;

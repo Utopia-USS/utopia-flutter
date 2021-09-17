@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:utopia_hooks/hook/compute/computed_state.dart';
-import 'package:utopia_hooks/widget/wrapper/compute/computed_list_wrapper.dart';
+import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+
+import 'computed_list_wrapper.dart';
 
 class RefreshableComputedListWrapper<E> extends StatelessWidget {
   final RefreshableComputedState<List<E>> state;
