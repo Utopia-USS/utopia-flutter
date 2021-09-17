@@ -1,3 +1,7 @@
+## 0.0.3+3
+
+ - **FIX**: Fix DioLogUtil.
+
 ## 0.0.3+2
 
  - **FIX**: Fix ReporterInterceptor.
