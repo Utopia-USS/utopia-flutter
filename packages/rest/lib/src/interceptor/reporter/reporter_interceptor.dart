@@ -44,6 +44,7 @@ class ReporterInterceptor implements Interceptor {
       s: StackTrace.empty,
       sanitizedMessage: DioLogUtil.buildResponseLog(response, sanitize: true),
     );
+    handler.next(response);
   }
 }
 
