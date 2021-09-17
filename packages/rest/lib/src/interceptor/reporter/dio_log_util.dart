@@ -32,7 +32,6 @@ class DioLogUtil {
     if (data.runtimeType == _typeOf<void>()) return null;
     if (data is List<int>) return 'Byte data, length=${data.length} bytes';
     if (data is FormData) return _printFormData(data);
-    if (data is List) return _printListData(data);
     return _tryPrintJsonData(data);
   }
 
@@ -43,19 +42,11 @@ class DioLogUtil {
     return fields.followedBy(files).join('\n');
   }
 
-  static String _printListData(List data) {
-    return [
-      '[',
-      for (final item in data) '  ${_tryPrettyPrint(item) ?? 'Non-printable data'},',
-      ']',
-    ].join('\n');
-  }
-
   static String? _tryPrintJsonData(dynamic data) {
     try {
       final encoder = JsonEncoder.withIndent('  ');
-      return encoder.convert(data.toJson());
-    } on NoSuchMethodError {
+      return encoder.convert(jsonDecode(data));
+    } catch(_) {
       return null;
     }
   }
