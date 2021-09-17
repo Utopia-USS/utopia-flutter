@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:utopia_arch/navigation/route_config.dart';
+import 'package:utopia_arch/src/navigation/route_config.dart';
 
 class NestedNavigator extends HookWidget {
   final GlobalKey<NavigatorState> navigatorKey;

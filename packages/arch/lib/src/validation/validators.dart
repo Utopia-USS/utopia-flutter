@@ -1,5 +1,5 @@
-import 'package:utopia_arch/input/field_state.dart';
-import 'package:utopia_arch/validation/validator.dart';
+import 'package:utopia_arch/src/input/field_state.dart';
+import 'package:utopia_arch/src/validation/validator.dart';
 
 class Validators {
   const Validators._();
