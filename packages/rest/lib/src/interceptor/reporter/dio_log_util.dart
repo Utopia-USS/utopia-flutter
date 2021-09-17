@@ -43,11 +43,15 @@ class DioLogUtil {
   }
 
   static String? _tryPrintJsonData(dynamic data) {
+    final encoder = JsonEncoder.withIndent('  ');
     try {
-      final encoder = JsonEncoder.withIndent('  ');
       return encoder.convert(jsonDecode(data));
     } catch(_) {
-      return null;
+      try {
+        return encoder.convert(data);
+      } catch(_) {
+        return null;
+      }
     }
   }
 
