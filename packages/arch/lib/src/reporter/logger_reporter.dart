@@ -6,13 +6,13 @@ class LoggerReporter extends Reporter {
 
   @override
   void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.e(message, error, s);
+      _logger.e(message, e, s);
 
   @override
   void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.w(message, error, s);
+      _logger.w(message, e, s);
 
   @override
   void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.i(message, error, s);
+      _logger.i(message, e, s);
 }
