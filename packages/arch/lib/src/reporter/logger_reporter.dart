@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:utopia_utils/reporter/reporter.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 class LoggerReporter extends Reporter {
   final _logger = Logger();

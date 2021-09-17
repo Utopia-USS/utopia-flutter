@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:utopia_hooks/hook/misc/use_value_wrapper.dart';
+import 'package:utopia_hooks/utopia_hooks.dart';
 
 class FieldState {
   final Function(String Function(BuildContext)?) onErrorChanged;

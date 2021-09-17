@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:utopia_hooks/hook/provider/use_provided.dart';
+import 'package:utopia_hooks/utopia_hooks.dart';
 
 class InjectorProvider extends SingleChildStatelessWidget {
   final Injector Function() setupInjector;

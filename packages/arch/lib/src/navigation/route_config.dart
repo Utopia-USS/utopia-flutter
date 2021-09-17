@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:utopia_utils/extension/extensions.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 enum RouteConfigOrientation { portrait, landscape }
 
