@@ -29,10 +29,17 @@ class DioLogUtil {
   }
 
   static String? _tryPrettyPrint(dynamic data) {
-    if (data.runtimeType == _typeOf<void>()) return null;
+    if (_isEmptyData(data)) return null;
     if (data is List<int>) return 'Byte data, length=${data.length} bytes';
     if (data is FormData) return _printFormData(data);
     return _tryPrintJsonData(data);
+  }
+
+  static bool _isEmptyData(dynamic data) {
+    return data.runtimeType == _typeOf<void>() ||
+        (data is List && data.isEmpty) ||
+        (data is Map && data.isEmpty) ||
+        (data is String && data.isEmpty);
   }
 
   static String _printFormData(FormData data) {
@@ -46,11 +53,11 @@ class DioLogUtil {
     final encoder = JsonEncoder.withIndent('  ');
     try {
       return encoder.convert(jsonDecode(data));
-    } catch(_) {
+    } catch (_) {
       try {
         return encoder.convert(data);
-      } catch(_) {
-        return null;
+      } catch (_) {
+        return data.toString();
       }
     }
   }
