@@ -1,6 +1,6 @@
 name: utopia_arch
 description: Utopia USS libs - generic architecture components
-version: 0.1.0+2
+version: 0.1.0+3
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

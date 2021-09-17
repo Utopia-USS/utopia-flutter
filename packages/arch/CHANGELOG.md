@@ -1,3 +1,7 @@
+## 0.1.0+3
+
+ - **FIX**: Fix LoggerReporter.
+
 ## 0.1.0+2
 
  - Update a dependency to the latest release.

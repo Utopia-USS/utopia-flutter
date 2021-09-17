@@ -1,3 +1,7 @@
+## 0.0.3+2
+
+ - **FIX**: Fix ReporterInterceptor.
+
 ## 0.0.3+1
 
  - **FIX**: Fix imports from utopia_utils.
