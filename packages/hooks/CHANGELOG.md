@@ -1,3 +1,7 @@
+## 0.2.1
+
+ - **FEAT**: Add ComputedStateValue.mapValue.
+
 ## 0.2.0
 
 > Note: This release has breaking changes.
