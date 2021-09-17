@@ -9,4 +9,6 @@ export 'string_extensions.dart';
 export 'value_notifier_extensions.dart';
 
 // type UtopiaExtensions to import all extensions
-extension UtopiaExtensions on void {}
+class UtopiaExtensions {
+  const UtopiaExtensions._();
+}
