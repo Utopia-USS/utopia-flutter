@@ -44,6 +44,15 @@ abstract class ComputedStateValue<T> {
   }
 
   T? get valueOrNull => maybeWhen(ready: (value) => value, orElse: () => null);
+
+  ComputedStateValue<R> mapValue<R>(R Function(T) block) {
+    return when(
+      notInitialized: () => ComputedStateValue.notInitialized,
+      inProgress: (future) => ComputedStateValue.inProgress(future.then((value) => block(value))),
+      ready: (value) => ComputedStateValue.ready(block(value)),
+      failed: (exception) => ComputedStateValue.failed(exception),
+    );
+  }
 }
 
 class ComputedStateValueNotInitialized extends ComputedStateValue<Never> with EquatableMixin {
