@@ -1,3 +1,7 @@
+## 0.0.3+5
+
+ - **FIX**: Fix DioLogUtil.
+
 ## 0.0.3+4
 
  - **FIX**: Fix DioLogUtil.
