@@ -9,18 +9,21 @@ import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
 MutableComputedState<T> useComputedState<T>({required Future<T> Function() compute}) {
   final state = useState<ComputedStateValue<T>>(ComputedStateValue.notInitialized);
   final computeWrapper = useValueWrapper(compute);
+  final isMounted = useIsMounted();
 
   Future<T> tryRefresh() {
     final future = Future.microtask(() async {
       try {
         final result = await computeWrapper.value();
-        state.value.maybeWhen(
-          inProgress: (_) => state.value = ComputedStateValue.ready(result),
-          orElse: () {}, // computation has been interrupted
-        );
+        if (isMounted()) {
+          state.value.maybeWhen(
+            inProgress: (_) => state.value = ComputedStateValue.ready(result),
+            orElse: () {}, // computation has been interrupted
+          );
+        }
         return result;
       } catch (e) {
-        state.value = ComputedStateValue.failed(e);
+        if (isMounted()) state.value = ComputedStateValue.failed(e);
         rethrow;
       }
     });
@@ -59,15 +62,17 @@ MutableComputedState<T> useAutoComputedState<T>({
   Duration debounceDuration = Duration.zero,
 }) {
   final state = useComputedState<T>(compute: compute);
-
   final timerState = useState<Timer?>(null);
+  final isMounted = useIsMounted();
 
   useSimpleEffect(() {
     if (shouldCompute == null || shouldCompute()) {
       timerState.value?.cancel();
       timerState.value = Timer(debounceDuration, () {
-        state.refresh();
-        timerState.value = null;
+        if (isMounted()) {
+          state.refresh();
+          timerState.value = null;
+        }
       });
     } else {
       state.clear();

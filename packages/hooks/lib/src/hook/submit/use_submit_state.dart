@@ -38,6 +38,7 @@ MutableSubmitState<I, T, E> useSubmitState<I, T, E>({
 }) {
   final isSubmitInProgressState = useState<bool>(false);
   final unknownErrorStream = useStreamController<SubmitErrorUnknown>();
+  final isMounted = useIsMounted();
 
   Future<SubmitResult<T, E>> trySubmit(I input) async {
     if (isSubmitInProgressState.value) return SubmitResult.alreadySubmitting();
@@ -60,14 +61,14 @@ MutableSubmitState<I, T, E> useSubmitState<I, T, E>({
 
       if (error is SubmitErrorUnknown) {
         UtopiaHooks.reporter?.error('Unknown error in SubmitState', e: e, s: s);
-        unknownErrorStream.add(error);
+        if(isMounted()) unknownErrorStream.add(error);
       }
 
       await afterError?.call(error);
 
       return SubmitResult.error(error);
     } finally {
-      isSubmitInProgressState.value = false;
+      if(isMounted()) isSubmitInProgressState.value = false;
     }
   }
 
