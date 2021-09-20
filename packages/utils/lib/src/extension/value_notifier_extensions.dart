@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 extension ValueNotifierExtensions<T> on ValueNotifier<T> {
+  void modify(T Function(T value) block) => value = block(value);
+
   Future<T> awaitSingle() {
     final completer = Completer<T>();
     var hasCompleted = false;
