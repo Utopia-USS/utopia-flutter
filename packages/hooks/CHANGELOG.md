@@ -1,3 +1,9 @@
+## 0.2.1+4
+
+ - **FIX**: fix useAppLifecycleStateCallbacks.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
 ## 0.2.1+3
 
  - **FIX**: export flutter_hooks for import convenience.
