@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:utopia_hooks/utopia_hooks.dart';
 
 void useAppLifecycleStateCallbacks({Function()? onPaused, Function()? onResumed}) {
-  WidgetsBinding.instance!.addObserver(
-    _Observer(onChanged: (state) => state == AppLifecycleState.paused ? onPaused?.call() : onResumed?.call()),
-  );
+  final wrappedOnPaused = useValueWrapper(onPaused);
+  final wrappedOnResumed = useValueWrapper(onResumed);
+
+  useEffect(() {
+    final observer = _Observer(onChanged: (state) {
+      return state == AppLifecycleState.paused ? wrappedOnPaused.value?.call() : wrappedOnResumed.value?.call();
+    });
+    WidgetsBinding.instance!.addObserver(observer);
+    return () => WidgetsBinding.instance!.removeObserver(observer);
+  }, []);
 }
 
 class _Observer extends WidgetsBindingObserver {
