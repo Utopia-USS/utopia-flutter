@@ -1,5 +1,7 @@
 import 'package:utopia_utils/utopia_utils.dart';
 
+export 'package:flutter_hooks/flutter_hooks.dart';
+
 export 'src/hook/compute/computed_state.dart';
 export 'src/hook/compute/computed_state_value.dart';
 export 'src/hook/compute/use_computed_state.dart';
