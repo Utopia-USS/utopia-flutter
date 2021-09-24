@@ -1,3 +1,7 @@
+## 0.2.1+3
+
+ - **FIX**: export flutter_hooks for import convenience.
+
 ## 0.2.1+2
 
  - Update a dependency to the latest release.
