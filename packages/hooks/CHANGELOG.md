@@ -1,3 +1,7 @@
+## 0.2.1+5
+
+ - **FIX**: fix memoization in useStreamSubscription.
+
 ## 0.2.1+4
 
  - **FIX**: fix useAppLifecycleStateCallbacks.
