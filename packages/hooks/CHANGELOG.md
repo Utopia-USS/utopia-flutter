@@ -1,3 +1,7 @@
+## 0.2.2
+
+ - **FEAT**: add ComputedState.valueOrPreviousOrNull.
+
 ## 0.2.1+5
 
  - **FIX**: fix memoization in useStreamSubscription.
