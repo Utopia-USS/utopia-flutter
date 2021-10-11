@@ -17,7 +17,7 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
         final result = await computeWrapper.value();
         if (isMounted()) {
           state.value.maybeWhen(
-            inProgress: (_) => state.value = ComputedStateValue.ready(result),
+            inProgress: (_, __) => state.value = ComputedStateValue.ready(result),
             orElse: () {}, // computation has been interrupted
           );
         }
@@ -27,13 +27,13 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
         rethrow;
       }
     });
-    state.value = ComputedStateValue.inProgress(future);
+    state.value = ComputedStateValue.inProgress(future, previous: state.value);
     return future;
   }
 
   Future<T> tryRefreshOrWait() async {
     return await state.value.maybeWhen(
-      inProgress: (future) async => await future,
+      inProgress: (future, _) async => await future,
       orElse: () async => await tryRefresh(),
     );
   }
