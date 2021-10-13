@@ -5,11 +5,18 @@ import 'package:flutter/foundation.dart';
 extension ValueNotifierExtensions<T> on ValueNotifier<T> {
   void modify(T Function(T value) block) => value = block(value);
 
+  R mutate<R>(R Function(T value) block) {
+    final result = block(value);
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    notifyListeners();
+    return result;
+  }
+
   Future<T> awaitSingle() {
     final completer = Completer<T>();
     var hasCompleted = false;
     addListener(() {
-      if(!hasCompleted) {
+      if (!hasCompleted) {
         hasCompleted = true;
         completer.complete(value);
       }
