@@ -1,3 +1,7 @@
+## 0.2.3
+
+ - **FEAT**: add [Refreshable]ComputedStateWrapper.
+
 ## 0.2.2+1
 
  - Update a dependency to the latest release.
