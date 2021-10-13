@@ -1,3 +1,9 @@
+## 0.2.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Add RouteConfig.defaultOrientation.
+
 ## 0.1.0+9
 
  - Update a dependency to the latest release.
