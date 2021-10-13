@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/widget/wrapper/compute/computed_state_wrapper.dart';
+import 'package:utopia_hooks/src/widget/wrapper/compute/util/non_scrollable_content.dart';
 
 class ComputedListWrapper<E> extends StatelessWidget {
   final ComputedState<List<E>> state;
@@ -19,26 +21,13 @@ class ComputedListWrapper<E> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return state.value.maybeWhen(
-      failed: (_) => _buildNonScrollableContent(failedBuilder(context)),
-      ready: (value) {
-        if (value.isNotEmpty) {
-          return builder(context, value);
-        } else {
-          return _buildNonScrollableContent(emptyBuilder(context));
-        }
-      },
-      orElse: () => _buildNonScrollableContent(inProgressBuilder(context)),
-    );
-  }
-
-  Widget _buildNonScrollableContent(Widget child) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        child,
-        SingleChildScrollView(physics: AlwaysScrollableScrollPhysics()),
-      ],
+    return ComputedStateWrapper<List<E>>(
+      state: state,
+      inProgressBuilder: inProgressBuilder,
+      failedBuilder: failedBuilder,
+      builder: (context, value) => value.isEmpty
+          ? NonScrollableContent(child: emptyBuilder(context))
+          : builder(context, value),
     );
   }
 }
