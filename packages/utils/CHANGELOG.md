@@ -1,3 +1,7 @@
+## 0.2.2
+
+ - **FEAT**: add ValueNotifierExtensions.mutate.
+
 ## 0.2.1
 
  - **FEAT**: Add ValueNotifierExtensions.modify.
