@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
 
-enum RouteConfigOrientation { portrait, landscape }
+enum RouteConfigOrientation {
+  all,
+  portrait,
+  landscape,
+}
 
 class RouteConfig<T> {
+  static RouteConfigOrientation defaultOrientation = RouteConfigOrientation.all;
+
   final Route<T> Function(RouteSettings, Widget Function()) routeBuilder;
   final Widget Function() contentBuilder;
   final RouteConfigOrientation? orientation;
 
-  const RouteConfig({required this.routeBuilder, required this.contentBuilder, this.orientation});
+  const RouteConfig({
+    required this.routeBuilder,
+    required this.contentBuilder,
+    this.orientation,
+  });
 
   factory RouteConfig.material(
     Widget Function() builder, {
@@ -43,8 +53,8 @@ class RouteConfig<T> {
 }
 
 class _OrientationNavigatorObserver extends NavigatorObserver {
-  static const _orientationMap = <RouteConfigOrientation?, List<DeviceOrientation>>{
-    null: DeviceOrientation.values,
+  static const _orientationMap = <RouteConfigOrientation, List<DeviceOrientation>>{
+    RouteConfigOrientation.all: DeviceOrientation.values,
     RouteConfigOrientation.portrait: [DeviceOrientation.portraitUp],
     RouteConfigOrientation.landscape: [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
   };
@@ -64,6 +74,6 @@ class _OrientationNavigatorObserver extends NavigatorObserver {
   }
 
   void _setSystemChrome(RouteConfigOrientation? orientation) {
-    SystemChrome.setPreferredOrientations(_orientationMap[orientation]!);
+    SystemChrome.setPreferredOrientations(_orientationMap[orientation ?? RouteConfig.defaultOrientation]!);
   }
 }
