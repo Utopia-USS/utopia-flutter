@@ -1,3 +1,7 @@
+## 0.2.3
+
+ - **FEAT**: import fic_extensions by default.
+
 ## 0.2.2
 
  - **FEAT**: add ValueNotifierExtensions.mutate.
