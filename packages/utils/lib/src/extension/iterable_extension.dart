@@ -22,6 +22,8 @@ extension IterableExtension<T> on Iterable<T> {
   }
 
   T? findOrNull(bool Function(T) test) => cast<T?>().firstWhere((it) => test(it!), orElse: () => null);
+
+  T? firstOrNull([bool Function(T)? test]) => findOrNull(test ?? (_) => true);
 }
 
 extension IterableExtensionNullable<T extends Object> on Iterable<T?> {

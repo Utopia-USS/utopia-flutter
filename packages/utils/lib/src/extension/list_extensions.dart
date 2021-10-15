@@ -1,3 +1,5 @@
+import 'package:utopia_utils/src/extension/iterable_extension.dart';
+
 extension ListExtensions<T> on List<T> {
   T? tryGet(int index) => index < length ? this[index] : null;
 
@@ -6,8 +8,5 @@ extension ListExtensions<T> on List<T> {
 
   List<T> minus(List<T> other) => where((it) => !other.contains(it)).toList();
 
-  T? firstOrNull() => this.isNotEmpty ? this[0] : null;
-
-  List<T2> mapWithNext<T2>(T2 f(T curr, T? next)) =>
-      [for (int i = 0; i < this.length; i++) f(this[i], i < length - 1 ? this[i + 1] : null)];
+  T? lastOrNull([bool Function(T)? test]) => reversed.findOrNull(test ?? (_) => true);
 }
