@@ -1,3 +1,7 @@
+## 0.2.4
+
+ - **FEAT**: create anyTrue.
+
 ## 0.2.3
 
  - **FEAT**: import fic_extensions by default.

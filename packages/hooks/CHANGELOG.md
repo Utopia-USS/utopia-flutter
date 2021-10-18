@@ -1,3 +1,7 @@
+## 0.2.4
+
+ - **FEAT**: create SubmitState.combine.
+
 ## 0.2.3+1
 
  - Update a dependency to the latest release.
