@@ -1,3 +1,7 @@
+## 0.2.5
+
+ - **FEAT**: add compareBy function.
+
 ## 0.2.4
 
  - **FEAT**: create anyTrue.

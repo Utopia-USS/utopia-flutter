@@ -1,3 +1,7 @@
+## 0.2.4+2
+
+ - Update a dependency to the latest release.
+
 ## 0.2.4+1
 
  - **FIX**: relax async package version constraint.
