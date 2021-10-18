@@ -1,3 +1,7 @@
+## 0.2.5+2
+
+ - **FIX**: fix duplicate Set.toggle extension.
+
 ## 0.2.5+1
 
  - **FIX**: fix duplicate Set.toggle extension.
