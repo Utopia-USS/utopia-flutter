@@ -1,3 +1,7 @@
+## 0.2.4+1
+
+ - **FIX**: relax async package version constraint.
+
 ## 0.2.4
 
  - **FEAT**: create SubmitState.combine.
