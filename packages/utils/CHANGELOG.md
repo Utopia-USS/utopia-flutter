@@ -1,3 +1,7 @@
+## 0.2.6
+
+ - **FEAT**: move LoggerReporter from utopia_arch.
+
 ## 0.2.5+2
 
  - **FIX**: fix duplicate Set.toggle extension.

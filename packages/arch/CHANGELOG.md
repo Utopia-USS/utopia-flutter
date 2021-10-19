@@ -1,3 +1,8 @@
+## 0.2.1
+
+ - **FIX**: move LoggerReporter to utopia_utils.
+ - **FEAT**: move LoggerReporter from utopia_arch.
+
 ## 0.2.0+8
 
  - Update a dependency to the latest release.

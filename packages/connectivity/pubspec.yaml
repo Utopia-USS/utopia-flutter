@@ -11,6 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_hooks: ^0.2.4+4
+  utopia_hooks: ^0.2.4+5
   connectivity_plus: ^1.1.0
 
