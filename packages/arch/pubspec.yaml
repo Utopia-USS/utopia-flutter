@@ -17,5 +17,4 @@ dependencies:
   page_transition: ^2.0.2
   shared_preferences: ^2.0.7
   injector: ^2.0.0
-  logger: ^1.1.0
   provider: ^6.0.0
