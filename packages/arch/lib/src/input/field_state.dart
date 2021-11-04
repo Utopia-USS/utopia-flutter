@@ -21,7 +21,7 @@ class FieldState {
     required this.getValue,
     required this.onIsObscuredChanged,
     this.focusNode,
-    this.requestFocus = () => {},
+    required this.requestFocus,
     required this.getErrorMessage,
     required this.onErrorChanged,
     required this.getIsObscured,
