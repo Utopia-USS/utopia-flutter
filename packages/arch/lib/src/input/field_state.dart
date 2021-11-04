@@ -13,7 +13,7 @@ class FieldState {
   ///Note: should not contain focusChange ([FieldStates] should not be coupled), there is special field in [AppTextInput] - [onSubmitFocusRequest]
   final Function(String)? onSubmit;
   final FocusNode? focusNode;
-  final Function()? requestFocus;
+  Function() requestFocus;
   final Function() onIsObscuredChanged;
 
   const FieldState({
@@ -21,7 +21,7 @@ class FieldState {
     required this.getValue,
     required this.onIsObscuredChanged,
     this.focusNode,
-    this.requestFocus,
+    this.requestFocus = () => {},
     required this.getErrorMessage,
     required this.onErrorChanged,
     required this.getIsObscured,
