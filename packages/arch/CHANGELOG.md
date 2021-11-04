@@ -1,3 +1,10 @@
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FIX**: remove LoggerReporter from utopia_arch.
+ - **BREAKING** **FEAT**: make FieldState.focusNode nullable.
+
 ## 0.2.1
 
  - **FIX**: move LoggerReporter to utopia_utils.
