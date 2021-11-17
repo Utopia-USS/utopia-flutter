@@ -1,0 +1,21 @@
+name: utopia_platform_utils
+description: Utopia USS - Android and iOS platform code utils
+version: 0.0.1
+homepage: https://github.com/Utopia-USS/utopia-flutter
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.20.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.utopiaultimate.flutter.utopia_platform_utils
+        pluginClass: UtopiaPlatformUtilsPlugin
+      ios:
+        pluginClass: UtopiaPlatformUtilsPlugin

@@ -1,13 +1,15 @@
-package com.utopiaultimate.flutter.utopia_save_file.util
+package com.utopiaultimate.flutter.utopia_platform_utils.flutter.coroutine
 
+import com.utopiaultimate.flutter.utopia_platform_utils.flutter.runForResult
 import io.flutter.Log
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.StandardMethodCodec
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-fun <T> CoroutineScope.launchForResult(
+@Suppress("EXPERIMENTAL_API_USAGE_FUTURE_ERROR")
+@OptIn(ExperimentalCoroutinesApi::class)
+public fun <T> CoroutineScope.launchForResult(
         result: MethodChannel.Result,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         context: CoroutineContext = EmptyCoroutineContext,
@@ -18,16 +20,14 @@ fun <T> CoroutineScope.launchForResult(
     coroutine.start(start, coroutine, block)
 }
 
-@UseExperimental(InternalCoroutinesApi::class)
+@OptIn(InternalCoroutinesApi::class)
 private class MethodChannelResultCoroutine(context: CoroutineContext, private val result: MethodChannel.Result) :
-        AbstractCoroutine<Any?>(context, active = true) {
+        AbstractCoroutine<Any?>(context, initParentJob = true, active = true) {
 
-    override fun onCompleted(value: Any?) {
-        result.success(value.takeUnless { it == Unit })
-    }
+    override fun onCompleted(value: Any?) = runForResult(result) { value }
 
     override fun onCancelled(cause: Throwable, handled: Boolean) {
-        Log.e("unknown", "Error in methodChannelResult", cause)
+        Log.e("unknown", "Error in launchForResult", cause)
         result.error("1000", cause.message, null)
     }
 }
