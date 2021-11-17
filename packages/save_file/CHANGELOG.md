@@ -1,3 +1,9 @@
+## 0.0.3+1
+
+ - **FIX**: fix ios platform code.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
 ## 0.0.3
 
  - **FIX**: migrate to utopia_platform_utils.
