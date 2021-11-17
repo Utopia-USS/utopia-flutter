@@ -2,7 +2,7 @@ group 'com.utopiaultimate.flutter.save_file'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.5.20'
     repositories {
         google()
         mavenCentral()
@@ -46,6 +46,5 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+    implementation project(":utopia_platform_utils")
 }
