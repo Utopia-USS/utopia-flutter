@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**: export IList variants of ComputedStateWrapper's.
+
 ## 0.2.5
 
  - **FEAT**: add IList variants of ComputedStateWrapper's.
