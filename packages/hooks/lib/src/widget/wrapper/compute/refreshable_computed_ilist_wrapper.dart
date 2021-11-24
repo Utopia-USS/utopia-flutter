@@ -1,18 +1,17 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/widget/wrapper/compute/computed_ilist_wrapper.dart';
 
-import 'computed_list_wrapper.dart';
-
-@Deprecated("Use RefreshableComputedIListWrapper")
-class RefreshableComputedListWrapper<E> extends StatelessWidget {
-  final RefreshableComputedState<List<E>> state;
+class RefreshableComputedIListWrapper<E> extends StatelessWidget {
+  final RefreshableComputedState<IList<E>> state;
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext) emptyBuilder;
-  final Widget Function(BuildContext, List<E>) builder;
+  final Widget Function(BuildContext, IList<E>) builder;
 
-  const RefreshableComputedListWrapper({
+  const RefreshableComputedIListWrapper({
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
@@ -24,7 +23,7 @@ class RefreshableComputedListWrapper<E> extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => await state.refresh(),
-      child: ComputedListWrapper<E>(
+      child: ComputedIListWrapper<E>(
         state: state,
         inProgressBuilder: inProgressBuilder,
         failedBuilder: failedBuilder,
