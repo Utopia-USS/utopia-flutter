@@ -1,3 +1,23 @@
+## 0.2.5
+
+ - **FIX**: Fix memoization issue in StatelessTextControllerWrapper.
+ - **FIX**: relax async package version constraint.
+ - **FIX**: fix memoization in useStreamSubscription.
+ - **FEAT**: create SubmitState.combine.
+ - **FEAT**: add [Refreshable]ComputedStateWrapper.
+ - **FEAT**: add ComputedState.valueOrPreviousOrNull.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
 ## 0.2.4+5
 
  - Update a dependency to the latest release.

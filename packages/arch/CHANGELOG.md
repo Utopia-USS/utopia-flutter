@@ -1,3 +1,26 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: move LoggerReporter to utopia_utils.
+ - **FEAT**: move LoggerReporter from utopia_arch.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **BREAKING** **FIX**: remove LoggerReporter from utopia_arch.
+ - **BREAKING** **FEAT**: make FieldState.focusNode nullable.
+ - **BREAKING** **FEAT**: Add RouteConfig.defaultOrientation.
+
 ## 0.3.0
 
 > Note: This release has breaking changes.

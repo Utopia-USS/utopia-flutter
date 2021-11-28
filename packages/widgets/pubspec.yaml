@@ -1,6 +1,6 @@
 name: utopia_widgets
 description: Utopia USS libs - simple, generic widgets
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -11,4 +11,4 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_utils: ^0.2.6
+  utopia_utils: ^0.2.7

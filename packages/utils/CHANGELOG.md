@@ -1,3 +1,20 @@
+## 0.2.7
+
+ - **FIX**: fix duplicate Set.toggle extension.
+ - **FIX**: fix duplicate Set.toggle extension.
+ - **FEAT**: move LoggerReporter from utopia_arch.
+ - **FEAT**: add compareBy function.
+ - **FEAT**: create anyTrue.
+ - **FEAT**: import fic_extensions by default.
+ - **FEAT**: add ValueNotifierExtensions.mutate.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
 ## 0.2.6
 
  - **FEAT**: move LoggerReporter from utopia_arch.
