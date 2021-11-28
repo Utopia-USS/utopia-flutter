@@ -10,3 +10,5 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  utopia_utils: ^0.2.6
