@@ -1,3 +1,8 @@
+## 0.2.5+2
+
+ - **FIX**: Fix memoization issue in StatelessTextControllerWrapper.
+ - **CHORE**: publish packages.
+
 ## 0.2.5+1
 
  - **FIX**: export IList variants of ComputedStateWrapper's.
