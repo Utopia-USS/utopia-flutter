@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
 
 class StatelessTextEditingControllerWrapper extends HookWidget {
   final String value;
@@ -15,9 +16,10 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useTextEditingController();
+    final wrappedValue = useValueWrapper(value);
     useEffect(() {
       final listener = () {
-        if (controller.text != value) onChanged?.call(controller.text);
+        if (controller.text != wrappedValue()) onChanged?.call(controller.text);
       };
 
       controller.addListener(listener);

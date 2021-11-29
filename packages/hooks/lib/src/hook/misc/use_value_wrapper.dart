@@ -4,6 +4,8 @@ abstract class ValueWrapper<T> {
   abstract final T value;
 
   T Function() get getValue => () => value;
+
+  T call() => value;
 }
 
 class _ValueWrapperImpl<T> extends ValueWrapper<T> {

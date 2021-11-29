@@ -1,3 +1,13 @@
+## 0.0.4
+
+ - **FIX**: fix ios platform code.
+ - **FIX**: migrate to utopia_platform_utils.
+ - **FEAT**: initial commit.
+ - **FEAT**: add UtopiaSaveFile.fromByteStream.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
 ## 0.0.3+1
 
  - **FIX**: fix ios platform code.
