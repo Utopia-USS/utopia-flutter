@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:utopia_arch/src/validation/validator.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
-class FieldState {
+class FieldState implements Validatable<String> {
   final Function(String Function(BuildContext)?) onErrorChanged;
   final Function(String?) onChanged;
 
