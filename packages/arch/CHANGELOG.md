@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: introduce Validatable interface.
+
 ## 0.3.0+3
 
  - Update a dependency to the latest release.
