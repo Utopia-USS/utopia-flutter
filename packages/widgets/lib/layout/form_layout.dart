@@ -7,7 +7,25 @@ class FormLayout extends StatefulWidget {
   final Widget content;
   final Widget bottom;
 
-  const FormLayout({
+  // TODO remove in next breaking release
+  @Deprecated("Use FormLayout.simple")
+  FormLayout({
+    required this.backgroundColor,
+    this.fadeBarHeight = 16,
+    this.fadeDuration = const Duration(milliseconds: 100),
+    required Widget content,
+    required this.bottom,
+  }) : content = SingleChildScrollView(child: content);
+
+  FormLayout.simple({
+    required this.backgroundColor,
+    this.fadeBarHeight = 16,
+    this.fadeDuration = const Duration(milliseconds: 100),
+    required Widget content,
+    required this.bottom,
+  }) : content = SingleChildScrollView(child: content);
+
+  const FormLayout.raw({
     required this.backgroundColor,
     this.fadeBarHeight = 16,
     this.fadeDuration = const Duration(milliseconds: 100),
@@ -68,7 +86,7 @@ class _FormLayoutState extends State<FormLayout> {
         if (isFadeBarVisible && current >= max) setState(() => isFadeBarVisible = false);
         return false;
       },
-      child: SingleChildScrollView(child: widget.content),
+      child: widget.content,
     );
   }
 }
