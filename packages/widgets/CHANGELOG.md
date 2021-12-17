@@ -1,3 +1,7 @@
+## 0.0.6
+
+ - **FEAT**: introduce FormLayout.raw.
+
 ## 0.0.5
 
  - **FEAT**: add Collapsible.
