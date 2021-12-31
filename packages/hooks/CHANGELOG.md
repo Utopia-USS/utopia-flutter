@@ -1,3 +1,7 @@
+## 0.2.6
+
+ - **FEAT**: add keepInProgress parameter to ComputedStateWrappers.
+
 ## 0.2.5+2
 
  - **FIX**: Fix memoization issue in StatelessTextControllerWrapper.
