@@ -8,12 +8,14 @@ class RefreshableComputedStateWrapper<E> extends StatelessWidget {
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext, E) builder;
+  final bool keepInProgress;
 
   const RefreshableComputedStateWrapper({
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.builder,
+    this.keepInProgress = false,
   });
 
   @override
@@ -22,6 +24,7 @@ class RefreshableComputedStateWrapper<E> extends StatelessWidget {
       onRefresh: () async => await state.refresh(),
       child: ComputedStateWrapper<E>(
         state: state,
+        keepInProgress: keepInProgress,
         inProgressBuilder: inProgressBuilder,
         failedBuilder: failedBuilder,
         builder: builder,

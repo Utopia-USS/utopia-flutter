@@ -7,21 +7,25 @@ class ComputedStateWrapper<E> extends StatelessWidget {
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext, E) builder;
+  final bool keepInProgress;
 
   const ComputedStateWrapper({
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.builder,
+    this.keepInProgress = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return state.value.maybeWhen(
+    return state.value.when(
+      notInitialized: () => NonScrollableContent(child: inProgressBuilder(context)),
+      inProgress: (_, prev) => keepInProgress && prev.valueOrNull != null
+          ? builder(context, prev.valueOrNull!)
+          : NonScrollableContent(child: inProgressBuilder(context)),
       failed: (_) => NonScrollableContent(child: failedBuilder(context)),
       ready: (value) => builder(context, value),
-      orElse: () => NonScrollableContent(child: inProgressBuilder(context)),
     );
   }
 }
-

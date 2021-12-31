@@ -11,6 +11,7 @@ class ComputedListWrapper<E> extends StatelessWidget {
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext) emptyBuilder;
   final Widget Function(BuildContext, List<E>) builder;
+  final bool keepInProgress;
 
   const ComputedListWrapper({
     required this.state,
@@ -18,12 +19,14 @@ class ComputedListWrapper<E> extends StatelessWidget {
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
+    this.keepInProgress = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ComputedStateWrapper<List<E>>(
       state: state,
+      keepInProgress: keepInProgress,
       inProgressBuilder: inProgressBuilder,
       failedBuilder: failedBuilder,
       builder: (context, value) => value.isEmpty
