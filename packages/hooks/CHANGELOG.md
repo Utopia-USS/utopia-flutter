@@ -1,3 +1,7 @@
+## 0.2.6+1
+
+ - **FIX**: fix initial value of StatelessTextControllerWrapper.
+
 ## 0.2.6
 
  - **FEAT**: add keepInProgress parameter to ComputedStateWrappers.
