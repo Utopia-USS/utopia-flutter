@@ -1,3 +1,7 @@
+## 0.2.6+2
+
+ - **FIX**: fix useAppLifecycleStateCallbacks.onResumed being called too often.
+
 ## 0.2.6+1
 
  - **FIX**: fix initial value of StatelessTextControllerWrapper.
