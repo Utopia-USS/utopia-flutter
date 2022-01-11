@@ -7,7 +7,8 @@ void useAppLifecycleStateCallbacks({Function()? onPaused, Function()? onResumed}
 
   useEffect(() {
     final observer = _Observer(onChanged: (state) {
-      return state == AppLifecycleState.paused ? wrappedOnPaused.value?.call() : wrappedOnResumed.value?.call();
+      if(state == AppLifecycleState.paused) wrappedOnPaused.value?.call();
+      if(state == AppLifecycleState.resumed) wrappedOnResumed.value?.call();
     });
     WidgetsBinding.instance!.addObserver(observer);
     return () => WidgetsBinding.instance!.removeObserver(observer);
