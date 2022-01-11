@@ -83,9 +83,14 @@ FieldState useFieldStateSimple({
   bool isObscurable = false,
   Function(String)? onSubmit,
   int? maxLength,
+  bool clearErrorOnChanged = false,
 }) {
   final state = useState<String>(initialValue ?? '');
   final errorState = useState<String Function(BuildContext)?>(null);
+
+  useSimpleEffect(() {
+    if (clearErrorOnChanged) errorState.value = null;
+  }, [state.value]);
 
   return useFieldState(
     value: state.value,
