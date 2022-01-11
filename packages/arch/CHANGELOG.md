@@ -1,3 +1,7 @@
+## 0.3.2
+
+ - **FEAT**: add clearErrorOnChanged param to useFieldStateSimple.
+
 ## 0.3.1+3
 
  - Update a dependency to the latest release.
