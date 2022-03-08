@@ -1,3 +1,7 @@
+## 0.2.6+3
+
+ - **FIX**: clear computation on debounce in useAutoComputedState.
+
 ## 0.2.6+2
 
  - **FIX**: fix useAppLifecycleStateCallbacks.onResumed being called too often.
