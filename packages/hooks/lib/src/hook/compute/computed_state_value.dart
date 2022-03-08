@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ComputedStateValue<T> {
@@ -5,8 +6,10 @@ abstract class ComputedStateValue<T> {
 
   static const ComputedStateValue<Never> notInitialized = ComputedStateValueNotInitialized._();
 
-  const factory ComputedStateValue.inProgress(Future<T> future, {required ComputedStateValue<T> previous}) =
-      ComputedStateValueInProgress._;
+  const factory ComputedStateValue.inProgress(
+    CancelableOperation<T> operation, {
+    required ComputedStateValue<T> previous,
+  }) = ComputedStateValueInProgress._;
 
   const factory ComputedStateValue.ready(T value) = ComputedStateValueReady._;
 
@@ -14,14 +17,15 @@ abstract class ComputedStateValue<T> {
 
   R maybeWhen<R>({
     R Function()? notInitialized,
-    R Function(Future<T> future, ComputedStateValue<T> previous)? inProgress,
+    R Function(CancelableOperation<T> operation, ComputedStateValue<T> previous)? inProgress,
     R Function(T value)? ready,
     R Function(Object exception)? failed,
     required R Function() orElse,
   }) {
     final value = this;
     if (value is ComputedStateValueNotInitialized && notInitialized != null) return notInitialized();
-    if (value is ComputedStateValueInProgress<T> && inProgress != null) return inProgress(value.future, value.previous);
+    if (value is ComputedStateValueInProgress<T> && inProgress != null)
+      return inProgress(value.operation, value.previous);
     if (value is ComputedStateValueReady<T> && ready != null) return ready(value.value);
     if (value is ComputedStateValueFailed && failed != null) return failed(value.exception);
     return orElse();
@@ -29,7 +33,7 @@ abstract class ComputedStateValue<T> {
 
   R when<R>({
     required R Function() notInitialized,
-    required R Function(Future<T> future, ComputedStateValue<T> previous) inProgress,
+    required R Function(CancelableOperation<T> operation, ComputedStateValue<T> previous) inProgress,
     required R Function(T value) ready,
     required R Function(Object exception) failed,
   }) {
@@ -52,8 +56,8 @@ abstract class ComputedStateValue<T> {
   ComputedStateValue<R> mapValue<R>(R Function(T) block) {
     return when(
       notInitialized: () => ComputedStateValue.notInitialized,
-      inProgress: (future, previous) => ComputedStateValue.inProgress(
-        future.then((value) => block(value)),
+      inProgress: (operation, previous) => ComputedStateValue.inProgress(
+        operation.then(block),
         previous: previous.mapValue(block),
       ),
       ready: (value) => ComputedStateValue.ready(block(value)),
@@ -70,13 +74,13 @@ class ComputedStateValueNotInitialized extends ComputedStateValue<Never> with Eq
 }
 
 class ComputedStateValueInProgress<T> extends ComputedStateValue<T> with EquatableMixin {
-  final Future<T> future;
+  final CancelableOperation<T> operation;
   final ComputedStateValue<T> previous;
 
-  const ComputedStateValueInProgress._(this.future, {required this.previous}) : super._();
+  const ComputedStateValueInProgress._(this.operation, {required this.previous}) : super._();
 
   @override
-  get props => [future];
+  get props => [operation];
 }
 
 class ComputedStateValueReady<T> extends ComputedStateValue<T> with EquatableMixin {

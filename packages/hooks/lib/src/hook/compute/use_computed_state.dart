@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:async/async.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state_value.dart';
@@ -12,28 +13,30 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
   final isMounted = useIsMounted();
 
   Future<T> tryRefresh() {
-    final future = Future.microtask(() async {
+    final completer = CancelableCompleter<T>();
+    state.value = ComputedStateValue.inProgress(completer.operation, previous: state.value);
+
+    Future.microtask(() async {
       try {
         final result = await computeWrapper.value();
-        if (isMounted()) {
-          state.value.maybeWhen(
-            inProgress: (_, __) => state.value = ComputedStateValue.ready(result),
-            orElse: () {}, // computation has been interrupted
-          );
+        if (!completer.isCanceled && isMounted()) {
+          state.value = ComputedStateValue.ready(result);
+          completer.complete(result);
         }
-        return result;
-      } catch (e) {
-        if (isMounted()) state.value = ComputedStateValue.failed(e);
-        rethrow;
+      } catch (e, s) {
+        if (!completer.isCanceled && isMounted()) {
+          state.value = ComputedStateValue.failed(e);
+          completer.completeError(e, s);
+        }
       }
     });
-    state.value = ComputedStateValue.inProgress(future, previous: state.value);
-    return future;
+
+    return completer.operation.value;
   }
 
   Future<T> tryRefreshOrWait() async {
     return await state.value.maybeWhen(
-      inProgress: (future, _) async => await future,
+      inProgress: (operation, _) async => await operation.value,
       orElse: () async => await tryRefresh(),
     );
   }
@@ -42,7 +45,13 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
     () => MutableComputedState(
       tryRefresh: tryRefreshOrWait,
       getValue: () => state.value,
-      clear: () => state.value = ComputedStateValue.notInitialized,
+      clear: () {
+        state.value.maybeWhen<void>(
+          inProgress: (operation, _) => operation.cancel(),
+          orElse: () {},
+        );
+        state.value = ComputedStateValue.notInitialized;
+      },
       updateValue: (value) => state.value = ComputedStateValue.ready(value),
     ),
   );
@@ -66,18 +75,20 @@ MutableComputedState<T> useAutoComputedState<T>({
   final isMounted = useIsMounted();
 
   useSimpleEffect(() {
+    state.clear();
+    timerState.value?.cancel();
+    timerState.value = null;
     if (shouldCompute == null || shouldCompute()) {
-      timerState.value?.cancel();
-      timerState.value = Timer(debounceDuration, () {
-        if (isMounted()) {
-          state.refresh();
-          timerState.value = null;
-        }
-      });
-    } else {
-      state.clear();
-      timerState.value?.cancel();
-      timerState.value = null;
+      if (debounceDuration == Duration.zero) {
+        state.refresh();
+      } else {
+        timerState.value = Timer(debounceDuration, () {
+          if (isMounted()) {
+            state.refresh();
+            timerState.value = null;
+          }
+        });
+      }
     }
   }, keys);
 
