@@ -1,3 +1,7 @@
+## 0.3.3
+
+ - **FEAT**: adhere to lints.
+
 ## 0.3.2+1
 
  - Update a dependency to the latest release.

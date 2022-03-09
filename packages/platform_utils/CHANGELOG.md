@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**: adhere to lints.
+
 ## 0.0.3
 
  - **FEAT**: add fast flutter serialization - encodeToFlutter, decodeFromFlutter based on kotlinx-serialization-json.

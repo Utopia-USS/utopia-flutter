@@ -1,3 +1,7 @@
+## 0.0.7
+
+ - **FEAT**: adhere to lints.
+
 ## 0.0.6
 
  - **FEAT**: introduce FormLayout.raw.

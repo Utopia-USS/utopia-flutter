@@ -1,6 +1,6 @@
 name: utopia_save_file
 description: Utopia USS libs - unified and *correct* implementation of file saving
-version: 0.0.4+1
+version: 0.0.5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -13,13 +13,12 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
 
-  utopia_platform_utils: ^0.0.3
+  utopia_platform_utils: ^0.0.4
   path: ^1.8.0
   path_provider: ^2.0.5
 
 dev_dependencies:
-  utopia_lints: ^0.0.0
-
+  utopia_lints: ^0.0.1
 flutter:
   plugin:
     platforms:

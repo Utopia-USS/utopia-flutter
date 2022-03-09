@@ -1,3 +1,8 @@
+## 0.2.8
+
+ - **FEAT**: adhere to lints.
+ - **FEAT**: adhere to lints.
+
 ## 0.2.7
 
  - **FIX**: fix duplicate Set.toggle extension.

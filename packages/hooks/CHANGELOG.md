@@ -1,3 +1,7 @@
+## 0.2.7
+
+ - **FEAT**: adhere to lints.
+
 ## 0.2.6+3
 
  - **FIX**: clear computation on debounce in useAutoComputedState.
