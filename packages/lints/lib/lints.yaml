@@ -55,4 +55,7 @@ linter:
     use_late_for_private_fields_and_variables: true
     use_setters_to_change_properties: true
     use_string_buffers: true
-    #use_super_initializers: true TODO enable in dart 2.17
+    # use_super_initializers: true TODO enable in dart 2.17
+
+    # disabled rules
+    use_key_in_widget_constructors: false

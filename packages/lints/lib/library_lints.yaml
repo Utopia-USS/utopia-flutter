@@ -1,0 +1,5 @@
+include: lints.yaml
+
+linter:
+  rules:
+    use_key_in_widget_constructors: true
