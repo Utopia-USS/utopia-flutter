@@ -1,3 +1,9 @@
+## 0.0.8
+
+ - **FIX**: separate library_lints.yaml.
+ - **FEAT**: adhere to lints.
+ - **FEAT**: adhere to lints.
+
 ## 0.0.7
 
  - **FEAT**: adhere to lints.
