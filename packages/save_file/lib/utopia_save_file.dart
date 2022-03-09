@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'src/utopia_save_file_impl.dart' if (dart.library.js) 'src/utopia_save_file_impl_web.dart';
 

@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+dev_dependencies:
+  utopia_lints: ^0.0.0
+
 flutter:
   plugin:
     platforms:

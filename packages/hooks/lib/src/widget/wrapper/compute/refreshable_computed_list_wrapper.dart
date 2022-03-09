@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
 
 import 'computed_list_wrapper.dart';
@@ -14,13 +13,14 @@ class RefreshableComputedListWrapper<E> extends StatelessWidget {
   final bool keepInProgress;
 
   const RefreshableComputedListWrapper({
+    Key? key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
     this.keepInProgress = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

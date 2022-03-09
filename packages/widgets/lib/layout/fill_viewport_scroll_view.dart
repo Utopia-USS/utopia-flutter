@@ -8,26 +8,29 @@ class FillViewportScrollView extends StatelessWidget {
   final ScrollPhysics? physics;
 
   const FillViewportScrollView({
+    Key? key,
     required this.child,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
     this.physics,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, viewportConstrains) {
-      return SingleChildScrollView(
-        physics: physics,
-        scrollDirection: scrollDirection,
-        reverse: reverse,
-        child: ConstrainedBox(
-          constraints: scrollDirection == Axis.vertical
-              ? BoxConstraints(minHeight: viewportConstrains.maxHeight)
-              : BoxConstraints(minWidth: viewportConstrains.maxWidth),
-          child: scrollDirection == Axis.vertical ? IntrinsicHeight(child: child) : IntrinsicWidth(child: child),
-        ),
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, viewportConstrains) {
+        return SingleChildScrollView(
+          physics: physics,
+          scrollDirection: scrollDirection,
+          reverse: reverse,
+          child: ConstrainedBox(
+            constraints: scrollDirection == Axis.vertical
+                ? BoxConstraints(minHeight: viewportConstrains.maxHeight)
+                : BoxConstraints(minWidth: viewportConstrains.maxWidth),
+            child: scrollDirection == Axis.vertical ? IntrinsicHeight(child: child) : IntrinsicWidth(child: child),
+          ),
+        );
+      },
+    );
   }
 }

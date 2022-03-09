@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class NonScrollableContent extends StatelessWidget {
   final Widget child;
 
-  const NonScrollableContent({required this.child});
+  const NonScrollableContent({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class NonScrollableContent extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         child,
-        SingleChildScrollView(physics: AlwaysScrollableScrollPhysics()),
+        const SingleChildScrollView(physics: AlwaysScrollableScrollPhysics()),
       ],
     );
   }

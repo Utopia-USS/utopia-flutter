@@ -4,7 +4,7 @@ import 'package:utopia_save_file/src/util/byte_stream_extensions.dart';
 
 class UtopiaSaveFileImpl {
   static Future<bool> fromUrl(String url, {String? name}) async {
-    html.AnchorElement anchorElement = new html.AnchorElement(href: url);
+    final anchorElement = html.AnchorElement(href: url);
     anchorElement.download = name;
     anchorElement.click();
     return true;

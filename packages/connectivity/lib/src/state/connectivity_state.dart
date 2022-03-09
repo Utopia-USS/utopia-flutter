@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class ConnectivityState {
@@ -13,16 +14,18 @@ class ConnectivityState {
 }
 
 class ConnectivityStateProvider extends HookStateProviderWidget<ConnectivityState> {
+  const ConnectivityStateProvider({Key? key}) : super(key: key);
+
   @override
   ConnectivityState use() {
     final state = useAutoComputedState<ConnectivityResult>(
-      compute: () async => await Connectivity().checkConnectivity(),
+      compute: () => Connectivity().checkConnectivity(),
       keys: [],
     );
 
     useStreamSubscription<ConnectivityResult>(
       useMemoized(() => Connectivity().onConnectivityChanged),
-      (result) => state.updateValue(result),
+      state.updateValue,
     );
 
     return ConnectivityState(

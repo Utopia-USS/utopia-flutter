@@ -14,3 +14,5 @@ dependencies:
   utopia_hooks: ^0.2.6+3
   connectivity_plus: ^1.1.0
 
+dev_dependencies:
+  utopia_lints: ^0.0.0

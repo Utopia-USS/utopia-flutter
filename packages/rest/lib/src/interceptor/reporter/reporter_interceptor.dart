@@ -38,7 +38,7 @@ class ReporterInterceptor implements Interceptor {
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
     reporter.info(
       DioLogUtil.buildResponseLog(response),
       s: StackTrace.empty,

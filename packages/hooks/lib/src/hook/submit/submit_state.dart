@@ -24,7 +24,9 @@ class SubmitState {
 }
 
 class MutableSubmitState<I, T, E> implements SubmitState {
+  @override
   final bool isSubmitInProgress;
+  @override
   final Stream<SubmitErrorUnknown> unknownErrorStream;
   final Future<SubmitResult<T, E>> Function(I) submitWithInput;
 

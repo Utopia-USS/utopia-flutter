@@ -5,7 +5,7 @@ extension ByteStreamExtensions on Stream<List<int>> {
   // based on https://pub.dev/documentation/http/latest/http/ByteStream/toBytes.html
   Future<List<int>> toBytes() {
     final completer = Completer<List<int>>();
-    final sink = ByteConversionSink.withCallback((bytes) => completer.complete(bytes));
+    final sink = ByteConversionSink.withCallback(completer.complete);
     listen(
       sink.add,
       onError: completer.completeError,

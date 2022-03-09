@@ -1,10 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
-import 'submit_error.dart';
-import 'submit_result.dart';
-import 'submit_state.dart';
 
 // for convenience
 export 'submit_state_extensions.dart';
@@ -15,7 +11,7 @@ MutableSubmitState<void, T, Never> useSubmitStateSimple<T>({
   FutureOr<void> Function()? beforeSubmit,
   required Future<T> Function() submit,
   FutureOr<void> Function(T)? afterSubmit,
-  Function(SubmitErrorUnknown)? afterError,
+  void Function(SubmitErrorUnknown)? afterError,
 }) {
   return useSubmitState<void, T, Never>(
     shouldSubmit: (_) => shouldSubmit?.call() ?? true,
@@ -34,21 +30,21 @@ MutableSubmitState<I, T, E> useSubmitState<I, T, E>({
   required Future<T> Function(I) submit,
   FutureOr<SubmitError<E>> Function(Object)? mapError,
   FutureOr<void> Function(I, T)? afterSubmit,
-  Function(SubmitError)? afterError,
+  FutureOr<void> Function(SubmitError<E>)? afterError,
 }) {
   final isSubmitInProgressState = useState<bool>(false);
   final unknownErrorStream = useStreamController<SubmitErrorUnknown>();
   final isMounted = useIsMounted();
 
   Future<SubmitResult<T, E>> trySubmit(I input) async {
-    if (isSubmitInProgressState.value) return SubmitResult.alreadySubmitting();
+    if (isSubmitInProgressState.value) return const SubmitResult.alreadySubmitting();
 
     try {
       isSubmitInProgressState.value = true;
 
       if (shouldSubmit != null && !await shouldSubmit(input)) {
         final result = await afterShouldNotSubmit?.call(input);
-        return result ?? SubmitResult.shouldNotSubmit();
+        return result ?? const SubmitResult.shouldNotSubmit();
       }
 
       await beforeSubmit?.call(input);

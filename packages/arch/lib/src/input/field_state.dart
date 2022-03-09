@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_arch/src/validation/validator.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class FieldState implements Validatable<String> {
-  final Function(String Function(BuildContext)?) onErrorChanged;
-  final Function(String?) onChanged;
+  final void Function(String Function(BuildContext)?) onErrorChanged;
+  final void Function(String?) onChanged;
 
   final String Function() getValue;
   final String Function(BuildContext)? Function() getErrorMessage;
   final bool? Function() getIsObscured;
 
   ///Note: should not contain focusChange ([FieldStates] should not be coupled), there is special field in [AppTextInput] - [onSubmitFocusRequest]
-  final Function(String)? onSubmit;
+  final void Function(String)? onSubmit;
   final FocusNode? focusNode;
-  final Function() requestFocus;
-  final Function() onIsObscuredChanged;
+  final void Function() requestFocus;
+  final void Function() onIsObscuredChanged;
 
   const FieldState({
     required this.onChanged,
@@ -29,6 +28,7 @@ class FieldState implements Validatable<String> {
     required this.onSubmit,
   });
 
+  @override
   String get value => getValue();
 
   String Function(BuildContext)? get errorMessage => getErrorMessage();
@@ -43,16 +43,17 @@ class FieldState implements Validatable<String> {
 
   set value(String value) => onChanged(value);
 
+  @override
   set errorMessage(String Function(BuildContext)? value) => onErrorChanged(value);
 }
 
 FieldState useFieldState({
   required String value,
-  required Function(String) onChanged,
+  required void Function(String) onChanged,
   String Function(BuildContext)? errorMessage,
-  Function(String Function(BuildContext)?)? onErrorChanged,
+  void Function(String Function(BuildContext)?)? onErrorChanged,
   bool isObscurable = false,
-  Function(String)? onSubmit,
+  void Function(String)? onSubmit,
 }) {
   final isObscuredState = useState<bool?>(isObscurable ? true : null);
   final node = useFocusNode();
@@ -79,9 +80,9 @@ FieldState useFieldState({
 
 FieldState useFieldStateSimple({
   String? initialValue,
-  Function(String)? onChanged,
+  void Function(String)? onChanged,
   bool isObscurable = false,
-  Function(String)? onSubmit,
+  void Function(String)? onSubmit,
   int? maxLength,
   bool clearErrorOnChanged = false,
 }) {

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 class DioLogUtil {
   const DioLogUtil._();
 
-  static String buildResponseLog(Response response, {bool sanitize = false}) {
+  static String buildResponseLog(Response<dynamic> response, {bool sanitize = false}) {
     late final prettyData = _tryPrettyPrint(response.data);
     return [
       'HTTP response',
@@ -50,9 +50,9 @@ class DioLogUtil {
   }
 
   static String? _tryPrintJsonData(dynamic data) {
-    final encoder = JsonEncoder.withIndent('  ');
+    const encoder = JsonEncoder.withIndent('  ');
     try {
-      return encoder.convert(jsonDecode(data));
+      return encoder.convert(jsonDecode(data as String));
     } catch (_) {
       try {
         return encoder.convert(data);

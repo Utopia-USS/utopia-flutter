@@ -1,8 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-typedef _PreferencesSetter = Future<void> Function(SharedPreferences preferences, String key, Object value);
 
-final _preferencesSetterMap = <Type, _PreferencesSetter>{
+final _preferencesSetterMap = <Type, Future<void> Function(SharedPreferences, String, Object)>{
   bool: (preferences, key, value) => preferences.setBool(key, value as bool),
   int: (preferences, key, value) => preferences.setInt(key, value as int),
   double: (preferences, key, value) => preferences.setDouble(key, value as double),
@@ -30,7 +29,7 @@ class PreferencesService {
   }
 
   Future<SharedPreferences> _ensureInitialized() async {
-    if (_preferences == null) _preferences = await SharedPreferences.getInstance();
+    _preferences ??= await SharedPreferences.getInstance();
     return _preferences!;
   }
 }

@@ -14,13 +14,14 @@ class ComputedListWrapper<E> extends StatelessWidget {
   final bool keepInProgress;
 
   const ComputedListWrapper({
+    Key? key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
     this.keepInProgress = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -4,14 +4,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // do not use with user-scrollable PageViews!
 class StatelessPageControllerWrapper extends HookWidget {
   final int pageIndex;
-  final Function(PageController controller, int index) onTransition;
+  final void Function(PageController controller, int index) onTransition;
   final Widget Function(PageController controller) child;
 
   const StatelessPageControllerWrapper({
+    Key? key,
     required this.pageIndex,
     required this.onTransition,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

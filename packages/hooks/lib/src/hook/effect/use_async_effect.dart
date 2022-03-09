@@ -1,4 +1,3 @@
-import 'package:utopia_hooks/src/hook/effect/use_simple_effect.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 @Deprecated("Replace with useSimpleEffect")

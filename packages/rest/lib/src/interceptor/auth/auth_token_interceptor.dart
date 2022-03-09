@@ -17,7 +17,7 @@ class AuthTokenInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await tokenProvider();
     if(token != null) {
-      options.headers[headerName] = headerValueBuilder?.call(token) ?? 'Bearer ${token}';
+      options.headers[headerName] = headerValueBuilder?.call(token) ?? 'Bearer $token';
     }
     handler.next(options);
   }

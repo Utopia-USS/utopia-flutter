@@ -37,12 +37,12 @@ class UtopiaSaveFileImpl {
 
   static Future<bool> _fromUrlAndroid(String url, String effectiveName) async {
     final dto = SaveFileFromUrlDto(url: url, name: effectiveName);
-    return await _channel.invokeMethod('saveFileFromUrl', dto.toJson());
+    return (await _channel.invokeMethod<bool>('saveFileFromUrl', dto.toJson()))!;
   }
 
   static Future<bool> _fromByteStreamAndroid(Stream<List<int>> stream, String name, String mime) async {
     final dto = SaveFileFromBytesDto(bytes: await stream.toBytes(), name: name, mime: mime);
-    return await _channel.invokeMethod('saveFileFromBytes', dto.toJson());
+    return (await _channel.invokeMethod<bool>('saveFileFromBytes', dto.toJson()))!;
   }
 
   static Future<void> _fromUriIos(Uri uri, String effectiveName) async {

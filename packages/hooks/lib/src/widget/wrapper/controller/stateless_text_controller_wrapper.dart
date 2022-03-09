@@ -4,23 +4,24 @@ import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
 
 class StatelessTextEditingControllerWrapper extends HookWidget {
   final String value;
-  final Function(String)? onChanged;
+  final void Function(String)? onChanged;
   final Widget Function(TextEditingController) child;
 
   const StatelessTextEditingControllerWrapper({
+    Key? key,
     required this.value,
     this.onChanged,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = useTextEditingController(text: value);
     final wrappedValue = useValueWrapper(value);
     useEffect(() {
-      final listener = () {
+      void listener() {
         if (controller.text != wrappedValue()) onChanged?.call(controller.text);
-      };
+      }
 
       controller.addListener(listener);
       return () {

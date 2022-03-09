@@ -6,8 +6,7 @@ void useSimpleEffect(void Function() effect, [List<Object?>? keys]) {
       Future.microtask(() => effect());
       return null;
     },
-    keys,
-  );
+    keys);
 }
 
 void useSimpleEffectIfNotNull<T extends Object>(T? value, void Function(T) effect, [List<Object?>? keys]) {

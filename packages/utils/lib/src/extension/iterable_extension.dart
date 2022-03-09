@@ -1,6 +1,6 @@
 extension IterableExtension<T> on Iterable<T> {
-  List<T> toSortedList([int compare(a, b)?]) {
-    final result = this.toList();
+  List<T> toSortedList([int Function(T a, T b)? compare]) {
+    final result = toList();
     result.sort(compare);
     return result;
   }
@@ -27,5 +27,5 @@ extension IterableExtension<T> on Iterable<T> {
 }
 
 extension IterableExtensionNullable<T extends Object> on Iterable<T?> {
-  Iterable<T> whereNotNull() => this.where((element) => element != null).cast<T>();
+  Iterable<T> whereNotNull() => where((element) => element != null).cast<T>();
 }

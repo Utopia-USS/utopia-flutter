@@ -14,3 +14,6 @@ dependencies:
   utopia_utils: ^0.2.7
   firebase_core: ^1.6.0
   firebase_crashlytics: ^2.2.1
+
+dev_dependencies:
+  utopia_lints: ^0.0.0

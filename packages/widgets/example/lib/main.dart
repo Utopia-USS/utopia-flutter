@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('UtopiaWidgets example'),
         ),
-        body: FormLayout(
+        body: FormLayout.simple(
           backgroundColor: Colors.white,
           content: Column(
             mainAxisSize: MainAxisSize.min,

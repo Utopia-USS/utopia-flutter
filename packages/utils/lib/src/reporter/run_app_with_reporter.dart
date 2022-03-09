@@ -11,10 +11,12 @@ void runAppWithReporter(Reporter reporter, Widget app) {
 
   // handle uncaught dart errors (not supported on Web)
   if (!kIsWeb) {
-    Isolate.current.addErrorListener(RawReceivePort((pair) async {
-      final List<dynamic> errorAndStacktrace = pair;
-      reporter.error('Uncaught error', e: errorAndStacktrace.first, s: errorAndStacktrace.last);
-    }).sendPort);
+    Isolate.current.addErrorListener(
+      // ignore: avoid_types_on_closure_parameters
+      RawReceivePort((List<dynamic> pair) async {
+        reporter.error('Uncaught error', e: pair.first, s: pair.last as StackTrace?);
+      }).sendPort,
+    );
   }
 
   // run app and handle uncaught failed futures

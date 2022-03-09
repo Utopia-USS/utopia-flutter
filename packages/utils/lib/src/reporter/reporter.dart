@@ -22,22 +22,22 @@ class _CombinedReporter extends Reporter {
 
   @override
   void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
-    _reporters.forEach(
-      (reporter) => reporter.error(message, e: e, s: s, sanitizedMessage: sanitizedMessage),
-    );
+    for (final reporter in _reporters) {
+      reporter.error(message, e: e, s: s, sanitizedMessage: sanitizedMessage);
+    }
   }
 
   @override
   void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
-    _reporters.forEach(
-      (reporter) => reporter.warning(message, e: e, s: s, sanitizedMessage: sanitizedMessage),
-    );
+    for (final reporter in _reporters) {
+      reporter.warning(message, e: e, s: s, sanitizedMessage: sanitizedMessage);
+    }
   }
 
   @override
   void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
-    _reporters.forEach(
-      (reporter) => reporter.info(message, e: e, s: s, sanitizedMessage: sanitizedMessage),
-    );
+    for (final reporter in _reporters) {
+      reporter.info(message, e: e, s: s, sanitizedMessage: sanitizedMessage);
+    }
   }
 }

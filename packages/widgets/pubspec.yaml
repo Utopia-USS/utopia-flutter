@@ -12,3 +12,6 @@ dependencies:
     sdk: flutter
 
   utopia_utils: ^0.2.7
+
+dev_dependencies:
+  utopia_lints: ^0.0.0

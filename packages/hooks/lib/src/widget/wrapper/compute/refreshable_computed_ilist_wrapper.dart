@@ -1,6 +1,5 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_ilist_wrapper.dart';
 
@@ -13,13 +12,14 @@ class RefreshableComputedIListWrapper<E> extends StatelessWidget {
   final bool keepInProgress;
 
   const RefreshableComputedIListWrapper({
+    Key? key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
     this.keepInProgress = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_arch/src/navigation/route_config.dart';
@@ -10,11 +9,12 @@ class NestedNavigator extends HookWidget {
   final String initialRoute;
 
   const NestedNavigator({
+    Key? key,
     required this.navigatorKey,
     required this.routes,
     required this.initialRoute,
     required this.parentNavigator,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +34,13 @@ class NestedNavigator extends HookWidget {
           if (parentNavigator.canPop()) MaterialPageRoute(builder: (_) => Container()),
           _generateRoute(RouteSettings(name: route)),
         ],
-        onGenerateRoute: (settings) => _generateRoute(settings),
+        onGenerateRoute: _generateRoute,
         initialRoute: initialRoute,
       ),
     );
   }
 
-  Route _generateRoute(RouteSettings settings) {
+  Route<dynamic> _generateRoute(RouteSettings settings) {
     // WARNING: will break if initial route is pushed on stack
     if (settings.name == initialRoute) {
       final config = routes[settings.name]!;

@@ -1,4 +1,3 @@
-import 'package:utopia_hooks/src/hook/compute/computed_state_value.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class ComputedState<T> {
@@ -12,6 +11,7 @@ class ComputedState<T> {
 }
 
 class RefreshableComputedState<T> implements ComputedState<T> {
+  @override
   final ComputedStateValue<T> value;
 
   /// If [value] is [ComputedStateValue.inProgress], waits for computation to complete.
@@ -39,11 +39,11 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
 
   /// Resets [value] to [ComputedStateValue.notInitialized]
   /// Cancels the computation if [value] is [ComputedStateValue.inProgress]
-  final Function() clear;
+  final void Function() clear;
 
   /// Explicitly sets [value] to [ComputedStateValue.ready] with given `value`.
   /// Cancels the computation if [value] is [ComputedStateValue.inProgress]
-  final Function(T value) updateValue;
+  final void Function(T value) updateValue;
 
   const MutableComputedState({
     required this.tryRefresh,

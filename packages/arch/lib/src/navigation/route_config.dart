@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
@@ -9,6 +8,7 @@ enum RouteConfigOrientation {
   landscape,
 }
 
+@optionalTypeArgs
 class RouteConfig<T> {
   static RouteConfigOrientation defaultOrientation = RouteConfigOrientation.all;
 
@@ -22,8 +22,7 @@ class RouteConfig<T> {
     this.orientation,
   });
 
-  factory RouteConfig.material(
-    Widget Function() builder, {
+  factory RouteConfig.material(Widget Function() builder, {
     RouteConfigOrientation? orientation,
   }) {
     return RouteConfig(
@@ -36,10 +35,10 @@ class RouteConfig<T> {
     );
   }
 
-  static Route generateInitialRoute(Map<String, RouteConfig> routes, String name) =>
+  static Route<dynamic> generateInitialRoute(Map<String, RouteConfig> routes, String name) =>
       generateRoute(routes, RouteSettings(name: name));
 
-  static Route generateRoute(Map<String, RouteConfig> routes, RouteSettings settings) {
+  static Route<dynamic> generateRoute(Map<String, RouteConfig> routes, RouteSettings settings) {
     final config = routes[settings.name]!;
     return config.routeBuilder(settings, config.contentBuilder);
   }
@@ -64,12 +63,12 @@ class _OrientationNavigatorObserver extends NavigatorObserver {
   _OrientationNavigatorObserver(this._routes) : super();
 
   @override
-  void didPop(Route route, Route? previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     previousRoute?.settings.name?.let((it) => _routes[it])?.let((it) => _setSystemChrome(it.orientation));
   }
 
   @override
-  void didPush(Route route, Route? previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     _routes[route.settings.name]?.let((it) => _setSystemChrome(it.orientation));
   }
 

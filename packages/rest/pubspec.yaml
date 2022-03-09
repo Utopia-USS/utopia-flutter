@@ -13,3 +13,6 @@ dependencies:
 
   utopia_utils: ^0.2.7
   dio: ^4.0.0
+
+dev_dependencies:
+  utopia_lints: ^0.0.0

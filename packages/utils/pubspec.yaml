@@ -16,6 +16,4 @@ dependencies:
   fast_immutable_collections: ^7.0.3
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
+  utopia_lints: ^0.0.0

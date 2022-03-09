@@ -24,8 +24,9 @@ abstract class ComputedStateValue<T> {
   }) {
     final value = this;
     if (value is ComputedStateValueNotInitialized && notInitialized != null) return notInitialized();
-    if (value is ComputedStateValueInProgress<T> && inProgress != null)
+    if (value is ComputedStateValueInProgress<T> && inProgress != null) {
       return inProgress(value.operation, value.previous);
+    }
     if (value is ComputedStateValueReady<T> && ready != null) return ready(value.value);
     if (value is ComputedStateValueFailed && failed != null) return failed(value.exception);
     return orElse();
@@ -61,7 +62,7 @@ abstract class ComputedStateValue<T> {
         previous: previous.mapValue(block),
       ),
       ready: (value) => ComputedStateValue.ready(block(value)),
-      failed: (exception) => ComputedStateValue.failed(exception),
+      failed: ComputedStateValue.failed,
     );
   }
 }
@@ -70,7 +71,7 @@ class ComputedStateValueNotInitialized extends ComputedStateValue<Never> with Eq
   const ComputedStateValueNotInitialized._() : super._();
 
   @override
-  get props => [];
+  List<Object?> get props => [];
 }
 
 class ComputedStateValueInProgress<T> extends ComputedStateValue<T> with EquatableMixin {
@@ -80,7 +81,7 @@ class ComputedStateValueInProgress<T> extends ComputedStateValue<T> with Equatab
   const ComputedStateValueInProgress._(this.operation, {required this.previous}) : super._();
 
   @override
-  get props => [operation];
+  List<Object?> get props => [operation];
 }
 
 class ComputedStateValueReady<T> extends ComputedStateValue<T> with EquatableMixin {
@@ -89,7 +90,7 @@ class ComputedStateValueReady<T> extends ComputedStateValue<T> with EquatableMix
   const ComputedStateValueReady._(this.value) : super._();
 
   @override
-  get props => [value];
+  List<Object?> get props => [value];
 }
 
 class ComputedStateValueFailed extends ComputedStateValue<Never> with EquatableMixin {
@@ -98,5 +99,5 @@ class ComputedStateValueFailed extends ComputedStateValue<Never> with EquatableM
   const ComputedStateValueFailed._(this.exception) : super._();
 
   @override
-  get props => [exception];
+  List<Object?> get props => [exception];
 }

@@ -8,12 +8,14 @@ class LoaderWrapperLayout extends StatelessWidget {
   final Widget child;
 
   const LoaderWrapperLayout({
+    Key? key,
     required this.isLoaderVisible,
     required this.loaderUiOverlayStyle,
     required this.loaderBuilder,
     required this.child,
-  });
+  }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => !isLoaderVisible,

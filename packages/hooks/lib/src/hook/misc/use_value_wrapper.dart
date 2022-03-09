@@ -9,6 +9,7 @@ abstract class ValueWrapper<T> {
 }
 
 class _ValueWrapperImpl<T> extends ValueWrapper<T> {
+  @override
   T value;
 
   _ValueWrapperImpl(this.value);
