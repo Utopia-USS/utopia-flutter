@@ -1,4 +1,6 @@
 export 'src/comparator/compare_by.dart';
+export 'src/error/retryable.dart';
+export 'src/error/run_with_reporter_and_ui_errors.dart';
 export 'src/function/bool_functions.dart';
 export 'src/reporter/logger_reporter.dart';
 export 'src/reporter/reporter.dart';
