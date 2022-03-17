@@ -12,7 +12,7 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
   final computeWrapper = useValueWrapper(compute);
   final isMounted = useIsMounted();
 
-  Future<T> tryRefresh() {
+  Future<T> refresh() {
     final completer = CancelableCompleter<T>();
     state.value = ComputedStateValue.inProgress(completer.operation, previous: state.value);
 
@@ -34,16 +34,16 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
     return completer.operation.value;
   }
 
-  Future<T> tryRefreshOrWait() async {
+  Future<T> refreshOrWait() async {
     return await state.value.maybeWhen(
       inProgress: (operation, _) async => await operation.value,
-      orElse: () async => await tryRefresh(),
+      orElse: () async => await refresh(),
     );
   }
 
   return useMemoized(
     () => MutableComputedState(
-      tryRefresh: tryRefreshOrWait,
+      refresh: refreshOrWait,
       getValue: () => state.value,
       clear: () {
         state.value.maybeWhen<void>(

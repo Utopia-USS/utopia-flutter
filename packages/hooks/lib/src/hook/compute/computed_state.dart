@@ -16,9 +16,6 @@ class RefreshableComputedState<T> implements ComputedState<T> {
 
   /// If [value] is [ComputedStateValue.inProgress], waits for computation to complete.
   /// Otherwise, starts a new computation.
-  /// This method is meant to be called from views, so it **will never throw**.
-  /// It completes with success, even if the computation fails.
-  /// To handle errors, use [MutableComputedState.tryRefresh]
   final Future<void> Function() refresh;
 
   const RefreshableComputedState({required this.value, required this.refresh});
@@ -34,8 +31,8 @@ class RefreshableComputedState<T> implements ComputedState<T> {
 class MutableComputedState<T> implements RefreshableComputedState<T> {
   final ComputedStateValue<T> Function() getValue;
 
-  /// See [RefreshableComputedState.refresh]
-  final Future<T> Function() tryRefresh;
+  @override
+  final Future<T> Function() refresh;
 
   /// Resets [value] to [ComputedStateValue.notInitialized]
   /// Cancels the computation if [value] is [ComputedStateValue.inProgress]
@@ -46,21 +43,11 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
   final void Function(T value) updateValue;
 
   const MutableComputedState({
-    required this.tryRefresh,
+    required this.refresh,
     required this.getValue,
     required this.clear,
     required this.updateValue,
   });
-
-  // defined as a getter to conform to superclass' interface
-  @override
-  Future<void> Function() get refresh => () async {
-        try {
-          await tryRefresh();
-        } catch (e, s) {
-          UtopiaHooks.reporter?.error('Unhandled exception in ComputedState', e: e, s: s);
-        }
-      };
 
   @override
   ComputedStateValue<T> get value => getValue();
@@ -71,4 +58,7 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
 
   @override
   T? get valueOrPreviousOrNull => value.valueOrPreviousOrNull;
+
+  @Deprecated("Use just refresh() instead")
+  Future<T> tryRefresh() => refresh();
 }
