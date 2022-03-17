@@ -32,7 +32,7 @@ class ConnectivityStateProvider extends HookStateProviderWidget<ConnectivityStat
       result: state.valueOrNull,
       awaitInitialized: () async {
         if (state.valueOrNull != null) return state.valueOrNull!;
-        return await state.tryRefresh();
+        return await state.refresh();
       },
     );
   }
