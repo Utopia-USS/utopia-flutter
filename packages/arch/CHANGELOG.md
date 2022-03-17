@@ -1,3 +1,7 @@
+## 0.3.4+1
+
+ - Update a dependency to the latest release.
+
 ## 0.3.4
 
  - **FIX**: separate library_lints.yaml.

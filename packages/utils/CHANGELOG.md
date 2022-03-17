@@ -1,3 +1,7 @@
+## 0.2.10
+
+ - **FEAT**: add GlobalErrorHandler, Retryable and runWithReporterAndUiErrors.
+
 ## 0.2.9
 
  - **FIX**: separate library_lints.yaml.

@@ -1,3 +1,7 @@
+## 0.0.3+1
+
+ - **FIX**: update utopia_hooks.
+
 ## 0.0.3
 
  - **FIX**: separate library_lints.yaml.

@@ -1,3 +1,9 @@
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: rebuild SubmitState and move to global unknown error handling mechanisms.
+
 ## 0.2.8
 
  - **FIX**: separate library_lints.yaml.
