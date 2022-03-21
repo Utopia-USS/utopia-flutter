@@ -14,3 +14,7 @@ extension NotNullMutableValueExtensions<T extends Object> on MutableValue<T> {
     return this.value;
   }
 }
+
+extension BoolMutableValueExtensions on MutableValue<bool> {
+  void toggle() => value = !value;
+}
