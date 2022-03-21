@@ -1,22 +1,11 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
-abstract class ValueWrapper<T> {
-  abstract final T value;
+// for convenience
+export 'package:utopia_utils/utopia_utils_extensions.dart' show ValueExtensions;
 
-  T Function() get getValue => () => value;
-
-  T call() => value;
-}
-
-class _ValueWrapperImpl<T> extends ValueWrapper<T> {
-  @override
-  T value;
-
-  _ValueWrapperImpl(this.value);
-}
-
-ValueWrapper<T> useValueWrapper<T>(T value) {
-  final wrapper = useMemoized(() => _ValueWrapperImpl(value));
+Value<T> useValueWrapper<T>(T value) {
+  final wrapper = useMemoized(() => MutableValue(value));
   wrapper.value = value;
   return wrapper;
 }

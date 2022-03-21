@@ -10,6 +10,7 @@ class TogglableBoolState {
   });
 }
 
+@Deprecated("Replace with ValueNotifer and .toggle() extension")
 // ignore: avoid_positional_boolean_parameters
 TogglableBoolState useTogglableBool(bool initialValue) {
   final state = useState<bool>(initialValue);

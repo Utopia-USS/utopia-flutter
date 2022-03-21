@@ -6,7 +6,6 @@ export 'src/hook/compute/use_computed_state.dart';
 export 'src/hook/effect/use_simple_effect.dart';
 export 'src/hook/misc/use_app_lifecycle_state_callbacks.dart';
 export 'src/hook/misc/use_memoized_future.dart';
-export 'src/hook/misc/use_togglable_bool.dart';
 export 'src/hook/misc/use_value_listenable_listener.dart';
 export 'src/hook/misc/use_value_wrapper.dart';
 export 'src/hook/provider/use_provided.dart';

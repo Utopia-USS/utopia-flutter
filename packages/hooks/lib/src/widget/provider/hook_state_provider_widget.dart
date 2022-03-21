@@ -8,13 +8,16 @@ abstract class HookStateProviderWidget<T> extends SingleChildStatelessWidget {
 
   T use();
 
+  @protected
+  bool updateShouldNotify(T old, T current) => true;
+
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
     return HookBuilder(
       builder: (context) => Provider<T>.value(
         value: use(),
+        updateShouldNotify: updateShouldNotify,
         child: child,
-        updateShouldNotify: (a, b) => true, // TODO revisit
       ),
     );
   }
