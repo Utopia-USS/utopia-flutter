@@ -7,6 +7,7 @@ export 'src/extension/list_extensions.dart';
 export 'src/extension/navigator_extensions.dart';
 export 'src/extension/set_extensions.dart';
 export 'src/extension/string_extensions.dart';
+export 'src/extension/value_extensions.dart';
 export 'src/extension/value_notifier_extensions.dart';
 
 class UtopiaUtilsExtensions {
