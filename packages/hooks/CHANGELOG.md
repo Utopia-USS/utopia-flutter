@@ -1,3 +1,7 @@
+## 0.3.1+1
+
+ - Update a dependency to the latest release.
+
 ## 0.3.1
 
  - **FEAT**: additional provider capabilities; deprecate use_togglable_bool.

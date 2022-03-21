@@ -1,3 +1,7 @@
+## 0.2.12
+
+ - **FEAT**: add MutableValue.toggle.
+
 ## 0.2.11
 
  - **FEAT**: add Value/MutableValue utils.
