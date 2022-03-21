@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: additional provider capabilities; deprecate use_togglable_bool.
+
 ## 0.3.0
 
 > Note: This release has breaking changes.

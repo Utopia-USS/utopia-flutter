@@ -1,3 +1,10 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: deprecate useScopedNavigator.
+ - **BREAKING** **FEAT**: rebuild FieldState and Validator.
+
 ## 0.3.4+1
 
  - Update a dependency to the latest release.

@@ -1,3 +1,7 @@
+## 0.2.11
+
+ - **FEAT**: add Value/MutableValue utils.
+
 ## 0.2.10
 
  - **FEAT**: add GlobalErrorHandler, Retryable and runWithReporterAndUiErrors.
