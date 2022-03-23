@@ -1,3 +1,7 @@
+## 0.0.10
+
+ - **FEAT**: add CrossFadeIndexedStack.
+
 ## 0.0.9+3
 
  - Update a dependency to the latest release.
