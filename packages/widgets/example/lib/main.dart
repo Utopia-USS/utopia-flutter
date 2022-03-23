@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:utopia_widgets/layout/form_layout.dart';
+import 'package:utopia_widgets_example/pages/cross_fade_indexed_stack.dart';
+import 'package:utopia_widgets_example/pages/form_layout.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('UtopiaWidgets example'),
-        ),
-        body: FormLayout.simple(
-          backgroundColor: Colors.white,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+      home: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: const Text("Utopia widgets example")),
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (int i = 0; i < 30; i++) Container(color: Colors.red, margin: const EdgeInsets.all(8), height: 50)
+            children: <Widget>[
+              for (final page in _pageMap.entries)
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => page.value)),
+                  child: Text(page.key),
+                ),
             ],
           ),
-          bottom: Container(color: Colors.green, margin: const EdgeInsets.all(8), height: 50),
         ),
       ),
     );
   }
 }
+
+final _pageMap = <String, Widget>{
+  "FormLayout": const FormLayoutPage(),
+  "CrossFadeIndexedStack": const CrossFadeIndexedStackPage(),
+};

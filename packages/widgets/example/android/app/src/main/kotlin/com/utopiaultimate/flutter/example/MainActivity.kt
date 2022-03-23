@@ -1,4 +1,4 @@
-package com.utopiaultimate.flutter.utopia_widgets_example
+package com.utopiaultimate.flutter.example
 
 import io.flutter.embedding.android.FlutterActivity
 

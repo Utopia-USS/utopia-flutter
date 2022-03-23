@@ -12,6 +12,8 @@ dependencies:
   utopia_widgets:
     path: ../
 
+  utopia_utils: ^0.2.12
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
