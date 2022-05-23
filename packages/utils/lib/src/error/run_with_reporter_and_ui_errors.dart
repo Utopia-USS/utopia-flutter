@@ -18,7 +18,7 @@ class UiGlobalError {
 }
 
 void runWithReporterAndUiErrors(Reporter reporter, void Function(Stream<UiGlobalError> uiErrors) block) {
-  final controller = StreamController<UiGlobalError>();
+  final controller = StreamController<UiGlobalError>.broadcast();
   final handler = GlobalErrorHandler.combine([ReporterGlobalErrorHandler(reporter), _UiGlobalErrorHandler(controller)]);
   runWithErrorHandler(handler, () => block(controller.stream));
 }
