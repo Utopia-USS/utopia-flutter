@@ -1,3 +1,7 @@
+## 0.2.12+1
+
+ - **FIX**: make runWithReporterAndUiError.
+
 ## 0.2.12
 
  - **FEAT**: add MutableValue.toggle.

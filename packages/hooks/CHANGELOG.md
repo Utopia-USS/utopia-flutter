@@ -1,3 +1,7 @@
+## 0.3.1+2
+
+ - **FIX**: fix useStreamSubscription memoization issue.
+
 ## 0.3.1+1
 
  - Update a dependency to the latest release.
