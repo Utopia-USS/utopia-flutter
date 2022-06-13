@@ -50,7 +50,7 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
           inProgress: (operation, _) => operation.cancel(),
           orElse: () {},
         );
-        state.value = ComputedStateValue.notInitialized;
+        state.value = ComputedStateValue.cleared(previous: state.value);
       },
       updateValue: (value) => state.value = ComputedStateValue.ready(value),
     ),

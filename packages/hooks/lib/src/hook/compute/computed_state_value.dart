@@ -15,11 +15,14 @@ abstract class ComputedStateValue<T> {
 
   const factory ComputedStateValue.failed(Object exception) = ComputedStateValueFailed._;
 
+  const factory ComputedStateValue.cleared({required ComputedStateValue<T> previous}) = ComputedStateValueCleared._;
+
   R maybeWhen<R>({
     R Function()? notInitialized,
     R Function(CancelableOperation<T> operation, ComputedStateValue<T> previous)? inProgress,
     R Function(T value)? ready,
     R Function(Object exception)? failed,
+    R Function(ComputedStateValue<T> previous)? cleared,
     required R Function() orElse,
   }) {
     final value = this;
@@ -29,6 +32,7 @@ abstract class ComputedStateValue<T> {
     }
     if (value is ComputedStateValueReady<T> && ready != null) return ready(value.value);
     if (value is ComputedStateValueFailed && failed != null) return failed(value.exception);
+    if (value is ComputedStateValueCleared<T> && cleared != null) return cleared(value.previous);
     return orElse();
   }
 
@@ -37,12 +41,14 @@ abstract class ComputedStateValue<T> {
     required R Function(CancelableOperation<T> operation, ComputedStateValue<T> previous) inProgress,
     required R Function(T value) ready,
     required R Function(Object exception) failed,
+    required R Function(ComputedStateValue<T> previous) cleared,
   }) {
     return maybeWhen(
       notInitialized: notInitialized,
       inProgress: inProgress,
       ready: ready,
       failed: failed,
+      cleared: cleared,
       orElse: () {
         throw StateError('Invalid ComputedStateValue descendant');
       },
@@ -51,9 +57,14 @@ abstract class ComputedStateValue<T> {
 
   T? get valueOrNull => maybeWhen(ready: (value) => value, orElse: () => null);
 
-  T? get valueOrPreviousOrNull =>
-      maybeWhen(ready: (value) => value, inProgress: (_, previous) => previous.valueOrNull, orElse: () => null);
+  ComputedStateValue<T>? get previousOrNull =>
+      maybeWhen(inProgress: (_, previous) => previous, cleared: (previous) => previous, orElse: () => null);
 
+  T? get previousValueOrNull => previousOrNull?.valueOrPreviousOrNull;
+
+  T? get valueOrPreviousOrNull => valueOrNull ?? previousValueOrNull;
+
+  /// Note: [block] should be a pure function, since it may be called multiple times.
   ComputedStateValue<R> mapValue<R>(R Function(T) block) {
     return when(
       notInitialized: () => ComputedStateValue.notInitialized,
@@ -63,6 +74,7 @@ abstract class ComputedStateValue<T> {
       ),
       ready: (value) => ComputedStateValue.ready(block(value)),
       failed: ComputedStateValue.failed,
+      cleared: (previous) => ComputedStateValue.cleared(previous: previous.mapValue(block)),
     );
   }
 }
@@ -100,4 +112,13 @@ class ComputedStateValueFailed extends ComputedStateValue<Never> with EquatableM
 
   @override
   List<Object?> get props => [exception];
+}
+
+class ComputedStateValueCleared<T> extends ComputedStateValue<T> with EquatableMixin {
+  final ComputedStateValue<T> previous;
+
+  const ComputedStateValueCleared._({required this.previous}) : super._();
+
+  @override
+  List<Object?> get props => [previous];
 }

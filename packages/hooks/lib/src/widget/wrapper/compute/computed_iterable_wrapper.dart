@@ -1,19 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_state_wrapper.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/util/non_scrollable_content.dart';
 
-@Deprecated("Use ComputedIListWrapper")
-class ComputedListWrapper<E> extends StatelessWidget {
-  final ComputedState<List<E>> state;
+typedef ComputedIListWrapper<E> = ComputedIterableWrapper<IList<E>>;
+
+typedef ComputedListWrapper<E> = ComputedIterableWrapper<List<E>>;
+
+class ComputedIterableWrapper<I extends Iterable<dynamic>> extends StatelessWidget {
+  final ComputedState<I> state;
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext) emptyBuilder;
-  final Widget Function(BuildContext, List<E>) builder;
+  final Widget Function(BuildContext, I) builder;
   final bool keepInProgress;
 
-  const ComputedListWrapper({
+  const ComputedIterableWrapper({
     Key? key,
     required this.state,
     required this.inProgressBuilder,
@@ -25,7 +28,7 @@ class ComputedListWrapper<E> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ComputedStateWrapper<List<E>>(
+    return ComputedStateWrapper<I>(
       state: state,
       keepInProgress: keepInProgress,
       inProgressBuilder: inProgressBuilder,

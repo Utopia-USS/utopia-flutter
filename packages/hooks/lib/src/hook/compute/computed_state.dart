@@ -7,6 +7,7 @@ class ComputedState<T> {
 
   // copied between implementations for convenience
   T? get valueOrNull => value.valueOrNull;
+  T? get previousValueOrNull => value.previousValueOrNull;
   T? get valueOrPreviousOrNull => value.valueOrPreviousOrNull;
 }
 
@@ -23,6 +24,9 @@ class RefreshableComputedState<T> implements ComputedState<T> {
   // copied between implementations for convenience
   @override
   T? get valueOrNull => value.valueOrNull;
+
+  @override
+  T? get previousValueOrNull => value.previousValueOrNull;
 
   @override
   T? get valueOrPreviousOrNull => value.valueOrPreviousOrNull;
@@ -55,6 +59,9 @@ class MutableComputedState<T> implements RefreshableComputedState<T> {
   // copied between implementations for convenience
   @override
   T? get valueOrNull => value.valueOrNull;
+
+  @override
+  T? get previousValueOrNull => value.previousValueOrNull;
 
   @override
   T? get valueOrPreviousOrNull => value.valueOrPreviousOrNull;

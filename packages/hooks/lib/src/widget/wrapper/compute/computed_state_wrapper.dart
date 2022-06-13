@@ -20,13 +20,14 @@ class ComputedStateWrapper<E> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return state.value.when(
-      notInitialized: () => NonScrollableContent(child: inProgressBuilder(context)),
-      inProgress: (_, prev) => keepInProgress && prev.valueOrNull != null
-          ? builder(context, prev.valueOrNull!)
-          : NonScrollableContent(child: inProgressBuilder(context)),
-      failed: (_) => NonScrollableContent(child: failedBuilder(context)),
-      ready: (value) => builder(context, value),
+    final value = state.valueOrNull;
+    late final previousValue = state.previousValueOrNull;
+    if (value != null || (keepInProgress && previousValue != null)) return builder(context, value ?? previousValue!);
+    return NonScrollableContent(
+      child: state.value.maybeWhen(
+        failed: (_) => failedBuilder(context),
+        orElse: () => inProgressBuilder(context),
+      ),
     );
   }
 }

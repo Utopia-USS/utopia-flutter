@@ -1,17 +1,21 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
-import 'package:utopia_hooks/src/widget/wrapper/compute/computed_ilist_wrapper.dart';
+import 'package:utopia_hooks/src/widget/wrapper/compute/computed_iterable_wrapper.dart';
 
-class RefreshableComputedIListWrapper<E> extends StatelessWidget {
-  final RefreshableComputedState<IList<E>> state;
+typedef RefreshableComputedIListWrapper<E> = RefreshableComputedIterableWrapper<IList<E>>;
+
+typedef RefreshableComputedListWrapper<E> = RefreshableComputedIterableWrapper<List<E>>;
+
+class RefreshableComputedIterableWrapper<I extends Iterable<dynamic>> extends StatelessWidget {
+  final RefreshableComputedState<I> state;
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
   final Widget Function(BuildContext) emptyBuilder;
-  final Widget Function(BuildContext, IList<E>) builder;
+  final Widget Function(BuildContext, I) builder;
   final bool keepInProgress;
 
-  const RefreshableComputedIListWrapper({
+  const RefreshableComputedIterableWrapper({
     Key? key,
     required this.state,
     required this.inProgressBuilder,
@@ -25,7 +29,7 @@ class RefreshableComputedIListWrapper<E> extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => await state.refresh(),
-      child: ComputedIListWrapper<E>(
+      child: ComputedIterableWrapper<I>(
         state: state,
         keepInProgress: keepInProgress,
         inProgressBuilder: inProgressBuilder,
