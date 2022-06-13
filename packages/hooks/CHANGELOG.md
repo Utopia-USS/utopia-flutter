@@ -1,3 +1,9 @@
+## 0.3.2
+
+ - **FIX**: Add documentation.
+ - **FEAT**: Update Flutter to 3.0.0.
+ - **FEAT**: Add .cleared state to ComputedStateValue; extract ComputedIterableWrapper.
+
 ## 0.3.1+2
 
  - **FIX**: fix useStreamSubscription memoization issue.

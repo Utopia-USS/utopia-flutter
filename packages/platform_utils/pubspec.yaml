@@ -1,6 +1,6 @@
 name: utopia_platform_utils
 description: Utopia USS - Android and iOS platform code utils
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

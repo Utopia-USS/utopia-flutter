@@ -1,3 +1,8 @@
+## 0.2.13
+
+ - **FIX**: Add documentation.
+ - **FEAT**: Update Flutter to 3.0.0.
+
 ## 0.2.12+1
 
  - **FIX**: make runWithReporterAndUiError.

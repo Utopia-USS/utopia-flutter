@@ -1,3 +1,8 @@
+## 0.0.10+2
+
+ - **FIX**: Add documentation and examples.
+ - **FIX**: Update Flutter to 3.0.0.
+
 ## 0.0.10+1
 
  - Update a dependency to the latest release.

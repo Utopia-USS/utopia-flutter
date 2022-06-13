@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**: Update Flutter to 3.0.0.
+
 ## 0.0.3+4
 
  - Update a dependency to the latest release.

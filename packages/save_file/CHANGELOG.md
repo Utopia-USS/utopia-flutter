@@ -1,3 +1,7 @@
+## 0.0.7
+
+ - **FEAT**: Update Flutter to 3.0.0.
+
 ## 0.0.6
 
  - **FIX**: separate library_lints.yaml.
