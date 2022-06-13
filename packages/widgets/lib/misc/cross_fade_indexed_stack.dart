@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
+/// Like `IndexedStack`, but pages fade through during transitions and can be lazy-initialized.
+///
+/// Designed for usage as content of screen controlled by `BottomNavigationBar`.
 class CrossFadeIndexedStack extends StatefulWidget {
   final int index;
   final List<Widget> children;

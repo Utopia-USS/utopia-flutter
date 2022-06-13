@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 /// ScrollView which forces child to be at least as big as the viewport in the main axis direction.
+///
+/// See https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html#:~:text=SingleChildScrollView.1%20mysample-,Expanding,-content%20to%20fit
 class FillViewportScrollView extends StatelessWidget {
   final Widget child;
   final Axis scrollDirection;

@@ -22,7 +22,7 @@ class LoaderWrapperLayout extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          child,
+          IgnorePointer(ignoring: isLoaderVisible, child: child),
           if (isLoaderVisible)
             BlockSemantics(
               child: AnnotatedRegion<SystemUiOverlayStyle>(

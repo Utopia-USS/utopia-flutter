@@ -1,5 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
+/// Scrollable layout with fixed content on the bottom.
+///
+/// This is designed for long screens (usually forms with multiple fields - hence `FormLayout`) with some
+/// always-visible, fixed content on the bottom (usually a submit button).
+/// The [content] and [bottom] widgets are separated with a semi-transparent fade-bar, so it looks like [bottom] is laid
+/// out "above" the [content].
+/// When [content] scrolls to the end, fade-bar disappears so that last part of it is fully visible.
 class FormLayout extends StatefulWidget {
   final Color backgroundColor;
   final double fadeBarHeight;
