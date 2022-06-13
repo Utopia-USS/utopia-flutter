@@ -10,8 +10,8 @@ void useAppLifecycleStateCallbacks({void Function()? onPaused, void Function()? 
       if (state == AppLifecycleState.paused) wrappedOnPaused.value?.call();
       if (state == AppLifecycleState.resumed) wrappedOnResumed.value?.call();
     });
-    WidgetsBinding.instance!.addObserver(observer);
-    return () => WidgetsBinding.instance!.removeObserver(observer);
+    WidgetsBinding.instance.addObserver(observer);
+    return () => WidgetsBinding.instance.removeObserver(observer);
   }, []);
 }
 
