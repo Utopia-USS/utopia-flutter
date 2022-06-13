@@ -1,14 +1,19 @@
-# utils
+# utopia_utils
 
-Misc utils
+Basic, miscellaneous utils.
 
-## Getting Started
+## Highlights
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+### Reporter
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Abstraction of logging/error reporting. Messages, apart from printing them to the console, can be piped e.g. to
+Crashlytics.
+
+### runAppWithReporterAndUiErrors
+
+Wrap your whole `main()` function to catch all uncaught errors. Send them to your `Reporter` and notify your user about
+them.
+
+### Value/MutableValue
+
+Abstraction around the concept of objects containing a (mutable) value.

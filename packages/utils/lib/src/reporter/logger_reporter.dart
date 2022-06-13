@@ -5,14 +5,17 @@ class LoggerReporter extends Reporter {
   final _logger = Logger();
 
   @override
-  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.e(message, e, s);
+  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) => _logger.e(message, e, s);
 
   @override
-  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.w(message, e, s);
+  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) => _logger.w(message, e, s);
 
   @override
-  void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
-      _logger.i(message, e, s);
+  void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
+    _logger.i(
+      message,
+      e,
+      s ?? StackTrace.empty, // more sensible behaviour - info messages usually do not require a stack trace
+    );
+  }
 }

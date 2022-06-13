@@ -17,6 +17,11 @@ class UiGlobalError {
   bool get canRetry => retry != null;
 }
 
+/// Handles global errors and sends them to [reporter] and stream of [UiGlobalError].
+///
+/// Designed to wrap the whole `main()` function.
+/// WARNING! `FlutterWidgetsBinding.ensureInitialized()` must be called inside it, otherwise some errors may not be
+/// caught.
 void runWithReporterAndUiErrors(Reporter reporter, void Function(Stream<UiGlobalError> uiErrors) block) {
   final controller = StreamController<UiGlobalError>.broadcast();
   final handler = GlobalErrorHandler.combine([ReporterGlobalErrorHandler(reporter), _UiGlobalErrorHandler(controller)]);
