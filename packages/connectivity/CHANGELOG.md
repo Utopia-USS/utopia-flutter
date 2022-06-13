@@ -1,3 +1,7 @@
+## 0.0.4+1
+
+ - **FIX**: Add README.
+
 ## 0.0.4
 
  - **FEAT**: Update Flutter to 3.0.0.
