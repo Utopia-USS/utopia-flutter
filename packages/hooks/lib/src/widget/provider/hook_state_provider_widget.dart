@@ -3,6 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+/// Combination of `HookWidget` and `Provider`, designed for hook-based global states.
+///
+/// For simplicity, this widget notifies its consumers after every update (even if oldValue == currentValue).
+/// To allow more selective rebuilds, consider overriding [updateShouldNotify].
+/// This behaviour may be changed in future releases.
 abstract class HookStateProviderWidget<T> extends SingleChildStatelessWidget {
   const HookStateProviderWidget({Key? key}) : super(key: key);
 

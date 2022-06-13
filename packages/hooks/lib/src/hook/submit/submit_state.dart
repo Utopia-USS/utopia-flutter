@@ -22,6 +22,24 @@ class MutableSubmitState implements SubmitState {
     required this.run,
   });
 
+  /// Simplified and opinionated version of [run] that supports many common cases.
+  ///
+  /// Example for not-so-uncommon case:
+  /// ```dart
+  /// submitState.runSimple<String, LoginErrorType>(
+  ///   shouldSubmit: () async => await showConfirmationDialog() == true,
+  ///   afterShouldNotSubmit: () => showCancelledSnackBar(),
+  ///   beforeSubmit: () => clearErrors(),
+  ///   submit: () async => await logIn(email, password),
+  ///   afterSubmit: (result) => moveToHome(userName: result),
+  ///   mapError: (exception) => exception is LoginException ? exception.errorType : null,
+  ///   afterKnownError: (errorType) => passwordField.error = errorType.errorMessage,
+  ///   afterError: () => passwordField.value = null,
+  /// );
+  /// ```
+  ///
+  /// Parameters:
+  ///
   Future<void> runSimple<T, E>({
     FutureOr<bool> Function()? shouldSubmit,
     FutureOr<void> Function()? afterShouldNotSubmit,
