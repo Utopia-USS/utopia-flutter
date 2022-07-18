@@ -1,3 +1,7 @@
+## 0.1.3+1
+
+ - **FIX**: retry reporting errors when firebase is not yet initialized.
+
 ## 0.1.3
 
  - **FEAT**: Update Flutter to 3.0.0.

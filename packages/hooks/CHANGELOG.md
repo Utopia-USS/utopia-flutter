@@ -1,3 +1,7 @@
+## 0.3.2+1
+
+ - **FIX**: ensure isMounted in useSubmitState.
+
 ## 0.3.2
 
  - **FIX**: Add documentation.
