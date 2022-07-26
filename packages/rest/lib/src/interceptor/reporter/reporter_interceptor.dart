@@ -4,8 +4,9 @@ import 'package:utopia_utils/utopia_utils.dart';
 
 class ReporterInterceptor implements Interceptor {
   final Reporter reporter;
+  final bool reportErrorsAsWarnings;
 
-  const ReporterInterceptor(this.reporter);
+  const ReporterInterceptor(this.reporter, {this.reportErrorsAsWarnings = false});
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
@@ -18,7 +19,9 @@ class ReporterInterceptor implements Interceptor {
       }
     }
 
-    reporter.error(
+    final report = reportErrorsAsWarnings ? reporter.warning : reporter.error;
+
+    report(
       buildMessage(),
       e: err.error,
       s: err.stackTrace ?? StackTrace.empty,
