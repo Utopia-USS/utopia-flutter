@@ -37,14 +37,14 @@ class UtopiaSaveFilePlugin : BaseFlutterPlugin(), MethodChannel.MethodCallHandle
   override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
       "saveFileFromUrl" -> activityScope.launchForResult(result) {
-        val dto = SaveFileFromUrlDto(call.arguments())
+        val dto = SaveFileFromUrlDto(call.arguments()!!)
         val mime = withContext(Dispatchers.IO) { obtainMime(dto.url) }
         val uri = createFile(dto.name, mime)
         if (uri != null) withContext(Dispatchers.IO) { download(source = dto.url, destination = uri) }
         uri != null
       }
       "saveFileFromBytes" -> activityScope.launchForResult(result) {
-        val dto = SaveFileFromBytesDto(call.arguments())
+        val dto = SaveFileFromBytesDto(call.arguments()!!)
         val uri = createFile(dto.name, dto.mime)
         if (uri != null) withContext(Dispatchers.IO) {
           save(source = ByteArrayInputStream(dto.bytes), destination = uri)
