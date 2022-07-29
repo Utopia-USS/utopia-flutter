@@ -1,3 +1,7 @@
+## 0.2.13+1
+
+ - **FIX**: Include HasInitialized in utopia_utils.dart.
+
 ## 0.2.13
 
  - **FIX**: Add documentation.

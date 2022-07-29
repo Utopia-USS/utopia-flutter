@@ -1,3 +1,7 @@
+## 0.1.3+2
+
+ - Update a dependency to the latest release.
+
 ## 0.1.3+1
 
  - **FIX**: retry reporting errors when firebase is not yet initialized.
