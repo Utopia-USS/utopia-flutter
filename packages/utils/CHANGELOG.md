@@ -1,3 +1,7 @@
+## 0.2.14
+
+ - **FEAT**: Add byte ByteReader and ByteWriter API.
+
 ## 0.2.13+1
 
  - **FIX**: Include HasInitialized in utopia_utils.dart.
