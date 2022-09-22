@@ -14,6 +14,8 @@ class ByteWriter {
     });
   }
 
+  void call<T>(ByteType<T> type, T value) => write(type, value);
+
   void writeBytes(Uint8List bytes) {
     _totalBytes += bytes.length;
     _writers.add((dstData, offset) {

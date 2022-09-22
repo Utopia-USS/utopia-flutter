@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:utopia_utils/src/bytes/byte_float.dart';
 import 'package:utopia_utils/src/bytes/byte_int.dart';
 import 'package:utopia_utils/src/bytes/byte_reader.dart';
+import 'package:utopia_utils/src/bytes/byte_type.dart';
 import 'package:utopia_utils/src/bytes/byte_uint.dart';
 import 'package:utopia_utils/src/bytes/byte_writer.dart';
 
@@ -12,11 +13,15 @@ class Bytes {
   static R read<R>(TypedData bytes, R Function(ByteReader reader) block) =>
       block(ByteReader(ByteData.sublistView(bytes)));
 
+  static T readSingle<T>(TypedData bytes, ByteType<T> type) => read(bytes, (reader) => reader(type));
+
   static Uint8List write(void Function(ByteWriter writer) block) {
     final writer = ByteWriter();
     block(writer);
     return Uint8List.sublistView(writer.toByteData());
   }
+
+  static Uint8List writeSingle<T>(ByteType<T> type, T value) => write((writer) => writer(type, value));
 
   static const uint8 = ByteUint8();
   static const uint16LE = ByteUint16(Endian.little);
