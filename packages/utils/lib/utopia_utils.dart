@@ -1,3 +1,4 @@
+export 'src/bytes/byte_coder.dart';
 export 'src/bytes/byte_reader.dart';
 export 'src/bytes/byte_writer.dart';
 export 'src/bytes/bytes.dart';
