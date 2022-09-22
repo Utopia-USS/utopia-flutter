@@ -1,3 +1,7 @@
+## 0.2.16+1
+
+ - **FIX**: Export ByteCoder.
+
 ## 0.2.16
 
  - **FEAT**: Add ByteCoder.
