@@ -1,3 +1,7 @@
+## 0.2.15
+
+ - **FEAT**: Add some convenience functions to Bytes API.
+
 ## 0.2.14
 
  - **FEAT**: Add byte ByteReader and ByteWriter API.
