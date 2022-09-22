@@ -1,3 +1,7 @@
+## 0.2.16
+
+ - **FEAT**: Add ByteCoder.
+
 ## 0.2.15
 
  - **FEAT**: Add some convenience functions to Bytes API.
