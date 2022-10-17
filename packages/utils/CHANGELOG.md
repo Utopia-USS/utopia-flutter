@@ -1,3 +1,7 @@
+## 0.2.18+1
+
+ - **FIX**: Fix ByteReader.readBytes().
+
 ## 0.2.18
 
  - **FEAT**: Add ByteReader.peek().
