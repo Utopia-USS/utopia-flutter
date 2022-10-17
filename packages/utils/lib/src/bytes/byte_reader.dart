@@ -20,7 +20,7 @@ class ByteReader {
   void skip(int byteCount) => _offset += byteCount;
 
   Uint8List readBytes(int byteCount) {
-    final bytes = Uint8List.sublistView(data, _offset, byteCount);
+    final bytes = Uint8List.sublistView(data, _offset, _offset + byteCount);
     _offset += byteCount;
     return bytes;
   }
