@@ -1,3 +1,7 @@
+## 0.2.17
+
+ - **FEAT**: Expose LoggerReporter.forceEnabled parameter.
+
 ## 0.2.16+1
 
  - **FIX**: Export ByteCoder.
