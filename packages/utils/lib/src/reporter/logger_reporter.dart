@@ -2,7 +2,11 @@ import 'package:logger/logger.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class LoggerReporter extends Reporter {
-  final _logger = Logger();
+  final bool forceEnabled;
+  
+  late final _logger = Logger(filter: forceEnabled ? ProductionFilter() : DevelopmentFilter());
+  
+  LoggerReporter({this.forceEnabled = false});
 
   @override
   void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) => _logger.e(message, e, s);
