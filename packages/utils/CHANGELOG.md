@@ -1,3 +1,19 @@
+## 0.2.16+1
+
+ - **FIX**: Export ByteCoder.
+
+## 0.2.16
+
+ - **FEAT**: Add ByteCoder.
+
+## 0.2.15
+
+ - **FEAT**: Add some convenience functions to Bytes API.
+
+## 0.2.14
+
+ - **FEAT**: Add byte ByteReader and ByteWriter API.
+
 ## 0.2.13+1
 
  - **FIX**: Include HasInitialized in utopia_utils.dart.

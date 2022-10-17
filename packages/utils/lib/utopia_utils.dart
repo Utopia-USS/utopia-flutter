@@ -1,3 +1,7 @@
+export 'src/bytes/byte_coder.dart';
+export 'src/bytes/byte_reader.dart';
+export 'src/bytes/byte_writer.dart';
+export 'src/bytes/bytes.dart';
 export 'src/comparator/compare_by.dart';
 export 'src/error/retryable.dart';
 export 'src/error/run_with_reporter_and_ui_errors.dart';
