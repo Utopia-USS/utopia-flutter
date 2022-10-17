@@ -1,3 +1,7 @@
+## 0.1.4+1
+
+ - Update a dependency to the latest release.
+
 ## 0.1.4
 
  - **FEAT**: Expose UtopiaFirebaseCrashlytics.ensure() method.

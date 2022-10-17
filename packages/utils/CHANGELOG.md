@@ -1,3 +1,7 @@
+## 0.2.18
+
+ - **FEAT**: Add ByteReader.peek().
+
 ## 0.2.17
 
  - **FEAT**: Expose LoggerReporter.forceEnabled parameter.
