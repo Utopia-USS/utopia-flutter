@@ -24,4 +24,6 @@ class ByteReader {
     _offset += byteCount;
     return bytes;
   }
+
+  ByteReader peek() => ByteReader(ByteData.sublistView(data, _offset));
 }
