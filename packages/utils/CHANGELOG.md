@@ -1,3 +1,7 @@
+## 0.2.19
+
+ - **FEAT**: Add ByteReader.availableBytes.
+
 ## 0.2.18+1
 
  - **FIX**: Fix ByteReader.readBytes().
