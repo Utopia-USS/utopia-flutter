@@ -9,6 +9,8 @@ class ByteReader {
 
   int _offset = 0;
 
+  int get availableBytes => data.lengthInBytes - _offset;
+
   T read<T>(ByteType<T> type) {
     final value = type.get(data, _offset);
     _offset += type.byteCount;
