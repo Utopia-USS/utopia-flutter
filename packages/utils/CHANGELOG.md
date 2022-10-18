@@ -1,3 +1,7 @@
+## 0.2.20
+
+ - **FEAT**: Add convenience methods to ByteWriter and AnyExtensions.
+
 ## 0.2.19
 
  - **FEAT**: Add ByteReader.availableBytes.
