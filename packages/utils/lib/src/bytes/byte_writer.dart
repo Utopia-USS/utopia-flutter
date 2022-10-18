@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:utopia_utils/src/bytes/byte_type.dart';
+import 'package:utopia_utils/src/bytes/bytes.dart';
 
 class ByteWriter {
   var _totalBytes = 0;
@@ -15,6 +16,8 @@ class ByteWriter {
   }
 
   void call<T>(ByteType<T> type, T value) => write(type, value);
+
+  void writeByte(int byte) => write(Bytes.uint8, byte);
 
   void writeBytes(Uint8List bytes) {
     _totalBytes += bytes.length;
