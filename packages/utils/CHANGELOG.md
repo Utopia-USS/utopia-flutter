@@ -1,3 +1,7 @@
+## 0.2.21+1
+
+ - **FIX**: Update exports.
+
 ## 0.2.21
 
  - **FEAT**: Add MutableValue.late.

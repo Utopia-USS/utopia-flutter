@@ -1,3 +1,7 @@
+## 0.3.3+1
+
+ - **FIX**: Update exports.
+
 ## 0.3.3
 
  - **FEAT**: Add useDebounced, usePreviousIfNull and useWithSelf.
