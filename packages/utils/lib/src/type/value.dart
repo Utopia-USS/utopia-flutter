@@ -19,6 +19,8 @@ abstract class MutableValue<T> implements Value<T> {
   
   const factory MutableValue.delegate(T Function() get, void Function(T) set) = _DelegateMutableValueImpl;
 
+  factory MutableValue.late() = _LateMutableValueImpl;
+
   factory MutableValue.ofValueNotifier(ValueNotifier<T> notifier) =>
       MutableValue.delegate(() => notifier.value, (value) => notifier.value = value);
 }
@@ -35,6 +37,11 @@ class _MutableValueImpl<T> implements MutableValue<T> {
   T value;
 
   _MutableValueImpl(this.value);
+}
+
+class _LateMutableValueImpl<T> implements MutableValue<T> {
+  @override
+  late T value;
 }
 
 class _DelegateValueImpl<T> implements Value<T> {
