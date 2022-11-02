@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 abstract class Reporter {
   const Reporter();
@@ -12,7 +13,12 @@ abstract class Reporter {
 
   void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {}
 
+  @Deprecated("Use the Reporter.combined factory constructor")
   static Reporter combine(List<Reporter> reporters) => _CombinedReporter(reporters);
+
+  const factory Reporter.combined(List<Reporter> reporters) = _CombinedReporter;
+
+  const factory Reporter.prefixed(Reporter reporter, String prefix) = _PrefixedReporter;
 }
 
 class _CombinedReporter extends Reporter {
@@ -40,4 +46,23 @@ class _CombinedReporter extends Reporter {
       reporter.info(message, e: e, s: s, sanitizedMessage: sanitizedMessage);
     }
   }
+}
+
+class _PrefixedReporter extends Reporter {
+  final Reporter reporter;
+  final String prefix;
+
+  const _PrefixedReporter(this.reporter, this.prefix);
+
+  @override
+  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      reporter.error(prefix + message, e: e, s: s, sanitizedMessage: sanitizedMessage?.let((it) => prefix + it));
+
+  @override
+  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      reporter.warning(prefix + message, e: e, s: s, sanitizedMessage: sanitizedMessage?.let((it) => prefix + it));
+
+  @override
+  void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      reporter.info(prefix + message, e: e, s: s, sanitizedMessage: sanitizedMessage?.let((it) => prefix + it));
 }
