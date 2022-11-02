@@ -1,3 +1,7 @@
+## 0.3.3
+
+ - **FEAT**: Add useDebounced, usePreviousIfNull and useWithSelf.
+
 ## 0.3.2+11
 
  - Update a dependency to the latest release.

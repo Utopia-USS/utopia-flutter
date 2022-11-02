@@ -1,3 +1,7 @@
+## 0.2.21
+
+ - **FEAT**: Add MutableValue.late.
+
 ## 0.2.20
 
  - **FEAT**: Add convenience methods to ByteWriter and AnyExtensions.
