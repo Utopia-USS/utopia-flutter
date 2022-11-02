@@ -1,3 +1,7 @@
+## 0.2.22
+
+ - **FEAT**: Add Reporter.prefixed constructor.
+
 ## 0.2.21+1
 
  - **FIX**: Update exports.
