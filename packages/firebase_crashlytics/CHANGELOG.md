@@ -1,3 +1,7 @@
+## 0.1.4+8
+
+ - **FIX**: Update firebase.
+
 ## 0.1.4+7
 
  - Update a dependency to the latest release.

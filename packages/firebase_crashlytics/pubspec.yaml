@@ -1,6 +1,6 @@
 name: utopia_firebase_crashlytics
 description: Utopia USS libs - firebase crashlytics setup and Reporter implementation
-version: 0.1.4+7
+version: 0.1.4+8
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
