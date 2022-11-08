@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
 
   utopia_utils: ^0.2.22
-  firebase_core: ^1.6.0
-  firebase_crashlytics: ^2.2.1
+  firebase_core: ^2.1.1
+  firebase_crashlytics: ^3.0.4
 
 dev_dependencies:
   utopia_lints: ^0.0.1+2
