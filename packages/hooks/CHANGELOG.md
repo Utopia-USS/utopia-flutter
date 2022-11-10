@@ -1,3 +1,7 @@
+## 0.3.4
+
+ - **FEAT**: Fix useValueListenableListener memoization issue.
+
 ## 0.3.3+2
 
  - Update a dependency to the latest release.
