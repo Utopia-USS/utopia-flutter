@@ -1,10 +1,17 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:utopia_hooks/utopia_hooks.dart';
 
-void useValueListenableListener<T>(ValueListenable<T> listenable, void Function(T) block) {
+void useListenableListener(Listenable? listenable, void Function() block) {
+  final wrappedBlock = useValueWrapper(block);
   useEffect(() {
-    void listener() => block(listenable.value);
-    listenable.addListener(listener);
-    return () => listenable.removeListener(listener);
+    if (listenable != null) {
+      void listener() => wrappedBlock.value();
+      listenable.addListener(listener);
+      return () => listenable.removeListener(listener);
+    }
+    return null;
   }, [listenable]);
 }
+
+void useValueListenableListener<T>(ValueListenable<T>? listenable, void Function(T) block) =>
+    useListenableListener(listenable, () => block(listenable!.value));
