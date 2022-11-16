@@ -1,3 +1,7 @@
+## 0.0.10+16
+
+ - **FIX**: Add IgnorePointer for fade bar in FormLayout.
+
 ## 0.0.10+15
 
  - Update a dependency to the latest release.
