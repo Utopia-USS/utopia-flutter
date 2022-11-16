@@ -73,16 +73,18 @@ class _FormLayoutState extends State<FormLayout> {
   }
 
   Widget _buildFadeBar() {
-    return AnimatedOpacity(
-      opacity: isFadeBarVisible ? 1 : 0,
-      duration: widget.fadeDuration,
-      child: Container(
-        height: widget.fadeBarHeight,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
+    return IgnorePointer(
+      child: AnimatedOpacity(
+        opacity: isFadeBarVisible ? 1 : 0,
+        duration: widget.fadeDuration,
+        child: Container(
+          height: widget.fadeBarHeight,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
+            ),
           ),
         ),
       ),
