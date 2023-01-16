@@ -38,8 +38,11 @@ class _UiGlobalErrorHandler implements GlobalErrorHandler {
       controller.add(UiGlobalError(error));
 
   @override
-  void onFlutterError(FlutterErrorDetails details) =>
+  void onFlutterError(FlutterErrorDetails details) {
+    if(!details.silent) {
       controller.add(UiGlobalError(details.exception));
+    }
+  }
 
   @override
   void onSerializedError(String error, StackTrace? stackTrace) => controller.add(const UiGlobalError());
