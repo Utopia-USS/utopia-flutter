@@ -1,3 +1,7 @@
+## 0.2.22+1
+
+ - **FIX**: FlutterError with silent=true should not be reported in runWithReporterAndUiErrors.
+
 ## 0.2.22
 
  - **FEAT**: Add Reporter.prefixed constructor.
