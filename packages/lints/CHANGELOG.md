@@ -1,3 +1,7 @@
+## 0.0.2
+
+ - **FEAT**: Revisit lints.
+
 ## 0.0.1+2
 
  - **FIX**: Remove invalid code from utopia_lints.dart.

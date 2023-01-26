@@ -13,4 +13,4 @@ dependencies:
 
   utopia_utils: ^0.2.22+1
 dev_dependencies:
-  utopia_lints: ^0.0.1+2
+  utopia_lints: ^0.0.2
