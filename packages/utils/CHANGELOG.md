@@ -1,3 +1,7 @@
+## 0.2.23
+
+ - **FEAT**: Make HasInitialized suitable for subclassing.
+
 ## 0.2.22+1
 
  - **FIX**: FlutterError with silent=true should not be reported in runWithReporterAndUiErrors.
