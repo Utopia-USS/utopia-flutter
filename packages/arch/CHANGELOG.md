@@ -1,3 +1,7 @@
+## 0.4.1+17
+
+ - **FIX**: Fix analyzer warnings.
+
 ## 0.4.1+16
 
  - Update a dependency to the latest release.

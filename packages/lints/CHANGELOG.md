@@ -1,3 +1,7 @@
+## 0.0.3+1
+
+ - **FIX**: Remove require_trailing_commas.
+
 ## 0.0.3
 
  - **FIX**: Update dependencies.

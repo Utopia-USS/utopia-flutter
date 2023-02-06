@@ -1,6 +1,6 @@
 name: utopia_lints
 description: Utopia USS libs - recommended lint rules
-version: 0.0.3
+version: 0.0.3+1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

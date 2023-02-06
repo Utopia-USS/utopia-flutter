@@ -18,7 +18,7 @@ dependencies:
   path_provider: ^2.0.5
 
 dev_dependencies:
-  utopia_lints: ^0.0.3
+  utopia_lints: ^0.0.3+1
 flutter:
   plugin:
     platforms:

@@ -1,3 +1,7 @@
+## 0.3.5
+
+ - **FEAT**: Cleanup, add usePeriodicalSignal, add HookStateProvider.
+
 ## 0.3.4+1
 
  - Update a dependency to the latest release.
