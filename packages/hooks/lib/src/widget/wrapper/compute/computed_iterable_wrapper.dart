@@ -17,14 +17,14 @@ class ComputedIterableWrapper<I extends Iterable<dynamic>> extends StatelessWidg
   final bool keepInProgress;
 
   const ComputedIterableWrapper({
-    Key? key,
+    super.key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
     this.keepInProgress = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -8,11 +8,11 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
   final Widget Function(TextEditingController) child;
 
   const StatelessTextEditingControllerWrapper({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

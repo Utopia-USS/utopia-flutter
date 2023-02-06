@@ -10,13 +10,13 @@ class ComputedStateWrapper<E> extends StatelessWidget {
   final bool keepInProgress;
 
   const ComputedStateWrapper({
-    Key? key,
+    super.key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.builder,
     this.keepInProgress = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

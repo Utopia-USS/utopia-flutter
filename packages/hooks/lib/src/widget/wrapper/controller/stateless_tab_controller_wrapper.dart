@@ -8,12 +8,12 @@ class StatelessTabControllerWrapper extends HookWidget {
   final Widget Function(TabController) builder;
 
   const StatelessTabControllerWrapper({
-    Key? key,
+    super.key,
     required this.length,
     required this.index,
     required this.onChanged,
     required this.builder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

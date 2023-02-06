@@ -16,19 +16,19 @@ class RefreshableComputedIterableWrapper<I extends Iterable<dynamic>> extends St
   final bool keepInProgress;
 
   const RefreshableComputedIterableWrapper({
-    Key? key,
+    super.key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.emptyBuilder,
     required this.builder,
     this.keepInProgress = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => await state.refresh(),
+      onRefresh: () async => state.refresh(),
       child: ComputedIterableWrapper<I>(
         state: state,
         keepInProgress: keepInProgress,

@@ -10,18 +10,18 @@ class RefreshableComputedStateWrapper<E> extends StatelessWidget {
   final bool keepInProgress;
 
   const RefreshableComputedStateWrapper({
-    Key? key,
+    super.key,
     required this.state,
     required this.inProgressBuilder,
     required this.failedBuilder,
     required this.builder,
     this.keepInProgress = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => await state.refresh(),
+      onRefresh: () async => state.refresh(),
       child: ComputedStateWrapper<E>(
         state: state,
         keepInProgress: keepInProgress,

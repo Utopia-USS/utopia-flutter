@@ -36,8 +36,8 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
 
   Future<T> refreshOrWait() async {
     return await state.value.maybeWhen(
-      inProgress: (operation, _) async => await operation.value,
-      orElse: () async => await refresh(),
+      inProgress: (operation, _) async => operation.value,
+      orElse: () async => refresh(),
     );
   }
 
@@ -47,7 +47,7 @@ MutableComputedState<T> useComputedState<T>({required Future<T> Function() compu
       getValue: () => state.value,
       clear: () {
         state.value.maybeWhen<void>(
-          inProgress: (operation, _) => operation.cancel(),
+          inProgress: (operation, _) => unawaited(operation.cancel()),
           orElse: () {},
         );
         state.value = ComputedStateValue.cleared(previous: state.value);
@@ -80,11 +80,11 @@ MutableComputedState<T> useAutoComputedState<T>({
     timerState.value = null;
     if (shouldCompute == null || shouldCompute()) {
       if (debounceDuration == Duration.zero) {
-        state.refresh();
+        unawaited(state.refresh());
       } else {
         timerState.value = Timer(debounceDuration, () {
           if (isMounted()) {
-            state.refresh();
+            unawaited(state.refresh());
             timerState.value = null;
           }
         });

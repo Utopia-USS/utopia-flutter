@@ -6,7 +6,12 @@ class SubmitState {
   final bool isSubmitInProgress;
 
   const SubmitState({required this.isSubmitInProgress});
+  
+  factory SubmitState.combined(List<SubmitState> states) => 
+      SubmitState(isSubmitInProgress: anyTrue(states.map((it) => it.isSubmitInProgress)));
 
+  @Deprecated("Use SubmitState.combined factory")
+  // ignore: prefer_constructors_over_static_methods
   static SubmitState combine(List<SubmitState> states) =>
       SubmitState(isSubmitInProgress: anyTrue(states.map((it) => it.isSubmitInProgress)));
 }

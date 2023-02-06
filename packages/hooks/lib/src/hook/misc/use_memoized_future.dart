@@ -6,4 +6,5 @@ AsyncSnapshot<T> useMemoizedFuture<T>(
   required T initialData,
   List<Object?> keys = const [],
 }) =>
+    // ignore: discarded_futures
     useFuture(useMemoized(valueBuilder, keys), initialData: initialData);
