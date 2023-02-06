@@ -58,7 +58,6 @@ linter:
     prefer_if_elements_to_conditional_expressions: true
     prefer_mixin: true
     prefer_null_aware_method_calls: true
-    require_trailing_commas: true
     sized_box_shrink_expand: true
     tighten_type_of_initializing_formals: true
     type_annotate_public_apis: true
