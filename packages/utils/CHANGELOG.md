@@ -1,3 +1,7 @@
+## 0.2.23+1
+
+ - **FIX**: Make HasInitialized suitable for subclassing.
+
 ## 0.2.23
 
  - **FEAT**: Make HasInitialized suitable for subclassing.
