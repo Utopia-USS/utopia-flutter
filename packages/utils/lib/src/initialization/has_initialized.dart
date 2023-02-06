@@ -1,6 +1,5 @@
 class HasInitialized {
-  // ignore: avoid_positional_boolean_parameters
-  const HasInitialized(this.isInitialized);
+  const HasInitialized({required this.isInitialized});
 
   final bool isInitialized;
 
