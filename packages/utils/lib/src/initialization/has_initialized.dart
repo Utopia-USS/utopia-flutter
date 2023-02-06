@@ -1,7 +1,8 @@
-abstract class HasInitialized {
-  const HasInitialized._();
+class HasInitialized {
+  // ignore: avoid_positional_boolean_parameters
+  const HasInitialized(this.isInitialized);
 
-  abstract final bool isInitialized;
+  final bool isInitialized;
 
   static List<bool> keys(List<HasInitialized> list) => list.map((e) => e.isInitialized).toList();
 
