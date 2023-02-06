@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
@@ -73,6 +75,6 @@ class _OrientationNavigatorObserver extends NavigatorObserver {
   }
 
   void _setSystemChrome(RouteConfigOrientation? orientation) {
-    SystemChrome.setPreferredOrientations(_orientationMap[orientation ?? RouteConfig.defaultOrientation]!);
+    unawaited(SystemChrome.setPreferredOrientations(_orientationMap[orientation ?? RouteConfig.defaultOrientation]!));
   }
 }

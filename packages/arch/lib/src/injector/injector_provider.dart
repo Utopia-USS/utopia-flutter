@@ -7,7 +7,7 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 class InjectorProvider extends SingleChildStatelessWidget {
   final Injector Function() setupInjector;
 
-  const InjectorProvider({Key? key, required this.setupInjector}) : super(key: key);
+  const InjectorProvider({super.key, required this.setupInjector});
 
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_arch/src/navigation/route_config.dart';
@@ -9,18 +11,18 @@ class NestedNavigator extends HookWidget {
   final String initialRoute;
 
   const NestedNavigator({
-    Key? key,
+    super.key,
     required this.navigatorKey,
     required this.routes,
     required this.initialRoute,
     required this.parentNavigator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        navigatorKey.currentState?.maybePop();
+        unawaited(navigatorKey.currentState?.maybePop());
         return false;
       },
       child: Navigator(
