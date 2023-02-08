@@ -1,3 +1,7 @@
+## 0.3.5+3
+
+ - **FIX**: Export PersistedState.
+
 ## 0.3.5+2
 
  - Update a dependency to the latest release.
