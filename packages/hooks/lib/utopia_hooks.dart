@@ -11,6 +11,7 @@ export 'src/hook/misc/use_previous_if_null.dart';
 export 'src/hook/misc/use_value_listenable_listener.dart';
 export 'src/hook/misc/use_value_wrapper.dart';
 export 'src/hook/misc/use_with_self.dart';
+export 'src/hook/persisted/use_persisted_state.dart';
 export 'src/hook/provider/use_provided.dart';
 export 'src/hook/stream/use_stream_subscription.dart';
 export 'src/hook/submit/submit_state.dart';
