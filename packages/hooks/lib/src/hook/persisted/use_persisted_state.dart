@@ -3,21 +3,39 @@ import 'dart:async';
 import 'package:utopia_hooks/utopia_hooks.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-class PersistedState<T extends Object> implements HasInitialized {
+abstract class PersistedState<T extends Object> implements HasInitialized {
+  abstract final bool isSynchronized;
+  abstract final T? value;
+  abstract final void Function(T? value) updateValue;
+
+  const PersistedState();
+
+  bool get hasValue => value != null;
+}
+
+class PersistedStateImpl<T extends Object> extends PersistedState<T> {
+  final bool Function() getIsInitialized;
+  final bool Function() getIsSynchronized;
+  final T? Function() getValue;
+
   @override
-  final bool isInitialized;
-  final bool isSynchronized;
-  final T? value;
   final void Function(T? value) updateValue;
 
-  const PersistedState({
-    required this.isInitialized,
-    required this.isSynchronized,
-    required this.value,
+  const PersistedStateImpl({
+    required this.getIsInitialized,
+    required this.getIsSynchronized,
+    required this.getValue,
     required this.updateValue,
   });
 
-  bool get hasValue => value != null;
+  @override
+  bool get isInitialized => getIsInitialized();
+
+  @override
+  bool get isSynchronized => getIsSynchronized();
+
+  @override
+  T? get value => getValue();
 }
 
 PersistedState<T> usePersistedState<T extends Object>(
@@ -34,12 +52,12 @@ PersistedState<T> usePersistedState<T extends Object>(
     unawaited(submitState.run(() => set(value)));
   }
 
-  final isInitialized = state.value is ComputedStateValueReady;
-
-  return PersistedState(
-    isInitialized: isInitialized,
-    isSynchronized: isInitialized && !submitState.isSubmitInProgress,
-    value: state.valueOrPreviousOrNull,
-    updateValue: updateValue,
+  return useMemoized(
+    () => PersistedStateImpl(
+      getIsInitialized: () => state.value is ComputedStateValueReady,
+      getIsSynchronized: () => state.value is ComputedStateValueReady && !submitState.isSubmitInProgress,
+      getValue: () => state.valueOrPreviousOrNull,
+      updateValue: updateValue,
+    ),
   );
 }
