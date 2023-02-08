@@ -20,9 +20,9 @@ class PersistedState<T extends Object> implements HasInitialized {
   bool get hasValue => value != null;
 }
 
-PersistedState<T> usePersistedState<T extends Object>({
-  required Future<T?> Function() get,
-  required Future<void> Function(T? value) set,
+PersistedState<T> usePersistedState<T extends Object>(
+  Future<T?> Function() get,
+  Future<void> Function(T? value) set, {
   bool Function()? canGet,
   List<Object?> getKeys = const [],
 }) {
