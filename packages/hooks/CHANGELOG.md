@@ -1,3 +1,7 @@
+## 0.3.5+4
+
+ - **FIX**: Change PersistedState argument order.
+
 ## 0.3.5+3
 
  - **FIX**: Export PersistedState.
