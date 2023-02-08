@@ -1,3 +1,7 @@
+## 0.3.6
+
+ - **FEAT**: Memoize PersistedState.
+
 ## 0.3.5+4
 
  - **FIX**: Change PersistedState argument order.
