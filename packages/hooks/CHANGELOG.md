@@ -1,3 +1,7 @@
+## 0.3.6+1
+
+ - **FIX**: Fix SubmitState shouldSubmit condition.
+
 ## 0.3.6
 
  - **FEAT**: Memoize PersistedState.
