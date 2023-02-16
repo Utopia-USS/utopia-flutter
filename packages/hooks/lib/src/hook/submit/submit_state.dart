@@ -56,7 +56,7 @@ class MutableSubmitState implements SubmitState {
     FutureOr<void> Function()? afterError,
     bool isRetryable = true,
   }) async {
-    if (shouldSubmit == null || !await shouldSubmit()) {
+    if (shouldSubmit != null && !await shouldSubmit()) {
       await afterShouldNotSubmit?.call();
       return;
     }
