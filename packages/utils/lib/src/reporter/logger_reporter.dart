@@ -31,5 +31,5 @@ class LoggerReporter extends Reporter {
     );
   }
 
-  static const _maxMethodCount = 0xFFFFFFFFFFFFFFFF;
+  static const _maxMethodCount = 10000;
 }
