@@ -11,8 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  utopia_utils: ^0.2.23+1
   utopia_hooks: ^0.3.6+1
-  connectivity_plus: ^1.1.0
+
+  connectivity_plus: ^3.0.3
 
 dev_dependencies:
   utopia_lints: ^0.0.3+1
