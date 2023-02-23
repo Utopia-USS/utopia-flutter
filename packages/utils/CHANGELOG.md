@@ -1,3 +1,7 @@
+## 0.2.24+1
+
+ - **FIX**: Change LoggerReporter._maxMethodCount value.
+
 ## 0.2.24
 
  - **FEAT**: Add possibility to customize Logger instance in LoggerReporter.
