@@ -21,7 +21,7 @@ extension IterableExtension<T> on Iterable<T> {
     return sum / count;
   }
 
-  T? findOrNull(bool Function(T) test) => cast<T?>().firstWhere((it) => test(it!), orElse: () => null);
+  T? findOrNull(bool Function(T) test) => cast<T?>().firstWhere((it) => test(it as T), orElse: () => null);
 
   T? firstOrNull([bool Function(T)? test]) => findOrNull(test ?? (_) => true);
 }

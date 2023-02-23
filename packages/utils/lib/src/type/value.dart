@@ -12,6 +12,9 @@ abstract class Value<T> {
 }
 
 abstract class MutableValue<T> implements Value<T> {
+  @override
+  T get value;
+
   set value(T value);
 
   // constructors

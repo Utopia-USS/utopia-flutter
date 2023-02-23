@@ -7,7 +7,7 @@ class Retryable {
 
   static final _expando = Expando<Retryable>();
 
-  static Retryable make(Object object, void Function() retry) {
+  factory Retryable.make(Object object, void Function() retry) {
     assert(object is! Retryable, "Object is already retryable");
     final retryable = Retryable._(retry);
     _expando[object] = retryable;

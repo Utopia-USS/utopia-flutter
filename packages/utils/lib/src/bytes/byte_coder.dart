@@ -1,4 +1,3 @@
-import 'package:utopia_utils/src/bytes/byte_type.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class ByteCoder<T> {
