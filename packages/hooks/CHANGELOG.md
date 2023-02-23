@@ -1,3 +1,7 @@
+## 0.3.6+2
+
+ - Update a dependency to the latest release.
+
 ## 0.3.6+1
 
  - **FIX**: Fix SubmitState shouldSubmit condition.

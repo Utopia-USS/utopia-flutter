@@ -1,3 +1,7 @@
+## 0.2.24
+
+ - **FEAT**: Add possibility to customize Logger instance in LoggerReporter.
+
 ## 0.2.23+1
 
  - **FIX**: Make HasInitialized suitable for subclassing.
