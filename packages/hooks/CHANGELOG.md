@@ -1,3 +1,7 @@
+## 0.3.7
+
+ - **FEAT**: Add StatelessTextControllerWrapper.controllerProvider.
+
 ## 0.3.6+3
 
  - Update a dependency to the latest release.
