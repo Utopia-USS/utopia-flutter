@@ -1,3 +1,7 @@
+## 0.3.7+1
+
+ - **FIX**: Export usePeriodicalSignal.
+
 ## 0.3.7
 
  - **FEAT**: Add StatelessTextControllerWrapper.controllerProvider.

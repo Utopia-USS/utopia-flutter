@@ -1,6 +1,6 @@
 name: utopia_hooks
 description: Utopia USS libs - basic and complex hooks (including SubmitState, ComputedState and supporting widgets)
-version: 0.3.7
+version: 0.3.7+1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
