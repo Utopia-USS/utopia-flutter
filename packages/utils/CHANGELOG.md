@@ -1,3 +1,7 @@
+## 0.2.24+2
+
+ - **FIX**: Document MutableValue.
+
 ## 0.2.24+1
 
  - **FIX**: Change LoggerReporter._maxMethodCount value.
