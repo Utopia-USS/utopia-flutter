@@ -11,6 +11,9 @@ abstract class Value<T> {
   factory Value.ofValueListenable(ValueListenable<T> listenable) => Value.delegate(() => listenable.value);
 }
 
+/// Simpler alternative to [ValueNotifier].
+///
+/// To convert a [ValueNotifier] to [MutableValue] use the `.asMutableValue()` extension.
 abstract class MutableValue<T> implements Value<T> {
   @override
   T get value;
