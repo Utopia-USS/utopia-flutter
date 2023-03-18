@@ -7,6 +7,7 @@ export 'src/hook/effect/use_simple_effect.dart';
 export 'src/hook/misc/use_app_lifecycle_state_callbacks.dart';
 export 'src/hook/misc/use_debounced.dart';
 export 'src/hook/misc/use_memoized_future.dart';
+export 'src/hook/misc/use_memoized_if.dart';
 export 'src/hook/misc/use_periodical_signal.dart';
 export 'src/hook/misc/use_previous_if_null.dart';
 export 'src/hook/misc/use_value_listenable_listener.dart';
