@@ -3,7 +3,7 @@ import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-abstract class GenericFieldState<T> {
+class GenericFieldState<T> {
   final T value;
   final void Function(T value) onChanged;
 
