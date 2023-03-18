@@ -1,3 +1,7 @@
+## 0.3.8+1
+
+ - **FIX**: Export useMemoizedIf.
+
 ## 0.3.8
 
  - **FEAT**: Add useMemoizedIf.
