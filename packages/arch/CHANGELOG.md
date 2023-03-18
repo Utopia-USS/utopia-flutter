@@ -1,3 +1,7 @@
+## 0.4.2
+
+ - **FEAT**: Make GenericFieldState not abstract.
+
 ## 0.4.1+30
 
  - Update a dependency to the latest release.
