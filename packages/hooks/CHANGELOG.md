@@ -1,3 +1,7 @@
+## 0.3.8
+
+ - **FEAT**: Add useMemoizedIf.
+
 ## 0.3.7+2
 
  - Update a dependency to the latest release.
