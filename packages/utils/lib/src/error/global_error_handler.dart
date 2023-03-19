@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
-import 'package:utopia_utils/utopia_utils_extensions.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 abstract class GlobalErrorHandler {
   void onFlutterError(FlutterErrorDetails details);

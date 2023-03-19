@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_utils/src/error/global_error_handler.dart';
 import 'package:utopia_utils/src/error/reporter_global_error_handler.dart';
-import 'package:utopia_utils/src/error/retryable.dart';
-import 'package:utopia_utils/src/reporter/reporter.dart';
-import 'package:utopia_utils/utopia_utils_extensions.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 class UiGlobalError {
   final Object? error;
@@ -34,12 +32,11 @@ class _UiGlobalErrorHandler implements GlobalErrorHandler {
   const _UiGlobalErrorHandler(this.controller);
 
   @override
-  void onOtherError(Object error, StackTrace stackTrace) =>
-      controller.add(UiGlobalError(error));
+  void onOtherError(Object error, StackTrace stackTrace) => controller.add(UiGlobalError(error));
 
   @override
   void onFlutterError(FlutterErrorDetails details) {
-    if(!details.silent) {
+    if (!details.silent) {
       controller.add(UiGlobalError(details.exception));
     }
   }
