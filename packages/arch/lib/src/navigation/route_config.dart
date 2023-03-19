@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:utopia_utils/utopia_utils_extensions.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 enum RouteConfigOrientation {
   all,
