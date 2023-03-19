@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 class StatelessTextEditingControllerWrapper extends HookWidget {
   final String value;
@@ -15,6 +16,13 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
     this.controllerProvider = TextEditingController.new,
     required this.child,
   });
+
+  StatelessTextEditingControllerWrapper.mutableValue(
+    MutableValue<String> value, {
+    super.key,
+    this.controllerProvider = TextEditingController.new,
+    required this.child,
+  }) : value = value.value, onChanged = value.set;
 
   @override
   Widget build(BuildContext context) {
