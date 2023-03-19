@@ -1,3 +1,7 @@
+## 0.3.9
+
+ - **FEAT**: Add StatelessTextControllerWrapper.mutableValue.
+
 ## 0.3.8+1
 
  - **FIX**: Export useMemoizedIf.

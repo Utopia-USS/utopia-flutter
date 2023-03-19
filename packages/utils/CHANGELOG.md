@@ -1,3 +1,7 @@
+## 0.2.24+3
+
+ - **FIX**: Deprecate utopia_utils_extensions.dart.
+
 ## 0.2.24+2
 
  - **FIX**: Document MutableValue.

@@ -1,3 +1,7 @@
+## 0.4.2+1
+
+ - **FIX**: Change deprecated imports.
+
 ## 0.4.2
 
  - **FEAT**: Make GenericFieldState not abstract.
