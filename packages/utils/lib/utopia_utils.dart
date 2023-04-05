@@ -19,6 +19,7 @@ export 'src/extension/value_extensions.dart';
 export 'src/extension/value_notifier_extensions.dart';
 export 'src/function/bool_functions.dart';
 export 'src/initialization/has_initialized.dart';
+export 'src/injector/build_injector.dart';
 export 'src/reporter/logger_reporter.dart';
 export 'src/reporter/reporter.dart';
 export 'src/reporter/run_app_with_reporter.dart';
