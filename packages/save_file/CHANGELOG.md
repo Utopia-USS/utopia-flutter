@@ -1,3 +1,7 @@
+## 0.0.7+2
+
+ - **FIX**(utopia_save_file): Fix iOS example config.
+
 ## 0.0.7+1
 
  - **FIX**: Fix Flutter 3 nullability issues.

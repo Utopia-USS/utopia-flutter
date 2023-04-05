@@ -1,3 +1,7 @@
+## 0.2.25
+
+ - **FEAT**(utopia_utils): Add buildInjector.
+
 ## 0.2.24+3
 
  - **FIX**: Deprecate utopia_utils_extensions.dart.
