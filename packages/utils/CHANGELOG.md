@@ -1,3 +1,7 @@
+## 0.2.25+1
+
+ - **FIX**(utopia_utils): Relax dependency constraints on intl.
+
 ## 0.2.25
 
  - **FEAT**(utopia_utils): Add buildInjector.
