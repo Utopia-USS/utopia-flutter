@@ -29,7 +29,7 @@ class UtopiaSaveFile {
   /// On Web, downloads the file using standard browser APIs.
   /// [url] must be served with `Content-Disposition: attachment` header, otherwise file will open in the browser.
   /// [name] parameter is ignored. File name depends on `Content-Disposition` header value and browser behaviour.
-  static Future<bool> fromUrl(String url, {String? name}) async => await UtopiaSaveFileImpl.fromUrl(url, name: name);
+  static Future<bool> fromUrl(String url, {String? name}) async => UtopiaSaveFileImpl.fromUrl(url, name: name);
 
   /// Saves provided byte [stream] to file.
   /// Returns `true` if file has been saved.
@@ -56,10 +56,10 @@ class UtopiaSaveFile {
   ///
   /// On Web, saves the file by data URI using standard browser APIs.
   static Future<bool> fromByteStream(Stream<List<int>> stream, {required String name, required String mime}) async =>
-      await UtopiaSaveFileImpl.fromByteStream(stream, name: name, mime: mime);
+      UtopiaSaveFileImpl.fromByteStream(stream, name: name, mime: mime);
 
   /// Saves provided [bytes] to file.
   /// See [fromByteStream].
   static Future<bool> fromBytes(List<int> bytes, {required String name, required String mime}) async =>
-      await UtopiaSaveFileImpl.fromByteStream(Stream.value(bytes), name: name, mime: mime);
+      UtopiaSaveFileImpl.fromByteStream(Stream.value(bytes), name: name, mime: mime);
 }

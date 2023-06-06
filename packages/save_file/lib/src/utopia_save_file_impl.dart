@@ -15,7 +15,7 @@ class UtopiaSaveFileImpl {
     late final uri = Uri.parse(url);
     late final effectiveName = name ?? uri.pathSegments.last;
     if (Platform.isAndroid) {
-      return await _fromUrlAndroid(url, effectiveName);
+      return _fromUrlAndroid(url, effectiveName);
     }
     if (Platform.isIOS) {
       await _fromUriIos(uri, effectiveName);
@@ -26,7 +26,7 @@ class UtopiaSaveFileImpl {
 
   static Future<bool> fromByteStream(Stream<List<int>> stream, {required String name, required String mime}) async {
     if (Platform.isAndroid) {
-      return await _fromByteStreamAndroid(stream, name, mime);
+      return _fromByteStreamAndroid(stream, name, mime);
     }
     if (Platform.isIOS) {
       await _fromByteStreamIos(stream, name);
