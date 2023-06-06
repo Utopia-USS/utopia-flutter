@@ -4,5 +4,4 @@ packages:
   - packages/**
 
 scripts:
-  release: melos version && melos publish --no-dry-run && git push --follow-tags
-  release:force: melos version --yes && melos publish --yes --no-dry-run && git push --follow-tags
+  release: melos version --yes && melos publish --yes --no-dry-run && git push --follow-tags
