@@ -15,6 +15,61 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_arch` - `v0.4.3`](#utopia_arch---v043)
+ - [`utopia_firebase_crashlytics` - `v0.1.4+19`](#utopia_firebase_crashlytics---v01419)
+ - [`utopia_rest` - `v0.0.7+24`](#utopia_rest---v00724)
+ - [`utopia_save_file` - `v0.0.7+3`](#utopia_save_file---v0073)
+ - [`utopia_utils` - `v0.2.27`](#utopia_utils---v0227)
+ - [`utopia_widgets` - `v0.0.10+27`](#utopia_widgets---v001027)
+ - [`utopia_connectivity` - `v0.0.5+12`](#utopia_connectivity---v00512)
+ - [`utopia_hooks` - `v0.3.9+4`](#utopia_hooks---v0394)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.0.5+12`
+ - `utopia_hooks` - `v0.3.9+4`
+
+---
+
+#### `utopia_arch` - `v0.4.3`
+
+ - **FEAT**(utopia_arch): Migrate features from utopia_utils.
+
+#### `utopia_firebase_crashlytics` - `v0.1.4+19`
+
+ - **FIX**(utopia_firebase_crashlytics): Adjust to Reporter changes.
+
+#### `utopia_rest` - `v0.0.7+24`
+
+ - **FIX**(utopia_rest): Fix lints.
+
+#### `utopia_save_file` - `v0.0.7+3`
+
+ - **FIX**(utopia_save_file): Fix lints.
+
+#### `utopia_utils` - `v0.2.27`
+
+ - **FEAT**(utopia_arch): Migrate features from utopia_utils.
+
+#### `utopia_widgets` - `v0.0.10+27`
+
+ - **FIX**(utopia_widgets): Fix lints.
+
+
+## 2023-06-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_utils` - `v0.2.26`](#utopia_utils---v0226)
  - [`utopia_firebase_crashlytics` - `v0.1.4+18`](#utopia_firebase_crashlytics---v01418)
  - [`utopia_connectivity` - `v0.0.5+11`](#utopia_connectivity---v00511)

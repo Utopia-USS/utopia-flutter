@@ -1,3 +1,7 @@
+## 0.1.4+19
+
+ - **FIX**(utopia_firebase_crashlytics): Adjust to Reporter changes.
+
 ## 0.1.4+18
 
  - Update a dependency to the latest release.

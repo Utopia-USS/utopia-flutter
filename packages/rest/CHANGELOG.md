@@ -1,3 +1,7 @@
+## 0.0.7+24
+
+ - **FIX**(utopia_rest): Fix lints.
+
 ## 0.0.7+23
 
  - Update a dependency to the latest release.

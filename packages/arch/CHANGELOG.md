@@ -1,3 +1,7 @@
+## 0.4.3
+
+ - **FEAT**(utopia_arch): Migrate features from utopia_utils.
+
 ## 0.4.2+4
 
  - Update a dependency to the latest release.

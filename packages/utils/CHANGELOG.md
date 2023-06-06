@@ -1,3 +1,7 @@
+## 0.2.27
+
+ - **FEAT**(utopia_arch): Migrate features from utopia_utils.
+
 ## 0.2.26
 
  - **FEAT**(utopia_utils): Expose utopia_utils_dart without flutter dependency.
