@@ -1,3 +1,7 @@
+## 0.2.26
+
+ - **FEAT**(utopia_utils): Expose utopia_utils_dart without flutter dependency.
+
 ## 0.2.25+1
 
  - **FIX**(utopia_utils): Relax dependency constraints on intl.

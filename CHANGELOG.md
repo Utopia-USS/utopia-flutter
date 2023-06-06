@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-06-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_utils` - `v0.2.26`](#utopia_utils---v0226)
+ - [`utopia_firebase_crashlytics` - `v0.1.4+18`](#utopia_firebase_crashlytics---v01418)
+ - [`utopia_connectivity` - `v0.0.5+11`](#utopia_connectivity---v00511)
+ - [`utopia_hooks` - `v0.3.9+3`](#utopia_hooks---v0393)
+ - [`utopia_arch` - `v0.4.2+4`](#utopia_arch---v0424)
+ - [`utopia_rest` - `v0.0.7+23`](#utopia_rest---v00723)
+ - [`utopia_widgets` - `v0.0.10+26`](#utopia_widgets---v001026)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_firebase_crashlytics` - `v0.1.4+18`
+ - `utopia_connectivity` - `v0.0.5+11`
+ - `utopia_hooks` - `v0.3.9+3`
+ - `utopia_arch` - `v0.4.2+4`
+ - `utopia_rest` - `v0.0.7+23`
+ - `utopia_widgets` - `v0.0.10+26`
+
+---
+
+#### `utopia_utils` - `v0.2.26`
+
+ - **FEAT**(utopia_utils): Expose utopia_utils_dart without flutter dependency.
+
+
 ## 2023-05-12
 
 ### Changes
