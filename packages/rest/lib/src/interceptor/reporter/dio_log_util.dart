@@ -28,14 +28,14 @@ class DioLogUtil {
     ].join('\n');
   }
 
-  static String? _tryPrettyPrint(dynamic data) {
+  static String? _tryPrettyPrint(Object? data) {
     if (_isEmptyData(data)) return null;
     if (data is List<int>) return 'Byte data, length=${data.length} bytes';
     if (data is FormData) return _printFormData(data);
     return _tryPrintJsonData(data);
   }
 
-  static bool _isEmptyData(dynamic data) {
+  static bool _isEmptyData(Object? data) {
     return data.runtimeType == _typeOf<void>() ||
         (data is List && data.isEmpty) ||
         (data is Map && data.isEmpty) ||
@@ -49,10 +49,10 @@ class DioLogUtil {
     return fields.followedBy(files).join('\n');
   }
 
-  static String? _tryPrintJsonData(dynamic data) {
+  static String? _tryPrintJsonData(Object? data) {
     const encoder = JsonEncoder.withIndent('  ');
     try {
-      return encoder.convert(jsonDecode(data as String));
+      return encoder.convert(jsonDecode(data! as String));
     } catch (_) {
       try {
         return encoder.convert(data);
