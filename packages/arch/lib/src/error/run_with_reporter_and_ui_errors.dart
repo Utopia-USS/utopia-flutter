@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:utopia_utils/src/error/global_error_handler.dart';
-import 'package:utopia_utils/src/error/reporter_global_error_handler.dart';
+import 'package:utopia_arch/src/error/global_error_handler.dart';
+import 'package:utopia_arch/src/error/reporter_global_error_handler.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class UiGlobalError {
