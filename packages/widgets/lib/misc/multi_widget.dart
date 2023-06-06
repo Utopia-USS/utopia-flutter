@@ -17,11 +17,10 @@ import 'package:utopia_utils/utopia_utils.dart';
 class MultiWidget extends StatefulWidget {
   final List<MapEntry<Object?, Widget Function(Widget child)>> widgets;
 
-  MultiWidget(List<Widget Function(Widget child)> widgets, {Key? key})
-      : widgets = widgets.map((it) => MapEntry(null, it)).toList(),
-        super(key: key);
+  MultiWidget(List<Widget Function(Widget child)> widgets, {super.key})
+      : widgets = widgets.map((it) => MapEntry(null, it)).toList();
 
-  const MultiWidget.keyed(this.widgets, {Key? key}) : super(key: key);
+  const MultiWidget.keyed(this.widgets, {super.key});
 
   @override
   State<MultiWidget> createState() => _MultiWidgetState();

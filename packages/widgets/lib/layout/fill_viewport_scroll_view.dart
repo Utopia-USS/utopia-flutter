@@ -10,12 +10,12 @@ class FillViewportScrollView extends StatelessWidget {
   final ScrollPhysics? physics;
 
   const FillViewportScrollView({
-    Key? key,
+    super.key,
     required this.child,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
     this.physics,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

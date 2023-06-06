@@ -3,18 +3,18 @@ import 'package:flutter/widgets.dart';
 
 class OverflowTransformBox extends SingleChildRenderObjectWidget {
   const OverflowTransformBox({
-    Key? key,
+    super.key,
     this.alignment = Alignment.center,
     required this.transform,
-    Widget? child,
-  }) : super(key: key, child: child);
+    super.child,
+  });
 
   final AlignmentGeometry alignment;
 
   final BoxConstraintsTransform transform;
 
   @override
-  _RenderOverflowTransformBox createRenderObject(BuildContext context) {
+  RenderAligningShiftedBox createRenderObject(BuildContext context) {
     return _RenderOverflowTransformBox(
       alignment: alignment,
       transform: transform,
@@ -23,7 +23,7 @@ class OverflowTransformBox extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, _RenderOverflowTransformBox renderObject) {
+  void updateRenderObject(BuildContext context, RenderAligningShiftedBox renderObject) {
     renderObject
       ..alignment = alignment
       ..textDirection = Directionality.maybeOf(context);
@@ -32,11 +32,10 @@ class OverflowTransformBox extends SingleChildRenderObjectWidget {
 
 class _RenderOverflowTransformBox extends RenderAligningShiftedBox {
   _RenderOverflowTransformBox({
-    RenderBox? child,
     required this.transform,
-    AlignmentGeometry alignment = Alignment.center,
-    TextDirection? textDirection,
-  }) : super(child: child, alignment: alignment, textDirection: textDirection);
+    super.alignment,
+    super.textDirection,
+  });
 
   final BoxConstraintsTransform transform;
 

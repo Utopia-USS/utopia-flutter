@@ -17,33 +17,31 @@ class FormLayout extends StatefulWidget {
   // TODO remove in next breaking release
   @Deprecated("Use FormLayout.simple")
   FormLayout({
-    Key? key,
+    super.key,
     required this.backgroundColor,
     this.fadeBarHeight = 16,
     this.fadeDuration = const Duration(milliseconds: 100),
     required Widget content,
     required this.bottom,
-  })  : content = SingleChildScrollView(child: content),
-        super(key: key);
+  })  : content = SingleChildScrollView(child: content);
 
   FormLayout.simple({
-    Key? key,
+    super.key,
     required this.backgroundColor,
     this.fadeBarHeight = 16,
     this.fadeDuration = const Duration(milliseconds: 100),
     required Widget content,
     required this.bottom,
-  })  : content = SingleChildScrollView(child: content),
-        super(key: key);
+  })  : content = SingleChildScrollView(child: content);
 
   const FormLayout.raw({
-    Key? key,
+    super.key,
     required this.backgroundColor,
     this.fadeBarHeight = 16,
     this.fadeDuration = const Duration(milliseconds: 100),
     required this.content,
     required this.bottom,
-  }) : super(key: key);
+  });
 
   @override
   State<FormLayout> createState() => _FormLayoutState();

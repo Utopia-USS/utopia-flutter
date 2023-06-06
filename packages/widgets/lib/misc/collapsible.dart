@@ -9,31 +9,29 @@ class Collapsible extends StatelessWidget {
   final Curve curve;
 
   const Collapsible({
-    Key? key,
+    super.key,
     required this.duration,
     required this.axis,
     this.curve = Curves.decelerate,
     required this.isExpanded,
     required this.child,
-  }) : super(key: key);
+  });
 
   const Collapsible.vertical({
-    Key? key,
+    super.key,
     required this.duration,
     this.curve = Curves.decelerate,
     required this.isExpanded,
     required this.child,
-  })  : axis = Axis.vertical,
-        super(key: key);
+  })  : axis = Axis.vertical;
 
   const Collapsible.horizontal({
-    Key? key,
+    super.key,
     required this.duration,
     this.curve = Curves.decelerate,
     required this.isExpanded,
     required this.child,
-  })  : axis = Axis.horizontal,
-        super(key: key);
+  })  : axis = Axis.horizontal;
 
   @override
   Widget build(BuildContext context) {

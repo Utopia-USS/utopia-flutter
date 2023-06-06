@@ -12,12 +12,12 @@ class TopBottomLayout extends StatelessWidget {
   final Widget bottom;
 
   const TopBottomLayout({
-    Key? key,
+    super.key,
     this.scrollPhysics,
     this.padding = EdgeInsets.zero,
     required this.top,
     required this.bottom,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

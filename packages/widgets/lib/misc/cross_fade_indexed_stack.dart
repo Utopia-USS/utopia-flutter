@@ -12,13 +12,13 @@ class CrossFadeIndexedStack extends StatefulWidget {
   final bool lazy;
 
   const CrossFadeIndexedStack({
-    Key? key,
+    super.key,
     this.curve = Curves.linear,
     required this.duration,
     required this.index,
     required this.children,
     this.lazy = false,
-  }) : super(key: key);
+  });
 
   @override
   State<CrossFadeIndexedStack> createState() => _CrossFadeIndexedStackState();
