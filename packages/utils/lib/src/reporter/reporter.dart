@@ -1,20 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 abstract class Reporter {
   const Reporter();
-
-  void flutterError(FlutterErrorDetails details) =>
-      error(details.toString(), e: details.exception, s: details.stack);
 
   void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {}
 
   void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {}
 
   void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {}
-
-  @Deprecated("Use the Reporter.combined factory constructor")
-  static Reporter combine(List<Reporter> reporters) => _CombinedReporter(reporters);
 
   const factory Reporter.combined(List<Reporter> reporters) = _CombinedReporter;
 

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 abstract class Value<T> {
   T get value;
 
@@ -7,13 +5,11 @@ abstract class Value<T> {
   const factory Value(T value) = _ValueImpl;
 
   const factory Value.delegate(T Function() get) = _DelegateValueImpl;
-
-  factory Value.ofValueListenable(ValueListenable<T> listenable) => Value.delegate(() => listenable.value);
 }
 
-/// Simpler alternative to [ValueNotifier].
+/// Simpler alternative to `ValueNotifier`.
 ///
-/// To convert a [ValueNotifier] to [MutableValue] use the `.asMutableValue()` extension.
+/// To convert a `ValueNotifier` to [MutableValue] use the `.asMutableValue()` extension.
 abstract class MutableValue<T> implements Value<T> {
   @override
   T get value;
@@ -26,9 +22,6 @@ abstract class MutableValue<T> implements Value<T> {
   const factory MutableValue.delegate(T Function() get, void Function(T) set) = _DelegateMutableValueImpl;
 
   factory MutableValue.late() = _LateMutableValueImpl;
-
-  factory MutableValue.ofValueNotifier(ValueNotifier<T> notifier) =>
-      MutableValue.delegate(() => notifier.value, (value) => notifier.value = value);
 }
 
 class _ValueImpl<T> implements Value<T> {

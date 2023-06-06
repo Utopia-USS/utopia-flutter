@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
@@ -27,7 +26,7 @@ class LoggerReporter extends Reporter {
   static Logger _buildDefaultLogger({required bool forceEnabled}) {
     return Logger(
       filter: forceEnabled ? ProductionFilter() : DevelopmentFilter(),
-      printer: PrettyPrinter(errorMethodCount: kDebugMode ? _maxMethodCount : 8),
+      printer: PrettyPrinter(errorMethodCount: _maxMethodCount),
     );
   }
 
