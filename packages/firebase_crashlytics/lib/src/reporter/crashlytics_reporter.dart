@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:utopia_firebase_crashlytics/utopia_firebase_crashlytics.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
@@ -6,14 +7,10 @@ class CrashlyticsReporter extends Reporter {
   const CrashlyticsReporter();
 
   @override
-  void flutterError(FlutterErrorDetails details) =>
-      UtopiaFirebaseCrashlytics.ensure((crashlytics) => crashlytics.recordFlutterError(details));
-
-  @override
   void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
     UtopiaFirebaseCrashlytics.ensure((crashlytics) {
       final effectiveMessage = sanitizedMessage ?? message;
-      crashlytics.recordError(e ?? effectiveMessage, s, reason: effectiveMessage);
+      unawaited(crashlytics.recordError(e ?? effectiveMessage, s, reason: effectiveMessage));
     });
   }
 
@@ -27,7 +24,7 @@ class CrashlyticsReporter extends Reporter {
   void _log(String message, Object? e, String? sanitizedMessage) {
     UtopiaFirebaseCrashlytics.ensure((crashlytics) {
       final effectiveMessage = (sanitizedMessage ?? message) + (e != null ? " --- $e" : "");
-      crashlytics.log(effectiveMessage);
+      unawaited(crashlytics.log(effectiveMessage));
     });
   }
 }
