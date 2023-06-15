@@ -1,3 +1,7 @@
+## 0.3.9+5
+
+ - **FIX**(utopia_hooks): Fix initial value in StatelessTextEditingControllerWrapper.
+
 ## 0.3.9+4
 
  - Update a dependency to the latest release.
