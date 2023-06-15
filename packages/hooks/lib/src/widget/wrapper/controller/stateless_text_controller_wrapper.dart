@@ -26,7 +26,7 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = useMemoized(controllerProvider);
+    final controller = useMemoized(() => controllerProvider(text: value));
     useEffect(() => controller.dispose, []);
 
     final wrappedValue = useValueWrapper(value);
