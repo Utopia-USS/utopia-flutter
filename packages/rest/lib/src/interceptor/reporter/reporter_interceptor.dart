@@ -9,13 +9,13 @@ class ReporterInterceptor implements Interceptor {
   const ReporterInterceptor(this.reporter, {this.reportErrorsAsWarnings = false});
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     String buildMessage({bool sanitize = false}) {
       final response = err.response;
       if (response != null) {
         return DioLogUtil.buildResponseLog(response, sanitize: sanitize);
       } else {
-        return 'Error: ${err.type.message}';
+        return 'Error: ${err.type.name}';
       }
     }
 
@@ -24,7 +24,7 @@ class ReporterInterceptor implements Interceptor {
     report(
       buildMessage(),
       e: err.error,
-      s: err.stackTrace ?? StackTrace.empty,
+      s: err.stackTrace,
       sanitizedMessage: buildMessage(sanitize: true),
     );
     handler.next(err);
@@ -48,24 +48,5 @@ class ReporterInterceptor implements Interceptor {
       sanitizedMessage: DioLogUtil.buildResponseLog(response, sanitize: true),
     );
     handler.next(response);
-  }
-}
-
-extension on DioErrorType {
-  String get message {
-    switch (this) {
-      case DioErrorType.connectTimeout:
-        return 'Connect timeout';
-      case DioErrorType.sendTimeout:
-        return 'Send timeout';
-      case DioErrorType.receiveTimeout:
-        return 'Receive timeout';
-      case DioErrorType.cancel:
-        return 'Cancelled';
-      case DioErrorType.other:
-        return 'Other';
-      case DioErrorType.response:
-        throw StateError('Should be handled independently');
-    }
   }
 }
