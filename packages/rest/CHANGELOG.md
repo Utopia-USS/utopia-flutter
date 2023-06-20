@@ -1,3 +1,7 @@
+## 0.0.8
+
+ - **FEAT**(utopia_rest): Update Dio.
+
 ## 0.0.7+24
 
  - **FIX**(utopia_rest): Fix lints.

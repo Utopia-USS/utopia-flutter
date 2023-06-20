@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-06-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_rest` - `v0.0.8`](#utopia_rest---v008)
+
+---
+
+#### `utopia_rest` - `v0.0.8`
+
+ - **FEAT**(utopia_rest): Update Dio.
+
+
 ## 2023-06-15
 
 ### Changes
