@@ -9,7 +9,7 @@ import 'package:provider/single_child_widget.dart';
 /// To allow more selective rebuilds, consider overriding [updateShouldNotify].
 /// This behaviour may be changed in future releases.
 abstract class HookStateProviderWidget<T> extends SingleChildStatelessWidget {
-  const HookStateProviderWidget({super.key});
+  const HookStateProviderWidget({super.key, super.child});
 
   T use();
 
@@ -29,7 +29,7 @@ abstract class HookStateProviderWidget<T> extends SingleChildStatelessWidget {
 }
 
 class HookStateProvider<T> extends HookStateProviderWidget<T> {
-  const HookStateProvider(this.block, {super.key});
+  const HookStateProvider(this.block, {super.key, super.child});
 
   final T Function() block;
 
