@@ -1,3 +1,7 @@
+## 0.3.10
+
+ - **FEAT**(utopia_hooks): Add child to HookStateProvider.
+
 ## 0.3.9+5
 
  - **FIX**(utopia_hooks): Fix initial value in StatelessTextEditingControllerWrapper.

@@ -1,3 +1,8 @@
+## 0.4.4
+
+ - **FIX**(utopia_arch): Remove nullability on routeArgs.
+ - **FEAT**(utopia_arch): Automatically rebuild injector on reassemble.
+
 ## 0.4.3+1
 
  - Update a dependency to the latest release.

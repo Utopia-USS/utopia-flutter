@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-11
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_arch` - `v0.4.4`](#utopia_arch---v044)
+ - [`utopia_hooks` - `v0.3.10`](#utopia_hooks---v0310)
+ - [`utopia_connectivity` - `v0.0.5+14`](#utopia_connectivity---v00514)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.0.5+14`
+
+---
+
+#### `utopia_arch` - `v0.4.4`
+
+ - **FIX**(utopia_arch): Remove nullability on routeArgs.
+ - **FEAT**(utopia_arch): Automatically rebuild injector on reassemble.
+
+#### `utopia_hooks` - `v0.3.10`
+
+ - **FEAT**(utopia_hooks): Add child to HookStateProvider.
+
+
 ## 2023-06-20
 
 ### Changes
