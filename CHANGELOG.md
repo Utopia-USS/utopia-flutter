@@ -15,6 +15,36 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.3.11`](#utopia_hooks---v0311)
+ - [`utopia_connectivity` - `v0.0.5+15`](#utopia_connectivity---v00515)
+ - [`utopia_arch` - `v0.4.4+1`](#utopia_arch---v0441)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.0.5+15`
+ - `utopia_arch` - `v0.4.4+1`
+
+---
+
+#### `utopia_hooks` - `v0.3.11`
+
+ - **FEAT**(utopia_hooks): Add skipIfInProgress to SubmitState.runSimple.
+
+
+## 2023-08-11
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_arch` - `v0.4.4`](#utopia_arch---v044)
  - [`utopia_hooks` - `v0.3.10`](#utopia_hooks---v0310)
  - [`utopia_connectivity` - `v0.0.5+14`](#utopia_connectivity---v00514)

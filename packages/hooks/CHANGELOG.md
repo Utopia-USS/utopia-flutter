@@ -1,3 +1,7 @@
+## 0.3.11
+
+ - **FEAT**(utopia_hooks): Add skipIfInProgress to SubmitState.runSimple.
+
 ## 0.3.10
 
  - **FEAT**(utopia_hooks): Add child to HookStateProvider.
