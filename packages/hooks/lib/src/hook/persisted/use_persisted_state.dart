@@ -55,7 +55,7 @@ PersistedState<T> usePersistedState<T extends Object>(
   return useMemoized(
     () => PersistedStateImpl(
       getIsInitialized: () => state.value is ComputedStateValueReady,
-      getIsSynchronized: () => state.value is ComputedStateValueReady && !submitState.isSubmitInProgress,
+      getIsSynchronized: () => state.value is ComputedStateValueReady && !submitState.inProgress,
       getValue: () => state.valueOrPreviousOrNull,
       updateValue: updateValue,
     ),

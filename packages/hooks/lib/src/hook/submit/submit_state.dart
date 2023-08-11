@@ -3,27 +3,30 @@ import 'dart:async';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class SubmitState {
-  final bool isSubmitInProgress;
+  final bool inProgress;
 
-  const SubmitState({required this.isSubmitInProgress});
-  
-  factory SubmitState.combined(List<SubmitState> states) => 
-      SubmitState(isSubmitInProgress: anyTrue(states.map((it) => it.isSubmitInProgress)));
+  const SubmitState({required this.inProgress});
+
+  factory SubmitState.combined(List<SubmitState> states) =>
+      SubmitState(inProgress: anyTrue(states.map((it) => it.inProgress)));
 
   @Deprecated("Use SubmitState.combined factory")
   // ignore: prefer_constructors_over_static_methods
   static SubmitState combine(List<SubmitState> states) =>
-      SubmitState(isSubmitInProgress: anyTrue(states.map((it) => it.isSubmitInProgress)));
+      SubmitState(inProgress: anyTrue(states.map((it) => it.inProgress)));
+
+  @Deprecated("Use `inProgress` instead")
+  bool get isSubmitInProgress => inProgress;
 }
 
 class MutableSubmitState implements SubmitState {
   @override
-  final bool isSubmitInProgress;
+  final bool inProgress;
 
   final Future<T> Function<T>(Future<T> Function() block, {bool isRetryable}) run;
 
   const MutableSubmitState({
-    required this.isSubmitInProgress,
+    required this.inProgress,
     required this.run,
   });
 
@@ -55,7 +58,9 @@ class MutableSubmitState implements SubmitState {
     FutureOr<void> Function(E)? afterKnownError,
     FutureOr<void> Function()? afterError,
     bool isRetryable = true,
+    bool skipIfInProgress = false,
   }) async {
+    if (skipIfInProgress && inProgress) return;
     if (shouldSubmit != null && !await shouldSubmit()) {
       await afterShouldNotSubmit?.call();
       return;
@@ -76,4 +81,8 @@ class MutableSubmitState implements SubmitState {
       }
     }, isRetryable: isRetryable);
   }
+
+  @override
+  @Deprecated("Use `inProgress` instead")
+  bool get isSubmitInProgress => inProgress;
 }

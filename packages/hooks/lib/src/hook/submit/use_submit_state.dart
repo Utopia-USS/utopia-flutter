@@ -19,5 +19,5 @@ MutableSubmitState useSubmitState() {
     }
   }
 
-  return MutableSubmitState(isSubmitInProgress: submitCountState.value > 0, run: run);
+  return MutableSubmitState(inProgress: submitCountState.value > 0, run: run);
 }
