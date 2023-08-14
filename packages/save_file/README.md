@@ -51,4 +51,3 @@ On Web uses a fake [`a` element](https://developer.mozilla.org/en-US/docs/Web/HT
 attribute to trigger the download, which then happens completely outside the app.
 This causes the `fromX` methods to complete immediately with `true` (even if users later cancels the
 download).
-
