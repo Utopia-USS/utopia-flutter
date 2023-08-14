@@ -1,3 +1,9 @@
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(utopia_save_file): Trigger re-release.
+
 ## 0.0.7+3
 
 - **FIX**(utopia_save_file): Fix lints.

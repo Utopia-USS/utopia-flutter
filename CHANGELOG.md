@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`utopia_save_file` - `v0.1.0`](#utopia_save_file---v010)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `utopia_save_file` - `v0.1.0`
+
+ - **BREAKING** **FEAT**(utopia_save_file): Trigger re-release.
+
+
 ## 2023-08-11
 
 ### Changes
