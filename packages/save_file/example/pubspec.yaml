@@ -12,6 +12,10 @@ dependencies:
   utopia_save_file:
     path: ../
 
+  cross_file: ^0.3.3+4
+  path_provider: ^2.1.0
+  mime: ^1.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

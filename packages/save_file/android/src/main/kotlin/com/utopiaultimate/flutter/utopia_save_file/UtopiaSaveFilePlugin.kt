@@ -4,8 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import com.utopiaultimate.flutter.utopia_platform_utils.flutter.coroutine.launchForResult
 import com.utopiaultimate.flutter.utopia_platform_utils.flutter.plugin.BaseFlutterPlugin
-import com.utopiaultimate.flutter.utopia_save_file.dto.SaveFileFromBytesDto
-import com.utopiaultimate.flutter.utopia_save_file.dto.SaveFileFromUrlDto
+import com.utopiaultimate.flutter.utopia_save_file.dto.SaveFileDto
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -14,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.InputStream
-import java.net.HttpURLConnection
 import java.net.URL
 
 class UtopiaSaveFilePlugin : BaseFlutterPlugin(), MethodChannel.MethodCallHandler {
@@ -36,49 +35,37 @@ class UtopiaSaveFilePlugin : BaseFlutterPlugin(), MethodChannel.MethodCallHandle
 
   override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
-      "saveFileFromUrl" -> activityScope.launchForResult(result) {
-        val dto = SaveFileFromUrlDto(call.arguments()!!)
-        val mime = withContext(Dispatchers.IO) { obtainMime(dto.url) }
-        val uri = createFile(dto.name, mime)
-        if (uri != null) withContext(Dispatchers.IO) { download(source = dto.url, destination = uri) }
-        uri != null
+      "fromFile" -> activityScope.launchForResult(result) {
+        val dto = SaveFileDto.FromFile(call.arguments()!!)
+        saveFile(dto) { File(dto.path).inputStream() }
       }
-      "saveFileFromBytes" -> activityScope.launchForResult(result) {
-        val dto = SaveFileFromBytesDto(call.arguments()!!)
-        val uri = createFile(dto.name, dto.mime)
-        if (uri != null) withContext(Dispatchers.IO) {
-          save(source = ByteArrayInputStream(dto.bytes), destination = uri)
-        }
-        uri != null
+
+      "fromUrl" -> activityScope.launchForResult(result) {
+        val dto = SaveFileDto.FromUrl(call.arguments()!!)
+        saveFile(dto) { URL(dto.url).openStream() }
       }
+
+      "fromBytes" -> activityScope.launchForResult(result) {
+        val dto = SaveFileDto.FromBytes(call.arguments()!!)
+        saveFile(dto) { ByteArrayInputStream(dto.bytes) }
+      }
+
       else -> result.notImplemented()
     }
   }
 
-  private fun obtainMime(url: String) = with(URL(url).openConnection() as HttpURLConnection) {
-    try {
-      requestMethod = "HEAD"
-      connect()
-      contentType
-    } finally {
-      disconnect()
+  private suspend fun saveFile(dto: SaveFileDto, block: () -> InputStream): Boolean {
+    val uri = createFile(dto.name, dto.mime)
+    if (uri != null) withContext(Dispatchers.IO) {
+      activity.contentResolver.openOutputStream(uri)!!.use { dst -> block().use { it.copyTo(dst) } }
     }
+    return uri != null
   }
 
   private suspend fun createFile(name: String, mimeType: String): Uri? {
     val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply { type = mimeType; putExtra(Intent.EXTRA_TITLE, name) }
     activity.startActivityForResult(intent, RequestCode)
     return activityResultEvents.first().data?.data
-  }
-
-  private fun download(source: String, destination: Uri) {
-    val sourceUrl = URL(source)
-    sourceUrl.openStream().use { sourceStream -> save(sourceStream, destination) }
-  }
-
-  private fun save(source: InputStream, destination: Uri) {
-    activity.contentResolver.openOutputStream(destination)!!
-      .use { outputStream -> source.copyTo(outputStream) }
   }
 
   companion object {
