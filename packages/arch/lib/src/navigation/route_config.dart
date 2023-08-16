@@ -42,7 +42,7 @@ class RouteConfig<T> {
     Widget Function() builder, {
     RouteConfigOrientation? orientation,
   }) {
-    return RouteConfig<T>(
+    return RouteConfig(
       routeBuilder: (settings, contentBuilder) {
         return PageRouteBuilder(
           opaque: false,
