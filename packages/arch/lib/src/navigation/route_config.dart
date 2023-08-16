@@ -43,13 +43,11 @@ class RouteConfig<T> {
     RouteConfigOrientation? orientation,
   }) {
     return RouteConfig(
-      routeBuilder: (settings, contentBuilder) {
-        return PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (_, __, ___) => contentBuilder(),
-          settings: settings,
-        );
-      },
+      routeBuilder: (settings, contentBuilder) => PageRouteBuilder<T>(
+        opaque: false,
+        pageBuilder: (_, __, ___) => contentBuilder(),
+        settings: settings,
+      ),
       contentBuilder: builder,
       orientation: orientation,
     );
