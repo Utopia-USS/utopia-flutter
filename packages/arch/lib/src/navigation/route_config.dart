@@ -24,12 +24,28 @@ class RouteConfig<T> {
     this.orientation,
   });
 
-  factory RouteConfig.material(Widget Function() builder, {
+  factory RouteConfig.material(
+    Widget Function() builder, {
     RouteConfigOrientation? orientation,
   }) {
     return RouteConfig(
       routeBuilder: (settings, contentBuilder) => MaterialPageRoute<T>(
         builder: (_) => contentBuilder(),
+        settings: settings,
+      ),
+      contentBuilder: builder,
+      orientation: orientation,
+    );
+  }
+
+  factory RouteConfig.transparent(
+    Widget Function() builder, {
+    RouteConfigOrientation? orientation,
+  }) {
+    return RouteConfig(
+      routeBuilder: (settings, contentBuilder) => PageRouteBuilder<T>(
+        opaque: false,
+        pageBuilder: (_, __, ___) => contentBuilder(),
         settings: settings,
       ),
       contentBuilder: builder,
