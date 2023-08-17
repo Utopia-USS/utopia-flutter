@@ -1,3 +1,7 @@
+## 0.4.5
+
+ - **FEAT**(utopia_arch): Add RouteConfig.transparent().
+
 ## 0.4.4+1
 
  - Update a dependency to the latest release.
