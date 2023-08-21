@@ -1,3 +1,7 @@
+## 0.0.9
+
+ - **FEAT**(utopia_rest): Add AuthTokenInterceptor.enabled.
+
 ## 0.0.8
 
  - **FEAT**(utopia_rest): Update Dio.

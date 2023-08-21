@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_rest` - `v0.0.9`](#utopia_rest---v009)
+
+---
+
+#### `utopia_rest` - `v0.0.9`
+
+ - **FEAT**(utopia_rest): Add AuthTokenInterceptor.enabled.
+
+
 ## 2023-08-17
 
 ### Changes
