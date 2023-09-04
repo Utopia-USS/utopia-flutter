@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-09-04
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.1.0+1`](#utopia_save_file---v0101)
+
+---
+
+#### `utopia_save_file` - `v0.1.0+1`
+
+ - **FIX**(utopia_save_file): Fix the iOS implementation.
+
+
 ## 2023-08-21
 
 ### Changes

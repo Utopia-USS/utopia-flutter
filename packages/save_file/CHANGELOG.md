@@ -1,3 +1,7 @@
+## 0.1.0+1
+
+ - **FIX**(utopia_save_file): Fix the iOS implementation.
+
 ## 0.1.0
 
 > Note: This release has breaking changes.
