@@ -33,7 +33,8 @@ class SaveFileIosImpl implements SaveFileNativeImpl {
     final file = await _buildFile(metadata.name);
     final sink = file.openWrite();
     try {
-      await stream.pipe(sink);
+      // Cast needed because of Dart type system issue: IOSink is not a subtype of StreamConsumer<Uint8List>
+      await stream.cast<List<int>>().pipe(sink);
       return true;
     } finally {
       await sink.close();
