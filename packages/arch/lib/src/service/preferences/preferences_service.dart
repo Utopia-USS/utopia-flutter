@@ -6,10 +6,12 @@ final _preferencesSetterMap = <Type, Future<void> Function(SharedPreferences, St
   int: (preferences, key, value) => preferences.setInt(key, value as int),
   double: (preferences, key, value) => preferences.setDouble(key, value as double),
   String: (preferences, key, value) => preferences.setString(key, value as String),
-  List: (preferences, key, value) => preferences.setStringList(key, value as List<String>),
+  List<String>: (preferences, key, value) => preferences.setStringList(key, value as List<String>),
 };
 
 class PreferencesService {
+  static final supportedTypes = _preferencesSetterMap.keys;
+
   SharedPreferences? _preferences;
 
   Future<void> save(String key, Object? value) async {
