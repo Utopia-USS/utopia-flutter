@@ -1,3 +1,7 @@
+## 0.4.6
+
+ - **FEAT**(utopia_arch): Add usePreferencesPersistedState.
+
 ## 0.4.5
 
  - **FEAT**(utopia_arch): Add RouteConfig.transparent().
