@@ -1,3 +1,7 @@
+## 0.4.8+1
+
+ - Update a dependency to the latest release.
+
 ## 0.4.8
 
  - **FEAT**(utopia_arch): Add useEnumPreferencesPersistedState.

@@ -1,3 +1,7 @@
+## 0.3.12
+
+ - **FEAT**(utopia_arch): Make PersistedState implement MutableValue.
+
 ## 0.3.11
 
  - **FEAT**(utopia_hooks): Add skipIfInProgress to SubmitState.runSimple.
