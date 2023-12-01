@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_arch` - `v0.4.8`](#utopia_arch---v048)
+
+---
+
+#### `utopia_arch` - `v0.4.8`
+
+ - **FEAT**(utopia_arch): Add useEnumPreferencesPersistedState.
+
+
+## 2023-12-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_arch` - `v0.4.7`](#utopia_arch---v047)
 
 ---
