@@ -1,3 +1,7 @@
+## 0.2.28
+
+ - **FEAT**(utopia_utils): Add MutableValue extensions.
+
 ## 0.2.27
 
  - **FEAT**(utopia_arch): Migrate features from utopia_utils.

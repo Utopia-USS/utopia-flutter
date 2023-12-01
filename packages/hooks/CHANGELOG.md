@@ -1,3 +1,7 @@
+## 0.3.12+1
+
+ - Update a dependency to the latest release.
+
 ## 0.3.12
 
  - **FEAT**(utopia_arch): Make PersistedState implement MutableValue.

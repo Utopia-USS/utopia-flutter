@@ -15,6 +15,46 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_utils` - `v0.2.28`](#utopia_utils---v0228)
+ - [`utopia_arch` - `v0.4.8+2`](#utopia_arch---v0482)
+ - [`utopia_firebase_crashlytics` - `v0.1.4+20`](#utopia_firebase_crashlytics---v01420)
+ - [`utopia_save_file` - `v0.1.0+2`](#utopia_save_file---v0102)
+ - [`utopia_rest` - `v0.0.9+1`](#utopia_rest---v0091)
+ - [`utopia_hooks` - `v0.3.12+1`](#utopia_hooks---v03121)
+ - [`utopia_connectivity` - `v0.0.5+17`](#utopia_connectivity---v00517)
+ - [`utopia_widgets` - `v0.0.10+28`](#utopia_widgets---v001028)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.4.8+2`
+ - `utopia_firebase_crashlytics` - `v0.1.4+20`
+ - `utopia_save_file` - `v0.1.0+2`
+ - `utopia_rest` - `v0.0.9+1`
+ - `utopia_hooks` - `v0.3.12+1`
+ - `utopia_connectivity` - `v0.0.5+17`
+ - `utopia_widgets` - `v0.0.10+28`
+
+---
+
+#### `utopia_utils` - `v0.2.28`
+
+ - **FEAT**(utopia_utils): Add MutableValue extensions.
+
+
+## 2023-12-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.3.12`](#utopia_hooks---v0312)
  - [`utopia_arch` - `v0.4.8+1`](#utopia_arch---v0481)
  - [`utopia_connectivity` - `v0.0.5+16`](#utopia_connectivity---v00516)

@@ -1,3 +1,7 @@
+## 0.0.10+28
+
+ - Update a dependency to the latest release.
+
 ## 0.0.10+27
 
  - **FIX**(utopia_widgets): Fix lints.

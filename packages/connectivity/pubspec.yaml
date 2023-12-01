@@ -1,6 +1,6 @@
 name: utopia_connectivity
 description: Utopia USS libs - ConnectivityState
-version: 0.0.5+16
+version: 0.0.5+17
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_utils: ^0.2.27
-  utopia_hooks: ^0.3.12
+  utopia_utils: ^0.2.28
+  utopia_hooks: ^0.3.12+1
   connectivity_plus: ^3.0.3
 
 dev_dependencies:
