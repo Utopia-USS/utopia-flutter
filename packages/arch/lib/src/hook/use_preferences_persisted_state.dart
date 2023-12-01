@@ -12,6 +12,15 @@ PersistedState<T> usePreferencesPersistedState<T extends Object>(String key, {T?
   );
 }
 
+PersistedState<T> useEnumPreferencesPersistedState<T extends Enum>(String key, List<T> values, {T? defaultValue}) {
+  return useComplexPreferencesPersistedState<T, int>(
+    key,
+    toPreferences: (it) => it.index,
+    fromPreferences: (it) => values[it],
+    defaultValue: defaultValue,
+  );
+}
+
 PersistedState<T> useComplexPreferencesPersistedState<T extends Object, T2 extends Object>(
   String key, {
   required T2 Function(T) toPreferences,
