@@ -14,6 +14,8 @@ extension MutableValueExtensions<T> on MutableValue<T> {
   void set(T value) => this.value = value;
 
   void modify(T Function(T value) block) => value = block(value);
+
+  MutableValue<T2> cast<T2 extends T>() => MutableValue.delegate(() => value as T2, (it) => value = it);
 }
 
 extension NotNullMutableValueExtensions<T extends Object> on MutableValue<T> {
@@ -21,6 +23,10 @@ extension NotNullMutableValueExtensions<T extends Object> on MutableValue<T> {
     if(value != null) this.value = value;
     return this.value;
   }
+}
+
+extension NullableMutableValueExtensions<T extends Object> on MutableValue<T?> {
+  MutableValue<T> asNotNull() => cast<T>();
 }
 
 extension BoolMutableValueExtensions on MutableValue<bool> {
