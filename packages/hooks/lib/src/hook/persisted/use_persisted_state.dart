@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:utopia_hooks/utopia_hooks.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-abstract class PersistedState<T extends Object> implements HasInitialized {
+abstract class PersistedState<T extends Object> implements MutableValue<T?>, HasInitialized {
   abstract final bool isSynchronized;
-  abstract final T? value;
-  abstract final void Function(T? value) updateValue;
 
   const PersistedState();
 
@@ -17,8 +15,6 @@ class PersistedStateImpl<T extends Object> extends PersistedState<T> {
   final bool Function() getIsInitialized;
   final bool Function() getIsSynchronized;
   final T? Function() getValue;
-
-  @override
   final void Function(T? value) updateValue;
 
   const PersistedStateImpl({
@@ -36,6 +32,9 @@ class PersistedStateImpl<T extends Object> extends PersistedState<T> {
 
   @override
   T? get value => getValue();
+
+  @override
+  set value(T? value) => updateValue(value);
 }
 
 PersistedState<T> usePersistedState<T extends Object>(
@@ -60,4 +59,9 @@ PersistedState<T> usePersistedState<T extends Object>(
       updateValue: updateValue,
     ),
   );
+}
+
+extension PersistedStateExtensions<T extends Object> on PersistedState<T> {
+  // ignore: use_setters_to_change_properties
+  void updateValue(T? value) => this.value = value;
 }
