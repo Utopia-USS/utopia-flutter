@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-12-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_arch` - `v0.4.7`](#utopia_arch---v047)
+
+---
+
+#### `utopia_arch` - `v0.4.7`
+
+ - **FEAT**(utopia_arch): Add usePreferencesPersistedState.defaultValue.
+
+
 ## 2023-11-27
 
 ### Changes

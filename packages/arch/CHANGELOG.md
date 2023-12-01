@@ -1,3 +1,7 @@
+## 0.4.7
+
+ - **FEAT**(utopia_arch): Add usePreferencesPersistedState.defaultValue.
+
 ## 0.4.6
 
  - **FEAT**(utopia_arch): Add usePreferencesPersistedState.
