@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:utopia_widgets/layout/form_layout.dart';
+import 'package:utopia_widgets/utopia_widgets.dart';
 
 class FormLayoutPage extends StatelessWidget {
   const FormLayoutPage({Key? key}) : super(key: key);

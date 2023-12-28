@@ -1,66 +1,87 @@
 abstract class Value<T> {
   T get value;
 
-  // constructors
-  const factory Value(T value) = _ValueImpl;
+  const factory Value(T value) = ValueImpl;
 
-  const factory Value.delegate(T Function() get) = _DelegateValueImpl;
+  const factory Value.computed(T Function() get) = ComputedValue;
+
+  const factory Value.delegate(Value<T> delegate) = DelegateValue;
 }
 
 /// Simpler alternative to `ValueNotifier`.
 ///
 /// To convert a `ValueNotifier` to [MutableValue] use the `.asMutableValue()` extension.
 abstract class MutableValue<T> implements Value<T> {
-  @override
-  T get value;
-
+  // ignore: avoid_setters_without_getters
   set value(T value);
 
-  // constructors
-  factory MutableValue(T initialValue) = _MutableValueImpl;
-  
-  const factory MutableValue.delegate(T Function() get, void Function(T) set) = _DelegateMutableValueImpl;
+  factory MutableValue(T initialValue) = MutableValueImpl;
 
-  factory MutableValue.late() = _LateMutableValueImpl;
+  const factory MutableValue.computed(T Function() get, void Function(T) set) = ComputedMutableValue;
+
+  const factory MutableValue.delegate(MutableValue<T> value) = DelegateMutableValue;
+
+  factory MutableValue.late() = LateMutableValue;
 }
 
-class _ValueImpl<T> implements Value<T> {
+class ValueImpl<T> implements Value<T> {
   @override
   final T value;
 
-  const _ValueImpl(this.value);
+  const ValueImpl(this.value);
 }
 
-class _MutableValueImpl<T> implements MutableValue<T> {
+class MutableValueImpl<T> implements MutableValue<T> {
   @override
   T value;
 
-  _MutableValueImpl(this.value);
+  MutableValueImpl(this.value);
 }
 
-class _LateMutableValueImpl<T> implements MutableValue<T> {
+class LateMutableValue<T> implements MutableValue<T> {
   @override
   late T value;
 }
 
-class _DelegateValueImpl<T> implements Value<T> {
+base class ComputedValue<T> implements Value<T> {
   final T Function() _get;
 
-  const _DelegateValueImpl(this._get);
+  const ComputedValue(this._get);
 
   @override
   T get value => _get();
 }
 
-class _DelegateMutableValueImpl<T> implements MutableValue<T> {
+base class DelegateValue<T> implements Value<T> {
+  final Value<T> _delegate;
+
+  const DelegateValue(this._delegate);
+
+  @override
+  T get value => _delegate.value;
+}
+
+base class ComputedMutableValue<T> implements MutableValue<T> {
   final T Function() _get;
   final void Function(T) _set;
 
-  const _DelegateMutableValueImpl(this._get, this._set);
+  const ComputedMutableValue(this._get, this._set);
 
   @override
   T get value => _get();
 
   @override
   set value(T value) => _set(value);
+}
+
+base class DelegateMutableValue<T> implements MutableValue<T> {
+  final MutableValue<T> _delegate;
+
+  const DelegateMutableValue(this._delegate);
+
+  @override
+  T get value => _delegate.value;
+
+  @override
+  set value(T value) => _delegate.value = value;
 }

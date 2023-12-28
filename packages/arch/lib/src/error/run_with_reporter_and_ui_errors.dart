@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_arch/src/error/global_error_handler.dart';
 import 'package:utopia_arch/src/error/reporter_global_error_handler.dart';
+import 'package:utopia_reporter/utopia_reporter.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class UiGlobalError {
@@ -15,7 +16,7 @@ class UiGlobalError {
   bool get canRetry => retry != null;
 }
 
-/// Handles global errors and sends them to [reporter] and stream of [UiGlobalError].
+/// Handles global errors and sends them to [reporter] and async of [UiGlobalError].
 ///
 /// Designed to wrap the whole `main()` function.
 /// WARNING! `FlutterWidgetsBinding.ensureInitialized()` must be called inside it, otherwise some errors may not be

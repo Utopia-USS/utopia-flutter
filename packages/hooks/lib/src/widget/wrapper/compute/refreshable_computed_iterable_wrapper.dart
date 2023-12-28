@@ -1,9 +1,6 @@
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_iterable_wrapper.dart';
-
-typedef RefreshableComputedIListWrapper<E> = RefreshableComputedIterableWrapper<IList<E>>;
 
 typedef RefreshableComputedListWrapper<E> = RefreshableComputedIterableWrapper<List<E>>;
 

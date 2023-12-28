@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_state_wrapper.dart';
 
 class RefreshableComputedStateWrapper<E> extends StatelessWidget {

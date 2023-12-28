@@ -1,38 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:utopia_hooks/src/hook/misc/use_value_wrapper.dart';
+import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
+import 'package:utopia_hooks/src/hook/base/use_effect.dart';
+import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
+import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 class StatelessTextEditingControllerWrapper extends HookWidget {
-  final String value;
-  final void Function(String)? onChanged;
+  final MutableValue<String> text;
   final TextEditingController Function({String? text}) controllerProvider;
-  final Widget Function(TextEditingController) child;
+  final Widget Function(TextEditingController) builder;
 
   const StatelessTextEditingControllerWrapper({
     super.key,
-    required this.value,
-    this.onChanged,
+    required this.text,
     this.controllerProvider = TextEditingController.new,
-    required this.child,
+    required this.builder,
   });
-
-  StatelessTextEditingControllerWrapper.mutableValue(
-    MutableValue<String> value, {
-    super.key,
-    this.controllerProvider = TextEditingController.new,
-    required this.child,
-  }) : value = value.value, onChanged = value.set;
 
   @override
   Widget build(BuildContext context) {
-    final controller = useMemoized(() => controllerProvider(text: value));
-    useEffect(() => controller.dispose, []);
+    final controller = useMemoized(() => controllerProvider(text: text.value), [], (it) => it.dispose());
 
-    final wrappedValue = useValueWrapper(value);
+    final wrappedValue = useValueWrapper(text);
     useEffect(() {
       void listener() {
-        if (controller.text != wrappedValue()) onChanged?.call(controller.text);
+        if (controller.text != wrappedValue().value) text.value = controller.text;
       }
 
       controller.addListener(listener);
@@ -43,9 +37,15 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
           // ignore errors during dispose
         }
       };
-    }, []);
-    if (controller.text != value) Future.microtask(() => controller.text = value);
+    });
 
-    return child(controller);
+    useEffect(() {
+      if (controller.text != text.value) {
+        Timer.run(() => controller.text = text.value);
+      }
+      return null;
+    }, [text.value]);
+
+    return builder(controller);
   }
 }

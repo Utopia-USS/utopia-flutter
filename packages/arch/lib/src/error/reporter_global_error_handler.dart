@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_arch/src/error/global_error_handler.dart';
-import 'package:utopia_utils/utopia_utils.dart';
+import 'package:utopia_reporter/utopia_reporter.dart';
 
 class ReporterGlobalErrorHandler implements GlobalErrorHandler {
   final Reporter reporter;

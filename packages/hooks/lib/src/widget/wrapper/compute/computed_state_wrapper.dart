@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
+import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
+import 'package:utopia_hooks/src/hook/misc/use_previous_if_null.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/util/non_scrollable_content.dart';
 
-class ComputedStateWrapper<E> extends StatelessWidget {
+class ComputedStateWrapper<E> extends HookWidget {
   final ComputedState<E> state;
   final Widget Function(BuildContext) inProgressBuilder;
   final Widget Function(BuildContext) failedBuilder;
@@ -21,7 +23,7 @@ class ComputedStateWrapper<E> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = state.valueOrNull;
-    late final previousValue = state.previousValueOrNull;
+    final previousValue = usePreviousIfNull(value);
     if (value != null || (keepInProgress && previousValue != null)) return builder(context, value ?? previousValue!);
     return NonScrollableContent(
       child: state.value.maybeWhen(

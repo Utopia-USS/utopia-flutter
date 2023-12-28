@@ -1,0 +1,13 @@
+name: utopia_collections
+description: Utopia libs - collection utils
+version: 0.0.1
+homepage: https://github.com/Utopia-USS/utopia-flutter
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  fast_immutable_collections: ^7.0.3
+
+dev_dependencies:
+  utopia_lints: ^0.0.3+1

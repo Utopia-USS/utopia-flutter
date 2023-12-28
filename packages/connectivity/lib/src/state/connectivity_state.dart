@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:utopia_hooks/utopia_hooks.dart';
-import 'package:utopia_utils/utopia_utils.dart';
+import 'package:utopia_arch/utopia_arch.dart';
 
 class ConnectivityState implements HasInitialized {
   final ConnectivityResult? result;
@@ -11,19 +10,13 @@ class ConnectivityState implements HasInitialized {
   @override
   bool get isInitialized => result != null;
 
-  @Deprecated("Use hasConnection")
-  bool get isConnected => hasConnection;
-
   bool get hasConnection => result != ConnectivityResult.none;
 }
 
 ConnectivityState useConnectivityState() {
-  final state = useAutoComputedState<ConnectivityResult>(
-    compute: () async => Connectivity().checkConnectivity(),
-    keys: [],
-  );
+  final state = useAutoComputedState(() async => Connectivity().checkConnectivity());
 
-  useStreamSubscription<ConnectivityResult>(
+  useStreamSubscription(
     useMemoized(() => Connectivity().onConnectivityChanged),
     state.updateValue,
   );
@@ -35,13 +28,4 @@ ConnectivityState useConnectivityState() {
       return state.refresh();
     },
   );
-}
-
-@Deprecated("Use standalone useConnectivityState hook")
-class ConnectivityStateProvider extends HookStateProviderWidget<ConnectivityState> {
-  @Deprecated("Use standalone useConnectivityState hook")
-  const ConnectivityStateProvider({super.key});
-
-  @override
-  ConnectivityState use() => useConnectivityState();
 }
