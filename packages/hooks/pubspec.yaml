@@ -1,6 +1,6 @@
 name: utopia_hooks
 description: Utopia libs - basic and complex hooks (including SubmitState, ComputedState and supporting widgets)
-version: 0.3.12+1
+version: 0.4.0-dev.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_utils: ^0.2.28
-  utopia_collections: ^0.0.1
-  utopia_validation: ^0.0.1
+  utopia_utils: ^0.3.0-dev.0
+  utopia_collections: ^0.1.0-dev.0
+  utopia_validation: ^0.1.0-dev.0
 
   equatable: ^2.0.3
   async: ^2.5.0

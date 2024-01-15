@@ -1,3 +1,9 @@
+## 0.4.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Decouple hooks and prepare architecture v2.
+
 ## 0.3.12+1
 
  - Update a dependency to the latest release.
