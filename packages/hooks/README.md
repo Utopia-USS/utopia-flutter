@@ -1,7 +1,4 @@
-<picture>
- <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo.png"  width = "309" height = "160" alt="Utopia Hooks">
-</picture>
+<img src="docs/logo.png" height="160px" alt="Logo"/>
 
 # Overview
 
@@ -16,11 +13,9 @@ architecture including not only local, but also global states, as well as unit &
 Hooks are functions that represent a single piece of state (or business logic). They return a value that can be
 then used in UI or other hooks and can request to be rebuilt (like `setState` in `StatefulWidget`s).
 
-<picture>
- <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"  alt="Utopia Hooks Diagram">
-</picture>
-
+<p align="center">
+  <img src="docs/single_hook.png" height="300px" alt="Single hook"/>
+</p>
 
 The three most basic hooks are:
 
@@ -115,17 +110,13 @@ class CounterButton extends HookWidget {
 }
 ```
 
-## Further reading
+## See also
 
-- [Guide](https://hooks.utopiasoft.io/category/guides) - A comprehensive guide to using hooks
-- [Hook library](https://hooks.utopiasoft.io/category/hooks-library) - A complete list of hooks available
-  in `utopia_hooks`
-- [Custom hooks](https://hooks.utopiasoft.io/guides/advanced/custom_hooks) - Guide to creating custom hooks for advanced
-  use-cases
-- [Deep dive](https://hooks.utopiasoft.io/guides/advanced/hook_internals) - A deep dive into the internal implementation
-  of hooks
+- [Hooks basics](https://hooks.utopiasoft.io/guides/basics) - Introduction to using hooks.
+- [Common hooks](https://hooks.utopiasoft.io/guides/common_hooks) - A list of most common hooks with an in-depth
+  explanation.
 
-# Hook Based Architecture
+# Hook-based Architecture
 
 While hooks can be used as a simple replacement for `StatefulWidget`s, they are much more powerful when used as a
 foundation of the architecture of the whole app. `utopia_hooks` package contains everything needed to build a scalable
@@ -142,6 +133,10 @@ components:
 3. **View** which displays the UI based on the current state and triggers the actions based e.g. on the user input
 4. **Coordinator** which serves as an entry point for the component by binding the Hook and View together and providing
    external functionality, like navigation.
+
+<p align="center">
+  <img src="docs/local_state.png" height="300px" alt="Local state"/>
+</p>
 
 ```dart
 // State
@@ -195,17 +190,12 @@ class MyScreen extends HookWidget {
 }
 ```
 
-Note: A `HookCoordinator` widget is a shorthand for binding a Hook and View together:
+### See also
 
-```dart
-class MyScreen extends StatelessWidget {
-  const MyScreen();
-
-  @override
-  Widget build(BuildContext context) =>
-      HookCoordinator(use: () => useMyScreenState(/* ... */), builder: MyScreenView.new);
-}
-```
+- [Local state](https://hooks.utopiasoft.io/guides/architecture/local_state) - An in-depth guide on implementing
+  local state using hooks.
+- [Unit testing](https://hooks.utopiasoft.io/guides/architecture/testing#unit-testing) - A guide on unit-testing local
+  state hooks.
 
 ## Global state
 
@@ -213,6 +203,10 @@ class MyScreen extends StatelessWidget {
 settings. It's convenient to break this logic up into smaller pieces ("Global states"), adhering to the Single
 Responsibility Principle. Each one can be represented by a standalone hook, and then can be depended on by other global
 or local states.
+
+<p align="center">
+  <img src="docs/global_state.png" height="400px" alt="Utopia Hooks States Diagram">
+</p>
 
 ### Creating global states
 
@@ -283,69 +277,19 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-The order of declaration of the global states is important - a state can only depend on states declared
-before it.
+### See also
 
-INVALID:
-
-```dart
-providers: {
-StateB: useStateB, // depends on StateA
-StateA: useStateA,
-// ...
-}
-```
-
-<picture>
- <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"  alt="Utopia Hooks States Diagram">
-</picture>
-
-
-## Testing
-
-### Unit testing
-
-Single hooks can be tested in isolation, without placing them in Widgets. This is done by using `SimpleHookContext`,
-triggering actions and checking the state:
-
-```dart
-void main() {
-  group("CounterState", () {
-    late SimpleHookContext<CounterState> context;
-
-    setUp(() {
-      // `SimpleHookContext` can take any hook
-      context = SimpleHookContext(useCounterState);
-    });
-
-    test("Should have initial value of 0", () {
-      // `context()` is a shorthand for current value of the hook
-      expect(context().value, 0);
-    });
-
-    test("Should increment value after pressed", () {
-      context().onPressed();
-      // Change should be reflected immediately
-      expect(context().value, 1);
-    });
-  });
-}
-```
-
-`SimpleHookContext` also supports mocking dependencies and awaiting asynchronous changes.
-Press [here](https://hooks.utopiasoft.io/guides/architecture/testing) for more.
-
-## Integration testing
-
-Hooks can be also tested together in an integration test. This is done using `SimpleHookProviderContainer`.
-
-# How it works?
+- [Global state](https://hooks.utopiasoft.io/guides/architecture/global_state) - An in-depth guide on
+  implementing global state using hooks.
+- [Integration testing](https://hooks.utopiasoft.io/guides/architecture/testing#integration-testing) - A guide on
+  integration-testing global and local states.
 
 # Examples
 
-- [Counter v1](example/lib/counter/v1)
-- [Counter v2](example/lib/counter/v2)
-- [Search - Firestore](example/lib/search/firebase)
-- [Search - Clean Architecture](example/lib/search/clean)
-- [Form Validation](example/lib/form_validation)
+- [Counter v1](example/lib/counter/v1) - "Counter" example (bare-bones)
+- [Counter v2](example/lib/counter/v2) - "Counter" example (using Hook-based architecture)
+- [Search - Firestore](example/lib/search/firebase) - Dynamic list with search and real-time updates, based on Firebase
+  Firestore
+- [Search - Clean Architecture](example/lib/search/clean) - Dynamic list with search, based on Clean Architecture.
+- [Form Validation](example/lib/form_validation) - Complex form with validation,
+  using [`utopia_validation`](https://pub.dev/packages/utopia_validation).

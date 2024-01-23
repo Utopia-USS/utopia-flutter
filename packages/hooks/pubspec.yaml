@@ -1,7 +1,14 @@
 name: utopia_hooks
-description: Utopia libs - basic and complex hooks (including SubmitState, ComputedState and supporting widgets)
+description: A comprehensive but flexible state management solution inspired by React Hooks.
 version: 0.4.0
-homepage: https://github.com/Utopia-USS/utopia-flutter
+repository: https://github.com/Utopia-USS/utopia-flutter/tree/master/packages/hooks
+documentation: https://hooks.utopiasoft.io
+topics:
+  - state
+  - state-management
+  - flutter
+  - architecture
+  - reactive
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
