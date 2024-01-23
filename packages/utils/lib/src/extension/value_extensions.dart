@@ -8,6 +8,10 @@ extension ValueExtensions<T> on Value<T> {
   T call() => value;
 }
 
+extension NullableValueExtensions<T> on Value<T?> {
+  bool get hasValue => value != null;
+}
+
 extension MutableValueExtensions<T> on MutableValue<T> {
   /// For easy tear-offs.
   // ignore: use_setters_to_change_properties
@@ -15,12 +19,16 @@ extension MutableValueExtensions<T> on MutableValue<T> {
 
   void modify(T Function(T value) block) => value = block(value);
 
-  MutableValue<T2> cast<T2 extends T>() => MutableValue.delegate(() => value as T2, (it) => value = it);
+  MutableValue<T2> cast<T2 extends T>() => MutableValue.computed(() => value as T2, (it) => value = it);
 }
 
 extension NotNullMutableValueExtensions<T extends Object> on MutableValue<T> {
+  /// Convenient short-hand variant allowing for both setting and getting.
+  ///
+  /// Get: `value = mutableValue()`
+  /// Set: `mutableValue(value)`
   T call([T? value]) {
-    if(value != null) this.value = value;
+    if (value != null) this.value = value;
     return this.value;
   }
 }

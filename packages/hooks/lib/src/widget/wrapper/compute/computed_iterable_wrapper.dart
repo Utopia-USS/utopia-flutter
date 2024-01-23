@@ -1,12 +1,7 @@
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
-import 'package:utopia_hooks/src/hook/compute/computed_state.dart';
+import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_state_wrapper.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/util/non_scrollable_content.dart';
-
-typedef ComputedIListWrapper<E> = ComputedIterableWrapper<IList<E>>;
-
-typedef ComputedListWrapper<E> = ComputedIterableWrapper<List<E>>;
 
 class ComputedIterableWrapper<I extends Iterable<dynamic>> extends StatelessWidget {
   final ComputedState<I> state;

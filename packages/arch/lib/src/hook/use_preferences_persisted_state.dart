@@ -1,7 +1,6 @@
-import 'package:utopia_arch/src/injector/injector_provider.dart';
+import 'package:utopia_arch/src/injector/use_injected.dart';
 import 'package:utopia_arch/src/service/preferences/preferences_service.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 PersistedState<T> usePreferencesPersistedState<T extends Object>(String key, {T? defaultValue}) {
   return useComplexPreferencesPersistedState<T, T>(

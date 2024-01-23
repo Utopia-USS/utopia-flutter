@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 extension ValueNotifierExtensions<T> on ValueNotifier<T> {
   void modify(T Function(T value) block) => value = block(value);
@@ -24,8 +23,6 @@ extension ValueNotifierExtensions<T> on ValueNotifier<T> {
     });
     return completer.future;
   }
-
-  MutableValue<T> asMutableValue() => MutableValue.delegate(() => value, (it) => value = it);
 }
 
 extension BoolValueNotifierExtensions on ValueNotifier<bool> {

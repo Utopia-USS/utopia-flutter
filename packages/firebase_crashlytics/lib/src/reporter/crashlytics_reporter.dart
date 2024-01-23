@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:utopia_firebase_crashlytics/utopia_firebase_crashlytics.dart';
-import 'package:utopia_utils/utopia_utils.dart';
+import 'package:utopia_reporter/utopia_reporter.dart';
 
-class CrashlyticsReporter extends Reporter {
+final class CrashlyticsReporter extends Reporter {
   const CrashlyticsReporter();
 
   @override

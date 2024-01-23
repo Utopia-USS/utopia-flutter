@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:utopia_reporter/utopia_reporter.dart';
 import 'package:utopia_rest/src/interceptor/reporter/dio_log_util.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 class ReporterInterceptor implements Interceptor {
   final Reporter reporter;

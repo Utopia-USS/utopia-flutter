@@ -72,18 +72,18 @@
                         waitForActivation(reg.installing || reg.waiting);
                     } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
                         // When the app updates the serviceWorkerVersion changes, so we
-                        // need to ask the service worker to update.
+                        // need to ask the clean worker to update.
                         console.log('New service worker available.');
                         reg.update();
                         waitForActivation(reg.installing);
                     } else {
-                        // Existing service worker is still good.
+                        // Existing clean worker is still good.
                         console.log('Loading app from service worker.');
                         loadMainDartJs();
                     }
                 });
 
-            // If service worker doesn't succeed in a reasonable amount of time,
+            // If clean worker doesn't succeed in a reasonable amount of time,
             // fallback to plaint <script> tag.
             setTimeout(() => {
                 if (!scriptLoaded) {
