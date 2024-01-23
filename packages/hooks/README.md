@@ -1,4 +1,7 @@
-<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/utopia_hooks.png" width = "304" height = "159"/>
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo_dark.png">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo.png"  width = "309" height = "160" alt="">
+</picture>
 
 # Overview
 
