@@ -1,17 +1,19 @@
-<img src="utopia_hooks.png" width = "304" height = "159"/>
+<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/utopia_hooks.png" width = "304" height = "159"/>
 
 # Overview
 
 Goal of this package is to provide a comprehensive but flexible state management solution for Flutter apps. It's heavily
 inspired by React Hooks (and [Flutter Hooks](https://pub.dev/packages/flutter_hooks)), but takes a more holistic
-approach allowing it to cover the whole presentation layer of the app.
+approach, allowing hooks to be used in various contexts, covering all use-cases required for a complete mobile
+application
+architecture including not only local, but also global states, as well as unit & integration-testing.
 
 ## Hooks
 
 Hooks are functions that represent a single piece of state (or business logic). They return a value that can be
 then used in UI or other hooks and can request to be rebuilt (like `setState` in `StatefulWidget`s).
 
-// TODO diagram
+<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"/>
 
 The three most basic hooks are:
 
@@ -108,10 +110,13 @@ class CounterButton extends HookWidget {
 
 ## Further reading
 
-- [Guide](https://hooks.utopiasoft.io/guide) - A comprehensive guide to using hooks
-- [Hook library](https://hooks.utopiasoft.io/hook-library) - A complete list of hooks available in `utopia_hooks`
-- [Custom hooks](https://hooks.utopiasoft.io/custom-hooks) - Guide to creating custom hooks for advanced use-cases
-- [Deep dive](https://hooks.utopiasoft.io/deep-dive) - A deep dive into the internal implementation of hooks
+- [Guide](https://hooks.utopiasoft.io/category/guides) - A comprehensive guide to using hooks
+- [Hook library](https://hooks.utopiasoft.io/category/hooks-library) - A complete list of hooks available
+  in `utopia_hooks`
+- [Custom hooks](https://hooks.utopiasoft.io/guides/advanced/custom_hooks) - Guide to creating custom hooks for advanced
+  use-cases
+- [Deep dive](https://hooks.utopiasoft.io/guides/advanced/hook_internals) - A deep dive into the internal implementation
+  of hooks
 
 # Hook Based Architecture
 
@@ -278,13 +283,13 @@ INVALID:
 
 ```dart
 providers: {
-  StateB: useStateB, // depends on StateA
-  StateA: useStateA,
-  // ...
+StateB: useStateB, // depends on StateA
+StateA: useStateA,
+// ...
 }
 ```
 
-// TODO diagram
+<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"/>
 
 ## Testing
 
@@ -317,7 +322,8 @@ void main() {
 }
 ```
 
-`SimpleHookContext` also supports mocking dependencies and awaiting asynchronous changes. See TODO.
+`SimpleHookContext` also supports mocking dependencies and awaiting asynchronous changes.
+Press [here](https://hooks.utopiasoft.io/guides/architecture/testing) for more.
 
 ## Integration testing
 
