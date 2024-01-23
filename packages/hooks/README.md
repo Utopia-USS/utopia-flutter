@@ -17,7 +17,7 @@ Hooks are functions that represent a single piece of state (or business logic). 
 then used in UI or other hooks and can request to be rebuilt (like `setState` in `StatefulWidget`s).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/single_hook.png" height="300px" alt="Single hook"/>
+  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/single_hook.png" style="max-height: 300px" alt="Single hook"/>
 </p>
 
 The three most basic hooks are:
@@ -138,7 +138,7 @@ components:
    external functionality, like navigation.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/local_state.png" height="300px" alt="Local state"/>
+  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/local_state.png" style="max-height: 350px" alt="Local state"/>
 </p>
 
 ```dart
@@ -208,7 +208,7 @@ Responsibility Principle. Each one can be represented by a standalone hook, and 
 or local states.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/global_state.png" height="400px" alt="Utopia Hooks States Diagram">
+  <img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/global_state.png" style="max-height: 450px"  alt="Utopia Hooks States Diagram">
 </p>
 
 ### Creating global states
