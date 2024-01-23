@@ -1,10 +1,15 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
+/// Mixin with common parts of [HookContext] implementations.
+///
+/// This mixin should be used by all [HookContext] implementations.
+/// Implementations should only override [HookContext.markNeedsBuild] and call [wrapBuild], [triggerPostBuildCallbacks]
+/// and [disposeHooks] as needed.
 mixin HookContextMixin implements HookContext {
   final _hooks = <HookState<Object?, Hook<Object?>>>[];
   final _postBuildCallbacks = <void Function()>[];
@@ -13,9 +18,11 @@ mixin HookContextMixin implements HookContext {
   var _isDisposed = false;
 
   @override
+  @nonVirtual
   bool get mounted => !_isDisposed;
 
   @override
+  @nonVirtual
   T use<T>(Hook<T> hook) {
     if (_isFirstBuild) {
       final state = hook.createState();
@@ -37,14 +44,16 @@ mixin HookContextMixin implements HookContext {
   }
 
   @override
+  @nonVirtual
   void addPostBuildCallback(void Function() callback) {
     assert(_index != 0, "postBuildCallback can only be called inside build");
     _postBuildCallbacks.add(callback);
   }
 
+  /// Performs [build] in this [HookContext].
   @protected
   T wrapBuild<T>(T Function() build) {
-    return HookContext.stack.wrap(this, () {
+    return HookContext.wrap(this, () {
       try {
         assert(_postBuildCallbacks.isEmpty, "triggerPostBuildCallbacks has not been called after the previous build");
         final result = build();
@@ -57,6 +66,9 @@ mixin HookContextMixin implements HookContext {
     });
   }
 
+  /// Disposes all hooks in this [HookContext] and marks is as unmounted.
+  ///
+  /// Should be called only once, when the [HookContext] is disposed.
   @protected
   void disposeHooks() {
     for (final state in _hooks) {
@@ -65,6 +77,10 @@ mixin HookContextMixin implements HookContext {
     _isDisposed = true;
   }
 
+  /// Triggers all callbacks registered in the previous build.
+  ///
+  /// This method must be called once after every build.
+  /// Implementations can decide whether call this method immediately after [wrapBuild], or schedule it for later.
   @protected
   void triggerPostBuildCallbacks() {
     for (final callback in _postBuildCallbacks) {
