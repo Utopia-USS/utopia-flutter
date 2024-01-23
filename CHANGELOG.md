@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-01-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`utopia_bytes` - `v0.1.0`](#utopia_bytes---v010)
+
+Packages with other changes:
+
+ - [`utopia_arch` - `v0.5.0`](#utopia_arch---v050)
+ - [`utopia_collections` - `v0.1.0`](#utopia_collections---v010)
+ - [`utopia_connectivity` - `v0.1.0`](#utopia_connectivity---v010)
+ - [`utopia_firebase_crashlytics` - `v0.2.0`](#utopia_firebase_crashlytics---v020)
+ - [`utopia_hooks` - `v0.4.0`](#utopia_hooks---v040)
+ - [`utopia_reporter` - `v0.1.0`](#utopia_reporter---v010)
+ - [`utopia_rest` - `v0.1.0`](#utopia_rest---v010)
+ - [`utopia_save_file` - `v0.2.0`](#utopia_save_file---v020)
+ - [`utopia_utils` - `v0.3.0`](#utopia_utils---v030)
+ - [`utopia_validation` - `v0.1.0`](#utopia_validation---v010)
+ - [`utopia_widgets` - `v0.1.0`](#utopia_widgets---v010)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `utopia_arch` - `v0.5.0`
+ - `utopia_collections` - `v0.1.0`
+ - `utopia_connectivity` - `v0.1.0`
+ - `utopia_firebase_crashlytics` - `v0.2.0`
+ - `utopia_hooks` - `v0.4.0`
+ - `utopia_reporter` - `v0.1.0`
+ - `utopia_rest` - `v0.1.0`
+ - `utopia_save_file` - `v0.2.0`
+ - `utopia_utils` - `v0.3.0`
+ - `utopia_validation` - `v0.1.0`
+ - `utopia_widgets` - `v0.1.0`
+
+---
+
+#### `utopia_bytes` - `v0.1.0`
+
+ - **BREAKING** **FEAT**: Decouple hooks and prepare architecture v2.
+
+#### `utopia_arch` - `v0.5.0`
+
+#### `utopia_collections` - `v0.1.0`
+
+#### `utopia_connectivity` - `v0.1.0`
+
+#### `utopia_firebase_crashlytics` - `v0.2.0`
+
+#### `utopia_hooks` - `v0.4.0`
+
+#### `utopia_reporter` - `v0.1.0`
+
+#### `utopia_rest` - `v0.1.0`
+
+#### `utopia_save_file` - `v0.2.0`
+
+#### `utopia_utils` - `v0.3.0`
+
+#### `utopia_validation` - `v0.1.0`
+
+#### `utopia_widgets` - `v0.1.0`
+
+
 ## 2024-01-15
 
 ### Changes

@@ -1,6 +1,6 @@
 name: utopia_collections
 description: Utopia libs - collection utils
-version: 0.1.0-dev.0
+version: 0.1.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

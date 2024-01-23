@@ -1,6 +1,6 @@
 name: utopia_bytes
 description: Utopia libs - bytes
-version: 0.0.1
+version: 0.1.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
