@@ -1,6 +1,6 @@
 <picture>
  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo.png"  width = "309" height = "160" alt="">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_logo.png"  width = "309" height = "160" alt="Utopia Hooks">
 </picture>
 
 # Overview
@@ -16,7 +16,11 @@ architecture including not only local, but also global states, as well as unit &
 Hooks are functions that represent a single piece of state (or business logic). They return a value that can be
 then used in UI or other hooks and can request to be rebuilt (like `setState` in `StatefulWidget`s).
 
-<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"/>
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram_dark.png">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"  width = "309" height = "160" alt="Utopia Hooks Diagram">
+</picture>
+
 
 The three most basic hooks are:
 
@@ -292,7 +296,11 @@ StateA: useStateA,
 }
 ```
 
-<img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"/>
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states_dark.png">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"  width = "309" height = "160" alt="Utopia Hooks States Diagram">
+</picture>
+
 
 ## Testing
 
