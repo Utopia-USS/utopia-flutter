@@ -1,3 +1,7 @@
+## 0.4.0+2
+
+ - **FIX**(utopia_hooks): README.
+
 ## 0.4.0+1
 
  - **FIX**(utopia_hooks): README.
