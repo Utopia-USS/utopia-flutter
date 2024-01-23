@@ -18,7 +18,7 @@ then used in UI or other hooks and can request to be rebuilt (like `setState` in
 
 <picture>
  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"  width = "309" height = "160" alt="Utopia Hooks Diagram">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_diagram.png"  alt="Utopia Hooks Diagram">
 </picture>
 
 
@@ -298,7 +298,7 @@ StateA: useStateA,
 
 <picture>
  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states_dark.png">
- <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"  width = "309" height = "160" alt="Utopia Hooks States Diagram">
+ <img src="https://github.com/Utopia-USS/utopia-flutter/raw/master/packages/hooks/hooks_states.png"  alt="Utopia Hooks States Diagram">
 </picture>
 
 
