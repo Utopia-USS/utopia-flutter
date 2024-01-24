@@ -38,7 +38,11 @@ base class HookProviderContainer {
     }
   }
 
+  T call<T>() => get<T>();
+
   T get<T>() => getUnsafe(T) as T;
+
+  T Function() getter<T>() => () => get<T>();
 
   Object? getUnsafe(Type type) => _providers[type]?.value;
 

@@ -34,6 +34,7 @@ StateB useB() {
 void main() {
   test("aa", () async {
     final container = SimpleHookProviderContainer({StateA: useA, StateB: useB});
+    container<StateA>();
     await container.waitUntil<StateB>((it) => it.b == 2);
   });
 }
