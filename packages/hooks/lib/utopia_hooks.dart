@@ -9,6 +9,7 @@ export 'src/base/provider/hook_provider_container.dart';
 export 'src/hook/async/use_debounced.dart';
 export 'src/hook/async/use_future.dart';
 export 'src/hook/async/use_memoized_future.dart';
+export 'src/hook/async/use_memoized_stream.dart';
 export 'src/hook/async/use_periodical_signal.dart';
 export 'src/hook/async/use_stream.dart';
 export 'src/hook/async/use_stream_controller.dart';

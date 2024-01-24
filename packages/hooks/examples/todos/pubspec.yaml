@@ -1,0 +1,36 @@
+name: flutter_todos
+description: An example todos app that showcases bloc state management patterns.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.0
+  local_storage_todos_api:
+    path: packages/local_storage_todos_api
+  todos_api:
+    path: packages/todos_api
+  todos_repository:
+    path: packages/todos_repository
+
+  utopia_hooks:
+    path: ../../
+
+  utopia_reporter:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockingjay: ^0.5.0
+  mocktail: ^1.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
