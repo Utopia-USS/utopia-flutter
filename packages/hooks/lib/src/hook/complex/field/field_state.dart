@@ -49,4 +49,4 @@ MutableGenericFieldState<T> useGenericFieldState<T>({required T initialValue}) {
   return useMemoized(() => MutableGenericFieldState(value: valueState, errorMessage: errorMessageState));
 }
 
-MutableFieldState useFieldState({String initialValue = ""}) => useGenericFieldState(initialValue: initialValue);
+MutableFieldState useFieldState({String? initialValue}) => useGenericFieldState(initialValue: initialValue ?? "");

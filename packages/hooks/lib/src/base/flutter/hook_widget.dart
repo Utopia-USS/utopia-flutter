@@ -1,7 +1,7 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
-import 'package:utopia_hooks/src/provider/provider.dart';
+import 'package:utopia_hooks/src/provider/provider_widget.dart';
 
 abstract class HookWidget extends StatefulWidget {
   const HookWidget({super.key});
@@ -30,10 +30,10 @@ class _HookWidgetState extends State<HookWidget> with HookContextMixin {
   void markNeedsBuild() => setState(() {});
 
   @override
-  T get<T>() {
-    return switch (T) {
-      BuildContext => context as T,
-      _ => context.get(),
+  dynamic getUnsafe(Type type) {
+    return switch (type) {
+      BuildContext => context,
+      _ => context.getUnsafe(type),
     };
   }
 

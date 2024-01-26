@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
+import 'package:utopia_hooks/src/provider/provider_context.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 /// Mixin with common parts of [HookContext] implementations.
@@ -118,7 +119,11 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   }
 
   @override
-  T get<T>() => _provided[T] as T;
+  @protected
+  dynamic getUnsafe(Type type) {
+    if(!_provided.containsKey(type)) throw ProvidedValueNotFoundException(type: type, context: this);
+    return _provided[type];
+  }
 
   @override
   @protected

@@ -1,5 +1,5 @@
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
-import 'package:utopia_hooks/src/initialization/has_initialized.dart';
+import 'package:utopia_hooks/src/misc/has_initialized.dart';
 
 base class ComputedState<T> with ComputedStateMixin<T> {
   @override

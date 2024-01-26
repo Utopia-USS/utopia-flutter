@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
+import 'package:utopia_hooks/src/provider/provider_context.dart';
 
-base class HookProviderContainer {
+base class HookProviderContainer implements ProviderContext {
   final void Function(void Function()) schedule;
   final _providers = <Type, _ProviderState>{};
   final _dependents = <Type, Set<Type>>{};
@@ -38,13 +39,8 @@ base class HookProviderContainer {
     }
   }
 
-  T call<T>() => get<T>();
-
-  T get<T>() => getUnsafe(T) as T;
-
-  T Function() getter<T>() => () => get<T>();
-
-  Object? getUnsafe(Type type) => _providers[type]?.value;
+  @override
+  dynamic getUnsafe(Type type) => _providers[type]?.value;
 
   void Function() addListener<T>(void Function(T) listener) => addListenerUnsafe(T, (it) => listener(it as T));
 
@@ -101,6 +97,8 @@ final class SimpleHookProviderContainer extends HookProviderContainer {
   })  : _provided = Map.of(provided),
         super({..._buildProviders(provided), ...providers}, schedule: (it) => it());
 
+  T call<T>() => get<T>();
+
   void setProvided<T>(T value) {
     _provided[T] = value;
     refresh(getDependents(T));
@@ -135,9 +133,9 @@ class _ProviderState with HookContextMixin {
   void dispose() => disposeHooks();
 
   @override
-  T2 get<T2>() {
-    if (isCollectingDependencies) dependencies.add(T2);
-    return container.get();
+  dynamic getUnsafe(Type type) {
+    if (isCollectingDependencies) dependencies.add(type);
+    return container.getUnsafe(type);
   }
 
   @override

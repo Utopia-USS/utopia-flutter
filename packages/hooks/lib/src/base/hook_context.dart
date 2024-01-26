@@ -2,11 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
+import 'package:utopia_hooks/src/provider/provider_context.dart';
 
 /// A context in which hooks can be used.
 ///
 /// It's strongly recommended to use [HookContextMixin] when implementing [HookContext].
-abstract interface class HookContext {
+abstract interface class HookContext implements ProviderContext {
   static final _stack = <HookContext>[];
 
   /// The currently active [HookContext].
@@ -39,12 +40,6 @@ abstract interface class HookContext {
   /// type.
   T use<T>(Hook<T> hook);
 
-  /// Retrieves a provided value of type [T] and registers it as a dependency of this [HookContext].
-  ///
-  /// Available values depend on the implementation.
-  /// Implementations should throw [ProvidedValueNotFoundException] when the requested value can't be provided.
-  T get<T>();
-
   /// Requests that this [HookContext] should be rebuilt.
   ///
   /// This method should only be called from implementations of [HookState].
@@ -75,19 +70,10 @@ T use<T>(Hook<T> hook) => HookContext.current!.use(hook);
 /// Implementations should throw [ProvidedValueNotFoundException] when the requested value can't be provided.
 T useProvided<T>() => HookContext.current!.get<T>();
 
+dynamic useProvidedUnsafe(Type type) => HookContext.current!.getUnsafe(type);
+
 /// Retrieves a [BuildContext] from the current [HookContext].
 ///
 /// Shorthand for [useProvided] with [BuildContext] as the type parameter.
 /// This [BuildContext] can be used to register dependencies on [InheritedWidget]s, rebuilding the hook after it changes.
 BuildContext useBuildContext() => useProvided<BuildContext>();
-
-/// An exception thrown by [HookContext.get] when the requested value can't be provided.
-class ProvidedValueNotFoundException implements Exception {
-  final Type type;
-  final HookContext context;
-
-  const ProvidedValueNotFoundException({required this.type, required this.context});
-
-  @override
-  String toString() => "Provided value of type $type not found in $context";
-}

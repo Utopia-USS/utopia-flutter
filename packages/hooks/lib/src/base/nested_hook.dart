@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
+import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 
 abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> {
@@ -8,6 +10,12 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
   bool _isBuilding = false;
 
   T buildInner();
+
+  // Redeclaration to make available for _NestedHookState.
+  @override
+  @protected
+  @internal
+  HookContext get context => super.context;
 
   @override
   @nonVirtual
@@ -37,10 +45,6 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
     return _contexts.putIfAbsent(key, () => _NestedHookContext(this)).wrapBuild(block);
   }
 
-  void _markNeedsBuild() => context.markNeedsBuild();
-
-  R _get<R>() => context.get<R>();
-
   void _postBuild() {
     final unused = _contexts.keys.toSet().difference(_used);
     for (final key in unused) {
@@ -68,8 +72,8 @@ class _NestedHookContext with HookContextMixin {
   void dispose() => disposeHooks();
 
   @override
-  void markNeedsBuild() => _state._markNeedsBuild();
+  void markNeedsBuild() => _state.context.markNeedsBuild();
 
   @override
-  T get<T>() => _state._get<T>();
+  dynamic getUnsafe(Type type) => _state.context.getUnsafe(type);
 }

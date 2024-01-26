@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:utopia_hooks/src/base/provider/hook_provider_container.dart';
-import 'package:utopia_hooks/src/provider/provider.dart';
+import 'package:utopia_hooks/src/provider/provider_widget.dart';
 
 class HookProviderContainerWidget extends StatefulWidget {
   final Map<Type, Object? Function()> providers;
@@ -53,7 +53,7 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   }
 
   @override
-  Widget build(BuildContext context) => RawProvider(Map.of(_values), child: widget.child);
+  Widget build(BuildContext context) => ProviderWidget(Map.of(_values), child: widget.child);
 
   void _schedule(void Function() block) {
     unawaited(SchedulerBinding.instance.scheduleTask(
