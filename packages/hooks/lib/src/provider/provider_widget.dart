@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
 
@@ -15,7 +16,7 @@ class ProviderWidget extends InheritedModel<Type> {
       dependencies.any((it) => values[it] != oldWidget.values[it]);
 
   @override
-  bool updateShouldNotify(ProviderWidget oldWidget) => values != oldWidget.values;
+  bool updateShouldNotify(ProviderWidget oldWidget) => !mapEquals(values, oldWidget.values);
 }
 
 class ValueProvider<T> extends StatelessWidget {
