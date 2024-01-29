@@ -99,8 +99,12 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   final Map<Type, Object?> _provided;
   final _waiting = <_WaitingPredicate<R>>[];
 
-  SimpleHookContext(this._build, {Map<Type, Object?> provided = const {}}) : _provided = Map.of(provided) {
-    rebuild();
+  SimpleHookContext(
+    this._build, {
+    bool init = true,
+    Map<Type, Object?> provided = const {},
+  }) : _provided = Map.of(provided) {
+    if(init) rebuild();
   }
 
   @override
@@ -121,7 +125,7 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   @override
   @protected
   dynamic getUnsafe(Type type) {
-    if(!_provided.containsKey(type)) throw ProvidedValueNotFoundException(type: type, context: this);
+    if (!_provided.containsKey(type)) throw ProvidedValueNotFoundException(type: type, context: this);
     return _provided[type];
   }
 
