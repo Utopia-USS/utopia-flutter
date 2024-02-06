@@ -39,6 +39,7 @@ export 'src/hook/nested/use_map.dart';
 export 'src/hook/reactive/use_listenable.dart';
 export 'src/hook/reactive/use_listenable_listener.dart';
 export 'src/misc/has_initialized.dart';
+export 'src/misc/listenable_value.dart';
 export 'src/provider/provider_context.dart';
 export 'src/provider/provider_widget.dart';
 export 'src/widget/coordinator/hook_coordinator.dart';
