@@ -1,3 +1,10 @@
+## 0.4.1
+
+ - **FIX**(utopia_hooks): Export src/misc/listenable_value.dart.
+ - **FIX**(utopia_hooks): Fix ProviderWidget.updateShouldNotify.
+ - **FEAT**(utopia_hooks): Add `init` parameter to SimpleHookContext constructor.
+ - **FEAT**(utopia_hooks): Extract ProviderContext, add CombinedInitializationState.
+
 ## 0.4.0+4
 
  - **FIX**(utopia_hooks): README.
