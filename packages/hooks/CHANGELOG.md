@@ -1,3 +1,8 @@
+## 0.4.2
+
+ - **FEAT**(utopia_hooks_riverpod): Initial release.
+ - **FEAT**(utopia_hooks): Expose HookContextStateMixin.
+
 ## 0.4.1
 
  - **FIX**(utopia_hooks): Export src/misc/listenable_value.dart.
