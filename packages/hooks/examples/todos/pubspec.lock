@@ -568,12 +568,11 @@ packages:
     source: hosted
     version: "1.3.2"
   utopia_collections:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: utopia_collections
-      sha256: "6ce2aeb4d5f151b9c5c55cc0c56f9c1da90c3c36b547872d84c8f70278c49d77"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../../collections"
+      relative: true
+    source: path
     version: "0.1.0"
   utopia_hooks:
     dependency: "direct main"
@@ -581,30 +580,27 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "0.4.0+4"
+    version: "0.4.1"
   utopia_reporter:
     dependency: "direct main"
     description:
-      name: utopia_reporter
-      sha256: e4cbc3a9a147a32167e46b432ad7e0a266ff7ecc82b43a4c12b9fe047d85d6e5
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../../reporter"
+      relative: true
+    source: path
     version: "0.1.0"
   utopia_utils:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: utopia_utils
-      sha256: "46c166f06fa350cd99905f7daf606c36c515793ebed7db7ccbcc0070a1969138"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../../utils"
+      relative: true
+    source: path
     version: "0.3.0"
   utopia_validation:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: utopia_validation
-      sha256: "875494528b6a5882c6380b8265dcc200040a35ce107422f524e1bb9d71ae183e"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../../validation"
+      relative: true
+    source: path
     version: "0.1.0"
   uuid:
     dependency: transitive
