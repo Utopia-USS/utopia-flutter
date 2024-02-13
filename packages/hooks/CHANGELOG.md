@@ -1,3 +1,7 @@
+## 0.4.3+1
+
+ - **FIX**(utopia_hooks): Check for isMounted in usePeriodicalSignal.
+
 ## 0.4.3
 
  - **FEAT**(utopia_hooks): Improve useListenable/useValueListenable hooks to allow for selective rebuilding.

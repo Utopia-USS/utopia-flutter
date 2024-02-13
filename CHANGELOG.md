@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.3+1`](#utopia_hooks---v0431)
+ - [`utopia_arch` - `v0.5.0+8`](#utopia_arch---v0508)
+ - [`utopia_hooks_riverpod` - `v0.0.2+2`](#utopia_hooks_riverpod---v0022)
+ - [`utopia_connectivity` - `v0.1.0+8`](#utopia_connectivity---v0108)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+8`
+ - `utopia_hooks_riverpod` - `v0.0.2+2`
+ - `utopia_connectivity` - `v0.1.0+8`
+
+---
+
+#### `utopia_hooks` - `v0.4.3+1`
+
+ - **FIX**(utopia_hooks): Check for isMounted in usePeriodicalSignal.
+
+
+## 2024-02-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.3`](#utopia_hooks---v043)
  - [`utopia_arch` - `v0.5.0+7`](#utopia_arch---v0507)
  - [`utopia_hooks_riverpod` - `v0.0.2+1`](#utopia_hooks_riverpod---v0021)
