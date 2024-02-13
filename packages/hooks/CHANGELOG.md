@@ -1,3 +1,7 @@
+## 0.4.3
+
+ - **FEAT**(utopia_hooks): Improve useListenable/useValueListenable hooks to allow for selective rebuilding.
+
 ## 0.4.2
 
  - **FEAT**(utopia_hooks_riverpod): Initial release.
