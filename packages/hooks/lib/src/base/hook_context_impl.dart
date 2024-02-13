@@ -98,13 +98,18 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   late R _value;
   final Map<Type, Object?> _provided;
   final _waiting = <_WaitingPredicate<R>>[];
+  bool shouldRebuild;
+  var _needsBuild = false;
+
+  bool get needsBuild => _needsBuild;
 
   SimpleHookContext(
     this._build, {
     bool init = true,
+    this.shouldRebuild = true,
     Map<Type, Object?> provided = const {},
   }) : _provided = Map.of(provided) {
-    if(init) rebuild();
+    if (init) rebuild();
   }
 
   @override
@@ -119,6 +124,7 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
         entry.completer.complete();
       }
     }
+    _needsBuild = false;
     return _value;
   }
 
@@ -131,7 +137,13 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
 
   @override
   @protected
-  void markNeedsBuild() => rebuild();
+  void markNeedsBuild() {
+    if (shouldRebuild) {
+      rebuild();
+    } else {
+      _needsBuild = true;
+    }
+  }
 
   void setProvided<T>(T value) {
     _provided[T] = value;
