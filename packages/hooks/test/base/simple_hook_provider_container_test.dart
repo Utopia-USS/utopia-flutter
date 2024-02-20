@@ -13,6 +13,7 @@ void main() {
       _State: () => _State(useAutoComputedState(() async => 1)),
     });
 
+    expect(container.get<_State>().xd.valueOrNull, null);
     await container.waitUntil<_State>((it) => it.xd.valueOrNull == 1);
   });
 }

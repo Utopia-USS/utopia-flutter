@@ -55,6 +55,8 @@ base class HookProviderContainer implements ProviderContext {
       (await waitUntilUnsafe(T, (it) => predicate(it as T))) as T;
 
   Future<Object?> waitUntilUnsafe(Type type, bool Function(Object?) predicate) async {
+    final currentValue = getUnsafe(type);
+    if(predicate(currentValue)) return currentValue;
     final completer = Completer<Object?>();
     final cancel = addListenerUnsafe(type, (value) {
       if (predicate(value)) completer.complete(value);
