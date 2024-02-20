@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.3+3`](#utopia_hooks---v0433)
+ - [`utopia_arch` - `v0.5.0+10`](#utopia_arch---v05010)
+ - [`utopia_hooks_riverpod` - `v0.0.2+4`](#utopia_hooks_riverpod---v0024)
+ - [`utopia_connectivity` - `v0.1.0+10`](#utopia_connectivity---v01010)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+10`
+ - `utopia_hooks_riverpod` - `v0.0.2+4`
+ - `utopia_connectivity` - `v0.1.0+10`
+
+---
+
+#### `utopia_hooks` - `v0.4.3+3`
+
+ - **FIX**(utopia_hooks): Fix SimpleHookProviderContainer.
+
+
+## 2024-02-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.3+2`](#utopia_hooks---v0432)
  - [`utopia_arch` - `v0.5.0+9`](#utopia_arch---v0509)
  - [`utopia_hooks_riverpod` - `v0.0.2+3`](#utopia_hooks_riverpod---v0023)

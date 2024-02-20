@@ -1,3 +1,7 @@
+## 0.4.3+3
+
+ - **FIX**(utopia_hooks): Fix SimpleHookProviderContainer.
+
 ## 0.4.3+2
 
  - **FIX**(utopia_hooks): Fix SimpleHookContext and SimpleHookProviderContainer.
