@@ -1,3 +1,7 @@
+## 0.4.3+2
+
+ - **FIX**(utopia_hooks): Fix SimpleHookContext and SimpleHookProviderContainer.
+
 ## 0.4.3+1
 
  - **FIX**(utopia_hooks): Check for isMounted in usePeriodicalSignal.
