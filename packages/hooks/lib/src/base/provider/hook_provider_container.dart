@@ -24,7 +24,7 @@ base class HookProviderContainer implements ProviderContext {
       };
     }
 
-    _triggerPostBuildCallbacks();
+    schedule(_triggerPostBuildCallbacks);
   }
 
   void refresh([Set<Type>? providers]) {
