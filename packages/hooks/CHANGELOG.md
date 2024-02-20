@@ -1,3 +1,7 @@
+## 0.4.3+4
+
+ - **FIX**(utopia_hooks): Remove unnecessary check in HookProviderContainer refresh.
+
 ## 0.4.3+3
 
  - **FIX**(utopia_hooks): Fix SimpleHookProviderContainer.
