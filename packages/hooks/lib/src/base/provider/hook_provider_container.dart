@@ -71,10 +71,9 @@ base class HookProviderContainer implements ProviderContext {
     for (final type in _providers.keys) {
       if (_dirty.contains(type)) {
         final provider = _providers[type]!;
-        if (provider.refreshValue()) {
-          _dirty.addAll(_dependents[type]!);
-          _listeners[type]?.forEach((it) => it(provider.value));
-        }
+        provider.refreshValue();
+        _dirty.addAll(_dependents[type]!);
+        _listeners[type]?.forEach((it) => it(provider.value));
       }
     }
     _dirty.clear();
@@ -125,10 +124,8 @@ class _ProviderState with HookContextMixin {
     isCollectingDependencies = false;
   }
 
-  bool refreshValue() {
-    final oldValue = value;
+  void refreshValue() {
     value = wrapBuild(block);
-    return oldValue != value;
   }
 
   void dispose() => disposeHooks();
