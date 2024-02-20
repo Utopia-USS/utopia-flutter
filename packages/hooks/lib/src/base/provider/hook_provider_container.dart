@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
+import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
 
 base class HookProviderContainer implements ProviderContext {
   final void Function(void Function()) schedule;
@@ -95,7 +96,7 @@ final class SimpleHookProviderContainer extends HookProviderContainer {
     Map<Type, Object? Function()> providers, {
     Map<Type, Object?> provided = const {},
   })  : _provided = Map.of(provided),
-        super({..._buildProviders(provided), ...providers}, schedule: (it) => it());
+        super({..._buildProviders(provided), ...providers}, schedule: ImmediateLockingScheduler());
 
   T call<T>() => get<T>();
 

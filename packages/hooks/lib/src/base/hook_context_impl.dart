@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
+import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 /// Mixin with common parts of [HookContext] implementations.
@@ -100,6 +101,7 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   final _waiting = <_WaitingPredicate<R>>[];
   bool shouldRebuild;
   var _needsBuild = false;
+  final _scheduler = ImmediateLockingScheduler();
 
   bool get needsBuild => _needsBuild;
 
@@ -109,7 +111,7 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
     this.shouldRebuild = true,
     Map<Type, Object?> provided = const {},
   }) : _provided = Map.of(provided) {
-    if (init) rebuild();
+    if (init) _scheduler(rebuild);
   }
 
   @override
@@ -139,7 +141,7 @@ class SimpleHookContext<R> with HookContextMixin implements Value<R> {
   @protected
   void markNeedsBuild() {
     if (shouldRebuild) {
-      rebuild();
+      _scheduler(rebuild);
     } else {
       _needsBuild = true;
     }
