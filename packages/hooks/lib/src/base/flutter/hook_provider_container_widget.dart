@@ -24,14 +24,13 @@ class HookProviderContainerWidget extends StatefulWidget {
 class _HookProviderContainerWidgetState extends State<HookProviderContainerWidget> {
   late final HookProviderContainer _container;
   late Map<Type, Object?> _values;
+  var _isFirstBuild = true;
 
   @override
   void initState() {
     super.initState();
-    _container = HookProviderContainer(schedule: _schedule, {
-      BuildContext: () => context,
-      ...widget.providers,
-    });
+    _container = HookProviderContainer(schedule: _schedule);
+    _container.initialize({BuildContext: () => context, ...widget.providers});
     _values = {
       for (final type in widget.providers.keys) type: _container.getUnsafe(type),
     };
@@ -43,7 +42,11 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _container.refresh(_container.getDependents(BuildContext));
+    if (_isFirstBuild) {
+      _isFirstBuild = false;
+    } else {
+      _container.refresh(_container.getDependents(BuildContext));
+    }
   }
 
   @override
@@ -56,10 +59,7 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   Widget build(BuildContext context) => ProviderWidget(Map.of(_values), child: widget.child);
 
   void _schedule(void Function() block) {
-    unawaited(SchedulerBinding.instance.scheduleTask(
-      block,
-      widget.schedulerPriority,
-      debugLabel: 'HookProviderContainer refresh'
-    ));
+    unawaited(SchedulerBinding.instance
+        .scheduleTask(block, widget.schedulerPriority, debugLabel: 'HookProviderContainer refresh'));
   }
 }

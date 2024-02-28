@@ -12,7 +12,9 @@ base class HookProviderContainer implements ProviderContext {
   final _listeners = <Type, Set<void Function(Object?)>>{};
   var _isRefreshInProgress = false;
 
-  HookProviderContainer(Map<Type, Object? Function()> providers, {required this.schedule}) {
+  HookProviderContainer({required this.schedule});
+
+  void initialize(Map<Type, Object? Function()> providers) {
     for (final entry in providers.entries) {
       _providers[entry.key] = _ProviderState(this, entry.key, entry.value);
     }
@@ -24,7 +26,7 @@ base class HookProviderContainer implements ProviderContext {
       };
     }
 
-    schedule(_triggerPostBuildCallbacks);
+    _triggerPostBuildCallbacks();
   }
 
   void refresh([Set<Type>? providers]) {
@@ -97,7 +99,9 @@ final class SimpleHookProviderContainer extends HookProviderContainer {
     Map<Type, Object? Function()> providers, {
     Map<Type, Object?> provided = const {},
   })  : _provided = Map.of(provided),
-        super({..._buildProviders(provided), ...providers}, schedule: ImmediateLockingScheduler());
+        super(schedule: ImmediateLockingScheduler()) {
+    schedule(() => initialize({...providers, ..._buildProviders(provided)}));
+  }
 
   T call<T>() => get<T>();
 
