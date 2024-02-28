@@ -1,3 +1,7 @@
+## 0.4.3+6
+
+ - **FIX**(utopia_hooks): Fix HookProviderContainerWidget.
+
 ## 0.4.3+5
 
  - **FIX**(utopia_hooks): Fix HookProviderContainer.waitUntil.
