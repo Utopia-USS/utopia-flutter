@@ -1,3 +1,7 @@
+## 0.4.3+7
+
+ - **FIX**(utopia_hooks): Export useAsyncSnapshotErrorHandler.
+
 ## 0.4.3+6
 
  - **FIX**(utopia_hooks): Fix HookProviderContainerWidget.
