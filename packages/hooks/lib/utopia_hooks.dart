@@ -6,6 +6,7 @@ export 'src/base/hook.dart';
 export 'src/base/hook_context.dart';
 export 'src/base/hook_context_impl.dart';
 export 'src/base/provider/hook_provider_container.dart';
+export 'src/hook/async/use_async_snapshot_error_handler.dart';
 export 'src/hook/async/use_debounced.dart';
 export 'src/hook/async/use_future.dart';
 export 'src/hook/async/use_memoized_future.dart';
