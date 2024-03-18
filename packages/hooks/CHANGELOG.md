@@ -1,3 +1,7 @@
+## 0.4.3+8
+
+ - **FIX**(utopia_hooks): Fix memoization issue in usePersistedState.
+
 ## 0.4.3+7
 
  - **FIX**(utopia_hooks): Export useAsyncSnapshotErrorHandler.
