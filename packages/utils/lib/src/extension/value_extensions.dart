@@ -34,7 +34,7 @@ extension NotNullMutableValueExtensions<T extends Object> on MutableValue<T> {
 }
 
 extension NullableMutableValueExtensions<T extends Object> on MutableValue<T?> {
-  MutableValue<T> asNotNull() => cast<T>();
+  MutableValue<T> asNotNull([T? onNull]) => MutableValue.computed(() => value ?? onNull!, (it) => value = it);
 }
 
 extension BoolMutableValueExtensions on MutableValue<bool> {
