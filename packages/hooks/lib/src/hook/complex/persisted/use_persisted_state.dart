@@ -23,9 +23,11 @@ PersistedState<T> usePersistedState<T extends Object>(
   final state = useAutoComputedState(get, shouldCompute: canGet, keys: getKeys);
   final submitState = useSubmitState();
 
+  final wrappedSet = useValueWrapper(set);
+
   void updateValue(T? value) {
     state.updateValue(value);
-    unawaited(submitState.run(() => set(value)));
+    unawaited(submitState.run(() => wrappedSet.value(value)));
   }
 
   final wrappedValue = useValueWrapper(usePreviousIfNull(state.valueOrNull));
