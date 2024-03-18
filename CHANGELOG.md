@@ -15,6 +15,52 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_utils` - `v0.3.1`](#utopia_utils---v031)
+ - [`utopia_arch` - `v0.5.0+16`](#utopia_arch---v05016)
+ - [`utopia_save_file` - `v0.2.0+1`](#utopia_save_file---v0201)
+ - [`utopia_rest` - `v0.1.0+1`](#utopia_rest---v0101)
+ - [`utopia_reporter` - `v0.1.0+1`](#utopia_reporter---v0101)
+ - [`utopia_validation` - `v0.1.0+1`](#utopia_validation---v0101)
+ - [`utopia_hooks` - `v0.4.3+9`](#utopia_hooks---v0439)
+ - [`utopia_widgets` - `v0.1.0+1`](#utopia_widgets---v0101)
+ - [`utopia_connectivity` - `v0.1.0+16`](#utopia_connectivity---v01016)
+ - [`utopia_firebase_crashlytics` - `v0.2.0+1`](#utopia_firebase_crashlytics---v0201)
+ - [`utopia_hooks_riverpod` - `v0.0.2+10`](#utopia_hooks_riverpod---v00210)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+16`
+ - `utopia_save_file` - `v0.2.0+1`
+ - `utopia_rest` - `v0.1.0+1`
+ - `utopia_reporter` - `v0.1.0+1`
+ - `utopia_validation` - `v0.1.0+1`
+ - `utopia_hooks` - `v0.4.3+9`
+ - `utopia_widgets` - `v0.1.0+1`
+ - `utopia_connectivity` - `v0.1.0+16`
+ - `utopia_firebase_crashlytics` - `v0.2.0+1`
+ - `utopia_hooks_riverpod` - `v0.0.2+10`
+
+---
+
+#### `utopia_utils` - `v0.3.1`
+
+ - **FEAT**(utopia_hooks): Add onNull parameter to MutableValue.asNotNull.
+
+
+## 2024-03-18
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.3+8`](#utopia_hooks---v0438)
  - [`utopia_arch` - `v0.5.0+15`](#utopia_arch---v05015)
  - [`utopia_hooks_riverpod` - `v0.0.2+9`](#utopia_hooks_riverpod---v0029)
