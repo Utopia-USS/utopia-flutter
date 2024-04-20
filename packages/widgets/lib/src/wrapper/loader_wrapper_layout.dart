@@ -17,8 +17,8 @@ class LoaderWrapperLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => !isLoaderVisible,
+    return PopScope(
+      canPop: !isLoaderVisible,
       child: Stack(
         fit: StackFit.expand,
         children: [
