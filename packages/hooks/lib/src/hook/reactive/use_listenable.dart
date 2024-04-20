@@ -2,25 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/hook/base/use_state.dart';
+import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 import 'package:utopia_hooks/src/misc/listenable_value.dart';
 
 void useListenable(Listenable? listenable, {bool Function()? shouldRebuild}) =>
     use(_ListenableHook(listenable, shouldRebuild));
 
 T useValueListenable<T>(ValueListenable<T> listenable, {bool Function(T prev, T curr)? shouldRebuild}) {
-  useListenable(
-    listenable,
-    shouldRebuild: _useShouldRebuild(getValue: () => listenable.value, shouldRebuild: shouldRebuild),
-  );
-  return listenable.value;
+  return useDebugGroup(debugLabel: "useValueListenable<$T>()", () {
+    useListenable(
+      listenable,
+      shouldRebuild: _useShouldRebuild(getValue: () => listenable.value, shouldRebuild: shouldRebuild),
+    );
+    return listenable.value;
+  });
 }
 
 T useListenableValue<T>(ListenableValue<T> listenable, {bool Function(T prev, T curr)? shouldRebuild}) {
-  useListenable(
-    listenable,
-    shouldRebuild: _useShouldRebuild(getValue: () => listenable.value, shouldRebuild: shouldRebuild),
-  );
-  return listenable.value;
+  return useDebugGroup(debugLabel: "useListenableValue<$T>()", () {
+    useListenable(
+      listenable,
+      shouldRebuild: _useShouldRebuild(getValue: () => listenable.value, shouldRebuild: shouldRebuild),
+    );
+    return listenable.value;
+  });
 }
 
 bool Function() _useShouldRebuild<T>({required T Function() getValue, bool Function(T prev, T curr)? shouldRebuild}) {
@@ -35,7 +40,7 @@ bool Function() _useShouldRebuild<T>({required T Function() getValue, bool Funct
 }
 
 final class _ListenableHook extends Hook<void> {
-  const _ListenableHook(this.listenable, this.shouldRebuild);
+  const _ListenableHook(this.listenable, this.shouldRebuild) : super(debugLabel: "useListenable()");
 
   final Listenable? listenable;
   final bool Function()? shouldRebuild;

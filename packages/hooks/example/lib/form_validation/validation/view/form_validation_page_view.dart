@@ -38,7 +38,7 @@ class FormValidationPageView extends StatelessWidget {
     return Builder(
       builder: (context) {
         final errorMessage = state.errorMessage;
-        return StatelessTextEditingControllerWrapper(
+        return TextEditingControllerWrapper(
           text: state,
           builder: (controller) => TextField(
             controller: controller,

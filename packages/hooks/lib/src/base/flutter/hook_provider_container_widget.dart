@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:utopia_hooks/src/base/provider/hook_provider_container.dart';
 import 'package:utopia_hooks/src/provider/provider_widget.dart';
@@ -21,7 +22,7 @@ class HookProviderContainerWidget extends StatefulWidget {
   State<HookProviderContainerWidget> createState() => _HookProviderContainerWidgetState();
 }
 
-class _HookProviderContainerWidgetState extends State<HookProviderContainerWidget> {
+class _HookProviderContainerWidgetState extends State<HookProviderContainerWidget> with DiagnosticableTreeMixin {
   late final HookProviderContainer _container;
   late Map<Type, Object?> _values;
   var _isFirstBuild = true;
@@ -50,6 +51,12 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   }
 
   @override
+  void reassemble() {
+    super.reassemble();
+    _container.reassemble();
+  }
+
+  @override
   void dispose() {
     _container.dispose();
     super.dispose();
@@ -59,7 +66,16 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   Widget build(BuildContext context) => ProviderWidget(Map.of(_values), child: widget.child);
 
   void _schedule(void Function() block) {
-    unawaited(SchedulerBinding.instance
-        .scheduleTask(block, widget.schedulerPriority, debugLabel: 'HookProviderContainer refresh'));
+    unawaited(
+      SchedulerBinding.instance
+          .scheduleTask(block, widget.schedulerPriority, debugLabel: 'HookProviderContainer refresh'),
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(FlagProperty("first build", value: _isFirstBuild, ifTrue: "first build"));
+    properties.add(DiagnosticableTreeNode(name: "container", value: _container, style: null));
   }
 }

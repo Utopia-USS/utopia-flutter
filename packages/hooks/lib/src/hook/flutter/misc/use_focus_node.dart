@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
@@ -41,10 +42,22 @@ final class _FocusNodeHook extends Hook<FocusNode> {
     required this.skipTraversal,
     required this.canRequestFocus,
     required this.descendantsAreFocusable,
-  });
+  }) : super(debugLabel: "useFocusNode()");
 
   @override
   _FocusNodeHookState createState() => _FocusNodeHookState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty("debugLabel", debugLabel, defaultValue: null))
+      ..add(ObjectFlagProperty.has("onKey", onKey))
+      ..add(ObjectFlagProperty.has("onKeyEvent", onKeyEvent))
+      ..add(FlagProperty("skipTraversal", value: skipTraversal, defaultValue: false))
+      ..add(FlagProperty("canRequestFocus", value: canRequestFocus, defaultValue: true))
+      ..add(FlagProperty("descendantsAreFocusable", value: descendantsAreFocusable, defaultValue: true));
+  }
 }
 
 final class _FocusNodeHookState extends HookState<FocusNode, _FocusNodeHook> {

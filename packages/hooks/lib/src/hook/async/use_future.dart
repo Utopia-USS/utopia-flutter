@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
@@ -22,10 +23,26 @@ final class _FutureHook<T> extends Hook<AsyncSnapshot<T>> {
   final T? initialData;
   final bool preserveState;
 
-  const _FutureHook(this.future, {this.initialData, required this.preserveState});
+  const _FutureHook(this.future, {this.initialData, required this.preserveState})
+      : super(debugLabel: 'useFuture<$T>()');
 
   @override
   _FutureHookState<T> createState() => _FutureHookState<T>();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty('future', future, ifNull: 'no future'));
+    properties.add(DiagnosticsProperty('initial data', initialData, ifNull: 'no initial data'));
+    properties.add(
+      FlagProperty(
+        'preserve state',
+        value: preserveState,
+        ifTrue: 'will preserve state',
+        ifFalse: 'will not preserve state',
+      ),
+    );
+  }
 }
 
 final class _FutureHookState<T> extends HookState<AsyncSnapshot<T>, _FutureHook<T>> {
@@ -96,4 +113,12 @@ final class _FutureHookState<T> extends HookState<AsyncSnapshot<T>, _FutureHook<
 
   @override
   AsyncSnapshot<T> build() => _snapshot;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(EnumProperty("connection state", _snapshot.connectionState));
+    properties.add(DiagnosticsProperty("value", _snapshot.data));
+    properties.add(DiagnosticsProperty("error", _snapshot.error));
+  }
 }

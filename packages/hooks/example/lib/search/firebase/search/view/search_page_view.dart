@@ -16,7 +16,7 @@ class SearchPageView extends StatelessWidget {
   }
 
   Widget _buildSearchField() {
-    return StatelessTextEditingControllerWrapper(
+    return TextEditingControllerWrapper(
       text: state.search,
       builder: (controller) => TextField(
         controller: controller,

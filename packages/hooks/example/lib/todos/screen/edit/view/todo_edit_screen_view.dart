@@ -30,7 +30,7 @@ class TodoEditScreenView extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: StatelessTextEditingControllerWrapper(
+      child: TextEditingControllerWrapper(
         text: state.titleField,
         builder: (controller) => TextField(
           controller: controller,

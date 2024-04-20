@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
@@ -7,6 +8,7 @@ import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart
 import 'package:utopia_hooks/src/hook/complex/computed/use_computed_state.dart';
 import 'package:utopia_hooks/src/hook/complex/submit/use_submit_state.dart';
 import 'package:utopia_hooks/src/hook/misc/use_previous_if_null.dart';
+import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 import 'package:utopia_hooks/src/misc/has_initialized.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
@@ -20,25 +22,33 @@ PersistedState<T> usePersistedState<T extends Object>(
   bool canGet = true,
   HookKeys getKeys = const [],
 }) {
-  final state = useAutoComputedState(get, shouldCompute: canGet, keys: getKeys);
-  final submitState = useSubmitState();
+  return useDebugGroup(
+    debugLabel: "usePersistedState<$T>()",
+    debugFillProperties: (builder) => builder
+      ..add(FlagProperty("can get", value: canGet, ifFalse: "fetching disabled"))
+      ..add(IterableProperty("get keys", getKeys, ifEmpty: null)),
+    () {
+      final state = useAutoComputedState(get, shouldCompute: canGet, keys: getKeys);
+      final submitState = useSubmitState();
 
-  final wrappedSet = useValueWrapper(set);
+      final wrappedSet = useValueWrapper(set);
 
-  void updateValue(T? value) {
-    state.updateValue(value);
-    unawaited(submitState.run(() => wrappedSet.value(value)));
-  }
+      void updateValue(T? value) {
+        state.updateValue(value);
+        unawaited(submitState.run(() => wrappedSet.value(value)));
+      }
 
-  final wrappedValue = useValueWrapper(usePreviousIfNull(state.valueOrNull));
+      final wrappedValue = useValueWrapper(usePreviousIfNull(state.valueOrNull));
 
-  return useMemoized(
-    () => _DelegatePersistedState(
-      getIsInitialized: () => state.value is ComputedStateValueReady,
-      getIsSynchronized: () => state.value is ComputedStateValueReady && !submitState.inProgress,
-      getValue: wrappedValue.get,
-      setValue: updateValue,
-    ),
+      return useMemoized(
+        () => _DelegatePersistedState(
+          getIsInitialized: () => state.value is ComputedStateValueReady,
+          getIsSynchronized: () => state.value is ComputedStateValueReady && !submitState.inProgress,
+          getValue: wrappedValue.get,
+          setValue: updateValue,
+        ),
+      );
+    },
   );
 }
 

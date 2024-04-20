@@ -4,14 +4,14 @@ import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 
-abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> {
+abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> with DiagnosticableTreeMixin {
   final _contexts = <Object, _NestedHookContext>{};
   final _used = <Object>{};
   bool _isBuilding = false;
 
   T buildInner();
 
-  // Redeclaration to make available for _NestedHookState.
+  // Redeclaration to make available for _NestedHookContext.
   @override
   @protected
   @internal
@@ -25,16 +25,9 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
       return buildInner();
     } finally {
       _isBuilding = false;
+      // TODO investigate disposing unused contexts immediately instead of post-build
       context.addPostBuildCallback(_postBuild);
     }
-  }
-
-  @override
-  void dispose() {
-    for (final context in _contexts.values) {
-      context.dispose();
-    }
-    super.dispose();
   }
 
   @protected
@@ -45,6 +38,14 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
     return _contexts.putIfAbsent(key, () => _NestedHookContext(this)).wrapBuild(block);
   }
 
+  @override
+  void dispose() {
+    for (final context in _contexts.values) {
+      context.dispose();
+    }
+    super.dispose();
+  }
+
   void _postBuild() {
     final unused = _contexts.keys.toSet().difference(_used);
     for (final key in unused) {
@@ -52,13 +53,32 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
       _contexts.remove(key);
     }
     _used.clear();
-    for(final key in _contexts.keys) {
+    for (final key in _contexts.keys) {
       _contexts[key]!.triggerPostBuildCallbacks();
     }
   }
+
+  @override
+  void debugMarkWillReassemble() {
+    super.debugMarkWillReassemble();
+    for(final context in _contexts.values) {
+      context.debugMarkWillReassemble();
+    }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(FlagProperty("building", value: _isBuilding, ifTrue: "building"));
+    properties.add(IterableProperty("used context keys", _used, ifEmpty: null));
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() =>
+      _contexts.entries.map((it) => it.value.toDiagnosticsNode(name: it.key.toString())).toList();
 }
 
-class _NestedHookContext with HookContextMixin {
+class _NestedHookContext with DiagnosticableTreeMixin, HookContextMixin {
   final NestedHookState<Object?, Hook<Object?>> _state;
 
   _NestedHookContext(this._state);
@@ -70,6 +90,9 @@ class _NestedHookContext with HookContextMixin {
   void triggerPostBuildCallbacks() => super.triggerPostBuildCallbacks();
 
   void dispose() => disposeHooks();
+
+  @override
+  void debugMarkWillReassemble() => super.debugMarkWillReassemble();
 
   @override
   void markNeedsBuild() => _state.context.markNeedsBuild();

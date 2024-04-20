@@ -6,7 +6,7 @@ import 'package:utopia_hooks/src/base/hook_context.dart';
 TickerProvider useSingleTickerProvider() => use(const _SingleTickerProviderHook());
 
 final class _SingleTickerProviderHook extends Hook<TickerProvider> {
-  const _SingleTickerProviderHook();
+  const _SingleTickerProviderHook() : super(debugLabel: 'useSingleTickerProvider()');
 
   @override
   _TickerProviderHookState createState() => _TickerProviderHookState();

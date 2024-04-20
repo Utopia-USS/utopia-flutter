@@ -1,4 +1,5 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/hook/flutter/animation/use_single_ticker_provider.dart';
@@ -59,10 +60,22 @@ final class _AnimationControllerHook extends Hook<AnimationController> {
     required this.upperBound,
     required this.vsync,
     required this.animationBehavior,
-  });
+  }) : super(debugLabel: 'useAnimationController()');
 
   @override
   _AnimationControllerHookState createState() => _AnimationControllerHookState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('duration', duration));
+    properties.add(DiagnosticsProperty('reverse duration', reverseDuration));
+    properties.add(StringProperty('debug label', debugLabel));
+    properties.add(DoubleProperty('initial value', initialValue, defaultValue: 0));
+    properties.add(DoubleProperty('lower bound', lowerBound, defaultValue: 0));
+    properties.add(DoubleProperty('upper bound', upperBound, defaultValue: 1));
+    properties.add(EnumProperty('behavior', animationBehavior, defaultValue: AnimationBehavior.normal));
+  }
 }
 
 final class _AnimationControllerHookState extends HookState<AnimationController, _AnimationControllerHook> {

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
-class StatelessTabControllerWrapper extends HookWidget {
+@Deprecated("Use TabControllerWrapper")
+typedef StatelessTabControllerWrapper = TabControllerWrapper;
+
+class TabControllerWrapper extends HookWidget {
   final int length;
   final MutableValue<int> index;
   final void Function(TabController controller, int index)? onTransition;
   final TabController Function({required TickerProvider vsync, required int length}) controllerProvider;
   final Widget Function(TabController) builder;
 
-  const StatelessTabControllerWrapper({
+  const TabControllerWrapper({
     super.key,
     required this.length,
     required this.index,

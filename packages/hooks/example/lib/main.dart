@@ -27,7 +27,7 @@ class MyApp extends HookWidget {
       home: Scaffold(
         body: Column(
           children: [
-            StatelessTextEditingControllerWrapper(
+            TextEditingControllerWrapper(
               text: fieldState,
               builder: (controller) => TextField(controller: controller),
             ),

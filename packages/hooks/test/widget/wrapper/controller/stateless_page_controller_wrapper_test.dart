@@ -50,7 +50,7 @@ void main() {
 Widget _buildWidget(MutableValue<int> index, {void Function(PageController controller, int index)? onTransition}) {
   return Directionality(
     textDirection: TextDirection.ltr,
-    child: StatelessPageControllerWrapper(
+    child: PageControllerWrapper(
       index: index,
       onTransition: onTransition,
       builder: (controller) => PageView(

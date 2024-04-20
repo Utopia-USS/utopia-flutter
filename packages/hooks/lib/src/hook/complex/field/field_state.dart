@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_state.dart';
+import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 import 'package:utopia_validation/utopia_validation.dart';
 
@@ -43,10 +45,24 @@ typedef FieldState = GenericFieldState<String>;
 typedef MutableFieldState = MutableGenericFieldState<String>;
 
 MutableGenericFieldState<T> useGenericFieldState<T>({required T initialValue}) {
+  return useDebugGroup(
+    debugLabel: "useGenericFieldState<$T>()",
+    debugFillProperties: (builder) => builder.add(DiagnosticsProperty("initial value", initialValue)),
+    () => _useGenericFieldState(initialValue: initialValue),
+  );
+}
+
+MutableFieldState useFieldState({String? initialValue}) {
+  return useDebugGroup(
+    debugLabel: "useFieldState()",
+    debugFillProperties: (builder) => builder.add(StringProperty("initial value", initialValue, defaultValue: "")),
+    () => _useGenericFieldState(initialValue: initialValue ?? ""),
+  );
+}
+
+MutableGenericFieldState<T> _useGenericFieldState<T>({required T initialValue}) {
   final valueState = useState<T>(initialValue);
   final errorMessageState = useState<ValidatorResult?>(null);
 
   return useMemoized(() => MutableGenericFieldState(value: valueState, errorMessage: errorMessageState));
 }
-
-MutableFieldState useFieldState({String? initialValue}) => useGenericFieldState(initialValue: initialValue ?? "");

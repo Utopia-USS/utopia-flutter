@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/base/nested_hook.dart';
@@ -8,10 +9,16 @@ final class _MapHook<K extends Object, T> extends Hook<Map<K, T>> {
   final Set<K> keys;
   final T Function(K) block;
 
-  const _MapHook(this.keys, this.block);
+  const _MapHook(this.keys, this.block) : super(debugLabel: "useMap<$K, $T>()");
 
   @override
   _MapHookState<K, T> createState() => _MapHookState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IterableProperty("keys", keys));
+  }
 }
 
 final class _MapHookState<K extends Object, T> extends NestedHookState<Map<K, T>, _MapHook<K, T>> {

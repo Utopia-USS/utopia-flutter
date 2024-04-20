@@ -13,10 +13,17 @@ final class _StateHook<T> extends Hook<ListenableMutableValue<T>> {
   final T initialValue;
   final bool listen;
 
-  const _StateHook(this.initialValue, {required this.listen});
+  const _StateHook(this.initialValue, {required this.listen})
+      : super(debugLabel: "useState<$T>(${!listen ? "listen: false" : ""})");
 
   @override
   _StateHookState<T> createState() => _StateHookState<T>(initialValue);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('initialValue', initialValue));
+  }
 }
 
 final class _StateHookState<T> extends HookState<ListenableMutableValue<T>, _StateHook<T>>
@@ -38,5 +45,11 @@ final class _StateHookState<T> extends HookState<ListenableMutableValue<T>, _Sta
     _value = value;
     notifyListeners();
     if (hook.listen) context.markNeedsBuild();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('value', _value));
   }
 }

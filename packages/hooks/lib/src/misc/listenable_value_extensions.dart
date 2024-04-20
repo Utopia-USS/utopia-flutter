@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/misc/listenable_value.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 extension ListenableValueX<T> on ListenableValue<T> {
   ValueListenable<T> asValueListenable() => _ListenableValueValueListenable(this);

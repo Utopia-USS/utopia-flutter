@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
@@ -62,15 +63,43 @@ abstract interface class HookContext implements ProviderContext {
 /// This method can only be called during build. Calling it outside the build will throw an exception.
 /// After the first build, all subsequent builds must call this method in the same order, with [Hook]s of the same
 /// type.
-T use<T>(Hook<T> hook) => HookContext.current!.use(hook);
+T use<T>(Hook<T> hook) {
+  assert(() {
+    if(HookContext.current == null) {
+      throw FlutterError.fromParts([
+        ErrorSummary("Tried to use() a hook without an available HookContext"),
+        ErrorDescription("Hooks can only be used during builds of valid HookContexts"),
+        ErrorHint("To use hooks in Widgets, use HookWidget"),
+        DiagnosticableNode(name: "hook", value: hook, style: null),
+      ]);
+    }
+    return true;
+  }());
+  return HookContext.current!.use(hook);
+}
+
+HookContext useContext() {
+  final context = HookContext.current;
+  assert(() {
+    if(context == null) {
+      throw FlutterError.fromParts([
+        ErrorSummary("Tried to useContext() without an available HookContext"),
+        ErrorDescription("useContext() can only be used during builds of valid HookContexts"),
+        ErrorHint("To use hooks in Widgets, use HookWidget"),
+      ]);
+    }
+    return true;
+  }());
+  return context!;
+}
 
 /// Retrieves a provided value of type [T] and registers it as a dependency of the current [HookContext].
 ///
-/// Shorthand for [HookContext.get] on [HookContext.current].
+/// Shorthand for [ProviderContextExtensions.get] on [HookContext.current].
 /// Implementations should throw [ProvidedValueNotFoundException] when the requested value can't be provided.
-T useProvided<T>() => HookContext.current!.get<T>();
+T useProvided<T>() => useContext().get<T>();
 
-dynamic useProvidedUnsafe(Type type) => HookContext.current!.getUnsafe(type);
+dynamic useProvidedUnsafe(Type type) => useContext().getUnsafe(type);
 
 /// Retrieves a [BuildContext] from the current [HookContext].
 ///

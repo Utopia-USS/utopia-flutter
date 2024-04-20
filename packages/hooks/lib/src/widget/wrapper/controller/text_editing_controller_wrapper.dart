@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
 import 'package:utopia_hooks/src/hook/base/use_effect.dart';
@@ -7,12 +5,15 @@ import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-class StatelessTextEditingControllerWrapper extends HookWidget {
+@Deprecated("Use TextEditingControllerWrapper instead")
+typedef StatelessTextEditingControllerWrapper = TextEditingControllerWrapper;
+
+class TextEditingControllerWrapper extends HookWidget {
   final MutableValue<String> text;
   final TextEditingController Function({String? text}) controllerProvider;
   final Widget Function(TextEditingController) builder;
 
-  const StatelessTextEditingControllerWrapper({
+  const TextEditingControllerWrapper({
     super.key,
     required this.text,
     this.controllerProvider = TextEditingController.new,
@@ -40,9 +41,7 @@ class StatelessTextEditingControllerWrapper extends HookWidget {
     });
 
     useEffect(() {
-      if (controller.text != text.value) {
-        Timer.run(() => controller.text = text.value);
-      }
+      if (controller.text != text.value) controller.text = text.value;
       return null;
     }, [text.value]);
 

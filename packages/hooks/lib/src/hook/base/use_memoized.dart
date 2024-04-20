@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 
@@ -8,10 +9,16 @@ final class _MemoizedHook<T> extends KeyedHook<T> {
   final T Function() block;
   final void Function(T)? dispose;
 
-  const _MemoizedHook(this.block, {this.dispose, required super.keys});
+  const _MemoizedHook(this.block, {this.dispose, required super.keys}) : super(debugLabel: 'useMemoized<$T>()');
 
   @override
   _MemoizedHookState<T> createState() => _MemoizedHookState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty('dispose', dispose, ifPresent: 'has dispose callback'));
+  }
 }
 
 final class _MemoizedHookState<T> extends KeyedHookState<T, _MemoizedHook<T>> {
@@ -38,4 +45,10 @@ final class _MemoizedHookState<T> extends KeyedHookState<T, _MemoizedHook<T>> {
 
   @override
   T build() => _value;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('value', _value));
+  }
 }

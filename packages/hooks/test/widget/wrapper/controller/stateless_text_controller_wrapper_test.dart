@@ -44,7 +44,7 @@ Widget _buildWidget(MutableValue<String> text) {
     child: Material(
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: StatelessTextEditingControllerWrapper(
+        child: TextEditingControllerWrapper(
           text: text,
           builder: (controller) => TextField(controller: controller),
         ),

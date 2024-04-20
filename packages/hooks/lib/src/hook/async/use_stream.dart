@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
@@ -24,7 +25,7 @@ final class _StreamHook<T> extends Hook<AsyncSnapshot<T>> {
     this.stream, {
     required this.initialData,
     required this.preserveState,
-  });
+  }) : super(debugLabel: 'useStream<$T>()');
 
   final Stream<T>? stream;
   final T? initialData;
@@ -32,6 +33,21 @@ final class _StreamHook<T> extends Hook<AsyncSnapshot<T>> {
 
   @override
   _StreamHookState<T> createState() => _StreamHookState<T>();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty('stream', stream, ifNull: 'no stream'));
+    properties.add(DiagnosticsProperty('initial data', initialData, ifNull: 'no initial data'));
+    properties.add(
+      FlagProperty(
+        'preserve state',
+        value: preserveState,
+        ifTrue: 'will preserve state',
+        ifFalse: 'will not preserve state',
+      ),
+    );
+  }
 }
 
 final class _StreamHookState<T> extends HookState<AsyncSnapshot<T>, _StreamHook<T>> {
@@ -116,4 +132,12 @@ final class _StreamHookState<T> extends HookState<AsyncSnapshot<T>, _StreamHook<
   AsyncSnapshot<T> _afterDone(AsyncSnapshot<T> current) => current.inState(ConnectionState.done);
 
   AsyncSnapshot<T> _afterDisconnected(AsyncSnapshot<T> current) => current.inState(ConnectionState.none);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(EnumProperty("connection state", _summary.connectionState));
+    properties.add(DiagnosticsProperty("value", _summary.data));
+    properties.add(DiagnosticsProperty("error", _summary.error));
+  }
 }

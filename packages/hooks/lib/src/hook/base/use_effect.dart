@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 
@@ -13,7 +14,8 @@ final class _EffectHook extends KeyedHook<void> {
   final bool immediate;
   final EffectHookDispose Function() effect;
 
-  const _EffectHook(this.effect, {required this.immediate, required super.keys});
+  const _EffectHook(this.effect, {required this.immediate, required super.keys})
+      : super(debugLabel: "use${immediate ? 'Immediate' : ''}Effect()");
 
   @override
   _EffectHookState createState() => _EffectHookState();
@@ -60,5 +62,11 @@ final class _EffectHookState extends KeyedHookState<void, _EffectHook> {
     if (_dispose is void Function()) {
       (_dispose as void Function())();
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty("dispose callback", _dispose, ifPresent: "has dispose callback"));
   }
 }

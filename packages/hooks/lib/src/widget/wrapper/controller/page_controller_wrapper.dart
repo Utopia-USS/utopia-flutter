@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
 import 'package:utopia_hooks/src/hook/base/use_effect.dart';
@@ -7,13 +5,16 @@ import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-class StatelessPageControllerWrapper extends HookWidget {
+@Deprecated("Use PageControllerWrapper instead")
+typedef StatelessPageControllerWrapper = PageControllerWrapper;
+
+class PageControllerWrapper extends HookWidget {
   final MutableValue<int> index;
   final void Function(PageController controller, int index)? onTransition;
   final PageController Function({int initialPage}) controllerProvider;
   final Widget Function(PageController controller) builder;
 
-  const StatelessPageControllerWrapper({
+  const PageControllerWrapper({
     super.key,
     required this.index,
     required this.builder,
@@ -39,13 +40,11 @@ class StatelessPageControllerWrapper extends HookWidget {
 
     useEffect(() {
       if (controller.hasClients && controller.page?.round() != index.value) {
-        Timer.run(() {
-          if (onTransition != null) {
-            onTransition!(controller, index.value);
-          } else {
-            controller.jumpToPage(index.value);
-          }
-        });
+        if (onTransition != null) {
+          onTransition!(controller, index.value);
+        } else {
+          controller.jumpToPage(index.value);
+        }
       }
       return null;
     }, [controller.hasClients, index.value]);
