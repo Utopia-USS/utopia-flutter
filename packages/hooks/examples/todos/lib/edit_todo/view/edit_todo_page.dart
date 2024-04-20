@@ -79,7 +79,7 @@ class _TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return StatelessTextEditingControllerWrapper(
+    return TextEditingControllerWrapper(
       text: state,
       builder: (controller) => TextFormField(
         key: const Key('editTodoView_title_textFormField'),
@@ -108,7 +108,7 @@ class _DescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return StatelessTextEditingControllerWrapper(
+    return TextEditingControllerWrapper(
       text: state,
       builder: (controller) => TextFormField(
         key: const Key('editTodoView_description_textFormField'),
