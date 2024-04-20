@@ -2,15 +2,15 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 
 class ConnectivityState implements HasInitialized {
-  final ConnectivityResult? result;
-  final Future<ConnectivityResult> Function() awaitInitialized;
+  final List<ConnectivityResult>? result;
+  final Future<List<ConnectivityResult>> Function() awaitInitialized;
 
   const ConnectivityState({required this.result, required this.awaitInitialized});
 
   @override
   bool get isInitialized => result != null;
 
-  bool get hasConnection => result != ConnectivityResult.none;
+  bool get hasConnection => !result!.contains(ConnectivityResult.none);
 }
 
 ConnectivityState useConnectivityState() {
