@@ -7,7 +7,7 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  fast_immutable_collections: ^7.0.3
+  fast_immutable_collections: ^10.2.2
 
 dev_dependencies:
   utopia_lints: ^0.0.3+1

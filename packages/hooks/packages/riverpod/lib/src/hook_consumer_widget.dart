@@ -30,7 +30,7 @@ abstract base class HookConsumerWidget extends ConsumerStatefulWidget {
 }
 
 class _HookConsumerState extends ConsumerState<HookConsumerWidget>
-    with HookContextMixin, HookContextStateMixin<HookConsumerWidget> {
+    with DiagnosticableTreeMixin, HookContextMixin, HookContextStateMixin<HookConsumerWidget> {
   @override
   Widget performBuild(BuildContext context) => widget.build(context, ref);
 
