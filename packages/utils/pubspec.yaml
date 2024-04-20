@@ -11,4 +11,4 @@ dependencies:
   meta: ^1.10.0
 
 dev_dependencies:
-  utopia_lints: ^0.0.3+1
+  utopia_lints: ^0.0.3+2

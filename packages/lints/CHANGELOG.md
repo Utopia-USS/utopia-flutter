@@ -1,3 +1,7 @@
+## 0.0.3+2
+
+ - **FIX**(utopia_lints): Update dependencies.
+
 ## 0.0.3+1
 
  - **FIX**: Remove require_trailing_commas.

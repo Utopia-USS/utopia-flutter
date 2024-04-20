@@ -1,3 +1,8 @@
+## 0.1.0+2
+
+ - **FIX**(utopia_widgets_example): Update dependencies.
+ - **FIX**(utopia_widgets): Replace deprecated WillPopScope.
+
 ## 0.1.0+1
 
  - Update a dependency to the latest release.

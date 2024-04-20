@@ -1,3 +1,7 @@
+## 0.0.2+11
+
+ - **FIX**(utopia_collections): Update dependencies.
+
 ## 0.0.2+10
 
  - Update a dependency to the latest release.

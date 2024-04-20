@@ -27,7 +27,7 @@ dev_dependencies:
     sdk: flutter
   test: ^1.16.0
 
-  utopia_lints: ^0.0.3+1
+  utopia_lints: ^0.0.3+2
 
 flutter:
   uses-material-design: true

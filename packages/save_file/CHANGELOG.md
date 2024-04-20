@@ -1,3 +1,7 @@
+## 0.2.0+2
+
+ - **FIX**(utopia_save_file_example): Update dependencies.
+
 ## 0.2.0+1
 
  - Update a dependency to the latest release.

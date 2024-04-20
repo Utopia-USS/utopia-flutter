@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_arch` - `v0.5.0+17`](#utopia_arch---v05017)
+ - [`utopia_collections` - `v0.1.0+1`](#utopia_collections---v0101)
+ - [`utopia_hooks` - `v0.4.4`](#utopia_hooks---v044)
+ - [`utopia_hooks_riverpod` - `v0.0.2+11`](#utopia_hooks_riverpod---v00211)
+ - [`utopia_lints` - `v0.0.3+2`](#utopia_lints---v0032)
+ - [`utopia_reporter` - `v0.1.0+2`](#utopia_reporter---v0102)
+ - [`utopia_save_file` - `v0.2.0+2`](#utopia_save_file---v0202)
+ - [`utopia_widgets` - `v0.1.0+2`](#utopia_widgets---v0102)
+ - [`utopia_connectivity` - `v0.1.0+17`](#utopia_connectivity---v01017)
+ - [`utopia_firebase_crashlytics` - `v0.2.0+2`](#utopia_firebase_crashlytics---v0202)
+ - [`utopia_rest` - `v0.1.0+2`](#utopia_rest---v0102)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.1.0+17`
+ - `utopia_firebase_crashlytics` - `v0.2.0+2`
+ - `utopia_rest` - `v0.1.0+2`
+
+---
+
+#### `utopia_arch` - `v0.5.0+17`
+
+ - **FIX**(utopia_arch): Update dependencies.
+
+#### `utopia_collections` - `v0.1.0+1`
+
+ - **FIX**(utopia_collections): Update dependencies.
+
+#### `utopia_hooks` - `v0.4.4`
+
+ - **FIX**(utopia_hooks): Update dependencies.
+ - **FIX**(utopia_collections): Update dependencies.
+ - **FEAT**(utopia_hooks): Implement diagnostics.
+
+#### `utopia_hooks_riverpod` - `v0.0.2+11`
+
+ - **FIX**(utopia_collections): Update dependencies.
+
+#### `utopia_lints` - `v0.0.3+2`
+
+ - **FIX**(utopia_lints): Update dependencies.
+
+#### `utopia_reporter` - `v0.1.0+2`
+
+ - **FIX**(utopia_reporter): Update dependencies.
+
+#### `utopia_save_file` - `v0.2.0+2`
+
+ - **FIX**(utopia_save_file_example): Update dependencies.
+
+#### `utopia_widgets` - `v0.1.0+2`
+
+ - **FIX**(utopia_widgets_example): Update dependencies.
+ - **FIX**(utopia_widgets): Replace deprecated WillPopScope.
+
+
 ## 2024-03-18
 
 ### Changes

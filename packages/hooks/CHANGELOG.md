@@ -1,3 +1,9 @@
+## 0.4.4
+
+ - **FIX**(utopia_hooks): Update dependencies.
+ - **FIX**(utopia_collections): Update dependencies.
+ - **FEAT**(utopia_hooks): Implement diagnostics.
+
 ## 0.4.3+9
 
  - Update a dependency to the latest release.
