@@ -9,17 +9,19 @@ final class LoggerReporter extends Reporter {
   LoggerReporter.standard({bool forceEnabled = false}) : _logger = _buildStandardLogger(forceEnabled: forceEnabled);
 
   @override
-  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) => _logger.e(message, e, s);
+  void error(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _logger.e(message, error: e, stackTrace: s);
 
   @override
-  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) => _logger.w(message, e, s);
+  void warning(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) =>
+      _logger.w(message, error: e, stackTrace: s);
 
   @override
   void info(String message, {Object? e, StackTrace? s, String? sanitizedMessage}) {
     _logger.i(
       message,
-      e,
-      s ?? StackTrace.empty, // more sensible behaviour - info messages usually do not require a stack trace
+      error: e,
+      stackTrace: s ?? StackTrace.empty, // more sensible behaviour - info messages usually do not require a stack trace
     );
   }
 

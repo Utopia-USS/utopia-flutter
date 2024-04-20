@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   utopia_utils: ^0.3.1
-  logger: ^1.4.0
+  logger: ^2.2.0
 
 dev_dependencies:
   utopia_lints: ^0.0.3+1
