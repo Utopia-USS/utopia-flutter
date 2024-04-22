@@ -1,3 +1,7 @@
+## 0.4.4+2
+
+ - **FIX**(utopia_hooks): Fix useCombinedInitializationState.
+
 ## 0.4.4+1
 
  - **FIX**(utopia_hooks): Fix useMemoized.
