@@ -19,14 +19,7 @@ base class HookProviderContainer with DiagnosticableTreeMixin implements Provide
     for (final entry in providers.entries) {
       _providers[entry.key] = _ProviderState(this, entry.key, entry.value);
     }
-
-    for (final dependency in _providers.keys) {
-      _dependents[dependency] = {
-        for (final dependent in _providers.entries)
-          if (dependent.value.dependencies.contains(dependency)) dependent.key
-      };
-    }
-
+    _buildDependents();
     _triggerPostBuildCallbacks();
   }
 
@@ -48,10 +41,15 @@ base class HookProviderContainer with DiagnosticableTreeMixin implements Provide
   }
 
   void reassemble() {
-    for (final provider in _providers.values) {
-      provider.debugMarkWillReassemble();
-    }
-    refresh();
+    assert(() {
+      for (final provider in _providers.values) {
+        provider.debugMarkWillReassemble();
+      }
+      _dirty.addAll(_providers.keys);
+      _doRefresh();
+      _buildDependents();
+      return true;
+    }());
   }
 
   void dispose() {
@@ -110,12 +108,28 @@ base class HookProviderContainer with DiagnosticableTreeMixin implements Provide
     }
   }
 
+  void _buildDependents() {
+    for (final dependency in _providers.keys) {
+      _dependents[dependency] = {
+        for (final dependent in _providers.entries)
+          if (dependent.value.dependencies.contains(dependency)) dependent.key
+      };
+    }
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IterableProperty('dirty', _dirty));
-    properties.add(IterableProperty('has listeners for', _listeners.keys));
-    properties.add(FlagProperty('refresh in progress', value: _isRefreshInProgress, ifTrue: 'refresh in progress'));
+    properties.add(IterableProperty('dirty', _dirty, level: DiagnosticLevel.debug));
+    properties.add(IterableProperty('has listeners for', _listeners.keys, level: DiagnosticLevel.debug));
+    properties.add(
+      FlagProperty(
+        'refresh in progress',
+        value: _isRefreshInProgress,
+        ifTrue: 'refresh in progress',
+        level: DiagnosticLevel.debug,
+      ),
+    );
   }
 
   @override
@@ -130,7 +144,7 @@ final class SimpleHookProviderContainer extends HookProviderContainer {
     Map<Type, Object? Function()> providers, {
     Map<Type, Object?> provided = const {},
   })  : _provided = Map.of(provided),
-        super(schedule: ImmediateLockingScheduler()) {
+        super(schedule: ImmediateLockingScheduler().call) {
     schedule(() => initialize({...providers, ..._buildProviders(provided)}));
   }
 
@@ -153,23 +167,36 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   final Type type;
   final Object? Function() block;
   final Set<Type> dependencies = {};
-  bool isCollectingDependencies = true;
-  late Object? value;
+  Object? value;
+
+  var _isCollectingDependencies = true;
 
   _ProviderState(this.container, this.type, this.block) {
-    value = wrapBuild(block);
-    isCollectingDependencies = false;
+    refreshValue();
   }
 
   void refreshValue() {
     value = wrapBuild(block);
+    _isCollectingDependencies = false;
   }
 
   void dispose() => disposeHooks();
 
   @override
   dynamic getUnsafe(Type type) {
-    if (isCollectingDependencies) dependencies.add(type);
+    assert(() {
+      if (!_isCollectingDependencies && debugDoingBuild && !dependencies.contains(type)) {
+        throw FlutterError.fromParts([
+          ErrorSummary('Trying to register a dependency after the first build'),
+          ErrorDescription('All dependencies must be registered during the first build of the provider'),
+          DiagnosticsProperty("type", type),
+          DiagnosticableTreeNode(name: 'provider', value: this, style: null),
+          DiagnosticableTreeNode(name: 'container', value: container, style: null),
+        ]);
+      }
+      return true;
+    }());
+    if (_isCollectingDependencies) dependencies.add(type);
     return container.getUnsafe(type);
   }
 
@@ -181,8 +208,14 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   void triggerPostBuildCallbacks() => super.triggerPostBuildCallbacks();
 
   @override
-  // Make available to HookProviderContainer
-  void debugMarkWillReassemble() => super.debugMarkWillReassemble();
+  void debugMarkWillReassemble() {
+    super.debugMarkWillReassemble();
+    assert(() {
+      dependencies.clear();
+      _isCollectingDependencies = true;
+      return true;
+    }());
+  }
 
   @override
   String toStringShort() {
@@ -195,10 +228,15 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', type));
+    properties.add(DiagnosticsProperty('type', type, level: DiagnosticLevel.debug));
     properties.add(IterableProperty('dependencies', dependencies));
     properties.add(
-      FlagProperty('collecting dependencies', value: isCollectingDependencies, ifTrue: 'collecting dependencies'),
+      FlagProperty(
+        'collecting dependencies',
+        value: _isCollectingDependencies,
+        ifTrue: 'collecting dependencies',
+        level: DiagnosticLevel.debug,
+      ),
     );
     properties.add(DiagnosticsProperty('value', value));
   }

@@ -17,14 +17,14 @@ abstract class Hook<T> with Diagnosticable {
   String toStringShort() => _debugLabel ?? super.toStringShort();
 }
 
-abstract class HookStateBase<T, H extends Hook<T>> {
+abstract class _HookStateBase<T, H extends Hook<T>> {
   H get hook;
 }
 
 /// Long-lived object representing entirety of the internal state of a [Hook].
 abstract class HookState<T, H extends Hook<T>>
     with Diagnosticable, HookStateDiagnosticableMixin<T, H>
-    implements HookStateBase<T, H> {
+    implements _HookStateBase<T, H> {
   /// The current [Hook] of this [HookState].
   ///
   /// This will be set at creation of the [HookState] and updated to a new instance of [Hook] every build.
@@ -65,11 +65,18 @@ abstract class HookState<T, H extends Hook<T>>
   /// This will be called exactly once every build.
   T build();
 
+  /// Signals that the next build will be a reassemble.
+  ///
+  /// This method won't be called in release mode.
   @mustCallSuper
   void debugMarkWillReassemble() {}
 }
 
-mixin HookStateDiagnosticableMixin<T, H extends Hook<T>> on Diagnosticable implements HookStateBase<T, H> {
+/// A mixin that provides default implementation for [Diagnosticable] for [HookState].
+///
+/// This mixin can be used in [HookContext] implementations that somehow have the default implementation overrode.
+/// See [useDebugGroup] for an example case when this mixin is needed.
+mixin HookStateDiagnosticableMixin<T, H extends Hook<T>> on Diagnosticable implements _HookStateBase<T, H> {
   // Given HookState should be uniquely identified by its Hook
   @override
   @nonVirtual
@@ -83,6 +90,9 @@ mixin HookStateDiagnosticableMixin<T, H extends Hook<T>> on Diagnosticable imple
   }
 }
 
+/// Standard type for keys used in [KeyedHook] and other hooks.
+///
+/// Hooks that take
 typedef HookKeys = List<Object?>;
 
 abstract base class KeyedHook<T> extends Hook<T> {

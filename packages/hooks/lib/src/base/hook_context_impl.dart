@@ -1,11 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
-import 'package:utopia_hooks/src/provider/provider_context.dart';
-import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 /// Mixin with common parts of [HookContext] implementations.
 ///
@@ -24,6 +19,8 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   @override
   @nonVirtual
   bool get mounted => _mounted;
+
+  bool get debugDoingBuild => _index > 0;
 
   @override
   @nonVirtual
@@ -91,7 +88,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   @nonVirtual
   void addPostBuildCallback(void Function() callback) {
     assert(() {
-      if (_index == 0) {
+      if (!debugDoingBuild) {
         throw FlutterError.fromParts([
           ErrorSummary("addPostBuildCallback can only be called during build"),
           DiagnosticableTreeNode(name: "context", value: this, style: null),
@@ -200,6 +197,9 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
     _postBuildCallbacks.clear();
   }
 
+  /// Marks the next build as a reassemble, allowing hooks to be added or removed.
+  ///
+  /// This doesn't have any effect in release mode.
   @protected
   void debugMarkWillReassemble() {
     assert(() {
@@ -211,83 +211,20 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IterableProperty('postBuildCallbacks', _postBuildCallbacks));
-    properties.add(IntProperty('current hook index', _index));
-    properties.add(FlagProperty('first build', value: _isFirstBuild, ifTrue: 'first build not completed'));
+    properties.add(IterableProperty('postBuildCallbacks', _postBuildCallbacks, level: DiagnosticLevel.fine));
+    properties.add(IntProperty('current hook index', _index, level: DiagnosticLevel.debug));
+    properties.add(
+      FlagProperty(
+        'first build',
+        value: _isFirstBuild,
+        ifTrue: 'first build not completed',
+        level: DiagnosticLevel.debug,
+      ),
+    );
     properties.add(FlagProperty('mounted', value: _mounted, ifFalse: 'disposed'));
     properties.add(FlagProperty('has hooks', value: _hooks.isNotEmpty, ifFalse: 'no hooks'));
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() => _hooks.map((it) => it.toDiagnosticsNode()).toList();
-}
-
-typedef _WaitingPredicate<R> = ({bool Function(R) predicate, Completer<void> completer});
-
-class SimpleHookContext<R> with DiagnosticableTreeMixin, HookContextMixin implements Value<R> {
-  final R Function() _build;
-  late R _value;
-  final Map<Type, Object?> _provided;
-  final _waiting = <_WaitingPredicate<R>>[];
-  bool shouldRebuild;
-  var _needsBuild = false;
-  final _scheduler = ImmediateLockingScheduler();
-
-  bool get needsBuild => _needsBuild;
-
-  SimpleHookContext(
-    this._build, {
-    bool init = true,
-    this.shouldRebuild = true,
-    Map<Type, Object?> provided = const {},
-  }) : _provided = Map.of(provided) {
-    if (init) _scheduler(rebuild);
-  }
-
-  @override
-  R get value => _value;
-
-  R rebuild() {
-    _value = wrapBuild(_build);
-    triggerPostBuildCallbacks();
-    for (final entry in List.of(_waiting)) {
-      if (entry.predicate(_value)) {
-        _waiting.remove(entry);
-        entry.completer.complete();
-      }
-    }
-    _needsBuild = false;
-    return _value;
-  }
-
-  @override
-  @protected
-  dynamic getUnsafe(Type type) {
-    if (!_provided.containsKey(type)) throw ProvidedValueNotFoundException(type: type, context: this);
-    return _provided[type];
-  }
-
-  @override
-  @protected
-  void markNeedsBuild() {
-    if (shouldRebuild) {
-      _scheduler(rebuild);
-    } else {
-      _needsBuild = true;
-    }
-  }
-
-  void setProvided<T>(T value) {
-    _provided[T] = value;
-    rebuild();
-  }
-
-  Future<void> waitUntil(bool Function(R) predicate) async {
-    if (predicate(_value)) return;
-    final completer = Completer<void>();
-    _waiting.add((predicate: predicate, completer: completer));
-    await completer.future;
-  }
-
-  void dispose() => disposeHooks();
 }

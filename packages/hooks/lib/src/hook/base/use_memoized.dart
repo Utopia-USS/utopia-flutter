@@ -17,38 +17,50 @@ final class _MemoizedHook<T> extends KeyedHook<T> {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ObjectFlagProperty('dispose', dispose, ifPresent: 'has dispose callback'));
+    properties.add(
+      ObjectFlagProperty('dispose', dispose, ifPresent: 'has dispose callback', level: DiagnosticLevel.debug),
+    );
   }
 }
 
 final class _MemoizedHookState<T> extends KeyedHookState<T, _MemoizedHook<T>> {
-  late T _value;
+  T? _value;
 
   @override
   void init() {
     super.init();
-    _value = hook.block();
+    _trigger(dispose: false);
   }
 
   @override
   void didUpdateKeys() {
     super.didUpdateKeys();
-    hook.dispose?.call(_value);
-    _value = hook.block();
+    _trigger();
   }
 
   @override
   void dispose() {
+    _trigger(create: false);
     super.dispose();
-    hook.dispose?.call(_value);
   }
 
   @override
-  T build() => _value;
+  T build() => _value as T;
+
+  @override
+  void debugMarkWillReassemble() {
+    super.debugMarkWillReassemble();
+    _trigger();
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty('value', _value));
+  }
+
+  void _trigger({bool create = true, bool dispose = true}) {
+    if (dispose) hook.dispose?.call(_value as T);
+    if (create) _value = hook.block();
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:utopia_hooks/src/base/flutter/hook_widget.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
+import 'package:utopia_hooks/src/base/provider/hook_provider_container.dart';
 import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
 
@@ -36,7 +38,7 @@ abstract interface class HookContext implements ProviderContext {
 
   /// Registers [hook] in this [HookContext] and returns its value.
   ///
-  /// This method can only be called during build. Calling it outside the build will throw an exception.
+  /// This method can only be called during build of this [HookContext], otherwise an exception will be thrown.
   /// After the first build, all subsequent builds must call this method in the same order, with [Hook]s of the same
   /// type.
   T use<T>(Hook<T> hook);
@@ -52,7 +54,7 @@ abstract interface class HookContext implements ProviderContext {
   /// Registers [callback] to be called after the current build.
   ///
   /// This method should only be called from implementations of [HookState].
-  /// This method can be called only during the build.
+  /// This method can only be called during build of this [HookContext], otherwise an exception will be thrown.
   /// The callbacks will be called in the order they were registered.
   void addPostBuildCallback(void Function() callback);
 }
@@ -60,12 +62,13 @@ abstract interface class HookContext implements ProviderContext {
 /// Register [hook] in the current [HookContext] and return its value.
 ///
 /// Shorthand for [HookContext.use] on [HookContext.current].
-/// This method can only be called during build. Calling it outside the build will throw an exception.
+/// This method can only be called during build in supported contexts (e.g. [HookWidget] or [HookProviderContainer]).
+/// Calling it outside of a valid context will throw an exception.
 /// After the first build, all subsequent builds must call this method in the same order, with [Hook]s of the same
 /// type.
 T use<T>(Hook<T> hook) {
   assert(() {
-    if(HookContext.current == null) {
+    if (HookContext.current == null) {
       throw FlutterError.fromParts([
         ErrorSummary("Tried to use() a hook without an available HookContext"),
         ErrorDescription("Hooks can only be used during builds of valid HookContexts"),
@@ -78,10 +81,17 @@ T use<T>(Hook<T> hook) {
   return HookContext.current!.use(hook);
 }
 
+/// Retrieves the current [HookContext].
+///
+/// Shorthand for [HookContext.current].
+/// This method can only be called during build in supported contexts (e.g. [HookWidget] or [HookProviderContainer]).
+/// Calling it outside of a valid context will throw an exception.
+/// After the first build, all subsequent builds must call this method in the same order, with [Hook]s of the same
+/// type.
 HookContext useContext() {
   final context = HookContext.current;
   assert(() {
-    if(context == null) {
+    if (context == null) {
       throw FlutterError.fromParts([
         ErrorSummary("Tried to useContext() without an available HookContext"),
         ErrorDescription("useContext() can only be used during builds of valid HookContexts"),
@@ -99,10 +109,15 @@ HookContext useContext() {
 /// Implementations should throw [ProvidedValueNotFoundException] when the requested value can't be provided.
 T useProvided<T>() => useContext().get<T>();
 
+/// Retrieves a provided value assigned to [type] and registers it as a dependency of the current [HookContext].
+///
+/// Shorthand for [ProviderContext.getUnsafe] on [HookContext.current].
+/// Consider using a type-safe [useProvided] instead.
 dynamic useProvidedUnsafe(Type type) => useContext().getUnsafe(type);
 
 /// Retrieves a [BuildContext] from the current [HookContext].
 ///
 /// Shorthand for [useProvided] with [BuildContext] as the type parameter.
+/// This doesn't have to be available in every [HookContext] (e.g. when using raw [HookProviderContainer]).
 /// This [BuildContext] can be used to register dependencies on [InheritedWidget]s, rebuilding the hook after it changes.
 BuildContext useBuildContext() => useProvided<BuildContext>();

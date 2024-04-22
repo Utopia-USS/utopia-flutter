@@ -69,8 +69,8 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(FlagProperty("building", value: _isBuilding, ifTrue: "building"));
-    properties.add(IterableProperty("used context keys", _used, ifEmpty: null));
+    properties.add(FlagProperty("building", value: _isBuilding, ifTrue: "building", level: DiagnosticLevel.debug));
+    properties.add(IterableProperty("used context keys", _used, ifEmpty: null, level: DiagnosticLevel.debug));
   }
 
   @override

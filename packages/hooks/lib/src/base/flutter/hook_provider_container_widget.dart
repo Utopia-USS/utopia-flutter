@@ -75,7 +75,9 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(FlagProperty("first build", value: _isFirstBuild, ifTrue: "first build"));
+    properties.add(
+      FlagProperty("first build", value: _isFirstBuild, ifTrue: "first build", level: DiagnosticLevel.debug),
+    );
     properties.add(DiagnosticableTreeNode(name: "container", value: _container, style: null));
   }
 }
