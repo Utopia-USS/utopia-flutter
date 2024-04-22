@@ -1,3 +1,7 @@
+## 0.5.0+18
+
+ - Update a dependency to the latest release.
+
 ## 0.5.0+17
 
  - **FIX**(utopia_arch): Update dependencies.

@@ -1,3 +1,7 @@
+## 0.4.4+1
+
+ - **FIX**(utopia_hooks): Fix useMemoized.
+
 ## 0.4.4
 
  - **FIX**(utopia_hooks): Update dependencies.
