@@ -13,7 +13,7 @@ CombinedInitializationState useCombinedInitializationState(Set<Type> types) {
     debugFillProperties: (builder) => builder.add(IterableProperty("types", types)),
     () {
       final context = useContext();
-      final states = types.map((type) => context.getUnsafe(type) as HasInitialized);
+      final states = types.map((type) => context.getUnsafe(type) as HasInitialized).toList();
       return CombinedInitializationState(isInitialized: HasInitialized.all(states));
     },
   );
