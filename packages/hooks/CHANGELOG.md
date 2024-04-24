@@ -1,3 +1,7 @@
+## 0.4.4+3
+
+ - **FIX**(utopia_hooks): Fix HookContextStateMixin.
+
 ## 0.4.4+2
 
  - **FIX**(utopia_hooks): Fix useCombinedInitializationState.
