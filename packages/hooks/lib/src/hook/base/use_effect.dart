@@ -27,35 +27,35 @@ final class _EffectHookState extends KeyedHookState<void, _EffectHook> {
   @override
   void init() {
     super.init();
-    _schedule();
+    _schedule(_execute);
   }
 
   @override
   void didUpdateKeys() {
     super.didUpdateKeys();
-    _schedule();
+    _schedule(_execute);
   }
 
   @override
   void dispose() {
-    _callDispose();
+    _schedule(_callDispose);
     super.dispose();
   }
 
   @override
   void build() {}
 
-  void _schedule() {
+  void _schedule(void Function() block) {
     if (hook.immediate) {
-      _execute();
+      block();
     } else {
-      context.addPostBuildCallback(_execute);
+      context.addPostBuildCallback(block);
     }
   }
 
-  void _execute([bool init = true]) {
+  void _execute() {
     _callDispose();
-    if (init) _dispose = hook.effect();
+    _dispose = hook.effect();
   }
 
   void _callDispose() {

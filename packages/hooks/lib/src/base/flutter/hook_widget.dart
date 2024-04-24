@@ -58,10 +58,8 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
 
   @override
   dynamic getUnsafe(Type type) {
-    return switch (type) {
-      BuildContext() => context,
-      _ => context.getUnsafe(type),
-    };
+    if(type == BuildContext) return context;
+    return context.getUnsafe(type);
   }
 
   void _schedulePostBuildCallbacks() =>
