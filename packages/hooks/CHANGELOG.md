@@ -1,3 +1,7 @@
+## 0.4.4+4
+
+ - **FIX**(utopia_hooks): Fix useEffect.
+
 ## 0.4.4+3
 
  - **FIX**(utopia_hooks): Fix HookContextStateMixin.
