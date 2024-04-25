@@ -38,7 +38,7 @@ final class _EffectHookState extends KeyedHookState<void, _EffectHook> {
 
   @override
   void dispose() {
-    _schedule(_callDispose);
+    _callDispose();
     super.dispose();
   }
 
