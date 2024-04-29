@@ -36,9 +36,11 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
   @override
   @nonVirtual
   Widget build(BuildContext context) {
-    final result = wrapBuild(() => performBuild(context));
-    _schedulePostBuildCallbacks();
-    return result;
+    try {
+      return wrapBuild(() => performBuild(context));
+    } finally {
+      _schedulePostBuildCallbacks();
+    }
   }
 
   @override

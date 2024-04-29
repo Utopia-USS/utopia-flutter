@@ -87,19 +87,22 @@ base class HookProviderContainer with DiagnosticableTreeMixin implements Provide
   Set<Type> getDependents(Type type) => _dependents[type] ?? {};
 
   void _doRefresh() {
-    _isRefreshInProgress = true;
-    for (final type in _providers.keys) {
-      if (_dirty.contains(type)) {
-        final provider = _providers[type]!;
-        provider.refreshValue();
-        _dirty.addAll(_dependents[type]!);
-        _listeners[type]?.forEach((it) => it(provider.value));
+    try {
+      _isRefreshInProgress = true;
+      for (final type in _providers.keys) {
+        if (_dirty.contains(type)) {
+          final provider = _providers[type]!;
+          provider.refreshValue();
+          _dirty.addAll(_dependents[type]!);
+          _listeners[type]?.forEach((it) => it(provider.value));
+        }
       }
+    } finally {
+      final dirty = Set.of(_dirty);
+      _dirty.clear();
+      _isRefreshInProgress = false;
+      _triggerPostBuildCallbacks(dirty);
     }
-    final dirty = Set.of(_dirty);
-    _dirty.clear();
-    _isRefreshInProgress = false;
-    _triggerPostBuildCallbacks(dirty);
   }
 
   void _triggerPostBuildCallbacks([Set<Type>? dirty]) {

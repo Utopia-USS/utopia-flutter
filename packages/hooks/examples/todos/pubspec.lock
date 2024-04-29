@@ -613,21 +613,21 @@ packages:
       path: "../../../collections"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.0+1"
   utopia_hooks:
     dependency: "direct main"
     description:
       path: "../.."
       relative: true
     source: path
-    version: "0.4.3+9"
+    version: "0.4.4+4"
   utopia_reporter:
     dependency: "direct main"
     description:
       path: "../../../reporter"
       relative: true
     source: path
-    version: "0.1.0+1"
+    version: "0.1.0+2"
   utopia_utils:
     dependency: "direct overridden"
     description:
