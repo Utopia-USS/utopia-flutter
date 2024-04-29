@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:utopia_widgets_example/pages/constrained_aspect_ratio.dart';
 import 'package:utopia_widgets_example/pages/cross_fade_indexed_stack.dart';
 import 'package:utopia_widgets_example/pages/form_layout.dart';
 import 'package:utopia_widgets_example/pages/multi_widget.dart';
@@ -36,4 +37,5 @@ final _pageMap = <String, Widget>{
   "FormLayout": const FormLayoutPage(),
   "CrossFadeIndexedStack": const CrossFadeIndexedStackPage(),
   "MultiWidget": const MultiWidgetPage(),
+  "ConstrainedAspectRatio": const ConstrainedAspectRatioPage(),
 };

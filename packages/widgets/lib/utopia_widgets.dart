@@ -1,3 +1,4 @@
+export 'src/layout/constrained_aspect_ratio.dart';
 export 'src/layout/fill_viewport_scroll_view.dart';
 export 'src/layout/form_layout.dart';
 export 'src/layout/overflow_transform_box.dart';
