@@ -1,3 +1,7 @@
+## 0.1.1
+
+ - **FEAT**(utopia_widgets): Add ConstrainedAspectRatio.
+
 ## 0.1.0+2
 
  - **FIX**(utopia_widgets_example): Update dependencies.

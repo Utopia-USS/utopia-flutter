@@ -1,3 +1,7 @@
+## 0.4.4+5
+
+ - **FIX**(utopia_hooks): Improve error handling.
+
 ## 0.4.4+4
 
  - **FIX**(utopia_hooks): Fix useEffect.
