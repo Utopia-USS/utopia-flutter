@@ -1,3 +1,7 @@
+## 0.4.4+6
+
+ - **FIX**(utopia_hooks): Allow for multiple builds per frame in HookWidget.
+
 ## 0.4.4+5
 
  - **FIX**(utopia_hooks): Improve error handling.
