@@ -175,8 +175,9 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
 
   /// Triggers all callbacks registered in the previous build.
   ///
-  /// This method must be called once after every build.
+  /// This method must be called once after every build, even if the build threw an exception.
   /// Implementations can decide whether call this method immediately after [wrapBuild], or schedule it for later.
+  /// This method will catch any exceptions thrown by the callbacks.
   @protected
   void triggerPostBuildCallbacks() {
     assert(() {
@@ -192,7 +193,23 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
     }());
 
     for (final callback in _postBuildCallbacks) {
-      callback();
+      try {
+        callback();
+      } catch (e, s) {
+        final error = FlutterErrorDetails(
+          exception: e,
+          stack: s,
+          library: 'utopia_hooks',
+          context: DiagnosticsBlock(
+            children: [
+              ErrorSummary("Exception thrown by a post-build callback"),
+              DiagnosticsProperty("callback", callback),
+              DiagnosticableTreeNode(name: "context", value: this, style: null),
+            ],
+          ),
+        );
+        FlutterError.reportError(error);
+      }
     }
     _postBuildCallbacks.clear();
   }

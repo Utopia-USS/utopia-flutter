@@ -31,15 +31,34 @@ class _HookWidgetState extends State<HookWidget>
 }
 
 mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, DiagnosticableTree, HookContextMixin {
+  bool _postBuildCallbacksDirty = false, _isDuringExtraBuild = false;
+
   Widget performBuild(BuildContext context);
 
   @override
   @nonVirtual
   Widget build(BuildContext context) {
     try {
+      // In some circumstances, build() can be called multiple times per frame (e.g. when using LayoutBuilder).
+      // In such cases triggerPostBuildCallbacks() scheduled by addPostFrameCallback() has not been called yet, so
+      // we need to trigger it during this extraneous build.
+      // markNeedsBuild() calls are ignored during that time, since the actual build will happen right after that.
+      if (_postBuildCallbacksDirty) {
+        try {
+          _isDuringExtraBuild = true;
+          _postBuildCallbacksDirty = false;
+          triggerPostBuildCallbacks();
+        } finally {
+          _isDuringExtraBuild = false;
+        }
+      }
       return wrapBuild(() => performBuild(context));
     } finally {
-      _schedulePostBuildCallbacks();
+      _postBuildCallbacksDirty = true;
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _postBuildCallbacksDirty = false;
+        triggerPostBuildCallbacks();
+      });
     }
   }
 
@@ -56,21 +75,26 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
   }
 
   @override
-  void markNeedsBuild() => setState(() {});
+  void markNeedsBuild() {
+    if (!_isDuringExtraBuild) {
+      setState(() {});
+    }
+  }
 
   @override
   dynamic getUnsafe(Type type) {
-    if(type == BuildContext) return context;
+    if (type == BuildContext) return context;
     return context.getUnsafe(type);
   }
-
-  void _schedulePostBuildCallbacks() =>
-      SchedulerBinding.instance.addPostFrameCallback((_) => triggerPostBuildCallbacks());
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(_HookContextStateDiagnosticsNode(this));
+    properties.add(
+      FlagProperty("post-build callbacks dirty", value: _postBuildCallbacksDirty, ifTrue: "post-build callbacks dirty"),
+    );
+    properties.add(FlagProperty("during extra build", value: _isDuringExtraBuild, ifTrue: "during extra build"));
   }
 }
 
