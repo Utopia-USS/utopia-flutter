@@ -31,7 +31,7 @@ class _HookWidgetState extends State<HookWidget>
 }
 
 mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, DiagnosticableTree, HookContextMixin {
-  bool _postBuildCallbacksDirty = false, _isDuringExtraBuild = false;
+  bool _postBuildCallbacksScheduled = false, _isBeforeExtraBuild = false;
 
   Widget performBuild(BuildContext context);
 
@@ -41,24 +41,22 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
     try {
       // In some circumstances, build() can be called multiple times per frame (e.g. when using LayoutBuilder).
       // In such cases triggerPostBuildCallbacks() scheduled by addPostFrameCallback() has not been called yet, so
-      // we need to trigger it during this extraneous build.
-      // markNeedsBuild() calls are ignored during that time, since the actual build will happen right after that.
-      if (_postBuildCallbacksDirty) {
-        try {
-          _isDuringExtraBuild = true;
-          _postBuildCallbacksDirty = false;
-          triggerPostBuildCallbacks();
-        } finally {
-          _isDuringExtraBuild = false;
-        }
+      // we need to trigger it before this extraneous build.
+      // markNeedsBuild() calls are ignored during that time, since the build will happen right after that.
+      if (_postBuildCallbacksScheduled) {
+        _isBeforeExtraBuild = true;
+        triggerPostBuildCallbacks();
+        _isBeforeExtraBuild = false;
       }
       return wrapBuild(() => performBuild(context));
     } finally {
-      _postBuildCallbacksDirty = true;
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        _postBuildCallbacksDirty = false;
-        triggerPostBuildCallbacks();
-      });
+      if (!_postBuildCallbacksScheduled) {
+        _postBuildCallbacksScheduled = true;
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          _postBuildCallbacksScheduled = false;
+          triggerPostBuildCallbacks();
+        });
+      }
     }
   }
 
@@ -76,7 +74,7 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
 
   @override
   void markNeedsBuild() {
-    if (!_isDuringExtraBuild) {
+    if (!_isBeforeExtraBuild) {
       setState(() {});
     }
   }
@@ -92,9 +90,13 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
     super.debugFillProperties(properties);
     properties.add(_HookContextStateDiagnosticsNode(this));
     properties.add(
-      FlagProperty("post-build callbacks dirty", value: _postBuildCallbacksDirty, ifTrue: "post-build callbacks dirty"),
+      FlagProperty(
+        "post-build callbacks dirty",
+        value: _postBuildCallbacksScheduled,
+        ifTrue: "post-build callbacks dirty",
+      ),
     );
-    properties.add(FlagProperty("during extra build", value: _isDuringExtraBuild, ifTrue: "during extra build"));
+    properties.add(FlagProperty("before extra build", value: _isBeforeExtraBuild, ifTrue: "before extra build"));
   }
 }
 
