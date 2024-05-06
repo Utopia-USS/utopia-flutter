@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.4+7`](#utopia_hooks---v0447)
+ - [`utopia_arch` - `v0.5.0+24`](#utopia_arch---v05024)
+ - [`utopia_hooks_riverpod` - `v0.0.2+18`](#utopia_hooks_riverpod---v00218)
+ - [`utopia_connectivity` - `v0.1.0+24`](#utopia_connectivity---v01024)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+24`
+ - `utopia_hooks_riverpod` - `v0.0.2+18`
+ - `utopia_connectivity` - `v0.1.0+24`
+
+---
+
+#### `utopia_hooks` - `v0.4.4+7`
+
+ - **FIX**(utopia_hooks): Fix bug in HookWidget during multi-rebuilds.
+
+
+## 2024-05-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.4+6`](#utopia_hooks---v0446)
  - [`utopia_arch` - `v0.5.0+23`](#utopia_arch---v05023)
  - [`utopia_hooks_riverpod` - `v0.0.2+17`](#utopia_hooks_riverpod---v00217)
