@@ -1,3 +1,7 @@
+## 0.4.5+1
+
+ - **FIX**(utopia_hooks_riverpod): Fix exports.
+
 ## 0.4.5
 
  - **FIX**(utopia_hooks): Expose HookProviderContainerWidgetMixin and HookProviderContainerWidgetStateMixin.

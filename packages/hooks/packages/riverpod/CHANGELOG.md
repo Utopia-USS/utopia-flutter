@@ -1,3 +1,7 @@
+## 0.0.3+1
+
+ - **FIX**(utopia_hooks_riverpod): Fix exports.
+
 ## 0.0.3
 
  - **FEAT**(utopia_hooks_riverpod): Add HookConsumerProviderContainerWidget.
