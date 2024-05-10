@@ -8,6 +8,8 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 /// This is supported only in supported widgets like [HookConsumer] and [HookConsumerWidget].
 WidgetRef useWidgetRef() => useProvided<WidgetRef>();
 
+T useRefWatch<T>(ProviderListenable<T> provider) => useWidgetRef().watch(provider);
+
 /// A [Consumer] that also allows using hooks in the passed [builder] function.
 final class HookConsumer extends HookConsumerWidget {
   final Widget Function(BuildContext context, WidgetRef ref) builder;
@@ -36,9 +38,7 @@ class _HookConsumerState extends ConsumerState<HookConsumerWidget>
 
   @override
   dynamic getUnsafe(Type type) {
-    return switch(type) {
-      WidgetRef => ref,
-      _ => super.getUnsafe(type),
-    };
+    if (type == WidgetRef) return ref;
+    return super.getUnsafe(type);
   }
 }
