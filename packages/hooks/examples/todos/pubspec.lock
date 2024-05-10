@@ -620,7 +620,7 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "0.4.4+4"
+    version: "0.4.5+1"
   utopia_reporter:
     dependency: "direct main"
     description:
