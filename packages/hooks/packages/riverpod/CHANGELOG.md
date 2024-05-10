@@ -1,3 +1,7 @@
+## 0.0.3
+
+ - **FEAT**(utopia_hooks_riverpod): Add HookConsumerProviderContainerWidget.
+
 ## 0.0.2+18
 
  - Update a dependency to the latest release.

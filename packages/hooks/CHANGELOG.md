@@ -1,3 +1,8 @@
+## 0.4.5
+
+ - **FIX**(utopia_hooks): Expose HookProviderContainerWidgetMixin and HookProviderContainerWidgetStateMixin.
+ - **FEAT**(utopia_hooks_riverpod): Add HookConsumerProviderContainerWidget.
+
 ## 0.4.4+7
 
  - **FIX**(utopia_hooks): Fix bug in HookWidget during multi-rebuilds.
