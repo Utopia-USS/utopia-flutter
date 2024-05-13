@@ -4,7 +4,7 @@ import 'package:utopia_hooks/src/hook/async/use_future.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 
 AsyncSnapshot<T> useMemoizedFuture<T>(
-  Future<T> Function() block, {
+  Future<T>? Function() block, {
   T? initialData,
   bool preserveState = true,
   HookKeys keys = const [],
@@ -13,7 +13,7 @@ AsyncSnapshot<T> useMemoizedFuture<T>(
     useFuture(useMemoized(block, keys), initialData: initialData, preserveState: preserveState);
 
 T? useMemoizedFutureData<T>(
-  Future<T> Function() block, {
+  Future<T>? Function() block, {
   T? initialData,
   bool preserveState = true,
   void Function(Object, StackTrace)? onError,

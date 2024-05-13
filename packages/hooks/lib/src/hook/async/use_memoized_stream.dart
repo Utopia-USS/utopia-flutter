@@ -4,7 +4,7 @@ import 'package:utopia_hooks/src/hook/async/use_stream.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 
 AsyncSnapshot<T> useMemoizedStream<T>(
-  Stream<T> Function() block, {
+  Stream<T>? Function() block, {
   T? initialData,
   bool preserveState = true,
   HookKeys keys = const [],
@@ -13,7 +13,7 @@ AsyncSnapshot<T> useMemoizedStream<T>(
     useStream(useMemoized(block, keys), initialData: initialData, preserveState: preserveState);
 
 T? useMemoizedStreamData<T>(
-  Stream<T> Function() block, {
+  Stream<T>? Function() block, {
   T? initialData,
   bool preserveState = true,
   void Function(Object, StackTrace)? onError,

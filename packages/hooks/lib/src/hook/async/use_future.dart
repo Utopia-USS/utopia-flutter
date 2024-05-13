@@ -5,7 +5,7 @@ import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/hook/async/use_async_snapshot_error_handler.dart';
 
 T? useFutureData<T>(
-  Future<T?> future, {
+  Future<T>? future, {
   T? initialData,
   bool preserveState = true,
   void Function(Object, StackTrace)? onError,
