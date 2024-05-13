@@ -1,3 +1,7 @@
+## 0.4.5+2
+
+ - **FIX**(utopia_hooks): Fix signatures of async hooks.
+
 ## 0.4.5+1
 
  - **FIX**(utopia_hooks_riverpod): Fix exports.
