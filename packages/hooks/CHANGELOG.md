@@ -1,3 +1,7 @@
+## 0.4.6+1
+
+ - **FIX**(utopia_hooks): Fix exports.
+
 ## 0.4.6
 
  - **FEAT**(utopia_hooks): Add Notifiable and related hooks.

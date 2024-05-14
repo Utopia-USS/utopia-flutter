@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.6+1`](#utopia_hooks---v0461)
+ - [`utopia_arch` - `v0.5.0+29`](#utopia_arch---v05029)
+ - [`utopia_hooks_riverpod` - `v0.0.3+4`](#utopia_hooks_riverpod---v0034)
+ - [`utopia_connectivity` - `v0.1.0+29`](#utopia_connectivity---v01029)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+29`
+ - `utopia_hooks_riverpod` - `v0.0.3+4`
+ - `utopia_connectivity` - `v0.1.0+29`
+
+---
+
+#### `utopia_hooks` - `v0.4.6+1`
+
+ - **FIX**(utopia_hooks): Fix exports.
+
+
+## 2024-05-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.6`](#utopia_hooks---v046)
  - [`utopia_arch` - `v0.5.0+28`](#utopia_arch---v05028)
  - [`utopia_hooks_riverpod` - `v0.0.3+3`](#utopia_hooks_riverpod---v0033)
