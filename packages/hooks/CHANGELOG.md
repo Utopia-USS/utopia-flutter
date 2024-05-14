@@ -1,3 +1,7 @@
+## 0.4.6
+
+ - **FEAT**(utopia_hooks): Add Notifiable and related hooks.
+
 ## 0.4.5+2
 
  - **FIX**(utopia_hooks): Fix signatures of async hooks.
