@@ -63,8 +63,8 @@ class _ValueNotifierListenableMutableValue<T> implements ListenableMutableValue<
   set value(T value) => _value.value = value;
 }
 
-mixin DelegateListenableValue<T, D> implements ListenableValue<T> {
-  ListenableValue<D> get delegate;
+mixin DelegateListenable implements Listenable {
+  Listenable get delegate;
 
   @override
   void addListener(VoidCallback listener) => delegate.addListener(listener);
@@ -73,7 +73,7 @@ mixin DelegateListenableValue<T, D> implements ListenableValue<T> {
   void removeListener(VoidCallback listener) => delegate.removeListener(listener);
 }
 
-class _MappedListenableValue<T, D> with DelegateListenableValue<T, D> {
+class _MappedListenableValue<T, D> with DelegateListenable implements ListenableValue<T> {
   @override
   final ListenableValue<D> delegate;
   final T Function(D) mapper;
