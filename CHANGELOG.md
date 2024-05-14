@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.7+1`](#utopia_hooks---v0471)
+ - [`utopia_arch` - `v0.5.0+31`](#utopia_arch---v05031)
+ - [`utopia_hooks_riverpod` - `v0.0.3+6`](#utopia_hooks_riverpod---v0036)
+ - [`utopia_connectivity` - `v0.1.0+31`](#utopia_connectivity---v01031)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+31`
+ - `utopia_hooks_riverpod` - `v0.0.3+6`
+ - `utopia_connectivity` - `v0.1.0+31`
+
+---
+
+#### `utopia_hooks` - `v0.4.7+1`
+
+ - **FIX**(utopia_hooks): Fix NotifiableValue mapping.
+
+
+## 2024-05-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.7`](#utopia_hooks---v047)
  - [`utopia_arch` - `v0.5.0+30`](#utopia_arch---v05030)
  - [`utopia_hooks_riverpod` - `v0.0.3+5`](#utopia_hooks_riverpod---v0035)

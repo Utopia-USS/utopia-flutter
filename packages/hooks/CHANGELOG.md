@@ -1,3 +1,7 @@
+## 0.4.7+1
+
+ - **FIX**(utopia_hooks): Fix NotifiableValue mapping.
+
 ## 0.4.7
 
  - **FEAT**(utopia_hooks): Add NotifiableValue mapping.
