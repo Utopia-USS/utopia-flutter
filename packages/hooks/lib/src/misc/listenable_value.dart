@@ -4,7 +4,7 @@ import 'package:utopia_utils/utopia_utils.dart';
 abstract class ListenableValue<T> implements Value<T>, Listenable {}
 
 abstract class ListenableMutableValue<T> implements MutableValue<T>, ListenableValue<T> {
-  factory ListenableMutableValue(T value) => ListenableMutableValueImpl(value);
+  factory ListenableMutableValue(T value) = ListenableMutableValueImpl;
 }
 
 class ListenableMutableValueImpl<T> extends MutableValueImpl<T>

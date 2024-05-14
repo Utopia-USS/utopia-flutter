@@ -41,6 +41,7 @@ export 'src/hook/nested/use_if.dart';
 export 'src/hook/nested/use_map.dart';
 export 'src/hook/reactive/use_listenable.dart';
 export 'src/hook/reactive/use_listenable_listener.dart';
+export 'src/hook/reactive/use_notifiable.dart';
 export 'src/misc/has_initialized.dart';
 export 'src/misc/listenable_value.dart';
 export 'src/misc/listenable_value_extensions.dart';
