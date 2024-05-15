@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
+import 'package:utopia_hooks/src/base/hook_keys.dart';
 
-T useMemoized<T>(T Function() block, [HookKeys keys = const [], void Function(T)? dispose]) =>
+T useMemoized<T>(T Function() block, [HookKeys keys = hookKeysEmpty, void Function(T)? dispose]) =>
     use(_MemoizedHook(block, keys: keys, dispose: dispose));
 
 final class _MemoizedHook<T> extends KeyedHook<T> {

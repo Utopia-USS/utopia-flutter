@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
+import 'package:utopia_hooks/src/base/hook_keys.dart';
 
 typedef EffectHookDispose = dynamic;
 
-void useEffect(EffectHookDispose Function() effect, [HookKeys keys = const []]) =>
+void useEffect(EffectHookDispose Function() effect, [HookKeys keys = hookKeysEmpty]) =>
     use(_EffectHook(effect, immediate: false, keys: keys));
 
-void useImmediateEffect(EffectHookDispose Function() effect, [HookKeys keys = const []]) =>
+void useImmediateEffect(EffectHookDispose Function() effect, [HookKeys keys = hookKeysEmpty]) =>
     use(_EffectHook(effect, immediate: true, keys: keys));
 
 final class _EffectHook extends KeyedHook<void> {

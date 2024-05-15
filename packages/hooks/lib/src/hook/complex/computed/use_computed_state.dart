@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
-import 'package:utopia_hooks/src/base/hook.dart';
+import 'package:utopia_hooks/src/base/hook_keys.dart';
 import 'package:utopia_hooks/src/hook/base/use_effect.dart';
 import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
@@ -25,14 +25,14 @@ MutableComputedState<T> useComputedState<T>(Future<T> Function() compute) =>
 MutableComputedState<T> useAutoComputedState<T>(
   Future<T> Function() compute, {
   bool shouldCompute = true,
-  HookKeys keys = const [],
+  HookKeys keys = hookKeysEmpty,
   Duration debounceDuration = Duration.zero,
 }) {
   return useDebugGroup(
     debugLabel: 'useAutoComputedState<$T>()',
     debugFillProperties: (properties) => properties
       ..add(DiagnosticsProperty("shouldCompute", shouldCompute, defaultValue: true))
-      ..add(IterableProperty("keys", keys, defaultValue: const []))
+      ..add(IterableProperty("keys", keys, defaultValue: hookKeysEmpty))
       ..add(DiagnosticsProperty("debounceDuration", debounceDuration, defaultValue: Duration.zero)),
     () {
       final state = _useComputedState(compute);

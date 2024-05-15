@@ -5,7 +5,7 @@ import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
 import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
 
-base class HookProviderContainer with DiagnosticableTreeMixin implements ProviderContext {
+class HookProviderContainer with DiagnosticableTreeMixin implements ProviderContext {
   final void Function(void Function()) schedule;
   final _providers = <Type, _ProviderState>{};
   final _dependents = <Type, Set<Type>>{};

@@ -25,7 +25,7 @@ final class _MapHookState<K extends Object, T> extends NestedHookState<Map<K, T>
   @override
   Map<K, T> buildInner() {
     return {
-      for (final key in hook.keys) key: wrapBuild(key, () => hook.block(key)),
+      for (final key in hook.keys) key: wrapBuild([key], () => hook.block(key)),
     };
   }
 }

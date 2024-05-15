@@ -1,23 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
+@pragma('vm:prefer-inline')
+@pragma('dart2js:tryInline')
 T useDebugGroup<T>(
   T Function() block, {
-  String? debugLabel,
+  String ? debugLabel,
   void Function(DiagnosticPropertiesBuilder)? debugFillProperties,
 }) {
   if(kDebugMode) {
-    return use(_DebugGroupHook(block, debugFillProperties, debugLabel: debugLabel));
+    return use(_DebugGroupHook(block, debugFillProperties, debugLabel: debugLabel ?? "useDebugGroup<$T>()"));
   }
   return block();
 }
 
-final class _DebugGroupHook<T> extends Hook<T> {
+class _DebugGroupHook<T> extends Hook<T> {
   final T Function() block;
   final void Function(DiagnosticPropertiesBuilder)? _debugFillProperties;
 
-  const _DebugGroupHook(this.block, this._debugFillProperties, {String? debugLabel})
-      : super(debugLabel: debugLabel ?? "useGroup()");
+  const _DebugGroupHook(this.block, this._debugFillProperties, {super.debugLabel});
 
   @override
   HookState<T, _DebugGroupHook<T>> createState() => _DebugGroupHookState<T>();
@@ -29,7 +30,7 @@ final class _DebugGroupHook<T> extends Hook<T> {
   }
 }
 
-final class _DebugGroupHookState<T> extends HookState<T, _DebugGroupHook<T>>
+class _DebugGroupHookState<T> extends HookState<T, _DebugGroupHook<T>>
     with DiagnosticableTreeMixin, HookStateDiagnosticableMixin<T, _DebugGroupHook<T>>, HookContextMixin {
   @override
   T build() {

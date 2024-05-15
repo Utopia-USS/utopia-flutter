@@ -3,10 +3,11 @@ import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
+import 'package:utopia_hooks/src/base/hook_keys.dart';
 
-abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> with DiagnosticableTreeMixin {
-  final _contexts = <Object, _NestedHookContext>{};
-  final _used = <Object>{};
+abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> with DiagnosticableTreeMixin {
+  final _contexts = <HookKeysEquatable, _NestedHookContext>{};
+  final _used = <HookKeysEquatable>{};
   bool _isBuilding = false;
 
   T buildInner();
@@ -15,7 +16,7 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
   @override
   @protected
   @internal
-  HookContext get context => super.context;
+  HookContext get context;
 
   @override
   @nonVirtual
@@ -31,11 +32,12 @@ abstract base class NestedHookState<T, H extends Hook<T>> extends HookState<T, H
   }
 
   @protected
-  R wrapBuild<R>(Object key, R Function() block) {
+  R wrapBuild<R>(HookKeys keys, R Function() block) {
     assert(_isBuilding, "wrapBuild can only be called during build");
-    assert(!_used.contains(key), "wrapBuild has already been called with this key during this build");
-    _used.add(key);
-    return _contexts.putIfAbsent(key, () => _NestedHookContext(this)).wrapBuild(block);
+    final keysEquatable = HookKeysEquatable(keys);
+    assert(!_used.contains(keysEquatable), "wrapBuild has already been called with this key during this build");
+    _used.add(keysEquatable);
+    return _contexts.putIfAbsent(keysEquatable, () => _NestedHookContext(this)).wrapBuild(block);
   }
 
   @override
@@ -84,15 +86,15 @@ class _NestedHookContext with DiagnosticableTreeMixin, HookContextMixin {
   _NestedHookContext(this._state);
 
   @override
-  T wrapBuild<T>(T Function() build) => super.wrapBuild(build);
+  T wrapBuild<T>(T Function() build);
 
   @override
-  void triggerPostBuildCallbacks() => super.triggerPostBuildCallbacks();
+  void triggerPostBuildCallbacks();
 
   void dispose() => disposeHooks();
 
   @override
-  void debugMarkWillReassemble() => super.debugMarkWillReassemble();
+  void debugMarkWillReassemble();
 
   @override
   void markNeedsBuild() => _state.context.markNeedsBuild();

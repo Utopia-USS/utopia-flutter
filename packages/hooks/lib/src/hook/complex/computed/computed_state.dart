@@ -1,14 +1,14 @@
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
 import 'package:utopia_hooks/src/misc/has_initialized.dart';
 
-base class ComputedState<T> with ComputedStateMixin<T> {
+class ComputedState<T> with ComputedStateMixin<T> {
   @override
   final ComputedStateValue<T> value;
 
   const ComputedState({required this.value});
 }
 
-base class RefreshableComputedState<T> with ComputedStateMixin<T> implements ComputedState<T> {
+class RefreshableComputedState<T> with ComputedStateMixin<T> implements ComputedState<T> {
   @override
   final ComputedStateValue<T> value;
 

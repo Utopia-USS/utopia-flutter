@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:utopia_hooks/src/base/hook.dart';
+import 'package:utopia_hooks/src/base/hook_keys.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
@@ -20,7 +20,7 @@ PersistedState<T> usePersistedState<T extends Object>(
   Future<T?> Function() get,
   Future<void> Function(T? value) set, {
   bool canGet = true,
-  HookKeys getKeys = const [],
+  HookKeys getKeys = hookKeysEmpty,
 }) {
   return useDebugGroup(
     debugLabel: "usePersistedState<$T>()",
