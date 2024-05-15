@@ -11,7 +11,7 @@ WidgetRef useWidgetRef() => useProvided<WidgetRef>();
 T useRefWatch<T>(ProviderListenable<T> provider) => useWidgetRef().watch(provider);
 
 /// A [Consumer] that also allows using hooks in the passed [builder] function.
-final class HookConsumer extends HookConsumerWidget {
+class HookConsumer extends HookConsumerWidget {
   final Widget Function(BuildContext context, WidgetRef ref) builder;
 
   const HookConsumer({required this.builder, super.key});
@@ -21,7 +21,7 @@ final class HookConsumer extends HookConsumerWidget {
 }
 
 /// A [ConsumerWidget] that also allows using hooks in its [build] method.
-abstract base class HookConsumerWidget extends ConsumerStatefulWidget {
+abstract class HookConsumerWidget extends ConsumerStatefulWidget {
   const HookConsumerWidget({super.key});
 
   Widget build(BuildContext context, WidgetRef ref);
