@@ -1,3 +1,7 @@
+## 0.0.3+7
+
+ - **FIX**(utopia_hooks_riverpod): Relax class modifier on HookConsumerWidget.
+
 ## 0.0.3+6
 
  - Update a dependency to the latest release.
