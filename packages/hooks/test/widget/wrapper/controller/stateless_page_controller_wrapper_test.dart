@@ -8,7 +8,7 @@ void main() {
       await tester.pumpWidget(_buildWidget(MutableValue(1)));
       await tester.pumpAndSettle();
 
-      expect(_findPageView(tester).controller.page, 1);
+      expect(_findPageView(tester).controller?.page, 1);
     });
 
     testWidgets("should move to given page", (tester) async {
@@ -27,11 +27,11 @@ void main() {
         ),
       );
 
-      expect(_findPageView(tester).controller.page, 0);
+      expect(_findPageView(tester).controller?.page, 0);
 
       await tester.pumpAndSettle();
 
-      expect(_findPageView(tester).controller.page, 1);
+      expect(_findPageView(tester).controller?.page, 1);
     });
 
     testWidgets("should reflect when user changes page", (tester) async {
@@ -41,7 +41,7 @@ void main() {
       await tester.drag(find.byType(PageView), const Offset(-1000, 0));
       await tester.pumpAndSettle();
 
-      expect(_findPageView(tester).controller.page, 1);
+      expect(_findPageView(tester).controller?.page, 1);
       expect(index.value, 1);
     });
   });
