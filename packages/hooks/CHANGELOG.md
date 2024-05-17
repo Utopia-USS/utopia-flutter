@@ -1,3 +1,7 @@
+## 0.4.8+1
+
+ - **FIX**(utopia_hooks): Fix tests.
+
 ## 0.4.8
 
  - **FEAT**(utopia_hooks): Add useKeyed.

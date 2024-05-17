@@ -1,3 +1,7 @@
+## 0.3.1+1
+
+ - **FIX**(utopia_utils): Extend intl version.
+
 ## 0.3.1
 
  - **FEAT**(utopia_hooks): Add onNull parameter to MutableValue.asNotNull.

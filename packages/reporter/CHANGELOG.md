@@ -1,3 +1,7 @@
+## 0.1.0+3
+
+ - Update a dependency to the latest release.
+
 ## 0.1.0+2
 
  - **FIX**(utopia_reporter): Update dependencies.
