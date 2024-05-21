@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.2.1`](#utopia_save_file---v021)
+
+---
+
+#### `utopia_save_file` - `v0.2.1`
+
+ - **FEAT**(utopia_save_file): Migrate to package:web.
+
+
 ## 2024-05-17
 
 ### Changes
