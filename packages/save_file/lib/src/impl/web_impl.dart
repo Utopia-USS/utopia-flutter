@@ -1,9 +1,8 @@
-import 'dart:html' as html;
-
 import 'package:cross_file/cross_file.dart';
 import 'package:utopia_save_file/src/impl/impl.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 import 'package:utopia_save_file/src/util/byte_stream_extensions.dart';
+import 'package:web/web.dart';
 
 typedef SaveFileTargetImpl = SaveFileWebImpl;
 
@@ -17,7 +16,8 @@ class SaveFileWebImpl implements SaveFileImpl {
 
   @override
   Future<bool> fromUrl(String url, SaveFileMetadata metadata) async {
-    html.AnchorElement(href: url)
+    HTMLAnchorElement()
+      ..href = url
       ..download = metadata.name
       ..click();
     return true;

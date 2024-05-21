@@ -20,6 +20,7 @@ dependencies:
   cross_file: ^0.3.3+4
   mime: ^1.0.4
   http: ^1.1.0
+  web: ^0.5.1
 
 
 dev_dependencies:
