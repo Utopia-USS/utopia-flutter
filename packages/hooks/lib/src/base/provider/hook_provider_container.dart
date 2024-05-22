@@ -59,7 +59,11 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   }
 
   @override
-  dynamic getUnsafe(Type type) => _providers[type]?.value;
+  dynamic getUnsafe(Type type, {bool? watch}) {
+    assert(watch != true, "Watching a dependency is not supported in HookProviderContainer.getUnsafe()");
+    if(!_providers.containsKey(type)) return ProviderContext.valueNotFound;
+    return _providers[type]?.value;
+  }
 
   void Function() addListener<T>(void Function(T) listener) => addListenerUnsafe(T, (it) => listener(it as T));
 
@@ -186,9 +190,10 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   void dispose() => disposeHooks();
 
   @override
-  dynamic getUnsafe(Type type) {
+  dynamic getUnsafe(Type type, {bool? watch}) {
+    watch ??= _isCollectingDependencies;
     assert(() {
-      if (!_isCollectingDependencies && debugDoingBuild && !dependencies.contains(type)) {
+      if (watch! && !_isCollectingDependencies && debugDoingBuild && !dependencies.contains(type)) {
         throw FlutterError.fromParts([
           ErrorSummary('Trying to register a dependency after the first build'),
           ErrorDescription('All dependencies must be registered during the first build of the provider'),
@@ -199,7 +204,7 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
       }
       return true;
     }());
-    if (_isCollectingDependencies) dependencies.add(type);
+    if (watch && _isCollectingDependencies) dependencies.add(type);
     return container.getUnsafe(type);
   }
 

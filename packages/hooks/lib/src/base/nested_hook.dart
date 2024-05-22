@@ -100,5 +100,5 @@ class _NestedHookContext with DiagnosticableTreeMixin, HookContextMixin {
   void markNeedsBuild() => _state.context.markNeedsBuild();
 
   @override
-  dynamic getUnsafe(Type type) => _state.context.getUnsafe(type);
+  dynamic getUnsafe(Type type, {bool? watch}) => _state.context.getUnsafe(type, watch: watch);
 }

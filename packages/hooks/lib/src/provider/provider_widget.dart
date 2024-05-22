@@ -42,11 +42,11 @@ class HookProvider<T> extends HookWidget {
 extension ProviderBuildContextExtensions on BuildContext {
   ProviderContext asProviderContext() => _ProviderBuildContext(this);
 
-  dynamic getUnsafe(Type type) => asProviderContext().getUnsafe(type);
+  dynamic getUnsafe(Type type, {bool? watch}) => asProviderContext().getUnsafe(type, watch: watch);
 
-  T get<T>() => asProviderContext().get<T>();
+  T get<T>({bool? watch}) => asProviderContext().get<T>(watch: watch);
 
-  T? getOrNull<T>() => asProviderContext().getOrNull<T>();
+  T? getOrNull<T>({bool? watch}) => asProviderContext().getOrNull<T>(watch: watch);
 }
 
 class _ProviderBuildContext implements ProviderContext {
@@ -55,9 +55,22 @@ class _ProviderBuildContext implements ProviderContext {
   const _ProviderBuildContext(this.context);
 
   @override
-  dynamic getUnsafe(Type type) {
-    final provider = InheritedModel.inheritFrom<ProviderWidget>(context, aspect: type);
-    if (provider == null) throw ProvidedValueNotFoundException(type: type, context: this);
-    return provider.values[type];
+  dynamic getUnsafe(Type type, {bool? watch}) {
+    final element = _findElement(type);
+    if (element == null) return ProviderContext.valueNotFound;
+    // No way to efficiently guess whether we should watch or not, so falling back to true.
+    if (watch ?? true) context.dependOnInheritedElement(element, aspect: type);
+    return (element.widget as ProviderWidget).values[type];
+  }
+
+  InheritedModelElement<Type>? _findElement(Type type) {
+    var currentContext = context;
+    while (true) {
+      final element =
+          currentContext.getElementForInheritedWidgetOfExactType<ProviderWidget>() as InheritedModelElement<Type>?;
+      if (element == null) return null;
+      if ((element.widget as ProviderWidget).isSupportedAspect(type)) return element;
+      currentContext = element;
+    }
   }
 }
