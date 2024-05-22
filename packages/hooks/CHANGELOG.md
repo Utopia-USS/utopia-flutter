@@ -1,3 +1,7 @@
+## 0.4.9+1
+
+ - **FIX**(utopia_hooks): Fix _ProviderBuildContext.
+
 ## 0.4.9
 
  - **FEAT**(utopia_hooks): Add possibility to read values from ProviderContext without watching.
