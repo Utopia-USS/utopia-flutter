@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**(utopia_hooks_riverpod): Add support for ProviderContext watching.
+
 ## 0.0.3+8
 
  - Update a dependency to the latest release.

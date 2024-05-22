@@ -1,3 +1,7 @@
+## 0.4.9
+
+ - **FEAT**(utopia_hooks): Add possibility to read values from ProviderContext without watching.
+
 ## 0.4.8+1
 
  - **FIX**(utopia_hooks): Fix tests.
