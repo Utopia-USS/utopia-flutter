@@ -70,7 +70,10 @@ class _ProviderBuildContext implements ProviderContext {
           currentContext.getElementForInheritedWidgetOfExactType<ProviderWidget>() as InheritedModelElement<Type>?;
       if (element == null) return null;
       if ((element.widget as ProviderWidget).isSupportedAspect(type)) return element;
-      currentContext = element;
+      element.visitAncestorElements((it) {
+        currentContext = it;
+        return false;
+      });
     }
   }
 }
