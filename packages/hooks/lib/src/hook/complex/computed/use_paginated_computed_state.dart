@@ -14,7 +14,7 @@ import 'package:utopia_hooks/src/hook/complex/computed/use_computed_state.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 
 ///JK workaround: reconsider implementation of [ComputedState] to avoid unnecessary wrappers
-class PaginationComputedState<T> {
+class PaginatedComputedState<T> {
   ///Set of computed items
   final List<T> values;
 
@@ -30,7 +30,7 @@ class PaginationComputedState<T> {
   /// Since we are caching results of the [computedState], [computedState.refresh] is insufficient
   final Future<void> Function() refresh;
 
-  PaginationComputedState({
+  PaginatedComputedState({
     required this.computedState,
     required this.values,
     required this.refresh,
@@ -38,7 +38,7 @@ class PaginationComputedState<T> {
   });
 }
 
-PaginationComputedState<T> usePaginatedComputedState<T>(
+PaginatedComputedState<T> usePaginatedComputedState<T>(
   Future<Iterable<T>> Function(int offset, int limit) compute, {
   int limit = 12,
   bool shouldCompute = true,
@@ -87,7 +87,7 @@ PaginationComputedState<T> usePaginatedComputedState<T>(
         await computedState.refresh();
       }
 
-      return PaginationComputedState(
+      return PaginatedComputedState(
         computedState: computedState,
         values: itemsState.value.toList(),
         refresh: refresh,
