@@ -14,17 +14,13 @@ extension AppLocalizationsExtensions on BuildContext {
   AppLocalizationsData get strings => localizations();
 }
 
-class AppLocalizationsDelegate extends UtopiaLocalizationsDelegate<AppLocalizationsData> {
-  const AppLocalizationsDelegate(super.data);
-}
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _currentLocale;
+  late Locale _currentLocale;
   UtopiaLocalizationData<AppLocalizationsData>? _override;
 
   @override
@@ -39,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       locale: _currentLocale,
       localizationsDelegates: [
-        AppLocalizationsDelegate(_override ?? appLocalizationsData), // <- Your custom delegate
+        UtopiaLocalizationsDelegate(_override ?? appLocalizationsData),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
@@ -47,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       // <- Supported locales
       home: MyHomePage(
         title: 'Internationalization demo',
-        locale: _currentLocale!,
+        locale: _currentLocale,
         onLocaleChanged: (locale) {
           if (_currentLocale != locale) {
             setState(() => _currentLocale = locale);
