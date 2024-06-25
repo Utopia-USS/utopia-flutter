@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      utopia_localization_generator:
+        enabled: true
+
+builders:
+  utopia_localization_generator:
+    target: "utopia_localization_generator"
+    import: "package:utopia_localization_generator/builder.dart"
+    builder_factories: ["utopiaLocalizationGenerator"]
+    build_extensions: {".dart": [".utopia_localization.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
