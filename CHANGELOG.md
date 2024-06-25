@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-06-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_generator` - `v0.0.2`](#utopia_localization_generator---v002)
+
+---
+
+#### `utopia_localization_generator` - `v0.0.2`
+
+ - **FIX**(utopia_localization_generator): Fix example.
+ - **FEAT**(utopia_localization): Initial release.
+
+
 ## 2024-05-22
 
 ### Changes
