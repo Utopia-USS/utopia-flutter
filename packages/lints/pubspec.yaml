@@ -4,7 +4,7 @@ version: 0.0.3+2
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
-  sdk: '>=2.16.0 <3.0.0'
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter_lints: ^3.0.2
