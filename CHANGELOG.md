@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-06-28
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_firebase_crashlytics` - `v0.2.0+4`](#utopia_firebase_crashlytics---v0204)
+ - [`utopia_localization_annotation` - `v0.0.2`](#utopia_localization_annotation---v002)
+ - [`utopia_localization_builder` - `v0.0.2`](#utopia_localization_builder---v002)
+ - [`utopia_localization_template` - `v0.0.2`](#utopia_localization_template---v002)
+ - [`utopia_localization_utils` - `v0.0.2`](#utopia_localization_utils---v002)
+ - [`utopia_localization_generator` - `v0.0.2+1`](#utopia_localization_generator---v0021)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_localization_generator` - `v0.0.2+1`
+
+---
+
+#### `utopia_firebase_crashlytics` - `v0.2.0+4`
+
+ - **FIX**(utopia_firebase_crashlytics): Upgrade dependencies.
+
+#### `utopia_localization_annotation` - `v0.0.2`
+
+ - **FEAT**(utopia_localization): Initial release.
+
+#### `utopia_localization_builder` - `v0.0.2`
+
+ - **FEAT**(utopia_localization): Initial release.
+
+#### `utopia_localization_template` - `v0.0.2`
+
+ - **FEAT**(utopia_localization): Initial release.
+
+#### `utopia_localization_utils` - `v0.0.2`
+
+ - **FEAT**(utopia_localization): Initial release.
+
+
 ## 2024-06-25
 
 ### Changes
