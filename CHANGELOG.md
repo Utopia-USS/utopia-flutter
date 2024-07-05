@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_builder` - `v0.0.2+1`](#utopia_localization_builder---v0021)
+ - [`utopia_localization_generator` - `v0.0.2+2`](#utopia_localization_generator---v0022)
+
+---
+
+#### `utopia_localization_builder` - `v0.0.2+1`
+
+ - **FIX**(utopia_localization): Fix generated code.
+
+#### `utopia_localization_generator` - `v0.0.2+2`
+
+ - **FIX**(utopia_localization): Fix generated code.
+
+
 ## 2024-06-28
 
 ### Changes

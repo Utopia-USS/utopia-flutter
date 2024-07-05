@@ -1,7 +1,7 @@
 name: utopia_localization_builder
 description: Utopia USS libs - Localization - Internal library for utopia_localization_generator.
 homepage: https://github.com/Utopia-USS/utopia-flutter
-version: 0.0.2
+version: 0.0.2+1
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
