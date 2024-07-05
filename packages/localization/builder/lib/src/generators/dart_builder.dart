@@ -33,7 +33,7 @@ class DartLocalizationBuilder {
   String _createLanguageMap(List<String> path, Localizations localizations) {
     final result = StringBuffer();
 
-    result.write('UtopiaLocalizationData({');
+    result.write('UtopiaLocalizationData<${localizations.name}>({');
 
     for (var languageCode in localizations.supportedLanguageCodes) {
       final instance = _createSectionInstance(path, languageCode, localizations);

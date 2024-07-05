@@ -6,7 +6,7 @@ part of 'localizations.dart';
 // UtopiaLocalizationGenerator
 // **************************************************************************
 
-const appLocalizationsData = UtopiaLocalizationData({
+const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
   'fr': AppLocalizationsData(
     multiline: 'C\'est\n\nun\n\nexemple multiligne.',
     plurals: AppLocalizationsDataPlurals(
