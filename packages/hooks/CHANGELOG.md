@@ -1,3 +1,7 @@
+## 0.4.10
+
+ - **FEAT**(utopia_hooks): Add async capabilities to useStreamSubscription.
+
 ## 0.4.9+1
 
  - **FIX**(utopia_hooks): Fix _ProviderBuildContext.
