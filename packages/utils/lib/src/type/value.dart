@@ -16,6 +16,8 @@ abstract class MutableValue<T> implements Value<T> {
   set value(T value);
 
   factory MutableValue(T initialValue) = MutableValueImpl;
+  
+  const factory MutableValue.property(T value, void Function(T) set) = PropertyMutableValue;
 
   const factory MutableValue.computed(T Function() get, void Function(T) set) = ComputedMutableValue;
 
@@ -36,6 +38,15 @@ class MutableValueImpl<T> implements MutableValue<T> {
   T value;
 
   MutableValueImpl(this.value);
+}
+
+class PropertyMutableValue<T> extends ValueImpl<T> implements MutableValue<T> {
+  final void Function(T) _set;
+
+  const PropertyMutableValue(super.value, this._set);
+
+  @override
+  set value(T value) => _set(value);
 }
 
 class LateMutableValue<T> implements MutableValue<T> {
