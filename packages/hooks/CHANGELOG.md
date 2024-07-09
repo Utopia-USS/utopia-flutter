@@ -1,3 +1,7 @@
+## 0.4.11
+
+ - **FEAT**(utopia_hooks): Add NotifiableValue default impl.
+
 ## 0.4.10
 
  - **FEAT**(utopia_hooks): Add async capabilities to useStreamSubscription.

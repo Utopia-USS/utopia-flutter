@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-09
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.11`](#utopia_hooks---v0411)
+ - [`utopia_utils` - `v0.3.2`](#utopia_utils---v032)
+ - [`utopia_arch` - `v0.5.0+37`](#utopia_arch---v05037)
+ - [`utopia_hooks_riverpod` - `v0.0.4+3`](#utopia_hooks_riverpod---v0043)
+ - [`utopia_connectivity` - `v0.1.0+37`](#utopia_connectivity---v01037)
+ - [`utopia_save_file` - `v0.2.1+1`](#utopia_save_file---v0211)
+ - [`utopia_rest` - `v0.1.0+4`](#utopia_rest---v0104)
+ - [`utopia_reporter` - `v0.1.0+4`](#utopia_reporter---v0104)
+ - [`utopia_validation` - `v0.1.0+3`](#utopia_validation---v0103)
+ - [`utopia_widgets` - `v0.1.1+2`](#utopia_widgets---v0112)
+ - [`utopia_firebase_crashlytics` - `v0.2.0+5`](#utopia_firebase_crashlytics---v0205)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.0+37`
+ - `utopia_hooks_riverpod` - `v0.0.4+3`
+ - `utopia_connectivity` - `v0.1.0+37`
+ - `utopia_save_file` - `v0.2.1+1`
+ - `utopia_rest` - `v0.1.0+4`
+ - `utopia_reporter` - `v0.1.0+4`
+ - `utopia_validation` - `v0.1.0+3`
+ - `utopia_widgets` - `v0.1.1+2`
+ - `utopia_firebase_crashlytics` - `v0.2.0+5`
+
+---
+
+#### `utopia_hooks` - `v0.4.11`
+
+ - **FEAT**(utopia_hooks): Add NotifiableValue default impl.
+
+#### `utopia_utils` - `v0.3.2`
+
+ - **FEAT**(utopia_utils): Add MutableValue.property.
+
+
 ## 2024-07-06
 
 ### Changes

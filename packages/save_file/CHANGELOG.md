@@ -1,3 +1,7 @@
+## 0.2.1+1
+
+ - Update a dependency to the latest release.
+
 ## 0.2.1
 
  - **FEAT**(utopia_save_file): Migrate to package:web.
