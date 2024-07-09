@@ -1,18 +1,27 @@
 import 'package:flutter/foundation.dart';
-import 'package:utopia_hooks/src/misc/listenable_value.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 abstract class Notifiable {
   void notify();
 }
 
-abstract class NotifiableValue<T> implements Value<T>, Notifiable {}
+abstract class NotifiableValue<T> implements Value<T>, Notifiable {
+  const factory NotifiableValue(T value, void Function() notify) = NotifiableValueImpl;
+}
 
 abstract class ListenableNotifiable implements Listenable, Notifiable {}
 
 abstract class ListenableNotifiableValue<T> implements ListenableValue<T>, NotifiableValue<T>, ListenableNotifiable {
   factory ListenableNotifiableValue(T value) = ListenableNotifiableValueImpl;
+}
+
+class NotifiableValueImpl<T> extends ValueImpl<T> implements NotifiableValue<T> {
+  final void Function() _notify;
+
+  const NotifiableValueImpl(super.value, this._notify);
+
+  @override
+  void notify() => _notify();
 }
 
 class ListenableNotifiableValueImpl<T> extends ValueImpl<T>
