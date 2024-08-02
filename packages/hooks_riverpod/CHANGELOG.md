@@ -1,3 +1,7 @@
+## 0.0.4+4
+
+ - **FIX**(utopia_hooks_riverpod): Fix infinite rebuild of HookConsumerProviderContainerWidget.
+
 ## 0.0.4+3
 
  - Update a dependency to the latest release.

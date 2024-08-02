@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks_riverpod` - `v0.0.4+4`](#utopia_hooks_riverpod---v0044)
+
+---
+
+#### `utopia_hooks_riverpod` - `v0.0.4+4`
+
+ - **FIX**(utopia_hooks_riverpod): Fix infinite rebuild of HookConsumerProviderContainerWidget.
+
+
 ## 2024-07-09
 
 ### Changes
