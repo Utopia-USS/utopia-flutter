@@ -24,16 +24,51 @@ class HookConsumerProviderContainerWidget extends ConsumerStatefulWidget with Ho
 }
 
 class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsumerProviderContainerWidget>
-    with DiagnosticableTreeMixin, HookProviderContainerWidgetStateMixin {
-  @override
-  Map<Type, Object Function()> get additionalProviders => {WidgetRef: () => ref};
+    with DiagnosticableTreeMixin, HookProviderContainerWidgetStateMixin
+    implements WidgetRef {
+  final _providers = <ProviderListenable<dynamic>>{};
 
   @override
-  Widget build(BuildContext context) {
-    // There's no way to listen for changes in providers watched via WidgetRef.watch so we need to rebuild its
-    // dependents every build.
-    // TODO Consider implementing a custom WidgetRef to track dependency changes.
-    container.refresh({WidgetRef});
-    return super.build(context);
+  Map<Type, Object Function()> get additionalProviders => {WidgetRef: () => this};
+
+  @override
+  bool exists(ProviderBase<Object?> provider) => ref.exists(provider);
+
+  @override
+  void invalidate(ProviderOrFamily provider) => ref.invalidate(provider);
+
+  @override
+  void listen<T>(
+    ProviderListenable<T> provider,
+    void Function(T? previous, T next) listener, {
+    void Function(Object error, StackTrace stackTrace)? onError,
+  }) {
+    ref.listen(provider, listener, onError: onError);
+  }
+
+  @override
+  ProviderSubscription<T> listenManual<T>(
+    ProviderListenable<T> provider,
+    void Function(T? previous, T next) listener, {
+    void Function(Object error, StackTrace stackTrace)? onError,
+    bool fireImmediately = false,
+  }) {
+    return ref.listenManual(provider, listener, onError: onError, fireImmediately: fireImmediately);
+  }
+
+  @override
+  T read<T>(ProviderListenable<T> provider) => ref.read(provider);
+
+  @override
+  State refresh<State>(Refreshable<State> provider) => ref.refresh(provider);
+
+  @override
+  T watch<T>(ProviderListenable<T> provider) {
+    if (!_providers.contains(provider)) {
+      _providers.add(provider);
+      // TODO Figure out how to selectively refresh providers.
+      ref.listenManual(provider, (_, __) => container.refresh({WidgetRef}));
+    }
+    return ref.watch(provider);
   }
 }
