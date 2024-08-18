@@ -5,10 +5,12 @@ import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 import 'package:utopia_hooks/src/base/hook_keys.dart';
 
-abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> with DiagnosticableTreeMixin {
+abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H>
+    with DiagnosticableTreeMixin, HookStateDiagnosticableMixin<T, H> {
   final _contexts = <HookKeysEquatable, _NestedHookContext>{};
   final _used = <HookKeysEquatable>{};
-  bool _isBuilding = false;
+
+  var _debugDoingBuild = false;
 
   T buildInner();
 
@@ -22,10 +24,16 @@ abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> wit
   @nonVirtual
   T build() {
     try {
-      _isBuilding = true;
+      assert(() {
+        _debugDoingBuild = true;
+        return true;
+      }());
       return buildInner();
     } finally {
-      _isBuilding = false;
+      assert(() {
+        _debugDoingBuild = false;
+        return true;
+      }());
       // TODO investigate disposing unused contexts immediately instead of post-build
       context.addPostBuildCallback(_postBuild);
     }
@@ -33,9 +41,12 @@ abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> wit
 
   @protected
   R wrapBuild<R>(HookKeys keys, R Function() block) {
-    assert(_isBuilding, "wrapBuild can only be called during build");
+    assert(_debugDoingBuild, "wrapBuild can only be called during build");
     final keysEquatable = HookKeysEquatable(keys);
-    assert(!_used.contains(keysEquatable), "wrapBuild has already been called with this key during this build");
+    assert(
+      !_used.contains(keysEquatable),
+      "wrapBuild has already been called with given keys ($keysEquatable during this build",
+    );
     _used.add(keysEquatable);
     return _contexts.putIfAbsent(keysEquatable, () => _NestedHookContext(this)).wrapBuild(block);
   }
@@ -63,7 +74,7 @@ abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> wit
   @override
   void debugMarkWillReassemble() {
     super.debugMarkWillReassemble();
-    for(final context in _contexts.values) {
+    for (final context in _contexts.values) {
       context.debugMarkWillReassemble();
     }
   }
@@ -71,7 +82,7 @@ abstract class NestedHookState<T, H extends Hook<T>> extends HookState<T, H> wit
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(FlagProperty("building", value: _isBuilding, ifTrue: "building", level: DiagnosticLevel.debug));
+    properties.add(FlagProperty("building", value: _debugDoingBuild, ifTrue: "building", level: DiagnosticLevel.debug));
     properties.add(IterableProperty("used context keys", _used, ifEmpty: null, level: DiagnosticLevel.debug));
   }
 

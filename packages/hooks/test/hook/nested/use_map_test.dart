@@ -19,5 +19,9 @@ void main() {
     context().keys.value = {"a", "b"};
     expect(context().map["a"]!.value, "b");
     expect(context().map["b"]!.value, "b");
+
+    context().keys.value = {"a"};
+    expect(context().map["a"]!.value, "b");
+    expect(context().map["b"], null);
   });
 }

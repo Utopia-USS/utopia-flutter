@@ -21,6 +21,9 @@ class HookKeysEquatable {
 
   @override
   int get hashCode => hookKeysEquality.hash(keys);
+
+  @override
+  String toString() => keys.join(",");
 }
 
 abstract class KeyedHook<T> extends Hook<T> {
