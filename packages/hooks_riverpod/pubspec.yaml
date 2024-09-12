@@ -1,6 +1,6 @@
 name: utopia_hooks_riverpod
 description: Utopia Hooks - Riverpod interoperability
-version: 0.0.4+6
+version: 0.0.4+7
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

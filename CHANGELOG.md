@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks_riverpod` - `v0.0.4+7`](#utopia_hooks_riverpod---v0047)
+
+---
+
+#### `utopia_hooks_riverpod` - `v0.0.4+7`
+
+ - **FIX**(utopia_hooks_riverpod): Remove debug prints.
+
+
+## 2024-09-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.12+1`](#utopia_hooks---v04121)
  - [`utopia_hooks_riverpod` - `v0.0.4+6`](#utopia_hooks_riverpod---v0046)
  - [`utopia_arch` - `v0.5.0+39`](#utopia_arch---v05039)
