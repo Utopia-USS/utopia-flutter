@@ -30,7 +30,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
           ErrorSummary('Cannot refresh while refresh is in progress'),
           ErrorDescription("refresh can only be called outside of a refresh cycle"),
           ErrorHint('Use addPostBuildCallback to schedule a refresh immediately after the current one'),
-          DiagnosticableTreeNode(name: 'container', value: this, style: null),
+          DiagnosticableTreeNode(name: 'container', value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;
@@ -199,7 +199,7 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
           ErrorDescription('All dependencies must be registered during the first build of the provider'),
           DiagnosticsProperty("type", type),
           DiagnosticableTreeNode(name: 'provider', value: this, style: null),
-          DiagnosticableTreeNode(name: 'container', value: container, style: null),
+          DiagnosticableTreeNode(name: 'container', value: container, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;

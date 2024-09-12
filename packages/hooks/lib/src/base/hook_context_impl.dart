@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 
@@ -15,12 +16,14 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   var _mounted = true;
   var _debugPostBuildCallbacksDirty = false;
   var _debugWillReassemble = false;
+  var _debugDoingBuild = false;
 
   @override
   @nonVirtual
   bool get mounted => _mounted;
 
-  bool get debugDoingBuild => _index > 0;
+  @internal
+  bool get debugDoingBuild => _debugDoingBuild;
 
   @override
   @nonVirtual
@@ -112,6 +115,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
             ]);
           }
           _debugPostBuildCallbacksDirty = true;
+          _debugDoingBuild = true;
           return true;
         }());
 
@@ -143,6 +147,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
       } finally {
         assert(() {
           _debugWillReassemble = false;
+          _debugDoingBuild = false;
           return true;
         }());
         _isFirstBuild = false;
