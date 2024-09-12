@@ -1,3 +1,7 @@
+## 0.0.4+6
+
+ - **FIX**(utopia_hooks_riverpod): Fix circular refresh issue.
+
 ## 0.0.4+5
 
  - **FIX**(utopia_hooks_riverpod): Fix ref.watch in HookConsumerProviderContainerWidget.

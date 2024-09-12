@@ -1,3 +1,7 @@
+## 0.4.12+1
+
+ - **FIX**(utopia_hooks): Fix addPostBuildCallback when no hook has been used yet.
+
 ## 0.4.12
 
  - **FIX**(utopia_hooks): Fix diagnostics in NestedHookState.
