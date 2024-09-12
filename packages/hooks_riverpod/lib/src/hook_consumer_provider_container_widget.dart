@@ -62,13 +62,10 @@ class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsum
   @override
   T watch<T>(ProviderListenable<T> provider) {
     if (!_providers.contains(provider)) {
-      print("Registering provider $provider");
       _providers.add(provider);
       // TODO Figure out how to selectively refresh providers.
       HookContext.current!.addPostBuildCallback(() {
-        print("Registering listener for $provider");
         ref.listenManual(provider, (_, __) {
-          print("Rebuild triggered by $provider");
           container.refresh({WidgetRef});
         });
       });
