@@ -69,6 +69,6 @@ class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsum
       // TODO Figure out how to selectively refresh providers.
       ref.listenManual(provider, (_, __) => container.refresh({WidgetRef}));
     }
-    return ref.watch(provider);
+    return ref.read(provider);
   }
 }
