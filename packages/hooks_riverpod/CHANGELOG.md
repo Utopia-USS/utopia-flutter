@@ -1,3 +1,7 @@
+## 0.0.4+5
+
+ - **FIX**(utopia_hooks_riverpod): Fix ref.watch in HookConsumerProviderContainerWidget.
+
 ## 0.0.4+4
 
  - **FIX**(utopia_hooks_riverpod): Fix infinite rebuild of HookConsumerProviderContainerWidget.

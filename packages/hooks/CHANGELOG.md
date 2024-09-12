@@ -1,3 +1,8 @@
+## 0.4.12
+
+ - **FIX**(utopia_hooks): Fix diagnostics in NestedHookState.
+ - **FEAT**(utopia_hooks): Add useLet.
+
 ## 0.4.11
 
  - **FEAT**(utopia_hooks): Add NotifiableValue default impl.
