@@ -1,3 +1,7 @@
+## 0.0.4+8
+
+ - **FIX**(utopia_hooks_riverpod): Fix refresh-during-refresh issues.
+
 ## 0.0.4+7
 
  - **FIX**(utopia_hooks_riverpod): Remove debug prints.

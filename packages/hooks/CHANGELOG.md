@@ -1,3 +1,7 @@
+## 0.4.13
+
+ - **FEAT**(utopia_hooks): Allow ProviderContext to be keyed by any object.
+
 ## 0.4.12+1
 
  - **FIX**(utopia_hooks): Fix addPostBuildCallback when no hook has been used yet.
