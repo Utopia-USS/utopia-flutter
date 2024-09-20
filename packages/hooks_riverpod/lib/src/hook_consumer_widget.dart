@@ -37,8 +37,8 @@ class _HookConsumerState extends ConsumerState<HookConsumerWidget>
   Widget performBuild(BuildContext context) => widget.build(context, ref);
 
   @override
-  dynamic getUnsafe(Type type, {bool? watch}) {
-    if (type == WidgetRef) return ref;
-    return super.getUnsafe(type, watch: watch);
+  dynamic getUnsafe(Object key, {bool? watch}) {
+    if (key == WidgetRef) return ref;
+    return super.getUnsafe(key, watch: watch);
   }
 }
