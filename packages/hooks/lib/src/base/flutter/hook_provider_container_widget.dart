@@ -38,7 +38,7 @@ mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidge
     on State<W>, DiagnosticableTreeMixin {
   @protected
   late final HookProviderContainer container;
-  late Map<Type, Object?> _values;
+  late Map<Object, Object?> _values;
   var _isFirstBuild = true;
 
   @protected

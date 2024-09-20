@@ -1,21 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:utopia_hooks/src/base/hook_context_impl.dart';
 import 'package:utopia_hooks/src/provider/provider_context.dart';
 import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
 
 class HookProviderContainer with DiagnosticableTreeMixin implements ProviderContext {
   final void Function(void Function()) schedule;
-  final _providers = <Type, _ProviderState>{};
-  final _dependents = <Type, Set<Type>>{};
-  final _dirty = <Type>{};
-  final _listeners = <Type, Set<void Function(Object?)>>{};
-  var _isRefreshInProgress = false;
+  final _providers = <Object, _ProviderState>{};
+  final _dependents = <Object, Set<Object>>{};
+  final _dirtyKeys = <Object>{};
+  final _listeners = <Object, Set<void Function(Object?)>>{};
+
+  var _debugDoingRefresh = false;
+
+  @internal
+  bool get debugDoingRefresh => _debugDoingRefresh;
 
   HookProviderContainer({required this.schedule});
 
-  void initialize(Map<Type, Object? Function()> providers) {
+  void initialize(Map<Object, Object? Function()> providers) {
     for (final entry in providers.entries) {
       _providers[entry.key] = _ProviderState(this, entry.key, entry.value);
     }
@@ -23,20 +28,21 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
     _triggerPostBuildCallbacks();
   }
 
-  void refresh([Set<Type>? providers]) {
+  void refresh([Set<Object>? keys]) {
     assert(() {
-      if (_isRefreshInProgress) {
+      if (_debugDoingRefresh) {
         throw FlutterError.fromParts([
           ErrorSummary('Cannot refresh while refresh is in progress'),
           ErrorDescription("refresh can only be called outside of a refresh cycle"),
           ErrorHint('Use addPostBuildCallback to schedule a refresh immediately after the current one'),
+          if (keys != null) IterableProperty('keys', keys) else MessageProperty('keys', 'all keys'),
           DiagnosticableTreeNode(name: 'container', value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;
     }());
-    final shouldSchedule = _dirty.isEmpty;
-    _dirty.addAll(providers ?? _providers.keys);
+    final shouldSchedule = _dirtyKeys.isEmpty;
+    _dirtyKeys.addAll(keys ?? _providers.keys);
     if (shouldSchedule) schedule(_doRefresh);
   }
 
@@ -45,7 +51,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
       for (final provider in _providers.values) {
         provider.debugMarkWillReassemble();
       }
-      _dirty.addAll(_providers.keys);
+      _dirtyKeys.addAll(_providers.keys);
       _doRefresh();
       _buildDependents();
       return true;
@@ -59,10 +65,10 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   }
 
   @override
-  dynamic getUnsafe(Type type, {bool? watch}) {
+  dynamic getUnsafe(Object key, {bool? watch}) {
     assert(watch != true, "Watching a dependency is not supported in HookProviderContainer.getUnsafe()");
-    if(!_providers.containsKey(type)) return ProviderContext.valueNotFound;
-    return _providers[type]?.value;
+    if (!_providers.containsKey(key)) return ProviderContext.valueNotFound;
+    return _providers[key]?.value;
   }
 
   void Function() addListener<T>(void Function(T) listener) => addListenerUnsafe(T, (it) => listener(it as T));
@@ -88,51 +94,58 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
     return value;
   }
 
-  Set<Type> getDependents(Type type) => _dependents[type] ?? {};
+  Set<Object> getDependents(Object key) => _dependents[key] ?? {};
 
   void _doRefresh() {
     try {
-      _isRefreshInProgress = true;
-      for (final type in _providers.keys) {
-        if (_dirty.contains(type)) {
-          final provider = _providers[type]!;
+      assert(() {
+        _debugDoingRefresh = true;
+        return true;
+      }());
+      for (final key in _providers.keys) {
+        if (_dirtyKeys.contains(key)) {
+          final provider = _providers[key]!;
           provider.refreshValue();
-          _dirty.addAll(_dependents[type]!);
-          _listeners[type]?.forEach((it) => it(provider.value));
+          _dirtyKeys.addAll(getDependents(key));
+          _listeners[key]?.forEach((it) => it(provider.value));
         }
       }
     } finally {
-      final dirty = Set.of(_dirty);
-      _dirty.clear();
-      _isRefreshInProgress = false;
+      assert(() {
+        _debugDoingRefresh = false;
+        return true;
+      }());
+      final dirty = Set.of(_dirtyKeys);
+      _dirtyKeys.clear();
       _triggerPostBuildCallbacks(dirty);
     }
   }
 
-  void _triggerPostBuildCallbacks([Set<Type>? dirty]) {
-    for (final type in dirty ?? _providers.keys) {
-      _providers[type]!.triggerPostBuildCallbacks();
+  void _triggerPostBuildCallbacks([Set<Object>? keys]) {
+    for (final key in keys ?? _providers.keys) {
+      _providers[key]!.triggerPostBuildCallbacks();
     }
   }
 
   void _buildDependents() {
-    for (final dependency in _providers.keys) {
-      _dependents[dependency] = {
-        for (final dependent in _providers.entries)
-          if (dependent.value.dependencies.contains(dependency)) dependent.key
-      };
+    _dependents.clear();
+    for (final entry in _providers.entries) {
+      for (final dependency in entry.value.dependencies) {
+        _dependents[dependency] ??= {};
+        _dependents[dependency]!.add(entry.key);
+      }
     }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IterableProperty('dirty', _dirty, level: DiagnosticLevel.debug));
+    properties.add(IterableProperty('dirty', _dirtyKeys, level: DiagnosticLevel.debug));
     properties.add(IterableProperty('has listeners for', _listeners.keys, level: DiagnosticLevel.debug));
     properties.add(
       FlagProperty(
         'refresh in progress',
-        value: _isRefreshInProgress,
+        value: _debugDoingRefresh,
         ifTrue: 'refresh in progress',
         level: DiagnosticLevel.debug,
       ),
@@ -145,40 +158,43 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
 }
 
 final class SimpleHookProviderContainer extends HookProviderContainer {
-  final Map<Type, Object?> _provided;
+  final Map<Object, Object?> _provided;
 
   SimpleHookProviderContainer(
-    Map<Type, Object? Function()> providers, {
-    Map<Type, Object?> provided = const {},
+    Map<Object, Object? Function()> providers, {
+    Map<Object, Object?> provided = const {},
   })  : _provided = Map.of(provided),
         super(schedule: ImmediateLockingScheduler().call) {
-    schedule(() => initialize({...providers, ..._buildProviders(provided)}));
+    schedule(() => initialize(providers));
   }
 
   T call<T>() => get<T>();
 
-  void setProvided<T>(T value) {
-    _provided[T] = value;
-    refresh(getDependents(T));
+  void setProvidedUnsafe(Object key, Object? value) {
+    _provided[key] = value;
+    refresh(getDependents(key));
   }
 
-  static Map<Type, Object? Function()> _buildProviders(Map<Type, Object?> provided) {
-    return {
-      for (final type in provided.keys) type: () => provided[type],
-    };
+  void setProvided<T>(T value) => setProvidedUnsafe(T, value);
+
+  @override
+  dynamic getUnsafe(Object key, {bool? watch}) {
+    var value = super.getUnsafe(key, watch: watch);
+    if (value == ProviderContext.valueNotFound && _provided.containsKey(key)) value = _provided[key];
+    return value;
   }
 }
 
 class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   final HookProviderContainer container;
-  final Type type;
+  final Object key;
   final Object? Function() block;
-  final Set<Type> dependencies = {};
+  final Set<Object> dependencies = {};
   Object? value;
 
   var _isCollectingDependencies = true;
 
-  _ProviderState(this.container, this.type, this.block) {
+  _ProviderState(this.container, this.key, this.block) {
     refreshValue();
   }
 
@@ -190,26 +206,26 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   void dispose() => disposeHooks();
 
   @override
-  dynamic getUnsafe(Type type, {bool? watch}) {
+  dynamic getUnsafe(Object key, {bool? watch}) {
     watch ??= _isCollectingDependencies;
     assert(() {
-      if (watch! && !_isCollectingDependencies && debugDoingBuild && !dependencies.contains(type)) {
+      if (watch! && !_isCollectingDependencies && debugDoingBuild && !dependencies.contains(key)) {
         throw FlutterError.fromParts([
           ErrorSummary('Trying to register a dependency after the first build'),
           ErrorDescription('All dependencies must be registered during the first build of the provider'),
-          DiagnosticsProperty("type", type),
-          DiagnosticableTreeNode(name: 'provider', value: this, style: null),
+          DiagnosticsProperty("key", key),
+          DiagnosticableTreeNode(name: 'provider', value: this, style: DiagnosticsTreeStyle.truncateChildren),
           DiagnosticableTreeNode(name: 'container', value: container, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;
     }());
-    if (watch && _isCollectingDependencies) dependencies.add(type);
-    return container.getUnsafe(type);
+    if (watch && _isCollectingDependencies) dependencies.add(key);
+    return container.getUnsafe(key);
   }
 
   @override
-  void markNeedsBuild() => container.refresh({type});
+  void markNeedsBuild() => container.refresh({key});
 
   @override
   // Make available to HookProviderContainer
@@ -236,7 +252,7 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', type, level: DiagnosticLevel.debug));
+    properties.add(DiagnosticsProperty('key', key, level: DiagnosticLevel.debug));
     properties.add(IterableProperty('dependencies', dependencies));
     properties.add(
       FlagProperty(

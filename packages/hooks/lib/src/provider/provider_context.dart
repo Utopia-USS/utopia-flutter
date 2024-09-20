@@ -2,14 +2,16 @@ abstract interface class ProviderContext {
   /// Special value returned by [ProviderContext.getUnsafe] when the requested value can't be provided.
   static const valueNotFound = Object();
 
-  /// Retrieves the value of the requested [type] and optionally watches for its change.
-  /// Returned values are guaranteed to be of type [type] or [valueNotFound] when it isn't found.
+  /// Retrieves the value matching requested [key] and optionally watches for its change.
+  ///
+  /// Sentinel value [valueNotFound] is returned when the requested value can't be provided.
+  /// If [key] is an instance of [Type], will always be an instance of the requested type.
   /// {@template ProviderContext.watch}
   /// If [watch] is not set, implementation should perform an educated guess (e.g. based on whether it's called during
   /// a build).
   /// Exact meaning of "watching" depends on the implementation and may not be supported.
   /// {@endtemplate}
-  dynamic getUnsafe(Type type, {bool? watch});
+  dynamic getUnsafe(Object key, {bool? watch});
 }
 
 /// An exception thrown by [ProviderContextExtensions.get] when the requested value can't be provided.

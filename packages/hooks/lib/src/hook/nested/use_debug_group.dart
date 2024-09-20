@@ -42,7 +42,7 @@ class _DebugGroupHookState<T> extends HookState<T, _DebugGroupHook<T>>
   }
 
   @override
-  dynamic getUnsafe(Type type, {bool? watch}) => context.getUnsafe(type, watch: watch);
+  dynamic getUnsafe(Object key, {bool? watch}) => context.getUnsafe(key, watch: watch);
 
   @override
   void markNeedsBuild() => context.markNeedsBuild();

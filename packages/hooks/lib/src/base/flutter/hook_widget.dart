@@ -80,9 +80,9 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
   }
 
   @override
-  dynamic getUnsafe(Type type, {bool? watch}) {
-    if (type == BuildContext) return context;
-    return context.getUnsafe(type, watch: watch);
+  dynamic getUnsafe(Object key, {bool? watch}) {
+    if (key == BuildContext) return context;
+    return context.getUnsafe(key, watch: watch);
   }
 
   @override

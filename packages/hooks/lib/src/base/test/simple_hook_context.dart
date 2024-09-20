@@ -46,10 +46,10 @@ class SimpleHookContext<R> with DiagnosticableTreeMixin, HookContextMixin implem
 
   @override
   @protected
-  dynamic getUnsafe(Type type, {bool? watch}) {
+  dynamic getUnsafe(Object key, {bool? watch}) {
     assert(watch != true, "Watching is not supported in SimpleHookContext.getUnsafe()");
-    if (!_provided.containsKey(type)) return ProviderContext.valueNotFound;
-    return _provided[type];
+    if (!_provided.containsKey(key)) return ProviderContext.valueNotFound;
+    return _provided[key];
   }
 
   @override

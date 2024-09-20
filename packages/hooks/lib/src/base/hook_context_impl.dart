@@ -47,7 +47,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
               ErrorDescription("New hooks cannot be added after the first build"),
               ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
               DiagnosticableNode(name: "hook", value: hook, style: null),
-              DiagnosticableTreeNode(name: "context", value: this, style: null),
+              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
             ]);
           }
         }
@@ -63,7 +63,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
               ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
               DiagnosticableNode(name: "old hook", value: _hooks[_index].hook, style: null),
               DiagnosticableNode(name: "new hook", value: hook, style: null),
-              DiagnosticableTreeNode(name: "context", value: this, style: null),
+              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
             ]);
           }
         }
@@ -94,7 +94,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
       if (!debugDoingBuild) {
         throw FlutterError.fromParts([
           ErrorSummary("addPostBuildCallback can only be called during build"),
-          DiagnosticableTreeNode(name: "context", value: this, style: null),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;
@@ -111,7 +111,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
           if (_debugPostBuildCallbacksDirty) {
             throw FlutterError.fromParts([
               ErrorSummary("triggerPostBuildCallbacks has not been called after the previous build"),
-              DiagnosticableTreeNode(name: "context", value: this, style: null),
+              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
             ]);
           }
           _debugPostBuildCallbacksDirty = true;
@@ -136,7 +136,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
                   name: "removed hooks",
                   children: _hooks.skip(_index).map((it) => it.toDiagnosticsNode()).toList(),
                 ),
-                DiagnosticableTreeNode(name: "context", value: this, style: null),
+                DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
               ]);
             }
           }
@@ -166,7 +166,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
         throw FlutterError.fromParts([
           ErrorSummary("disposeHooks has been called more than once"),
           ErrorDescription("disposeHooks must be called exactly once"),
-          DiagnosticableTreeNode(name: "context", value: this, style: null),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       return true;
@@ -190,7 +190,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
         throw FlutterError.fromParts([
           ErrorSummary("triggerPostBuildCallbacks has been called more than once"),
           ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
-          DiagnosticableTreeNode(name: "context", value: this, style: null),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
       _debugPostBuildCallbacksDirty = false;
@@ -209,7 +209,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
             children: [
               ErrorSummary("Exception thrown by a post-build callback"),
               DiagnosticsProperty("callback", callback),
-              DiagnosticableTreeNode(name: "context", value: this, style: null),
+              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
             ],
           ),
         );

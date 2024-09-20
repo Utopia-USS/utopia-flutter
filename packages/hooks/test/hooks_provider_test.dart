@@ -22,19 +22,22 @@ class StateB {
 
 StateB useB() {
   final a = useProvided<StateA>();
+  final ext = useProvided<int>();
 
   useEffect(() {
     if(a.a == 0) Future.delayed(const Duration(seconds: 1), a.b);
     return null;
   }, [a.a]);
 
-  return StateB(b: a.a + 1);
+  return StateB(b: a.a + ext);
 }
 
 void main() {
   test("aa", () async {
-    final container = SimpleHookProviderContainer({StateA: useA, StateB: useB});
-    container<StateA>();
+    final container = SimpleHookProviderContainer({StateA: useA, StateB: useB}, provided: {int: 1});
+    expect(container<StateB>().b, 1);
     await container.waitUntil<StateB>((it) => it.b == 2);
+    container.setProvided<int>(2);
+    expect(container<StateB>().b, 3);
   });
 }
