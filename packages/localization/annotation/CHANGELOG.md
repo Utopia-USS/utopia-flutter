@@ -1,3 +1,7 @@
+## 0.0.3
+
+ - **FEAT**(utopia_localizations): Add fallbackLocale.
+
 ## 0.0.2
 
  - **FEAT**(utopia_localization): Initial release.

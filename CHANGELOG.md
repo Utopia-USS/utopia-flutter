@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-08
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_annotation` - `v0.0.3`](#utopia_localization_annotation---v003)
+ - [`utopia_localization_builder` - `v0.0.3`](#utopia_localization_builder---v003)
+ - [`utopia_localization_generator` - `v0.0.3`](#utopia_localization_generator---v003)
+ - [`utopia_localization_utils` - `v0.0.2+1`](#utopia_localization_utils---v0021)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_localization_utils` - `v0.0.2+1`
+
+---
+
+#### `utopia_localization_annotation` - `v0.0.3`
+
+ - **FEAT**(utopia_localizations): Add fallbackLocale.
+
+#### `utopia_localization_builder` - `v0.0.3`
+
+ - **FEAT**(utopia_localizations): Add fallbackLocale.
+
+#### `utopia_localization_generator` - `v0.0.3`
+
+ - **FEAT**(utopia_localizations): Add fallbackLocale.
+
+
 ## 2024-09-20
 
 ### Changes
