@@ -6,6 +6,7 @@ class UtopiaLocalization {
   final int version;
   final String className, fieldName;
   final bool jsonSerializers;
+  final String? fallbackLocale;
 
   const UtopiaLocalization(
     this.docId,
@@ -14,6 +15,7 @@ class UtopiaLocalization {
     this.className = "AppLocalizationsData",
     this.fieldName = "appLocalizationsData",
     this.jsonSerializers = true,
+    this.fallbackLocale,
   });
 }
 

@@ -8,6 +8,7 @@ part of 'localizations.dart';
 
 const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
   'fr': AppLocalizationsData(
+    onlyEnglish: 'English-only',
     multiline: 'C\'est\n\nun\n\nexemple multiligne.',
     plurals: AppLocalizationsDataPlurals(
       man_201422728: 'hommes',
@@ -47,6 +48,7 @@ const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
     ),
   ),
   'en': AppLocalizationsData(
+    onlyEnglish: 'English-only',
     multiline: 'This is\n\na\n\nmultiline example.',
     plurals: AppLocalizationsDataPlurals(
       man_201422728: 'men',
@@ -86,7 +88,8 @@ const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
     ),
   ),
   'zh-Hans-CN': AppLocalizationsData(
-    multiline: '这是\n\nA\n\n多行示例。',
+    onlyEnglish: 'English-only',
+    multiline: '这是\n\n一个\n\n多行示例。',
     plurals: AppLocalizationsDataPlurals(
       man_201422728: '男人',
       man_116447630: '男人',
@@ -128,18 +131,21 @@ const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
 
 class AppLocalizationsData {
   const AppLocalizationsData({
+    required this.onlyEnglish,
     required this.multiline,
     required this.plurals,
     required this.templated,
     required this.dates,
   });
 
+  final String onlyEnglish;
   final String multiline;
   final AppLocalizationsDataPlurals plurals;
   final AppLocalizationsDataTemplated templated;
   final AppLocalizationsDataDates dates;
   factory AppLocalizationsData.fromJson(Map<String, Object?> map) =>
       AppLocalizationsData(
+        onlyEnglish: map['onlyEnglish']! as String,
         multiline: map['multiline']! as String,
         plurals: AppLocalizationsDataPlurals.fromJson(
             map['plurals']! as Map<String, Object?>),
@@ -149,6 +155,7 @@ class AppLocalizationsData {
             map['dates']! as Map<String, Object?>),
       );
   Map<String, Object?> toJson() => {
+        'onlyEnglish': onlyEnglish,
         'multiline': multiline,
         'plurals': plurals.toJson(),
         'templated': templated.toJson(),
@@ -156,12 +163,14 @@ class AppLocalizationsData {
       };
 
   AppLocalizationsData copyWith({
+    String? onlyEnglish,
     String? multiline,
     AppLocalizationsDataPlurals? plurals,
     AppLocalizationsDataTemplated? templated,
     AppLocalizationsDataDates? dates,
   }) =>
       AppLocalizationsData(
+        onlyEnglish: onlyEnglish ?? this.onlyEnglish,
         multiline: multiline ?? this.multiline,
         plurals: plurals ?? this.plurals,
         templated: templated ?? this.templated,
@@ -172,6 +181,7 @@ class AppLocalizationsData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsData &&
+          onlyEnglish == other.onlyEnglish &&
           multiline == other.multiline &&
           plurals == other.plurals &&
           templated == other.templated &&
@@ -179,6 +189,7 @@ class AppLocalizationsData {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      onlyEnglish.hashCode ^
       multiline.hashCode ^
       plurals.hashCode ^
       templated.hashCode ^

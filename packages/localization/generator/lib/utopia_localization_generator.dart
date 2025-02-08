@@ -27,6 +27,7 @@ class UtopiaLocalizationGenerator extends GeneratorForAnnotation<UtopiaLocalizat
     final localizations = await _downloadGoogleSheet(docId!, sheetId!, name);
     final builder = DartLocalizationBuilder(
       jsonParser: annotation.objectValue.getField('jsonSerializers')!.toBoolValue()!,
+      fallbackLocale: annotation.objectValue.getField('fallbackLocale')?.toStringValue(),
     );
     final code = StringBuffer();
     code.writeln(builder.build(localizations, fieldName: fieldName));

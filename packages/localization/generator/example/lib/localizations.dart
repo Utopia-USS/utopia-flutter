@@ -1,4 +1,4 @@
-@UtopiaLocalization('1AcjI1BjmQpjlnPUZ7aVLbrnVR98xtATnSjU4CExM9fs', '0', 16)
+@UtopiaLocalization('1mcv7Zzg1HI35gz_IhltBPnkZkSXgxw9IwyAQfAgasck', '0', 20, fallbackLocale: 'en')
 library;
 
 import 'package:utopia_localization_annotation/utopia_localization_annotation.dart';

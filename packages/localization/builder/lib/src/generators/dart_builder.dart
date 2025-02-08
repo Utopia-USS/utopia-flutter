@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:utopia_localization_builder/src/definitions/condition.dart';
 import 'package:utopia_localization_builder/src/definitions/localizations.dart';
@@ -10,10 +11,11 @@ import 'builders/argument.dart';
 import 'builders/data_class.dart';
 
 class DartLocalizationBuilder {
-  DartLocalizationBuilder({this.jsonParser = true});
+  DartLocalizationBuilder({this.jsonParser = true, this.fallbackLocale});
 
   StringBuffer _buffer = StringBuffer();
   final bool jsonParser;
+  final String? fallbackLocale;
 
   String buildImports() {
     return "import 'package:utopia_localization_annotation/utopia_localization_annotation.dart';";
@@ -46,11 +48,9 @@ class DartLocalizationBuilder {
     return result.toString();
   }
 
-  String _createSectionInstance(
-    List<String> path,
-    String languageCode,
-    Section section,
-  ) {
+  String _createSectionInstance(List<String> path,
+      String languageCode,
+      Section section,) {
     path = [
       ...path,
       section.normalizedKey,
@@ -69,10 +69,14 @@ class DartLocalizationBuilder {
           final fieldName = '${label.normalizedKey}';
           result.write(fieldName);
         }
-        final translation = caze.translations.firstWhere(
-          (x) => x.languageCode == languageCode,
-          orElse: () => Translation(languageCode, '?'),
-        );
+        Translation? getTranslation(String languageCode) {
+          return caze.translations.firstWhereOrNull((x) =>
+          x.value.isNotEmpty && x.languageCode == languageCode,);
+        }
+
+        var translation = getTranslation(languageCode);
+        if(fallbackLocale != null) translation ??= getTranslation(fallbackLocale!);
+        translation ??= Translation(languageCode, '?');
         result.write(':');
         result.write('\'${_escapeString(translation.value)}\',');
       }
@@ -132,7 +136,7 @@ class DartLocalizationBuilder {
         /// Default value
         final hasDefaultCase = label.cases.any((it) => it.condition is DefaultCondition);
 
-        if(hasDefaultCase) {
+        if (hasDefaultCase) {
           result.addProperty('String', '_${label.normalizedKey}');
         }
 
@@ -164,7 +168,7 @@ class DartLocalizationBuilder {
             body.writeln('${condition.value} => _${createCaseFieldName(label.normalizedKey, value: condition.value)},');
           }
           final defaultValue =
-              hasDefaultCase ? '_${label.normalizedKey}' : 'throw Exception("No case available for \${_value}")';
+          hasDefaultCase ? '_${label.normalizedKey}' : 'throw Exception("No case available for \${_value}")';
           body.writeln('_ => $defaultValue,');
           body.writeln('};');
         } else {
