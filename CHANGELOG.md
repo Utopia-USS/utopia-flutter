@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_arch` - `v0.5.1`](#utopia_arch---v051)
+ - [`utopia_collections` - `v0.1.1`](#utopia_collections---v011)
+ - [`utopia_hooks` - `v0.4.14`](#utopia_hooks---v0414)
+ - [`utopia_lints` - `v0.0.4`](#utopia_lints---v004)
+ - [`utopia_localization_builder` - `v0.0.4`](#utopia_localization_builder---v004)
+ - [`utopia_localization_generator` - `v0.0.4`](#utopia_localization_generator---v004)
+ - [`utopia_localization_template` - `v0.0.3`](#utopia_localization_template---v003)
+ - [`utopia_save_file` - `v0.2.2`](#utopia_save_file---v022)
+ - [`utopia_utils` - `v0.3.3`](#utopia_utils---v033)
+ - [`utopia_widgets` - `v0.1.2`](#utopia_widgets---v012)
+ - [`utopia_connectivity` - `v0.1.0+41`](#utopia_connectivity---v01041)
+ - [`utopia_hooks_riverpod` - `v0.0.4+9`](#utopia_hooks_riverpod---v0049)
+ - [`utopia_localization_annotation` - `v0.0.3+1`](#utopia_localization_annotation---v0031)
+ - [`utopia_localization_utils` - `v0.0.2+2`](#utopia_localization_utils---v0022)
+ - [`utopia_reporter` - `v0.1.0+5`](#utopia_reporter---v0105)
+ - [`utopia_rest` - `v0.1.0+5`](#utopia_rest---v0105)
+ - [`utopia_validation` - `v0.1.0+4`](#utopia_validation---v0104)
+ - [`utopia_firebase_crashlytics` - `v0.2.0+6`](#utopia_firebase_crashlytics---v0206)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.1.0+41`
+ - `utopia_hooks_riverpod` - `v0.0.4+9`
+ - `utopia_localization_annotation` - `v0.0.3+1`
+ - `utopia_localization_utils` - `v0.0.2+2`
+ - `utopia_reporter` - `v0.1.0+5`
+ - `utopia_rest` - `v0.1.0+5`
+ - `utopia_validation` - `v0.1.0+4`
+ - `utopia_firebase_crashlytics` - `v0.2.0+6`
+
+---
+
+#### `utopia_arch` - `v0.5.1`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_collections` - `v0.1.1`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_hooks` - `v0.4.14`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_lints` - `v0.0.4`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_localization_builder` - `v0.0.4`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_localization_generator` - `v0.0.4`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_localization_template` - `v0.0.3`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_save_file` - `v0.2.2`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_utils` - `v0.3.3`
+
+ - **FEAT**: Upgrade packages.
+
+#### `utopia_widgets` - `v0.1.2`
+
+ - **FEAT**: Upgrade packages.
+
+
 ## 2025-02-08
 
 ### Changes

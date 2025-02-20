@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**: Upgrade packages.
+
 ## 0.0.3+2
 
  - **FIX**(utopia_lints): Update dependencies.

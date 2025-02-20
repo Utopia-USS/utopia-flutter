@@ -1,6 +1,6 @@
 name: utopia_rest
 description: Utopia USS libs - REST API support with Dio
-version: 0.1.0+4
+version: 0.1.0+5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_utils: ^0.3.2
-  utopia_reporter: ^0.1.0+4
+  utopia_utils: ^0.3.3
+  utopia_reporter: ^0.1.0+5
   dio: ^5.0.0
 
 dev_dependencies:
-  utopia_lints: ^0.0.3+2
+  utopia_lints: ^0.0.4

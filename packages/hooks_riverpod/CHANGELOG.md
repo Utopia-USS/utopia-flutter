@@ -1,3 +1,7 @@
+## 0.0.4+9
+
+ - Update a dependency to the latest release.
+
 ## 0.0.4+8
 
  - **FIX**(utopia_hooks_riverpod): Fix refresh-during-refresh issues.

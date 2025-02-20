@@ -1,6 +1,6 @@
 name: utopia_hooks
 description: A comprehensive but flexible state management solution inspired by React Hooks.
-version: 0.4.13
+version: 0.4.14
 repository: https://github.com/Utopia-USS/utopia-flutter/tree/master/packages/hooks
 documentation: https://hooks.utopiasoft.io
 topics:
@@ -18,9 +18,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_utils: ^0.3.2
-  utopia_collections: ^0.1.0+1
-  utopia_validation: ^0.1.0+3
+  utopia_utils: ^0.3.3
+  utopia_collections: ^0.1.1
+  utopia_validation: ^0.1.0+4
 
   collection: ^1.18.0
   equatable: ^2.0.3
@@ -31,4 +31,4 @@ dev_dependencies:
   flutter_test:
       sdk: flutter
   test: ^1.24.9
-  utopia_lints: ^0.0.3+2
+  utopia_lints: ^0.0.4

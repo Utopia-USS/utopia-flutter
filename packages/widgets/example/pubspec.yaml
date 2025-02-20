@@ -13,7 +13,7 @@ dependencies:
   utopia_widgets:
     path: ../
 
-  utopia_utils: ^0.3.2
+  utopia_utils: ^0.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

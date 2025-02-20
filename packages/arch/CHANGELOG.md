@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - **FEAT**: Upgrade packages.
+
 ## 0.5.0+40
 
  - Update a dependency to the latest release.

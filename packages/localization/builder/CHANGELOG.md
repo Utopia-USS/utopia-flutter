@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**: Upgrade packages.
+
 ## 0.0.3
 
  - **FEAT**(utopia_localizations): Add fallbackLocale.

@@ -1,3 +1,7 @@
+## 0.1.1
+
+ - **FEAT**: Upgrade packages.
+
 ## 0.1.0+1
 
  - **FIX**(utopia_collections): Update dependencies.

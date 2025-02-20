@@ -1,3 +1,7 @@
+## 0.3.3
+
+ - **FEAT**: Upgrade packages.
+
 ## 0.3.2
 
  - **FEAT**(utopia_utils): Add MutableValue.property.

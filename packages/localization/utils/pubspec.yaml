@@ -1,6 +1,6 @@
 name: utopia_localization_utils
 description: Utopia USS libs - Localization - Flutter utils for utopia_localization_generator.
-version: 0.0.2+1
+version: 0.0.2+2
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -10,4 +10,4 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_localization_annotation: ^0.0.3
+  utopia_localization_annotation: ^0.0.3+1
