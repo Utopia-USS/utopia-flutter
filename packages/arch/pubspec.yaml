@@ -20,7 +20,7 @@ dependencies:
 
   page_transition: ^2.0.2
   shared_preferences: ^2.0.7
-  injector: ^3.0.0
+  injector: ^4.0.0
 
 dev_dependencies:
   flutter_test:

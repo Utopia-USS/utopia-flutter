@@ -13,4 +13,4 @@ dependencies:
   yaml: ^3.1.0
   equatable: ^2.0.0
   collection: ^1.15.0
-  dart_style: ^2.0.0
+  dart_style: ^3.0.1
