@@ -15,6 +15,37 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_localization_builder` - `v0.0.4+1`](#utopia_localization_builder---v0041)
+ - [`utopia_localization_generator` - `v0.0.4+1`](#utopia_localization_generator---v0041)
+ - [`utopia_save_file` - `v0.2.2+1`](#utopia_save_file---v0221)
+
+---
+
+#### `utopia_localization_builder` - `v0.0.4+1`
+
+ - **FIX**: After-upgrade fixes.
+
+#### `utopia_localization_generator` - `v0.0.4+1`
+
+ - **FIX**: After-upgrade fixes.
+
+#### `utopia_save_file` - `v0.2.2+1`
+
+ - **FIX**: After-upgrade fixes.
+
+
+## 2025-02-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_arch` - `v0.5.1`](#utopia_arch---v051)
  - [`utopia_collections` - `v0.1.1`](#utopia_collections---v011)
  - [`utopia_hooks` - `v0.4.14`](#utopia_hooks---v0414)

@@ -1,3 +1,7 @@
+## 0.0.4+1
+
+ - **FIX**: After-upgrade fixes.
+
 ## 0.0.4
 
  - **FEAT**: Upgrade packages.
