@@ -148,11 +148,14 @@ class AppLocalizationsData {
         onlyEnglish: map['onlyEnglish']! as String,
         multiline: map['multiline']! as String,
         plurals: AppLocalizationsDataPlurals.fromJson(
-            map['plurals']! as Map<String, Object?>),
+          map['plurals']! as Map<String, Object?>,
+        ),
         templated: AppLocalizationsDataTemplated.fromJson(
-            map['templated']! as Map<String, Object?>),
+          map['templated']! as Map<String, Object?>,
+        ),
         dates: AppLocalizationsDataDates.fromJson(
-            map['dates']! as Map<String, Object?>),
+          map['dates']! as Map<String, Object?>,
+        ),
       );
   Map<String, Object?> toJson() => {
         'onlyEnglish': onlyEnglish,
@@ -209,9 +212,7 @@ class AppLocalizationsDataPlurals {
   final String _man_116447630;
   final String _man_17408168;
 
-  String man(
-    Object? _value,
-  ) {
+  String man(Object? _value) {
     var label = switch (_value) {
       Plural.multiple => _man_201422728,
       Plural.one => _man_116447630,
@@ -276,36 +277,21 @@ class AppLocalizationsDataTemplated {
   final AppLocalizationsDataTemplatedDate date;
   final AppLocalizationsDataTemplatedNumbers numbers;
 
-  String contact(
-    Object? _value, {
-    required String lastName,
-    String? locale,
-  }) {
+  String contact(Object? _value, {required String lastName, String? locale}) {
     var label = switch (_value) {
       Gender.female => _contact_537753378,
       Gender.male => _contact_588305750,
       _ => throw Exception("No case available for ${_value}"),
     };
-    label = label.insertTemplateValues(
-      {
-        'last_name': lastName,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'last_name': lastName}, locale: locale);
     return label;
   }
 
-  String hello({
-    required String firstName,
-    String? locale,
-  }) {
+  String hello({required String firstName, String? locale}) {
     var label = _hello;
-    label = label.insertTemplateValues(
-      {
-        'first_name': firstName,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({
+      'first_name': firstName,
+    }, locale: locale);
     return label;
   }
 
@@ -315,9 +301,11 @@ class AppLocalizationsDataTemplated {
         contact_588305750: map['contact_588305750']! as String,
         hello: map['hello']! as String,
         date: AppLocalizationsDataTemplatedDate.fromJson(
-            map['date']! as Map<String, Object?>),
+          map['date']! as Map<String, Object?>,
+        ),
         numbers: AppLocalizationsDataTemplatedNumbers.fromJson(
-            map['numbers']! as Map<String, Object?>),
+          map['numbers']! as Map<String, Object?>,
+        ),
       );
   Map<String, Object?> toJson() => {
         'contact_537753378': _contact_537753378,
@@ -371,44 +359,26 @@ class AppLocalizationsDataTemplatedDate {
   final String _pattern;
   final String _simple;
 
-  String pattern({
-    required DateTime date,
-    String? locale,
-  }) {
+  String pattern({required DateTime date, String? locale}) {
     var label = _pattern;
-    label = label.insertTemplateValues(
-      {
-        'date': date,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'date': date}, locale: locale);
     return label;
   }
 
-  String simple({
-    required DateTime date,
-    String? locale,
-  }) {
+  String simple({required DateTime date, String? locale}) {
     var label = _simple;
-    label = label.insertTemplateValues(
-      {
-        'date': date,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'date': date}, locale: locale);
     return label;
   }
 
   factory AppLocalizationsDataTemplatedDate.fromJson(
-          Map<String, Object?> map) =>
+    Map<String, Object?> map,
+  ) =>
       AppLocalizationsDataTemplatedDate(
         pattern: map['pattern']! as String,
         simple: map['simple']! as String,
       );
-  Map<String, Object?> toJson() => {
-        'pattern': _pattern,
-        'simple': _simple,
-      };
+  Map<String, Object?> toJson() => {'pattern': _pattern, 'simple': _simple};
 
   AppLocalizationsDataTemplatedDate copyWith({
     String? pattern,
@@ -443,50 +413,27 @@ class AppLocalizationsDataTemplatedNumbers {
   final String _simple;
   final String _count;
 
-  String formatted({
-    required double price,
-    String? locale,
-  }) {
+  String formatted({required double price, String? locale}) {
     var label = _formatted;
-    label = label.insertTemplateValues(
-      {
-        'price': price,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'price': price}, locale: locale);
     return label;
   }
 
-  String simple({
-    required double price,
-    String? locale,
-  }) {
+  String simple({required double price, String? locale}) {
     var label = _simple;
-    label = label.insertTemplateValues(
-      {
-        'price': price,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'price': price}, locale: locale);
     return label;
   }
 
-  String count({
-    required int count,
-    String? locale,
-  }) {
+  String count({required int count, String? locale}) {
     var label = _count;
-    label = label.insertTemplateValues(
-      {
-        'count': count,
-      },
-      locale: locale,
-    );
+    label = label.insertTemplateValues({'count': count}, locale: locale);
     return label;
   }
 
   factory AppLocalizationsDataTemplatedNumbers.fromJson(
-          Map<String, Object?> map) =>
+    Map<String, Object?> map,
+  ) =>
       AppLocalizationsDataTemplatedNumbers(
         formatted: map['formatted']! as String,
         simple: map['simple']! as String,
@@ -525,19 +472,18 @@ class AppLocalizationsDataTemplatedNumbers {
 }
 
 class AppLocalizationsDataDates {
-  const AppLocalizationsDataDates({
-    required this.month,
-    required this.weekday,
-  });
+  const AppLocalizationsDataDates({required this.month, required this.weekday});
 
   final AppLocalizationsDataDatesMonth month;
   final AppLocalizationsDataDatesWeekday weekday;
   factory AppLocalizationsDataDates.fromJson(Map<String, Object?> map) =>
       AppLocalizationsDataDates(
         month: AppLocalizationsDataDatesMonth.fromJson(
-            map['month']! as Map<String, Object?>),
+          map['month']! as Map<String, Object?>,
+        ),
         weekday: AppLocalizationsDataDatesWeekday.fromJson(
-            map['weekday']! as Map<String, Object?>),
+          map['weekday']! as Map<String, Object?>,
+        ),
       );
   Map<String, Object?> toJson() => {
         'month': month.toJson(),

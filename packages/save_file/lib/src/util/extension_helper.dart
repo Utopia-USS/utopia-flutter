@@ -16,7 +16,7 @@ abstract class ExtensionHelper {
     if (behavior == SaveFileExtensionBehavior.ignore || lookupMimeType(metadata.name) == metadata.mime) return metadata;
     final extension = extensionFromMime(metadata.mime);
     final name = switch (behavior) {
-      SaveFileExtensionBehavior.replace => _replaceExtension(metadata.name, extension),
+      SaveFileExtensionBehavior.replace => _replaceExtension(metadata.name, extension!),
       SaveFileExtensionBehavior.append => _appendExtension(metadata.name, extension),
       SaveFileExtensionBehavior.ignore => throw StateError("Unreachable"),
       SaveFileExtensionBehavior.fail => throw SaveFileExtensionException(mime: metadata.mime, name: metadata.mime),

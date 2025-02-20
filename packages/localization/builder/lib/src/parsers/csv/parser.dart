@@ -58,12 +58,8 @@ class CsvLocalizationParser extends LocalizationParser<Iterable<List>, CsvLocali
         rowValues
             .asMap()
             .entries
-            .where(
-              (e) => e.key < index.length,
-            )
-            .map(
-              (e) => MapEntry(index[e.key], e.value),
-            ),
+            .where((e) => e.key < index.length)
+            .map((e) => MapEntry(index[e.key], e.value as String)),
       );
       final key = row[keyKey];
       var condition = row[conditionKey];

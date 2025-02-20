@@ -1,1 +1,4 @@
 include: package:utopia_lints/library_lints.yaml
+
+formatter:
+  page_width: 120

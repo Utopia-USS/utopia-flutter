@@ -35,8 +35,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       locale: _currentLocale,
       localizationsDelegates: [
-        UtopiaLocalizationsDelegate(_override ?? appLocalizationsData),
-        GlobalMaterialLocalizations.delegate,
+        UtopiaLocalizationsDelegate<AppLocalizationsData>(_override ?? appLocalizationsData),
+        ...GlobalMaterialLocalizations.delegates,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: appLocalizationsData.supportedLocales,
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     if (result != null) {
       final data = result.files.single.bytes!;
       final json = jsonDecode(utf8.decode(data));
-      setState(() => _override = UtopiaLocalizationData.fromJson(json, AppLocalizationsData.fromJson));
+      setState(() => _override = UtopiaLocalizationData.fromJson(json as Map<String, dynamic>, AppLocalizationsData.fromJson));
     }
   }
 }

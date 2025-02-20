@@ -35,7 +35,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
     for (var languageEntry in map.nodes.entries) {
       _addToken(
         YamlLocalizationTokenType.languageKey,
-        languageEntry.key,
+        languageEntry.key as YamlNode,
       );
       if (!(languageEntry.value is YamlMap)) {
         throw ParsingException<YamlLocalizationToken>(
@@ -74,7 +74,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
         final labelTranslation = value.value.toString();
         _addToken(
           YamlLocalizationTokenType.labelKey,
-          sectionEntry.key,
+          sectionEntry.key as YamlNode,
         );
         _addToken(
           YamlLocalizationTokenType.labelValue,
@@ -101,7 +101,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
         if (value.containsKey('cases')) {
           _addToken(
             YamlLocalizationTokenType.labelKey,
-            sectionEntry.key,
+            sectionEntry.key as YamlNode,
           );
           final cases = <Case>[];
 
@@ -116,7 +116,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
 
           _addToken(
             YamlLocalizationTokenType.caseKey,
-            value.nodes.entries.firstWhere((x) => x.key.toString() == 'cases').key,
+            value.nodes.entries.firstWhere((x) => x.key.toString() == 'cases').key as YamlNode,
           );
 
           final caseMap = caseNodes;
@@ -124,7 +124,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
           for (var caseEntry in caseMap.nodes.entries) {
             _addToken(
               YamlLocalizationTokenType.caseKey,
-              caseEntry.key,
+              caseEntry.key as YamlNode,
             );
             _addToken(
               YamlLocalizationTokenType.caseValue,
@@ -156,7 +156,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
         else {
           _addToken(
             YamlLocalizationTokenType.sectionKey,
-            sectionEntry.key,
+            sectionEntry.key as YamlNode,
           );
           final sectionKey = sectionEntry.key.toString();
 
