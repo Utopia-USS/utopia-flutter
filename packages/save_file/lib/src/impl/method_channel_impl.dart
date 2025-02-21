@@ -5,12 +5,12 @@ import 'package:utopia_save_file/src/impl/native_impl.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 import 'package:utopia_save_file/src/util/byte_stream_extensions.dart';
 
-class SaveFileAndroidImpl implements SaveFileNativeImpl {
+class SaveFileMethodChannelImpl implements SaveFileNativeImpl {
   static const _channel = MethodChannel('utopia_save_file');
 
-  static const instance = SaveFileAndroidImpl._();
+  static const instance = SaveFileMethodChannelImpl._();
 
-  const SaveFileAndroidImpl._();
+  const SaveFileMethodChannelImpl._();
 
   @override
   Future<bool> fromFile(XFile file, SaveFileMetadata metadata) async =>
