@@ -1,3 +1,7 @@
+## 0.2.3
+
+ - **FEAT**(utopia_save_file): Implement MacOS support.
+
 ## 0.2.2+1
 
  - **FIX**: After-upgrade fixes.

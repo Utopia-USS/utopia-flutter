@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.2.3`](#utopia_save_file---v023)
+
+---
+
+#### `utopia_save_file` - `v0.2.3`
+
+ - **FEAT**(utopia_save_file): Implement MacOS support.
+
+
 ## 2025-02-20
 
 ### Changes
