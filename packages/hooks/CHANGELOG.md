@@ -1,3 +1,7 @@
+## 0.4.15
+
+ - **FEAT**(utopia_hooks): Improvements to ListenableValue.
+
 ## 0.4.14
 
  - **FEAT**: Upgrade packages.
