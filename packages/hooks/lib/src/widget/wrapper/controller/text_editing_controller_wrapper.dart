@@ -24,10 +24,11 @@ class TextEditingControllerWrapper extends HookWidget {
   Widget build(BuildContext context) {
     final controller = useMemoized(() => controllerProvider(text: text.value), [], (it) => it.dispose());
 
-    final wrappedValue = useValueWrapper(text);
+    final wrappedText = useValueWrapper(text);
+
     useEffect(() {
       void listener() {
-        if (controller.text != wrappedValue().value) text.value = controller.text;
+        if (controller.text != wrappedText().value) wrappedText().value = controller.text;
       }
 
       controller.addListener(listener);
