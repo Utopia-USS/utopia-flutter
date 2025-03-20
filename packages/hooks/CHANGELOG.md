@@ -1,3 +1,7 @@
+## 0.4.15+1
+
+ - **FIX**(utopia_hooks): Fix TextEditingControllerWrapper when underlying MutableValue instance changes.
+
 ## 0.4.15
 
  - **FEAT**(utopia_hooks): Improvements to ListenableValue.

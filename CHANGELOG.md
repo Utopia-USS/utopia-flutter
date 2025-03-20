@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-03-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.15+1`](#utopia_hooks---v04151)
+ - [`utopia_arch` - `v0.5.1+2`](#utopia_arch---v0512)
+ - [`utopia_hooks_riverpod` - `v0.0.4+11`](#utopia_hooks_riverpod---v00411)
+ - [`utopia_connectivity` - `v0.1.0+43`](#utopia_connectivity---v01043)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+2`
+ - `utopia_hooks_riverpod` - `v0.0.4+11`
+ - `utopia_connectivity` - `v0.1.0+43`
+
+---
+
+#### `utopia_hooks` - `v0.4.15+1`
+
+ - **FIX**(utopia_hooks): Fix TextEditingControllerWrapper when underlying MutableValue instance changes.
+
+
 ## 2025-02-27
 
 ### Changes
