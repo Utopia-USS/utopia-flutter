@@ -8,3 +8,10 @@ T useWithSelf<T extends Object>(T Function(Value<T> self) block) {
     return self.value = block(self);
   });
 }
+
+T useWithSelfOrNull<T>(T Function(Value<T?> self) block) {
+  return useDebugGroup(debugLabel: 'useWithSelfOrNull<$T>()', () {
+    final self = useMemoized(() => MutableValue<T?>(null));
+    return self.value = block(self);
+  });
+}
