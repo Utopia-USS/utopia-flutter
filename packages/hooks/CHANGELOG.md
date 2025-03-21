@@ -1,3 +1,7 @@
+## 0.4.16
+
+ - **FEAT**(utopia_hooks): Add listen parameter to useNotifiable.
+
 ## 0.4.15+1
 
  - **FIX**(utopia_hooks): Fix TextEditingControllerWrapper when underlying MutableValue instance changes.
