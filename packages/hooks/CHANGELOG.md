@@ -1,3 +1,7 @@
+## 0.4.17
+
+ - **FEAT**(utopia_hooks): Add useWithSelfOrNull.
+
 ## 0.4.16
 
  - **FEAT**(utopia_hooks): Add listen parameter to useNotifiable.

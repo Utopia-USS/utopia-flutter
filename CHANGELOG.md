@@ -15,6 +15,38 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks` - `v0.4.17`](#utopia_hooks---v0417)
+ - [`utopia_arch` - `v0.5.1+4`](#utopia_arch---v0514)
+ - [`utopia_hooks_riverpod` - `v0.0.4+13`](#utopia_hooks_riverpod---v00413)
+ - [`utopia_connectivity` - `v0.1.0+45`](#utopia_connectivity---v01045)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+4`
+ - `utopia_hooks_riverpod` - `v0.0.4+13`
+ - `utopia_connectivity` - `v0.1.0+45`
+
+---
+
+#### `utopia_hooks` - `v0.4.17`
+
+ - **FEAT**(utopia_hooks): Add useWithSelfOrNull.
+
+
+## 2025-03-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.16`](#utopia_hooks---v0416)
  - [`utopia_arch` - `v0.5.1+3`](#utopia_arch---v0513)
  - [`utopia_hooks_riverpod` - `v0.0.4+12`](#utopia_hooks_riverpod---v00412)
