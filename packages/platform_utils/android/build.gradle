@@ -25,6 +25,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace "com.utopiaultimate.flutter.utopia_platform_utils"
+
     compileSdkVersion 31
 
     compileOptions {
