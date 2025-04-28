@@ -1,3 +1,7 @@
+## 0.2.4
+
+ - **FEAT**(utopia_save_file): Add fromAsset method.
+
 ## 0.2.3
 
  - **FEAT**(utopia_save_file): Implement MacOS support.

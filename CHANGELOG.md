@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-04-28
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_platform_utils` - `v0.0.6+1`](#utopia_platform_utils---v0061)
+ - [`utopia_save_file` - `v0.2.4`](#utopia_save_file---v024)
+
+---
+
+#### `utopia_platform_utils` - `v0.0.6+1`
+
+ - **FIX**(utopia_platform_utils): Add Android namespace.
+
+#### `utopia_save_file` - `v0.2.4`
+
+ - **FEAT**(utopia_save_file): Add fromAsset method.
+
+
 ## 2025-03-21
 
 ### Changes

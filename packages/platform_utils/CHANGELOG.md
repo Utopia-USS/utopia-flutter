@@ -1,3 +1,7 @@
+## 0.0.6+1
+
+ - **FIX**(utopia_platform_utils): Add Android namespace.
+
 ## 0.0.6
 
  - **FEAT**: Update Flutter to 3.0.0.
