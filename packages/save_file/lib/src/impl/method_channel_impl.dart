@@ -29,6 +29,10 @@ class SaveFileMethodChannelImpl implements SaveFileNativeImpl {
   Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata) async =>
       fromBytes(await stream.toBytes(), metadata);
 
+  @override
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata) async =>
+      _execute('fromAsset', SaveFileDto.fromAsset(metadata, key: key));
+
   static Future<bool> _execute(String method, SaveFileDto dto) async =>
       (await _channel.invokeMethod<bool>(method, dto.toMap()))!;
 }

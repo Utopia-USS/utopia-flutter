@@ -12,6 +12,7 @@ sealed class SaveFileDto {
   static const fromFile = SaveFileDtoFromFile.new;
   static const fromUrl = SaveFileDtoFromUrl.new;
   static const fromBytes = SaveFileDtoFromBytes.new;
+  static const fromAsset = SaveFileDtoFromAsset.new;
 }
 
 final class SaveFileDtoFromFile extends SaveFileDto {
@@ -39,4 +40,13 @@ final class SaveFileDtoFromBytes extends SaveFileDto {
 
   @override
   Map<String, dynamic> toMap() => {...super.toMap(), "bytes": bytes};
+}
+
+final class SaveFileDtoFromAsset extends SaveFileDto {
+  final String key;
+
+  SaveFileDtoFromAsset(super.metadata, {required this.key});
+
+  @override
+  Map<String, dynamic> toMap() => {...super.toMap(), "key": key};
 }

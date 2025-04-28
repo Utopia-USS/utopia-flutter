@@ -42,3 +42,12 @@ class SaveFileDtoFromBytes: SaveFileDto {
         super.init(from: map)
     }
 }
+
+class SaveFileDtoFromAsset: SaveFileDto {
+    let key: String
+    
+    override init(from map: NSDictionary) {
+        key = map["key"] as! String
+        super.init(from: map)
+    }
+}

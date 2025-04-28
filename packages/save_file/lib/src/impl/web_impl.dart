@@ -1,3 +1,5 @@
+import 'dart:ui_web';
+
 import 'package:cross_file/cross_file.dart';
 import 'package:utopia_save_file/src/impl/impl.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
@@ -22,6 +24,9 @@ class SaveFileWebImpl implements SaveFileImpl {
       ..click();
     return true;
   }
+
+  @override
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata) => fromUrl(assetManager.getAssetUrl(key), metadata);
 
   @override
   Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata) async =>

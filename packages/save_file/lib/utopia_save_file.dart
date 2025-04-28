@@ -1,3 +1,7 @@
+/// @docImport 'dart:html';
+/// @docImport 'package:utopia_save_file/utopia_save_file_web.dart';
+library;
+
 import 'dart:async';
 
 import 'package:cross_file/cross_file.dart';
@@ -38,11 +42,9 @@ sealed class UtopiaSaveFile {
   /// See [SaveFileExtensionBehavior] for documentation of the available options.
   /// {@endtemplate}
   ///
-  /// On native platforms the [file] must be accessible by the app.
+  /// On native platforms, [file] must be accessible by the app.
   ///
   /// On the Web, [file] can point to an arbitrary URL but consider using the following, more specialized APIs:
-  // Cannot import UtopiaSaveFileWeb or 'dart:html' because they are forbidden on native platforms.
-  // ignore: comment_references
   /// - [UtopiaSaveFileWeb.fromBlob] convenience method for [Blob]s
   /// - [fromUrl] for HTTP(S) URLs
   static Future<bool> fromFile(
@@ -61,10 +63,10 @@ sealed class UtopiaSaveFile {
   /// {@macro utopia_save_file.return}
   ///
   /// If [mime] or [name] parameters are not provided, they will be inferred using the following methods, in order:
-  /// For [mime] :
+  /// For [mime]:
   /// 1. `Content-Type` header returned via a `HEAD` request.
   /// 2. [lookupMimeType] function using the last path segment.
-  /// For [name] :
+  /// For [name]:
   /// 1. `Content-Disposition` header returned via a `HEAD` request.
   /// 2. Last path segment.
   ///
@@ -74,12 +76,11 @@ sealed class UtopiaSaveFile {
   /// prevent the browser from blocking the request. However, if the `filename` parameter is also sent in the header,
   /// it will override the [name] parameter.
   ///
+  /// {@template utopia_save_file.webBehavior}
   /// On the Web, method will complete immediately and start the download in the background, without the ability
-  // Cannot import UtopiaSaveFileWeb or 'dart:html' because they are forbidden on native platforms.
-  // ignore: comment_references
   /// to monitor its status. To gain more control over this process, consider using [HttpRequest.request] with
-  // ignore: comment_references
   /// `responseType: 'blob'` and then [UtopiaSaveFileWeb.fromBlob].
+  /// {@endtemplate}
   static Future<bool> fromUrl(
     String url, {
     String? name,
@@ -88,6 +89,27 @@ sealed class UtopiaSaveFile {
   }) async {
     final metadata = await MetadataHelper.fromUrl(url, mime: mime, name: name);
     return _impl.fromUrl(url, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+  }
+
+  /// Copies asset at [key] to a location where it's accessible by the user.
+  ///
+  /// {@macro utopia_save_file.return}
+  ///
+  /// If [mime] or [name] parameters are not provided, they will be inferred using the following methods:
+  /// For [mime]: [lookupMimeType] function (using file extension).
+  /// For [name]: Last segment of [key].
+  ///
+  /// {@macro utopia_save_file.extensionBehavior}
+  ///
+  /// {@macro utopia_save_file.webBehavior}
+  static Future<bool> fromAsset(
+    String key, {
+    String? mime,
+    String? name,
+    SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+  }) async {
+    final metadata = await MetadataHelper.fromAsset(key, mime: mime, name: name);
+    return _impl.fromAsset(key, ExtensionHelper.ensureValid(metadata, extensionBehavior));
   }
 
   /// Saves provided byte [stream] to file in a location accessible by the user.

@@ -12,6 +12,10 @@ sealed class SaveFileDto(map: Map<String, Any>) {
     val url: String by map
   }
 
+  class FromAsset(map: Map<String, Any>) : SaveFileDto(map) {
+    val key: String by map
+  }
+
   class FromBytes(map: Map<String, Any>) : SaveFileDto(map) {
     val bytes: ByteArray by map
   }

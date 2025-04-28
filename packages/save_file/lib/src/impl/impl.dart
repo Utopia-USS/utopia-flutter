@@ -12,6 +12,8 @@ abstract interface class SaveFileImpl {
 
   Future<bool> fromUrl(String url, SaveFileMetadata metadata);
 
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata);
+
   Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata);
 
   Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata);

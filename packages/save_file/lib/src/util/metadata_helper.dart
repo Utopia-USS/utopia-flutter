@@ -43,6 +43,14 @@ abstract class MetadataHelper {
     );
   }
 
+  static Future<SaveFileMetadata> fromAsset(
+    String key, {
+    required String? mime,
+    required String? name,
+  }) async {
+    return _buildMetadata(key, mime ?? lookupMimeType(key), name ?? key.split('/').last);
+  }
+
   static SaveFileMetadata _buildMetadata(String object, String? mime, String? name) {
     if (mime == null || name == null) throw SaveFileMetadataException(object: object, mime: mime, name: name);
     return SaveFileMetadata(mime: mime, name: name);

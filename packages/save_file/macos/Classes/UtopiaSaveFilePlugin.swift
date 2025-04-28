@@ -3,10 +3,16 @@ import FlutterMacOS
 import UniformTypeIdentifiers
 
 public class UtopiaSaveFilePlugin: NSObject, FlutterPlugin {
+    let registrar: FlutterPluginRegistrar
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "utopia_save_file", binaryMessenger: registrar.messenger)
-        let instance = UtopiaSaveFilePlugin()
+        let instance = UtopiaSaveFilePlugin(registrar)
         registrar.addMethodCallDelegate(instance, channel: channel)
+    }
+    
+    init(_ registrar: FlutterPluginRegistrar) {
+        self.registrar = registrar
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -18,6 +24,11 @@ public class UtopiaSaveFilePlugin: NSObject, FlutterPlugin {
         case "fromUrl":
             let dto = SaveFileDtoFromUrl(from: arguments)
             saveFromUrl(dto, result)
+        case "fromAsset":
+            let dto = SaveFileDtoFromAsset(from: arguments)
+            let path = registrar.lookupKey(forAsset: dto.key)
+            let url = Bundle.main.bundleURL.appendingPathComponent(path)
+            performSave(dto, result) { InputStream(url: url) }
         case "fromBytes":
             let dto = SaveFileDtoFromBytes(from: arguments)
             performSave(dto, result) { InputStream(data: dto.bytes.data) }

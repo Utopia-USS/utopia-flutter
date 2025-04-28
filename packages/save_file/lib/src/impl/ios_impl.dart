@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cross_file/cross_file.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:utopia_save_file/src/impl/native_impl.dart';
@@ -23,6 +24,10 @@ class SaveFileIosImpl implements SaveFileNativeImpl {
 
   @override
   Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata) async => _save(stream, metadata);
+
+  @override
+  Future<bool> fromAsset(String name, SaveFileMetadata metadata) async =>
+      _save(Stream.value((await rootBundle.load(name)).buffer.asUint8List()), metadata);
 
   Future<Stream<List<int>>> _fetch(String url) async {
     final request = await HttpClient().getUrl(Uri.parse(url));

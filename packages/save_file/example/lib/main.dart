@@ -10,6 +10,7 @@ const _fileUrl = "https://upload.wikimedia.org/wikipedia/commons/8/80/Wikipedia-
 const _fileUrlName = "wiki_logo";
 const _fileBytesName = "alamakota";
 const _fileBytesMime = "text/plain";
+const _assetKey = "assets/Wikipedia-logo-v2.svg";
 
 Stream<List<int>> _buildFileBytes() =>
     Stream.fromIterable(["ala", "ma", "kota"]).map((it) => Uint8ClampedList.fromList(it.codeUnits));
@@ -33,11 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('UtopiaSaveFile example')),
-        body: Builder(
-          builder: (context) => Center(
-            child: _isInProgress ? _buildLoader() : _buildButtons(context),
-          ),
-        ),
+        body: Builder(builder: (context) => Center(child: _isInProgress ? _buildLoader() : _buildButtons(context))),
       ),
     );
   }
@@ -47,26 +44,13 @@ class _MyAppState extends State<MyApp> {
   Widget _buildButtons(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      spacing: 8,
       children: [
-        ElevatedButton(
-          onPressed: () => _saveUrl(context, useName: false),
-          child: const Text("Save without name"),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: () => _saveUrl(context, useName: true),
-          child: const Text("Save with name"),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: () => _saveBytes(context),
-          child: const Text("Save bytes"),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: () => _saveFile(context),
-          child: const Text("Save file"),
-        ),
+        ElevatedButton(onPressed: () => _saveUrl(context, useName: false), child: const Text("Save without name")),
+        ElevatedButton(onPressed: () => _saveUrl(context, useName: true), child: const Text("Save with name")),
+        ElevatedButton(onPressed: () => _saveBytes(context), child: const Text("Save bytes")),
+        ElevatedButton(onPressed: () => _saveFile(context), child: const Text("Save file")),
+        ElevatedButton(onPressed: () => _saveAsset(context), child: const Text("Save asset")),
       ],
     );
   }
@@ -84,6 +68,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> _saveFile(BuildContext context) async =>
       _runWithProgress(context, () async => UtopiaSaveFile.fromFile(await download(_fileUrl), name: _fileUrlName));
 
+  Future<void> _saveAsset(BuildContext context) async =>
+      _runWithProgress(context, () => UtopiaSaveFile.fromAsset(_assetKey));
+
   Future<void> _runWithProgress(BuildContext context, Future<bool> Function() block) async {
     late String message;
     try {
@@ -94,7 +81,9 @@ class _MyAppState extends State<MyApp> {
       rethrow;
     } finally {
       setState(() => _isInProgress = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      }
     }
   }
 }

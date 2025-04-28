@@ -1,6 +1,7 @@
 package com.utopiaultimate.flutter.utopia_save_file
 
 import android.content.Intent
+import android.content.res.AssetManager
 import android.net.Uri
 import com.utopiaultimate.flutter.utopia_platform_utils.flutter.coroutine.launchForResult
 import com.utopiaultimate.flutter.utopia_platform_utils.flutter.plugin.BaseFlutterPlugin
@@ -43,6 +44,11 @@ class UtopiaSaveFilePlugin : BaseFlutterPlugin(), MethodChannel.MethodCallHandle
       "fromUrl" -> activityScope.launchForResult(result) {
         val dto = SaveFileDto.FromUrl(call.arguments()!!)
         saveFile(dto) { URL(dto.url).openStream() }
+      }
+
+      "fromAsset" -> activityScope.launchForResult(result) {
+        val dto = SaveFileDto.FromAsset(call.arguments()!!)
+        saveFile(dto) { context.assets.open(binding.flutterAssets.getAssetFilePathByName(dto.key)) }
       }
 
       "fromBytes" -> activityScope.launchForResult(result) {
