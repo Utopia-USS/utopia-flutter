@@ -27,7 +27,7 @@ apply plugin: 'kotlin-android'
 android {
     namespace "com.utopiaultimate.flutter.save_file"
 
-    compileSdkVersion 30
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
