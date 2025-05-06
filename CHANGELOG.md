@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-05-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.2.4+1`](#utopia_save_file---v0241)
+
+---
+
+#### `utopia_save_file` - `v0.2.4+1`
+
+ - **FIX**(utopia_save_file): Update Android compileSdkVersion to 34.
+
+
 ## 2025-04-28
 
 ### Changes
