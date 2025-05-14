@@ -1,3 +1,7 @@
+## 0.4.17+1
+
+ - **FIX**(utopia_hooks): Improve error handling in HookProviderContainer.
+
 ## 0.4.17
 
  - **FEAT**(utopia_hooks): Add useWithSelfOrNull.
