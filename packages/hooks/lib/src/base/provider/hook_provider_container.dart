@@ -68,7 +68,23 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   dynamic getUnsafe(Object key, {bool? watch}) {
     assert(watch != true, "Watching a dependency is not supported in HookProviderContainer.getUnsafe()");
     if (!_providers.containsKey(key)) return ProviderContext.valueNotFound;
-    return _providers[key]?.value;
+    final value = _providers[key]?.value;
+    assert(() {
+      if (value == const _ProviderNotBuiltSentinel()) {
+        throw FlutterError.fromParts([
+          ErrorSummary("Provider not built yet"),
+          ErrorDescription("Value of the requested provider haven't been built yet"),
+          ErrorHint(
+            "This can happen if all previous builds of this provider have failed. "
+            "Fix the issue in the offending provider.",
+          ),
+          DiagnosticsProperty("key", key),
+          DiagnosticableTreeNode(name: 'container', value: this, style: DiagnosticsTreeStyle.truncateChildren),
+        ]);
+      }
+      return true;
+    }());
+    return value;
   }
 
   void Function() addListener<T>(void Function(T) listener) => addListenerUnsafe(T, (it) => listener(it as T));
@@ -105,9 +121,10 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
       for (final key in _providers.keys) {
         if (_dirtyKeys.contains(key)) {
           final provider = _providers[key]!;
-          provider.refreshValue();
-          _dirtyKeys.addAll(getDependents(key));
-          _listeners[key]?.forEach((it) => it(provider.value));
+          if(provider.refreshValue()) {
+            _dirtyKeys.addAll(getDependents(key));
+            _listeners[key]?.forEach((it) => it(provider.value));
+          }
         }
       }
     } finally {
@@ -190,17 +207,39 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   final Object key;
   final Object? Function() block;
   final Set<Object> dependencies = {};
-  Object? value;
+  Object? value = const _ProviderNotBuiltSentinel();
 
   var _isCollectingDependencies = true;
 
   _ProviderState(this.container, this.key, this.block) {
     refreshValue();
+    _isCollectingDependencies = false;
   }
 
-  void refreshValue() {
-    value = wrapBuild(block);
-    _isCollectingDependencies = false;
+  bool refreshValue() {
+    try {
+      value = wrapBuild(block);
+      return true;
+    } catch (e, s) {
+      final error = FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'utopia_hooks',
+        context: ErrorDescription("while building a provider"),
+        informationCollector: () => [
+          DiagnosticsProperty("key", key),
+          DiagnosticableTreeNode(name: 'provider', value: this, style: DiagnosticsTreeStyle.truncateChildren),
+          DiagnosticableTreeNode(name: 'container', value: container, style: DiagnosticsTreeStyle.truncateChildren),
+        ],
+      );
+      FlutterError.reportError(error);
+      return false;
+    } finally {
+      assert(() {
+        _isCollectingDependencies = false;
+        return true;
+      }());
+    }
   }
 
   void dispose() => disposeHooks();
@@ -229,7 +268,7 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
 
   @override
   // Make available to HookProviderContainer
-  void triggerPostBuildCallbacks() => super.triggerPostBuildCallbacks();
+  void triggerPostBuildCallbacks();
 
   @override
   void debugMarkWillReassemble() {
@@ -264,4 +303,12 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
     );
     properties.add(DiagnosticsProperty('value', value));
   }
+}
+
+class _ProviderNotBuiltSentinel {
+  @literal
+  const _ProviderNotBuiltSentinel();
+
+  @override
+  String toString() => "Provider not built";
 }

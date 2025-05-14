@@ -205,13 +205,11 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
           exception: e,
           stack: s,
           library: 'utopia_hooks',
-          context: DiagnosticsBlock(
-            children: [
-              ErrorSummary("Exception thrown by a post-build callback"),
-              DiagnosticsProperty("callback", callback),
-              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
-            ],
-          ),
+          context: ErrorDescription("while executing a post-build callback"),
+          informationCollector: () => [
+            DiagnosticsProperty("callback", callback),
+            DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+          ],
         );
         FlutterError.reportError(error);
       }
