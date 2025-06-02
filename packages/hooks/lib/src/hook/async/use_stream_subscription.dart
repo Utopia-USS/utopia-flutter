@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/hook/base/use_effect.dart';
+import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
 import 'package:utopia_hooks/src/hook/base/use_state.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
@@ -29,9 +30,11 @@ void useStreamSubscription<T>(
       final wrappedOnError = useValueWrapper(onError ?? Zone.current.handleUncaughtError);
       final wrappedOnDone = useValueWrapper(onDone ?? () {});
 
+      final isMounted = useIsMounted();
       final isHandlingState = useState(false, listen: false);
 
       Future<void> handle(StreamSubscription<T> subscription, T value) async {
+        if(!isMounted()) return;
         switch (strategy) {
           case StreamSubscriptionStrategy.parallel:
             break;
@@ -44,7 +47,7 @@ void useStreamSubscription<T>(
         try {
           await wrappedBlock.value(value);
         } finally {
-          isHandlingState.value = false;
+          if(isMounted()) isHandlingState.value = false;
           subscription.resume();
         }
       }
