@@ -1,3 +1,7 @@
+## 0.4.17+2
+
+ - **FIX**(utopia_hooks): useStreamSubscription: Fix edge case when disposing.
+
 ## 0.4.17+1
 
  - **FIX**(utopia_hooks): Improve error handling in HookProviderContainer.
