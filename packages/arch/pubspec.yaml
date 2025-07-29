@@ -1,6 +1,6 @@
 name: utopia_arch
 description: Utopia libs - complete architecture (including hooks, widgets, utils, reporter, collections, validation)
-version: 0.5.1+6
+version: 0.5.1+7
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

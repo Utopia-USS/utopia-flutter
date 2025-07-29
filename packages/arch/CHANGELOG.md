@@ -1,3 +1,7 @@
+## 0.5.1+7
+
+ - **FIX**(utopia_hooks): Export buildInjector.
+
 ## 0.5.1+6
 
  - Update a dependency to the latest release.
