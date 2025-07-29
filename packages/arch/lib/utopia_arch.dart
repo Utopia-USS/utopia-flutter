@@ -12,6 +12,7 @@ export 'src/extension/navigator_extensions.dart';
 export 'src/extension/value_notifier_extensions.dart';
 export 'src/hook/use_preferences_persisted_state.dart';
 export 'src/injector/use_injected.dart';
+export 'src/injector/build_injector.dart';
 export 'src/navigation/nested_navigator.dart';
 export 'src/navigation/route_config.dart';
 export 'src/navigation/scoped_navigator_state.dart';
