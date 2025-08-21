@@ -34,7 +34,7 @@ class EditTodoPage extends StatelessWidget {
 class EditTodoView extends StatelessWidget {
   final EditTodoPageState state;
 
-  const EditTodoView(this.state);
+  const EditTodoView(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class EditTodoView extends StatelessWidget {
       body: CupertinoScrollbar(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 _TitleField(state: state.titleState, submitInProgress: state.isSubmitInProgress),

@@ -6,7 +6,7 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 class TodosOverviewFilterButton extends StatelessWidget {
   final TodosOverviewPageState state;
 
-  const TodosOverviewFilterButton(this.state);
+  const TodosOverviewFilterButton(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {

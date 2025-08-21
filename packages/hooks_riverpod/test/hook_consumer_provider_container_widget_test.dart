@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
-import 'package:utopia_hooks_riverpod/src/hook_consumer_provider_container_widget.dart';
 import 'package:utopia_hooks_riverpod/utopia_hooks_riverpod.dart';
 
 final provider = StateProvider((ref) => 0);
@@ -54,7 +53,6 @@ void main() {
     await tester.tap(find.byType(GestureDetector));
     await tester.pump(const Duration(milliseconds: 1));
     await tester.idle();
-
 
     expect(find.text('1 - 2'), findsOneWidget);
   });

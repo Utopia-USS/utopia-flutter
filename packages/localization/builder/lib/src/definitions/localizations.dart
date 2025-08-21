@@ -1,14 +1,12 @@
 import 'package:utopia_localization_builder/utopia_localization_builder.dart';
 
 class Localizations extends Section {
-  Localizations({
+  const Localizations({
     required this.name,
     required this.supportedLanguageCodes,
-    required List<Label> labels,
-    required List<Section> children,
+    required super.labels,
+    required super.children,
   }) : super(
-          children: children,
-          labels: labels,
           key: '',
         );
 
@@ -33,7 +31,7 @@ class Localizations extends Section {
 
     Section? section;
 
-    for (var value in values) {
+    for (final value in values) {
       // Merging supportedLanguageCodes
       supportedLanguageCodes.addAll(
         value.supportedLanguageCodes.where(

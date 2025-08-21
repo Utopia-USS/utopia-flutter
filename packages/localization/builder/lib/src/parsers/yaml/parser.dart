@@ -20,7 +20,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
     required YamlNode input,
     required String name,
   }) {
-    if (!(input is YamlMap)) {
+    if (input is! YamlMap) {
       throw ParsingException<YamlLocalizationToken>(
         message: '[input] should be a YamlMap',
         token: YamlLocalizationToken.unknown(input),
@@ -32,12 +32,12 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
     // Parsing language coedes
     final languages = <Localizations>[];
 
-    for (var languageEntry in map.nodes.entries) {
+    for (final languageEntry in map.nodes.entries) {
       _addToken(
         YamlLocalizationTokenType.languageKey,
         languageEntry.key as YamlNode,
       );
-      if (!(languageEntry.value is YamlMap)) {
+      if (languageEntry.value is! YamlMap) {
         throw ParsingException<YamlLocalizationToken>(
           message: '[${languageEntry.key}] should be a YamlMap',
           token: YamlLocalizationToken.unknown(languageEntry.value),
@@ -67,7 +67,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
   Section _parseSection(String languageKey, String key, YamlMap map) {
     final labels = <Label>[];
     final children = <Section>[];
-    for (var sectionEntry in map.nodes.entries) {
+    for (final sectionEntry in map.nodes.entries) {
       final value = sectionEntry.value;
       // Label
       if (value is YamlScalar) {
@@ -85,7 +85,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
             key: sectionEntry.key.toString(),
             cases: <Case>[
               Case(
-                condition: DefaultCondition(),
+                condition: const DefaultCondition(),
                 translations: [
                   Translation(
                     languageKey,
@@ -107,7 +107,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
 
           final caseNodes = value.nodes['cases'];
 
-          if (!(caseNodes is YamlMap)) {
+          if (caseNodes is! YamlMap) {
             throw ParsingException<YamlLocalizationToken>(
               message: '[cases] should be a YamlMap',
               token: YamlLocalizationToken.unknown(caseNodes),
@@ -121,7 +121,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
 
           final caseMap = caseNodes;
 
-          for (var caseEntry in caseMap.nodes.entries) {
+          for (final caseEntry in caseMap.nodes.entries) {
             _addToken(
               YamlLocalizationTokenType.caseKey,
               caseEntry.key as YamlNode,
@@ -160,7 +160,7 @@ class YamlLocalizationParser extends LocalizationParser<YamlNode, YamlLocalizati
           );
           final sectionKey = sectionEntry.key.toString();
 
-          if (!(sectionEntry.value is YamlMap)) {
+          if (sectionEntry.value is! YamlMap) {
             throw ParsingException<YamlLocalizationToken>(
               message: '[$sectionKey] should be a YamlMap',
               token: YamlLocalizationToken.unknown(sectionEntry.value),

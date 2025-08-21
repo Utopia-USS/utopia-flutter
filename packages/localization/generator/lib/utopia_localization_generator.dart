@@ -37,12 +37,12 @@ class UtopiaLocalizationGenerator extends GeneratorForAnnotation<UtopiaLocalizat
   Future<Localizations> _downloadGoogleSheet(String documentId, String sheetId, String name) async {
     final url = 'https://docs.google.com/spreadsheets/d/$documentId/export?format=csv&id=$documentId&gid=$sheetId';
 
-    var response = await http.get(Uri.parse(url), headers: {'accept': 'text/csv;charset=UTF-8'});
+    final response = await http.get(Uri.parse(url), headers: {'accept': 'text/csv;charset=UTF-8'});
 
     final bytes = response.bodyBytes.toList();
     final csv = Stream<List<int>>.fromIterable([bytes]);
-    final rows = await csv.transform(utf8.decoder).transform(CsvToListConverter(shouldParseNumbers: false)).toList();
-    final parser = CsvLocalizationParser();
+    final rows = await csv.transform(utf8.decoder).transform(const CsvToListConverter(shouldParseNumbers: false)).toList();
+    final parser = const CsvLocalizationParser();
     final result = parser.parse(input: rows, name: name);
     return result.result;
   }

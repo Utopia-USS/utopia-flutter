@@ -21,7 +21,7 @@ class Section extends Equatable {
     if (value.labels.isEmpty) {
       labels.addAll(other.labels);
     } else {
-      for (var otherLabel in other.labels) {
+      for (final otherLabel in other.labels) {
         final existingLabel = value.labels.cast<Label?>().firstWhere(
               (x) => x!.key == otherLabel.key,
               orElse: () => null,
@@ -42,7 +42,7 @@ class Section extends Equatable {
     if (value.children.isEmpty) {
       children.addAll(other.children);
     } else {
-      for (var otherChild in other.children) {
+      for (final otherChild in other.children) {
         final existingChild = value.children.cast<Section?>().firstWhere(
               (x) => x!.key == otherChild.key,
               orElse: () => null,

@@ -55,7 +55,7 @@ class Case extends Equatable {
       final templatedValues = translations.first.templatedValues;
       for (var i = 1; i < translations.length; i++) {
         final current = translations[i];
-        if (!const SetEquality().equals(templatedValues.toSet(), current.templatedValues.toSet())) {
+        if (!const SetEquality<StringTemplate>().equals(templatedValues.toSet(), current.templatedValues.toSet())) {
           return false;
         }
       }

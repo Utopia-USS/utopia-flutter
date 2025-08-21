@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:utopia_localization_builder/utopia_localization_builder.dart' show Case, Label;
 
 /// A condition can define a [Case] when a [Label] have multiple possible
 /// values.

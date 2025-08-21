@@ -64,7 +64,7 @@ String defaultPropertyBuilderJsonConverter(
   } else if (property.type == 'DateTime') {
     return 'DateTime.parse($value as String)';
   } else {
-    return '$value';
+    return value;
   }
 }
 

@@ -9,7 +9,7 @@ enum TodosOverviewOption { toggleAll, clearCompleted }
 class TodosOverviewOptionsButton extends StatelessWidget {
   final TodosOverviewPageState state;
 
-  const TodosOverviewOptionsButton(this.state);
+  const TodosOverviewOptionsButton(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {

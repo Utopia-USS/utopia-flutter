@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class StatefulItem extends StatefulWidget {
   final int index;
 
-  const StatefulItem({Key? key, required this.index}) : super(key: key);
+  const StatefulItem({super.key, required this.index});
 
   @override
   State<StatefulItem> createState() => _StatefulItemState();

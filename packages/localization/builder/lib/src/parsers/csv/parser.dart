@@ -6,7 +6,7 @@ import '../parser.dart';
 import '../result.dart';
 import 'token.dart';
 
-class CsvLocalizationParser extends LocalizationParser<Iterable<List>, CsvLocalizationToken> {
+class CsvLocalizationParser extends LocalizationParser<Iterable<List<dynamic>>, CsvLocalizationToken> {
   const CsvLocalizationParser();
 
   static const conditionKey = 'condition';
@@ -17,12 +17,12 @@ class CsvLocalizationParser extends LocalizationParser<Iterable<List>, CsvLocali
   ];
 
   String _uniformizeKey(String key) {
-    key = key.trim();
-    final lowercase = key.toLowerCase();
+    final trimmedKey = key.trim();
+    final lowercase = trimmedKey.toLowerCase();
     if (reservedIndexKeys.contains(lowercase)) {
       return lowercase;
     }
-    return key;
+    return trimmedKey;
   }
 
   bool _isReservedKey(String key) => reservedIndexKeys.contains(key);
@@ -30,8 +30,8 @@ class CsvLocalizationParser extends LocalizationParser<Iterable<List>, CsvLocali
   bool _isLanguageKey(String key) => !_isReservedKey(key) && !(key.trim().startsWith('(') && key.trim().endsWith(')'));
 
   @override
-  ParsingResult<Iterable<List>, CsvLocalizationToken> parse({
-    required Iterable<List> input,
+  ParsingResult<Iterable<List<dynamic>>, CsvLocalizationToken> parse({
+    required Iterable<List<dynamic>> input,
     required String name,
   }) {
     final fields = input.toList();
@@ -41,7 +41,7 @@ class CsvLocalizationParser extends LocalizationParser<Iterable<List>, CsvLocali
     // Getting language codes
     final supportedLanguageCodes = index.where(_isLanguageKey).toList();
 
-    var section = Section(
+    var section = const Section(
       key: '',
       children: [],
       labels: [],

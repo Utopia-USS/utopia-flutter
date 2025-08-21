@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:utopia_arch/src/navigation/route_config.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
+@Deprecated("Use Navigation 2 instead")
 class NestedNavigator extends HookWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final NavigatorState parentNavigator;
   final Map<String, RouteConfig> routes;
   final String initialRoute;
 
+  @Deprecated("Use Navigation 2 instead")
   const NestedNavigator({
     super.key,
     required this.navigatorKey,

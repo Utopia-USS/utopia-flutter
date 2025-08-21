@@ -3,7 +3,7 @@ import 'package:utopia_widgets/utopia_widgets.dart';
 import 'package:utopia_widgets_example/util/stateful_item.dart';
 
 class MultiWidgetPage extends StatefulWidget {
-  const MultiWidgetPage({Key? key}) : super(key: key);
+  const MultiWidgetPage({super.key});
 
   @override
   State<MultiWidgetPage> createState() => _MultiWidgetPageState();

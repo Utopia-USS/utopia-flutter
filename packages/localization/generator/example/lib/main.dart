@@ -8,13 +8,15 @@ import 'package:utopia_localization_utils/utopia_localization_utils.dart';
 
 import 'localizations.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 extension AppLocalizationsExtensions on BuildContext {
   AppLocalizationsData get strings => localizations();
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -54,7 +56,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _upload() async {
+  Future<void> _upload() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
@@ -69,7 +71,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({
+  const MyHomePage({super.key, 
     required this.title,
     required this.locale,
     required this.onLocaleChanged,
@@ -87,12 +89,12 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: [IconButton(icon: Icon(Icons.upload), onPressed: onImportPressed)],
+        actions: [IconButton(icon: const Icon(Icons.upload), onPressed: onImportPressed)],
       ),
       body: Column(
         children: <Widget>[
           DropdownButton<Locale>(
-            key: Key('Picker'),
+            key: const Key('Picker'),
             value: locale,
             items: appLocalizationsData.supportedLocales.map((locale) {
               return DropdownMenuItem<Locale>(
@@ -114,9 +116,9 @@ class MyHomePage extends StatelessWidget {
                 Text(labels.templated.hello(firstName: 'World')),
                 Text(labels.templated.contact(Gender.male, lastName: 'John')),
                 Text(labels.templated.contact(Gender.female, lastName: 'Jane')),
-                Text('0 ' + labels.plurals.man(0.plural())),
-                Text('1 ' + labels.plurals.man(1.plural())),
-                Text('5 ' + labels.plurals.man(5.plural())),
+                Text('0 ${labels.plurals.man(0.plural())}'),
+                Text('1 ${labels.plurals.man(1.plural())}'),
+                Text('5 ${labels.plurals.man(5.plural())}'),
                 Text(labels.templated.numbers.simple(price: 10)),
                 Text(labels.templated.numbers.formatted(price: 10)),
                 Text(labels.templated.date.simple(date: DateTime.now())),

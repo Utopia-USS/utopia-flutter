@@ -84,7 +84,7 @@ MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute) {
           completer.completeError(e, s);
         }
       }
-    });
+    }).ignore();
 
     return completer.operation.value;
   }

@@ -60,7 +60,7 @@ class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsum
   T read<T>(ProviderListenable<T> provider) => ref.read(provider);
 
   @override
-  State refresh<State>(Refreshable<State> provider) => ref.refresh(provider);
+  S refresh<S>(Refreshable<S> provider) => ref.refresh(provider);
 
   @override
   T watch<T>(ProviderListenable<T> provider) {
@@ -75,7 +75,7 @@ class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsum
           // need to reschedule the refresh.
           // Using Future.microtask because `container.refresh` only schedules the actual refresh.
           // TODO revisit
-          Future.microtask(() => container.refresh(container.getDependents(WidgetRef)));
+          Future.microtask(() => container.refresh(container.getDependents(WidgetRef))).ignore();
         },
       );
     }

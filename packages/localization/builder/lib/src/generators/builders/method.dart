@@ -19,7 +19,9 @@ class MethodBuilder {
     final result = StringBuffer();
     result.write('$returnType $name(');
     final groupedArguments = arguments.groupListsBy((x) => x.named);
-    for(final argument in groupedArguments[false] ?? <ArgumentBuilder>[]) result.write(argument.build() + ',');
+    for(final argument in groupedArguments[false] ?? <ArgumentBuilder>[]) {
+      result.write('${argument.build()},');
+    }
     if (groupedArguments[true] != null) {
       result.write('{');
       for (final argument in groupedArguments[true]!) {

@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:utopia_hooks/src/misc/notifiable.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 void main() {

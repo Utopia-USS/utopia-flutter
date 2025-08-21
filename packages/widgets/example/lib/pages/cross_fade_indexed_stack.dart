@@ -3,7 +3,7 @@ import 'package:utopia_widgets/utopia_widgets.dart';
 import 'package:utopia_widgets_example/util/stateful_item.dart';
 
 class CrossFadeIndexedStackPage extends StatefulWidget {
-  const CrossFadeIndexedStackPage({Key? key}) : super(key: key);
+  const CrossFadeIndexedStackPage({super.key});
 
   @override
   State<CrossFadeIndexedStackPage> createState() => _CrossFadeIndexedStackPageState();

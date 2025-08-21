@@ -53,7 +53,7 @@ class TodosOverviewPage extends StatelessWidget {
 class TodosOverviewView extends HookWidget {
   final TodosOverviewPageState state;
 
-  const TodosOverviewView(this.state);
+  const TodosOverviewView(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class Label extends Equatable {
     assert(value.key == other.key, 'The two merged labels should have the same key');
     final cases = <Case>[];
 
-    for (var otherCase in other.cases) {
+    for (final otherCase in other.cases) {
       final existingCase = cases.cast<Case?>().firstWhere(
             (x) => x!.condition == otherCase.condition,
             orElse: () => null,
@@ -50,7 +50,7 @@ class Label extends Equatable {
       final templatedValues = cases.first.templatedValues;
       for (var i = 1; i < cases.length; i++) {
         final current = cases[i];
-        assert(const SetEquality().equals(templatedValues.toSet(), current.templatedValues.toSet()),
+        assert(const SetEquality<StringTemplate>().equals(templatedValues.toSet(), current.templatedValues.toSet()),
             'All cases should have the same template values');
       }
 

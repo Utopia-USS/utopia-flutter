@@ -12,7 +12,7 @@ class UtopiaLocalizationsDelegate<T> extends LocalizationsDelegate<T> {
   bool isSupported(Locale locale) => data.supportedLocales.contains(locale);
 
   @override
-  Future<T> load(Locale locale) => SynchronousFuture(data[locale]!);
+  Future<T> load(Locale locale) => SynchronousFuture(data[locale] as T);
 
   @override
   bool shouldReload(UtopiaLocalizationsDelegate<T> old) => old.data != data;

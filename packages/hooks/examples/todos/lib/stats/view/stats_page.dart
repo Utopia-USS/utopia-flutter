@@ -14,7 +14,7 @@ class StatsPage extends StatelessWidget {
 class StatsView extends StatelessWidget {
   final StatsPageState state;
 
-  const StatsView(this.state);
+  const StatsView(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {

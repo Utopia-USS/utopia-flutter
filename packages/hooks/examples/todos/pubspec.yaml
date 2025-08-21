@@ -25,6 +25,8 @@ dependencies:
 
   utopia_reporter:
 
+  shared_preferences_web: any
+  flutter_web_plugins: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

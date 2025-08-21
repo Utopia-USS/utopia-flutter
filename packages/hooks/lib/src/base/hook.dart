@@ -1,3 +1,6 @@
+/// @docImport 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
+library;
+
 import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 

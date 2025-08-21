@@ -57,7 +57,7 @@ class DataClassBuilder {
   }) {
     final propertyNames = _properties.keys.toList();
 
-    final buffer = StringBuffer('class $name \{\n');
+    final buffer = StringBuffer('class $name {\n');
 
     if (isConst) {
       // Default constructor
@@ -65,7 +65,7 @@ class DataClassBuilder {
       buffer.writeln('  const $name(');
       if (propertyNames.isNotEmpty) {
         buffer.write('{');
-        for (var propertyName in propertyNames) {
+        for (final propertyName in propertyNames) {
           final property = _properties[propertyName]!;
           buffer.write(property.buildConstructorParameter());
           buffer.writeln(',');
@@ -77,7 +77,7 @@ class DataClassBuilder {
       final initializers = <String>[];
       if (propertyNames.isNotEmpty) {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
+          final propertyName = propertyNames[i];
           final property = _properties[propertyName]!;
           initializers.addAll(property.buildConstructorInitializers());
         }
@@ -89,14 +89,14 @@ class DataClassBuilder {
       buffer.writeln(';');
 
       // Constructors
-      for (var constructor in _constructors.entries) {
+      for (final constructor in _constructors.entries) {
         buffer.writeln();
         buffer.write('  const $name.${constructor.key}()');
         if (_properties.isNotEmpty) {
           buffer.writeln(' : ');
           for (var i = 0; i < propertyNames.length; i++) {
-            var propertyName = propertyNames[i];
-            var property = _properties[propertyName]!;
+            final propertyName = propertyNames[i];
+            final property = _properties[propertyName]!;
             final value = constructor.value[propertyName];
             buffer.write('    this.${property.argumentName} = $value');
             buffer.writeln(i == propertyNames.length - 1 ? ';' : ',');
@@ -107,7 +107,7 @@ class DataClassBuilder {
       // Properties
       if (propertyNames.isNotEmpty) {
         buffer.writeln();
-        for (var propertyName in propertyNames) {
+        for (final propertyName in propertyNames) {
           final property = _properties[propertyName]!;
           //propertyName = createFieldName(propertyName);
           buffer.writeln(property.buildField());
@@ -117,7 +117,7 @@ class DataClassBuilder {
       // Default constructor
       buffer.writeln();
       buffer.writeln('  const $name({');
-      for (var propertyName in propertyNames) {
+      for (final propertyName in propertyNames) {
         final property = _properties[propertyName];
         final propertyType = property!.type;
         //propertyName = createFieldName(propertyName);
@@ -128,8 +128,8 @@ class DataClassBuilder {
 
       if (propertyNames.isNotEmpty) {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
-          var property = _properties[propertyName]!;
+          final propertyName = propertyNames[i];
+          final property = _properties[propertyName]!;
           //propertyName = createFieldName(propertyName);
           buffer.write('    _${property.argumentName} = ${property.argumentName}');
           buffer.writeln(i == propertyNames.length - 1 ? ';' : ',');
@@ -144,8 +144,8 @@ class DataClassBuilder {
 
       if (propertyNames.isNotEmpty) {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
-          var property = _properties[propertyName]!;
+          final propertyName = propertyNames[i];
+          final property = _properties[propertyName]!;
           buffer.write('    _${property.fieldName} = null');
           buffer.writeln(i == propertyNames.length - 1 ? ';' : ',');
         }
@@ -154,7 +154,7 @@ class DataClassBuilder {
       }
 
       // Constructors
-      for (var constructor in _constructors.entries) {
+      for (final constructor in _constructors.entries) {
         buffer.writeln();
 
         buffer.write('  const factory $name.${constructor.key}() = _$name${createClassdName(constructor.key)};');
@@ -164,7 +164,7 @@ class DataClassBuilder {
       if (propertyNames.isNotEmpty) {
         buffer.writeln();
         for (var propertyName in propertyNames) {
-          var property = _properties[propertyName]!;
+          final property = _properties[propertyName]!;
           final propertyType = property.type;
           propertyName = createFieldName(propertyName);
           buffer.writeln('  final $propertyType? _${property.fieldName};');
@@ -177,7 +177,7 @@ class DataClassBuilder {
     // Methods
     if (_methods.isNotEmpty) {
       buffer.writeln();
-      for (var method in _methods.values) {
+      for (final method in _methods.values) {
         buffer.writeln(method.build());
       }
     }
@@ -188,10 +188,10 @@ class DataClassBuilder {
 
       if (propertyNames.isNotEmpty) {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
-          var property = _properties[propertyName]!;
+          final propertyName = propertyNames[i];
+          final property = _properties[propertyName]!;
           buffer.write('${property.argumentName} : ');
-          final value = 'map[\'$propertyName\']!';
+          final value = "map['$propertyName']!";
           buffer.write(property.jsonConverter(value));
           buffer.write(',');
         }
@@ -201,9 +201,9 @@ class DataClassBuilder {
       buffer.write('Map<String, Object?> toJson() => {');
       if (propertyNames.isNotEmpty) {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
-          var property = _properties[propertyName]!;
-          buffer.write('\'$propertyName\' : ');
+          final propertyName = propertyNames[i];
+          final property = _properties[propertyName]!;
+          buffer.write("'$propertyName' : ");
           final value = property.toJson(property.isPrivate ? '_${property.argumentName}' : property.argumentName);
           buffer.write(value);
           buffer.write(',');
@@ -219,7 +219,7 @@ class DataClassBuilder {
       if (_properties.isNotEmpty) {
         buffer.writeln('{');
         for (var propertyName in _properties.keys) {
-          var property = _properties[propertyName]!;
+          final property = _properties[propertyName]!;
           final propertyType = property.type;
           propertyName = createFieldName(propertyName);
           buffer.writeln('    $propertyType? ${property.argumentName},');
@@ -242,7 +242,7 @@ class DataClassBuilder {
       buffer.writeln('  @override');
       buffer.write('  bool operator ==(Object other) => ');
       buffer.writeln('identical(this, other) || (other is $name');
-      for (var propertyName in _properties.keys) {
+      for (final propertyName in _properties.keys) {
         final property = _properties[propertyName]!;
         buffer.writeln('     && ${property.fieldName} == other.${property.fieldName}');
       }
@@ -255,7 +255,7 @@ class DataClassBuilder {
         buffer.writeln(';');
       } else {
         for (var i = 0; i < propertyNames.length; i++) {
-          var propertyName = propertyNames[i];
+          final propertyName = propertyNames[i];
           final property = _properties[propertyName]!;
           buffer.writeln('    ^ ${property.fieldName}.hashCode${i == propertyNames.length - 1 ? ';' : ''}');
         }
@@ -266,16 +266,16 @@ class DataClassBuilder {
 
     // Final classes
     if (!isConst) {
-      for (var constructor in _constructors.entries) {
+      for (final constructor in _constructors.entries) {
         buffer.writeln();
-        buffer.writeln('class _$name${createClassdName(constructor.key)} extends $name \{\n');
+        buffer.writeln('class _$name${createClassdName(constructor.key)} extends $name {\n');
 
         buffer.writeln('  const _$name${createClassdName(constructor.key)}() : super._();');
 
         // Properties
         if (propertyNames.isNotEmpty) {
           buffer.writeln();
-          for (var propertyName in propertyNames) {
+          for (final propertyName in propertyNames) {
             final property = _properties[propertyName]!;
             final propertyType = property.type;
             var value = constructor.value[propertyName];
