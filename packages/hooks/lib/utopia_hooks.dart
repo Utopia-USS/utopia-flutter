@@ -24,6 +24,7 @@ export 'src/hook/base/use_state.dart';
 export 'src/hook/base/use_value_changed.dart';
 export 'src/hook/base/use_value_wrapper.dart';
 export 'src/hook/base/use_with_self.dart';
+export 'src/hook/complex/button/button_state.dart';
 export 'src/hook/complex/computed/computed_state.dart';
 export 'src/hook/complex/computed/computed_state_value.dart';
 export 'src/hook/complex/computed/use_computed_state.dart';
