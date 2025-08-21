@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+ - **FIX**: Adjust utopia_lints.
+
 ## 0.1.1
 
  - **FEAT**: Upgrade packages.

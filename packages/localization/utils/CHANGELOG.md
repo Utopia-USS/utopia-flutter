@@ -1,3 +1,7 @@
+## 0.0.2+3
+
+ - **FIX**: Adjust utopia_lints.
+
 ## 0.0.2+2
 
  - Update a dependency to the latest release.

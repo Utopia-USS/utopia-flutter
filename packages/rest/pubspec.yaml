@@ -16,4 +16,4 @@ dependencies:
   dio: ^5.0.0
 
 dev_dependencies:
-  utopia_lints: ^0.0.4
+  utopia_lints: ^0.0.4+1

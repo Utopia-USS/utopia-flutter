@@ -15,6 +15,79 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_arch` - `v0.5.1+9`](#utopia_arch---v0519)
+ - [`utopia_collections` - `v0.1.1+1`](#utopia_collections---v0111)
+ - [`utopia_hooks` - `v0.4.18+1`](#utopia_hooks---v04181)
+ - [`utopia_hooks_riverpod` - `v0.0.4+17`](#utopia_hooks_riverpod---v00417)
+ - [`utopia_lints` - `v0.0.4+1`](#utopia_lints---v0041)
+ - [`utopia_localization_builder` - `v0.0.4+2`](#utopia_localization_builder---v0042)
+ - [`utopia_localization_generator` - `v0.0.4+2`](#utopia_localization_generator---v0042)
+ - [`utopia_localization_utils` - `v0.0.2+3`](#utopia_localization_utils---v0023)
+ - [`utopia_save_file` - `v0.2.4+2`](#utopia_save_file---v0242)
+ - [`utopia_widgets` - `v0.1.2+1`](#utopia_widgets---v0121)
+ - [`utopia_connectivity` - `v0.1.0+50`](#utopia_connectivity---v01050)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_connectivity` - `v0.1.0+50`
+
+---
+
+#### `utopia_arch` - `v0.5.1+9`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_collections` - `v0.1.1+1`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_hooks` - `v0.4.18+1`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_hooks_riverpod` - `v0.0.4+17`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_lints` - `v0.0.4+1`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_localization_builder` - `v0.0.4+2`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_localization_generator` - `v0.0.4+2`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_localization_utils` - `v0.0.2+3`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_save_file` - `v0.2.4+2`
+
+ - **FIX**: Adjust utopia_lints.
+
+#### `utopia_widgets` - `v0.1.2+1`
+
+ - **FIX**: Adjust utopia_lints.
+
+
+## 2025-08-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.18`](#utopia_hooks---v0418)
  - [`utopia_arch` - `v0.5.1+8`](#utopia_arch---v0518)
  - [`utopia_hooks_riverpod` - `v0.0.4+16`](#utopia_hooks_riverpod---v00416)

@@ -1,3 +1,7 @@
+## 0.4.18+1
+
+ - **FIX**: Adjust utopia_lints.
+
 ## 0.4.18
 
  - **FEAT**(utopia_hooks): Add ButtonState.

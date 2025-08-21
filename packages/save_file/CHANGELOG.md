@@ -1,3 +1,7 @@
+## 0.2.4+2
+
+ - **FIX**: Adjust utopia_lints.
+
 ## 0.2.4+1
 
  - **FIX**(utopia_save_file): Update Android compileSdkVersion to 34.
