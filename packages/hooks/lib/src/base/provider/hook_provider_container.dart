@@ -8,6 +8,7 @@ import 'package:utopia_hooks/src/util/immediate_locking_scheduler.dart';
 
 class HookProviderContainer with DiagnosticableTreeMixin implements ProviderContext {
   final void Function(void Function()) schedule;
+  final bool alwaysNotifyDependents;
   final _providers = <Object, _ProviderState>{};
   final _dependents = <Object, Set<Object>>{};
   final _dirtyKeys = <Object>{};
@@ -18,7 +19,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   @internal
   bool get debugDoingRefresh => _debugDoingRefresh;
 
-  HookProviderContainer({required this.schedule});
+  HookProviderContainer({required this.schedule, this.alwaysNotifyDependents = true});
 
   void initialize(Map<Object, Object? Function()> providers) {
     for (final entry in providers.entries) {
@@ -121,7 +122,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
       for (final key in _providers.keys) {
         if (_dirtyKeys.contains(key)) {
           final provider = _providers[key]!;
-          if(provider.refreshValue()) {
+          if (provider.refreshValue()) {
             _dirtyKeys.addAll(getDependents(key));
             _listeners[key]?.forEach((it) => it(provider.value));
           }
@@ -218,8 +219,9 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
 
   bool refreshValue() {
     try {
+      final oldValue = value;
       value = wrapBuild(block);
-      return true;
+      return container.alwaysNotifyDependents || value != oldValue;
     } catch (e, s) {
       final error = FlutterErrorDetails(
         exception: e,

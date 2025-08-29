@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class _State {
@@ -21,11 +21,18 @@ void main() {
 
     test("consistent state on exception", () async {
       var effectCount = 0;
+
+      var errorReported = false;
+
+      FlutterError.onError = (_) => errorReported = true;
+
       final container = SimpleHookProviderContainer({
         MutableValue<int>: () => useState(0),
         String: () => useProvided<MutableValue<int>>().value == 0 ? throw Exception("Not good") : "All good",
         #test: () => useProvided<String>().also((_) => effectCount++),
       });
+
+      expect(errorReported, true);
 
       expect(() => container.get<String>(), throwsA(isA<FlutterError>()));
       expect(effectCount, 0);

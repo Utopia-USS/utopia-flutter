@@ -8,6 +8,7 @@ import 'package:utopia_hooks/src/provider/provider_widget.dart';
 
 mixin HookProviderContainerWidgetMixin on StatefulWidget {
   abstract final Map<Type, Object? Function()> providers;
+  abstract final bool alwaysNotifyDependents;
   abstract final Priority schedulerPriority;
   abstract final Widget child;
 }
@@ -16,6 +17,8 @@ class HookProviderContainerWidget extends StatefulWidget with HookProviderContai
   @override
   final Map<Type, Object? Function()> providers;
   @override
+  final bool alwaysNotifyDependents;
+  @override
   final Priority schedulerPriority;
   @override
   final Widget child;
@@ -23,6 +26,7 @@ class HookProviderContainerWidget extends StatefulWidget with HookProviderContai
   const HookProviderContainerWidget(
     this.providers, {
     super.key,
+    this.alwaysNotifyDependents = true,
     this.schedulerPriority = Priority.animation,
     required this.child,
   });
@@ -48,7 +52,7 @@ mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidge
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isFirstBuild) {
-      container = HookProviderContainer(schedule: _schedule);
+      container = HookProviderContainer(schedule: _schedule, alwaysNotifyDependents: widget.alwaysNotifyDependents);
       container.initialize({BuildContext: () => context, ...additionalProviders, ...widget.providers});
       _values = {
         for (final type in widget.providers.keys) type: container.getUnsafe(type),
@@ -91,5 +95,11 @@ mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidge
       FlagProperty("first build", value: _isFirstBuild, ifTrue: "first build", level: DiagnosticLevel.debug),
     );
     properties.add(DiagnosticableTreeNode(name: "container", value: container, style: null));
+    properties.add(
+      DiagnosticsBlock(
+        name: "values",
+        properties: [for (final entry in _values.entries) DiagnosticsProperty(entry.key.toString(), entry.value)],
+      ),
+    );
   }
 }

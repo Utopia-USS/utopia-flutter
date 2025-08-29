@@ -8,6 +8,8 @@ class HookConsumerProviderContainerWidget extends ConsumerStatefulWidget with Ho
   @override
   final Map<Type, Object? Function()> providers;
   @override
+  final bool alwaysNotifyDependents;
+  @override
   final Priority schedulerPriority;
   @override
   final Widget child;
@@ -15,6 +17,7 @@ class HookConsumerProviderContainerWidget extends ConsumerStatefulWidget with Ho
   const HookConsumerProviderContainerWidget(
     this.providers, {
     super.key,
+    this.alwaysNotifyDependents = true,
     this.schedulerPriority = Priority.animation,
     required this.child,
   });
