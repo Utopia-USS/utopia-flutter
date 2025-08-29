@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**(utopia_hooks,utopia_hooks_riverpod): Add alwaysNotifyDependents.
+
 ## 0.0.4+17
 
  - **FIX**: Adjust utopia_lints.
