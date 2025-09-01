@@ -1,3 +1,7 @@
+## 0.4.19+1
+
+ - **FIX**(utopia_hooks): Remove HasInitialized equality.
+
 ## 0.4.19
 
  - **FEAT**(utopia_hooks,utopia_hooks_riverpod): Add alwaysNotifyDependents.
