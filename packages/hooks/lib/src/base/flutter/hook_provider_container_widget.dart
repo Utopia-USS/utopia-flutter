@@ -41,8 +41,8 @@ class _HookProviderContainerWidgetState extends State<HookProviderContainerWidge
 mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidgetMixin>
     on State<W>, DiagnosticableTreeMixin {
   @protected
-  late final HookProviderContainer container;
-  late Map<Object, Object?> _values;
+  HookProviderContainer? container;
+  Map<Object, Object?>? _values;
   var _isFirstBuild = true;
 
   @protected
@@ -53,33 +53,33 @@ mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidge
     super.didChangeDependencies();
     if (_isFirstBuild) {
       container = HookProviderContainer(schedule: _schedule, alwaysNotifyDependents: widget.alwaysNotifyDependents);
-      container.initialize({BuildContext: () => context, ...additionalProviders, ...widget.providers});
+      container!.initialize({BuildContext: () => context, ...additionalProviders, ...widget.providers});
       _values = {
-        for (final type in widget.providers.keys) type: container.getUnsafe(type),
+        for (final type in widget.providers.keys) type: container!.getUnsafe(type),
       };
       for (final entry in widget.providers.keys) {
-        container.addListenerUnsafe(entry, (value) => setState(() => _values[entry] = value));
+        container!.addListenerUnsafe(entry, (value) => setState(() => _values![entry] = value));
       }
       _isFirstBuild = false;
     } else {
-      container.refresh(container.getDependents(BuildContext));
+      container!.refresh(container!.getDependents(BuildContext));
     }
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    container.reassemble();
+    container!.reassemble();
   }
 
   @override
   void dispose() {
-    container.dispose();
+    container!.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => ProviderWidget(Map.of(_values), child: widget.child);
+  Widget build(BuildContext context) => ProviderWidget({...?_values}, child: widget.child);
 
   void _schedule(void Function() block) {
     unawaited(
@@ -94,12 +94,14 @@ mixin HookProviderContainerWidgetStateMixin<W extends HookProviderContainerWidge
     properties.add(
       FlagProperty("first build", value: _isFirstBuild, ifTrue: "first build", level: DiagnosticLevel.debug),
     );
-    properties.add(DiagnosticableTreeNode(name: "container", value: container, style: null));
-    properties.add(
-      DiagnosticsBlock(
-        name: "values",
-        properties: [for (final entry in _values.entries) DiagnosticsProperty(entry.key.toString(), entry.value)],
-      ),
-    );
+    if (container != null) properties.add(DiagnosticableTreeNode(name: "container", value: container!, style: null));
+    if (_values != null) {
+      properties.add(
+        DiagnosticsBlock(
+          name: "values",
+          properties: [for (final entry in _values!.entries) DiagnosticsProperty(entry.key.toString(), entry.value)],
+        ),
+      );
+    }
   }
 }
