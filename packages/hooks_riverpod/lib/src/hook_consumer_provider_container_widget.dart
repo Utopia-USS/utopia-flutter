@@ -78,7 +78,7 @@ class _HookConsumerProviderContainerWidgetState extends ConsumerState<HookConsum
           // need to reschedule the refresh.
           // Using Future.microtask because `container.refresh` only schedules the actual refresh.
           // TODO revisit
-          Future.microtask(() => container.refresh(container.getDependents(WidgetRef))).ignore();
+          Future.microtask(() => container!.refresh(container!.getDependents(WidgetRef))).ignore();
         },
       );
     }
