@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-09-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.19+2`](#utopia_hooks---v04192)
+ - [`utopia_arch` - `v0.5.1+12`](#utopia_arch---v05112)
+ - [`utopia_hooks_riverpod` - `v0.0.5+2`](#utopia_hooks_riverpod---v0052)
+ - [`utopia_connectivity` - `v0.1.0+53`](#utopia_connectivity---v01053)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+12`
+ - `utopia_hooks_riverpod` - `v0.0.5+2`
+ - `utopia_connectivity` - `v0.1.0+53`
+
+---
+
+#### `utopia_hooks` - `v0.4.19+2`
+
+ - **FIX**(utopia_hooks): Fix lazy initialization issues in HookProviderContainerMixin.
+
+
 ## 2025-09-01
 
 ### Changes

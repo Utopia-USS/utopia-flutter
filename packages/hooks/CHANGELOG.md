@@ -1,3 +1,7 @@
+## 0.4.19+2
+
+ - **FIX**(utopia_hooks): Fix lazy initialization issues in HookProviderContainerMixin.
+
 ## 0.4.19+1
 
  - **FIX**(utopia_hooks): Remove HasInitialized equality.
