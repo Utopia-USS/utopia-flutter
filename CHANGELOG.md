@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_hooks_riverpod` - `v0.0.5+3`](#utopia_hooks_riverpod---v0053)
+
+---
+
+#### `utopia_hooks_riverpod` - `v0.0.5+3`
+
+ - **FIX**(utopia_hooks_riverpod): Fix lazy initialization issues in HookProviderContainerMixin.
+
+
+## 2025-09-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.19+2`](#utopia_hooks---v04192)
  - [`utopia_arch` - `v0.5.1+12`](#utopia_arch---v05112)
  - [`utopia_hooks_riverpod` - `v0.0.5+2`](#utopia_hooks_riverpod---v0052)
