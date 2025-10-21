@@ -1,3 +1,7 @@
+## 0.2.4+3
+
+ - **FIX**(utopia_save_file): Fix WebAssembly support.
+
 ## 0.2.4+2
 
  - **FIX**: Adjust utopia_lints.

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-10-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.2.4+3`](#utopia_save_file---v0243)
+
+---
+
+#### `utopia_save_file` - `v0.2.4+3`
+
+ - **FIX**(utopia_save_file): Fix WebAssembly support.
+
+
 ## 2025-09-29
 
 ### Changes
