@@ -1,7 +1,7 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/services.dart';
 import 'package:utopia_save_file/src/dto/save_file_dto.dart';
-import 'package:utopia_save_file/src/impl/native_impl.dart';
+import 'package:utopia_save_file/src/impl/impl.native.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 import 'package:utopia_save_file/src/util/byte_stream_extensions.dart';
 

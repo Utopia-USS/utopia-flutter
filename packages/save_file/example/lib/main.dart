@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:utopia_save_file/utopia_save_file.dart';
 
-import 'download_io.dart' if (dart.library.js) 'download_web.dart';
+import 'download_io.dart' if (dart.library.js_interop) 'download_web.dart';
 
 const _fileUrl = "https://upload.wikimedia.org/wikipedia/commons/8/80/Wikipedia-logo-v2.svg?download";
 const _fileUrlName = "wiki_logo";

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cross_file/cross_file.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 
-import 'native_impl.dart' if (dart.library.js) 'web_impl.dart';
+import 'impl.stub.dart' if (dart.library.io) 'impl.native.dart' if (dart.library.js_interop) 'impl.web.dart';
 
 abstract interface class SaveFileImpl {
   static final instance = SaveFileTargetImpl.instance;
