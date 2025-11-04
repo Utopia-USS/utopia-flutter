@@ -1,3 +1,7 @@
+## 0.0.5+4
+
+ - Update a dependency to the latest release.
+
 ## 0.0.5+3
 
  - **FIX**(utopia_hooks_riverpod): Fix lazy initialization issues in HookProviderContainerMixin.

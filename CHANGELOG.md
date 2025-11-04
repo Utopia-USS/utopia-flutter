@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-11-04
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.19+3`](#utopia_hooks---v04193)
+ - [`utopia_arch` - `v0.5.1+13`](#utopia_arch---v05113)
+ - [`utopia_hooks_riverpod` - `v0.0.5+4`](#utopia_hooks_riverpod---v0054)
+ - [`utopia_connectivity` - `v0.1.0+54`](#utopia_connectivity---v01054)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+13`
+ - `utopia_hooks_riverpod` - `v0.0.5+4`
+ - `utopia_connectivity` - `v0.1.0+54`
+
+---
+
+#### `utopia_hooks` - `v0.4.19+3`
+
+ - **FIX**(utopia_hooks): Skip if in progress on useSubmitButtonState.
+
+
 ## 2025-10-21
 
 ### Changes

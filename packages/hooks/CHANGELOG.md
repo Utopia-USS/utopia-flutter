@@ -1,3 +1,7 @@
+## 0.4.19+3
+
+ - **FIX**(utopia_hooks): Skip if in progress on useSubmitButtonState.
+
 ## 0.4.19+2
 
  - **FIX**(utopia_hooks): Fix lazy initialization issues in HookProviderContainerMixin.
