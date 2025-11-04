@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class ButtonState {
@@ -19,5 +21,10 @@ extension ButtonStateX on ButtonState {
 ButtonState useSubmitButtonState(Future<void> Function() action, {bool enabled = true}) {
   final submitState = useSubmitState();
 
-  return submitState.toButtonState(onTap: () => submitState.run(action), enabled: enabled);
+  void onTap() {
+    if (submitState.inProgress) return;
+    unawaited(submitState.run(action));
+  }
+
+  return submitState.toButtonState(onTap: onTap, enabled: enabled);
 }
