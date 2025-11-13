@@ -1,4 +1,4 @@
-/// Represents a part of a [Translation] that can be replaced
+/// Represents a part of a translation that can be replaced
 /// by a value at runtime.
 ///
 /// It follows the pattern `{{key}}`.
@@ -58,7 +58,7 @@ class StringTemplate {
   }
 
   @override
-  bool operator ==(Object o) => o is StringTemplate && o.key == key;
+  bool operator ==(Object other) => other is StringTemplate && other.key == key;
 
   @override
   int get hashCode => key.hashCode;

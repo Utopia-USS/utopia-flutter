@@ -3,6 +3,7 @@ export 'src/definitions/condition.dart';
 export 'src/definitions/label.dart';
 export 'src/definitions/localizations.dart';
 export 'src/definitions/section.dart';
+export 'src/definitions/translation.dart';
 export 'src/generators/builders/argument.dart';
 export 'src/generators/builders/base.dart';
 export 'src/generators/builders/data_class.dart';

@@ -17,22 +17,21 @@ class DartLocalizationBuilder {
   final bool jsonParser;
   final String? fallbackLocale;
 
-  String buildImports() {
-    return "import 'package:utopia_localization_annotation/utopia_localization_annotation.dart';";
-  }
-
   String build(Localizations localizations, {required String fieldName}) {
     _buffer = StringBuffer();
+    _createPreamble();
     _createLocalization([localizations.name], localizations, fieldName);
     _addSectionDefinition([localizations.name], localizations);
-    return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
-        .format(_buffer.toString());
+    return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion).format(_buffer.toString());
   }
 
-  void _createLocalization(
-      List<String> path, Localizations localizations, String fieldName) {
+  void _createPreamble() {
     _buffer.writeln(
-        'const $fieldName = ${_createLanguageMap(path, localizations)};');
+        "// ignore_for_file: unnecessary_raw_strings,leading_newlines_in_multiline_strings,no_leading_underscores_for_local_identifiers,prefer_final_locals,join_return_with_assignment");
+  }
+
+  void _createLocalization(List<String> path, Localizations localizations, String fieldName) {
+    _buffer.writeln('const $fieldName = ${_createLanguageMap(path, localizations)};');
   }
 
   String _createLanguageMap(List<String> path, Localizations localizations) {
@@ -41,8 +40,7 @@ class DartLocalizationBuilder {
     result.write('UtopiaLocalizationData<${localizations.name}>({');
 
     for (final languageCode in localizations.supportedLanguageCodes) {
-      final instance =
-          _createSectionInstance(path, languageCode, localizations);
+      final instance = _createSectionInstance(path, languageCode, localizations);
 
       result.write("'$languageCode': $instance,");
     }
@@ -57,20 +55,19 @@ class DartLocalizationBuilder {
     String languageCode,
     Section section,
   ) {
-    path = [
+    final effectivePath = [
       ...path,
       section.normalizedKey,
     ];
 
     final result = StringBuffer();
-    result.writeln('${_buildClassNameFromPath(path)}(');
+    result.writeln('${_buildClassNameFromPath(effectivePath)}(');
 
     for (final label in section.labels) {
       for (final caze in label.cases) {
         if (caze.condition is ValueCondition) {
           final condition = caze.condition as ValueCondition;
-          final fieldName =
-              createCaseFieldName(label.normalizedKey, value: condition.value);
+          final fieldName = createCaseFieldName(label.normalizedKey, value: condition.value);
           result.write(fieldName);
         } else {
           final fieldName = label.normalizedKey;
@@ -88,7 +85,7 @@ class DartLocalizationBuilder {
         }
         translation ??= Translation(languageCode, '?');
         result.write(':');
-        result.write("'${_escapeString(translation.value)}',");
+        result.write('r"""${translation.value}""",');
       }
     }
 
@@ -96,7 +93,7 @@ class DartLocalizationBuilder {
       result.write(child.normalizedKey);
       result.write(':');
       result.write(_createSectionInstance(
-        path,
+        effectivePath,
         languageCode,
         child,
       ));
@@ -109,31 +106,27 @@ class DartLocalizationBuilder {
   }
 
   void _addSectionDefinition(List<String> path, Section section) {
-    path = [
+    final effectivePath = [
       ...path,
       section.normalizedKey,
     ];
 
     final result = DataClassBuilder(
-      _buildClassNameFromPath(path),
+      _buildClassNameFromPath(effectivePath),
       isConst: true,
     );
 
     for (final label in section.labels) {
-      if (label.templatedValues.isEmpty &&
-          label.cases.length == 1 &&
-          label.cases.first.condition is DefaultCondition) {
+      if (label.templatedValues.isEmpty && label.cases.length == 1 && label.cases.first.condition is DefaultCondition) {
         result.addProperty('String', label.normalizedKey);
       } else {
         final methodArguments = <ArgumentBuilder>[];
 
         /// Adding an argument for each category
-        final categoryCases =
-            label.cases.where((x) => x.condition is ValueCondition);
+        final categoryCases = label.cases.where((x) => x.condition is ValueCondition);
         for (final categoryCase in categoryCases) {
           final condition = categoryCase.condition as ValueCondition;
-          final fieldName =
-              '_${createCaseFieldName(label.normalizedKey, value: condition.value)}';
+          final fieldName = '_${createCaseFieldName(label.normalizedKey, value: condition.value)}';
           result.addProperty('String', fieldName);
         }
 
@@ -148,8 +141,7 @@ class DartLocalizationBuilder {
         }
 
         /// Default value
-        final hasDefaultCase =
-            label.cases.any((it) => it.condition is DefaultCondition);
+        final hasDefaultCase = label.cases.any((it) => it.condition is DefaultCondition);
 
         if (hasDefaultCase) {
           result.addProperty('String', '_${label.normalizedKey}');
@@ -179,15 +171,11 @@ class DartLocalizationBuilder {
 
         if (label.cases.any((it) => it.condition is ValueCondition)) {
           body.writeln("var label = switch(_value) {");
-          for (final condition in label.cases
-              .map((it) => it.condition)
-              .whereType<ValueCondition>()) {
-            body.writeln(
-                '${condition.value} => _${createCaseFieldName(label.normalizedKey, value: condition.value)},');
+          for (final condition in label.cases.map((it) => it.condition).whereType<ValueCondition>()) {
+            body.writeln('${condition.value} => _${createCaseFieldName(label.normalizedKey, value: condition.value)},');
           }
-          final defaultValue = hasDefaultCase
-              ? '_${label.normalizedKey}'
-              : r'throw Exception("No case available for ${_value}")';
+          final defaultValue =
+              hasDefaultCase ? '_${label.normalizedKey}' : r'throw Exception("No case available for $_value")';
           body.writeln('_ => $defaultValue,');
           body.writeln('};');
         } else {
@@ -197,8 +185,7 @@ class DartLocalizationBuilder {
         if (label.templatedValues.isNotEmpty) {
           body.write('label = label.insertTemplateValues({');
           for (final templatedValue in label.templatedValues) {
-            body.write(
-                "'${templatedValue.key}' : ${createFieldName(templatedValue.key)},");
+            body.write("'${templatedValue.key}' : ${createFieldName(templatedValue.key)},");
           }
           body.write('}, locale : locale,);');
         }
@@ -218,7 +205,7 @@ class DartLocalizationBuilder {
 
     for (final child in section.children) {
       final childPath = [
-        ...path,
+        ...effectivePath,
         child.normalizedKey,
       ];
       result.addProperty(
@@ -236,7 +223,7 @@ class DartLocalizationBuilder {
     );
 
     for (final child in section.children) {
-      _addSectionDefinition(path, child);
+      _addSectionDefinition(effectivePath, child);
     }
   }
 }
@@ -244,8 +231,3 @@ class DartLocalizationBuilder {
 String _buildClassNameFromPath(List<String> path) {
   return path.map(createClassdName).join();
 }
-
-String _escapeString(String value) => value
-    .replaceAll('\n', r'\n')
-    .replaceAll("'", r"\'")
-    .replaceAll(r'$', r'\$');

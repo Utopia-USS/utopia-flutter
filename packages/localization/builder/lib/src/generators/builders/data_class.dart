@@ -9,7 +9,7 @@ class DataClassBuilder {
 
   DataClassBuilder(
     this.name, {
-    this.isConst = true,
+    required this.isConst,
   });
 
   void addProperty(

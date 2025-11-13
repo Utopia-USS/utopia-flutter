@@ -23,7 +23,7 @@ class FormLayout extends StatefulWidget {
     this.fadeDuration = const Duration(milliseconds: 100),
     required Widget content,
     required this.bottom,
-  })  : content = SingleChildScrollView(child: content);
+  }) : content = SingleChildScrollView(child: content);
 
   FormLayout.simple({
     super.key,
@@ -32,7 +32,7 @@ class FormLayout extends StatefulWidget {
     this.fadeDuration = const Duration(milliseconds: 100),
     required Widget content,
     required this.bottom,
-  })  : content = SingleChildScrollView(child: content);
+  }) : content = SingleChildScrollView(child: content);
 
   const FormLayout.raw({
     super.key,
@@ -81,7 +81,7 @@ class _FormLayoutState extends State<FormLayout> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
+              colors: [widget.backgroundColor.withValues(alpha: 0), widget.backgroundColor],
             ),
           ),
         ),

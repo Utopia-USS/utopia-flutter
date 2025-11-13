@@ -2,16 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:recase/recase.dart' as recase;
 import 'package:utopia_localization_builder/utopia_localization_builder.dart';
 
-import 'translation.dart';
-
 /// A section is a set of labels, grouped together to to make them
 /// easier to find.
 class Section extends Equatable {
   const Section({
-    required String key,
+    required this.key,
     required this.labels,
     required this.children,
-  }) : key = key;
+  });
 
   /// Merges [value] and [other] into a new [Section] with combined [labels] and merged [children].
   factory Section.merge(Section value, Section other) {
@@ -68,15 +66,15 @@ class Section extends Equatable {
     return result;
   }
 
-  /// A new section with the [translation] inserted at [path].
+  /// A new section with the [Translation] inserted at [path].
   Section withTranslations(
     String path,
     String? condition,
     List<Translation> translations,
   ) {
-    path = path.trim();
-    assert(path.isNotEmpty);
-    var pathSplits = path.split('.');
+    final trimmedPath = path.trim();
+    assert(trimmedPath.isNotEmpty);
+    var pathSplits = trimmedPath.split('.');
 
     final label = Label(
       key: pathSplits.last,

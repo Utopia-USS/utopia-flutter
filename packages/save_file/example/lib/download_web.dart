@@ -1,9 +1,10 @@
-import 'package:web/web.dart';
+import 'dart:js_interop';
 
 import 'package:cross_file/cross_file.dart';
+import 'package:web/web.dart';
 
 Future<XFile> download(String url) async {
-  final request = await HttpRequest.request(url, responseType: 'blob');
-  final blob = request.response as Blob;
+  final response = await window.fetch(url.toJS).toDart;
+  final blob = await response.blob().toDart;
   return XFile(URL.createObjectURL(blob), mimeType: blob.type);
 }

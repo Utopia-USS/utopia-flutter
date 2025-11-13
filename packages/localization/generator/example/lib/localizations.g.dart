@@ -6,124 +6,137 @@ part of 'localizations.dart';
 // UtopiaLocalizationGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_raw_strings,leading_newlines_in_multiline_strings,no_leading_underscores_for_local_identifiers,prefer_final_locals,join_return_with_assignment
 const appLocalizationsData = UtopiaLocalizationData<AppLocalizationsData>({
   'fr': AppLocalizationsData(
-    onlyEnglish: 'English-only',
-    multiline: 'C\'est\n\nun\n\nexemple multiligne.',
+    onlyEnglish: r"""English-only""",
+    multiline: r"""Ceci est
+
+un
+
+exemple multiligne.""",
     plurals: AppLocalizationsDataPlurals(
-      man_201422728: 'hommes',
-      man_116447630: 'homme',
-      man_17408168: 'hommes',
+      man_201422728: r"""hommes""",
+      man_116447630: r"""homme""",
+      man_17408168: r"""hommes""",
     ),
     templated: AppLocalizationsDataTemplated(
-      contact_537753378: 'Mme {{last_name}}',
-      contact_588305750: 'M. {{last_name}}',
-      hello: 'Bonjour {{first_name}}!',
+      contact_537753378: r"""Mme {{last_name}}""",
+      contact_588305750: r"""M. {{last_name}}""",
+      hello: r"""Bonjour {{first_name}}!""",
       date: AppLocalizationsDataTemplatedDate(
-        pattern: 'Aujourd\'hui : {{date:DateTime[EEE, M/d/y]}}',
-        simple: 'Aujourd\'hui : {{date:DateTime}}',
+        pattern: r"""Aujourd'hui : {{date:DateTime[EEE, M/d/y]}}""",
+        simple: r"""Aujourd'hui : {{date:DateTime}}""",
       ),
       numbers: AppLocalizationsDataTemplatedNumbers(
-        formatted: 'Le prix est de {{price:double[compactCurrency]}}',
-        simple: 'Le prix est de {{price:double}}€',
-        count: 'Il y a {{count:int}} éléments.',
+        formatted: r"""Le prix est de {{price:double[compactCurrency]}}""",
+        simple: r"""Le prix est de {{price:double}}€""",
+        count: r"""Il y a {{count:int}} éléments.""",
       ),
     ),
     dates: AppLocalizationsDataDates(
       month: AppLocalizationsDataDatesMonth(
-        april: 'avril',
-        march: 'février',
-        february: 'février',
-        january: 'Janvier',
+        april: r"""avril""",
+        march: r"""février""",
+        february: r"""février""",
+        january: r"""Janvier""",
       ),
       weekday: AppLocalizationsDataDatesWeekday(
-        sunday: 'dimanche',
-        saturday: 'Samedi',
-        friday: 'vendredi',
-        thursday: 'Jeudi',
-        wednesday: 'Mercredi',
-        tuesday: 'Mardi',
-        monday: 'LUNDI',
+        sunday: r"""dimanche""",
+        saturday: r"""Samedi""",
+        friday: r"""vendredi""",
+        thursday: r"""Jeudi""",
+        wednesday: r"""Mercredi""",
+        tuesday: r"""Mardi""",
+        monday: r"""LUNDI""",
       ),
     ),
   ),
   'en': AppLocalizationsData(
-    onlyEnglish: 'English-only',
-    multiline: 'This is\n\na\n\nmultiline example.',
+    onlyEnglish: r"""English-only""",
+    multiline: r"""This is
+
+a
+
+multiline example.""",
     plurals: AppLocalizationsDataPlurals(
-      man_201422728: 'men',
-      man_116447630: 'man',
-      man_17408168: 'man',
+      man_201422728: r"""men""",
+      man_116447630: r"""man""",
+      man_17408168: r"""man""",
     ),
     templated: AppLocalizationsDataTemplated(
-      contact_537753378: 'Mrs {{last_name}}!',
-      contact_588305750: 'Mr {{last_name}}!',
-      hello: 'Hello {{first_name}}!',
+      contact_537753378: r"""Mrs {{last_name}}!""",
+      contact_588305750: r"""Mr {{last_name}}!""",
+      hello: r"""Hello {{first_name}}!""",
       date: AppLocalizationsDataTemplatedDate(
-        pattern: 'Today : {{date:DateTime[EEE, M/d/y]}}',
-        simple: 'Today : {{date:DateTime}}',
+        pattern: r"""Today : {{date:DateTime[EEE, M/d/y]}}""",
+        simple: r"""Today : {{date:DateTime}}""",
       ),
       numbers: AppLocalizationsDataTemplatedNumbers(
-        formatted: 'The price is {{price:double[compactCurrency]}}',
-        simple: 'The price is {{price:double}}\$',
-        count: 'There are {{count:int}}\ items.',
+        formatted: r"""The price is {{price:double[compactCurrency]}}""",
+        simple: r"""The price is {{price:double}}$""",
+        count: r"""There are {{count:int}}\ items.""",
       ),
     ),
     dates: AppLocalizationsDataDates(
       month: AppLocalizationsDataDatesMonth(
-        april: 'april',
-        march: 'march',
-        february: 'february',
-        january: 'january',
+        april: r"""april""",
+        march: r"""march""",
+        february: r"""february""",
+        january: r"""january""",
       ),
       weekday: AppLocalizationsDataDatesWeekday(
-        sunday: 'sunday',
-        saturday: 'saturday',
-        friday: 'friday',
-        thursday: 'thursday',
-        wednesday: 'wednesday',
-        tuesday: 'tuesday',
-        monday: 'MONDAY',
+        sunday: r"""sunday""",
+        saturday: r"""saturday""",
+        friday: r"""friday""",
+        thursday: r"""thursday""",
+        wednesday: r"""wednesday""",
+        tuesday: r"""tuesday""",
+        monday: r"""MONDAY""",
       ),
     ),
   ),
   'zh-Hans-CN': AppLocalizationsData(
-    onlyEnglish: 'English-only',
-    multiline: '这是\n\n一个\n\n多行示例。',
+    onlyEnglish: r"""English-only""",
+    multiline: r"""这是一个
+
+多行示例。
+
+""",
     plurals: AppLocalizationsDataPlurals(
-      man_201422728: '男人',
-      man_116447630: '男人',
-      man_17408168: '男人',
+      man_201422728: r"""男人""",
+      man_116447630: r"""男人""",
+      man_17408168: r"""男人""",
     ),
     templated: AppLocalizationsDataTemplated(
-      contact_537753378: '夫人{{last_name}}',
-      contact_588305750: '先生{{last_name}}',
-      hello: '你好{{first_name}}!',
+      contact_537753378: r"""夫人{{last_name}}""",
+      contact_588305750: r"""先生{{last_name}}""",
+      hello: r"""你好{{first_name}}!""",
       date: AppLocalizationsDataTemplatedDate(
-        pattern: '今日 : {{date:DateTime[EEE, M/d/y]}}',
-        simple: '今日 : {{date:DateTime}}',
+        pattern: r"""今日 : {{date:DateTime[EEE, M/d/y]}}""",
+        simple: r"""今日 : {{date:DateTime}}""",
       ),
       numbers: AppLocalizationsDataTemplatedNumbers(
-        formatted: '価格は{{price:double[compactCurrency]}}です',
-        simple: '価格は{{price:double}}¥です',
-        count: '{{count:int}}個のアイテムがあります',
+        formatted: r"""価格は{{price:double[compactCurrency]}}です""",
+        simple: r"""価格は{{price:double}}¥です""",
+        count: r"""{{count:int}}個のアイテムがあります""",
       ),
     ),
     dates: AppLocalizationsDataDates(
       month: AppLocalizationsDataDatesMonth(
-        april: '四月',
-        march: '游行',
-        february: '二月',
-        january: '一月',
+        april: r"""四月""",
+        march: r"""游行""",
+        february: r"""二月""",
+        january: r"""一月""",
       ),
       weekday: AppLocalizationsDataDatesWeekday(
-        sunday: '星期日',
-        saturday: '星期六',
-        friday: '星期五',
-        thursday: '星期四',
-        wednesday: '星期三',
-        tuesday: '星期二',
-        monday: '星期一',
+        sunday: r"""星期日""",
+        saturday: r"""星期六""",
+        friday: r"""星期五""",
+        thursday: r"""星期四""",
+        wednesday: r"""星期三""",
+        tuesday: r"""星期二""",
+        monday: r"""星期一""",
       ),
     ),
   ),
@@ -217,7 +230,7 @@ class AppLocalizationsDataPlurals {
       Plural.multiple => _man_201422728,
       Plural.one => _man_116447630,
       Plural.zero => _man_17408168,
-      _ => throw Exception("No case available for ${_value}"),
+      _ => throw Exception("No case available for $_value"),
     };
     return label;
   }
@@ -281,7 +294,7 @@ class AppLocalizationsDataTemplated {
     var label = switch (_value) {
       Gender.female => _contact_537753378,
       Gender.male => _contact_588305750,
-      _ => throw Exception("No case available for ${_value}"),
+      _ => throw Exception("No case available for $_value"),
     };
     label = label.insertTemplateValues({'last_name': lastName}, locale: locale);
     return label;

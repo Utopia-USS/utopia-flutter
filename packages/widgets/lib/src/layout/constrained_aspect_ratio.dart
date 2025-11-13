@@ -16,6 +16,7 @@ class ConstrainedAspectRatio extends SingleChildRenderObjectWidget {
       _RenderConstrainedAspectRatio(range: (min: min, max: max), alignment: alignment);
 
   @override
+  // ignore: library_private_types_in_public_api
   void updateRenderObject(BuildContext context, _RenderConstrainedAspectRatio renderObject) => renderObject
     ..range = (min: min, max: max)
     ..alignment = alignment;

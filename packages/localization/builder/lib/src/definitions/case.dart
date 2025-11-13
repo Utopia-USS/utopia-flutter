@@ -8,7 +8,7 @@ import 'condition.dart';
 /// Case represents a specific case for a label can respect a [condition], with
 /// a set of associated [translations].
 ///
-/// The condition is generally a [Category] value.
+/// The condition is generally a category value.
 class Case extends Equatable {
   /// Creates a new case.
   const Case({
