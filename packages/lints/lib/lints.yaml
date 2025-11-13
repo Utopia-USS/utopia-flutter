@@ -85,6 +85,7 @@ linter:
     secure_pubspec_urls: true
     dangling_library_doc_comments: true
     deprecated_consistency: true
+    avoid_redundant_argument_values: true
 
     # disabled rules
     use_key_in_widget_constructors: false
