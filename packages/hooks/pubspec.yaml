@@ -31,4 +31,4 @@ dev_dependencies:
   flutter_test:
       sdk: flutter
   test: ^1.24.9
-  utopia_lints: ^0.0.4+1
+  utopia_lints: ^0.0.5

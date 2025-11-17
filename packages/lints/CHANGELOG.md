@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**(utopia_lints): Add avoid_redundant_argument_values.
+
 ## 0.0.4+1
 
  - **FIX**: Adjust utopia_lints.

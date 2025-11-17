@@ -10,4 +10,4 @@ dependencies:
   fast_immutable_collections: ^11.0.3
 
 dev_dependencies:
-  utopia_lints: ^0.0.4+1
+  utopia_lints: ^0.0.5

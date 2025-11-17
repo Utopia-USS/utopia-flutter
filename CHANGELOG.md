@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-11-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_lints` - `v0.0.5`](#utopia_lints---v005)
+
+---
+
+#### `utopia_lints` - `v0.0.5`
+
+ - **FEAT**(utopia_lints): Add avoid_redundant_argument_values.
+
+
 ## 2025-11-04
 
 ### Changes
