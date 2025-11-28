@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:injector/injector.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'package:utopia_injector/utopia_injector.dart';
 
 T useInjected<T>() => useProvided<Injector>().get();
 

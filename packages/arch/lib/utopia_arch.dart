@@ -1,5 +1,6 @@
 export 'package:utopia_collections/utopia_collections.dart';
 export 'package:utopia_hooks/utopia_hooks.dart';
+export 'package:utopia_injector/utopia_injector.dart';
 export 'package:utopia_reporter/utopia_reporter.dart';
 export 'package:utopia_validation/utopia_validation.dart';
 export 'package:utopia_widgets/utopia_widgets.dart';

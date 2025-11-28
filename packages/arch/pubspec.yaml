@@ -17,10 +17,10 @@ dependencies:
   utopia_collections: ^0.1.1+1
   utopia_validation: ^0.1.0+4
   utopia_widgets: ^0.1.2+1
+  utopia_injector: ^0.0.1
 
   page_transition: ^2.0.2
   shared_preferences: ^2.0.7
-  injector: ^4.0.0
 
 dev_dependencies:
   flutter_test:
