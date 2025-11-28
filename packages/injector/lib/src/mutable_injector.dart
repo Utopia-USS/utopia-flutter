@@ -4,7 +4,7 @@ import 'exception/not_defined_exception.dart';
 import 'factory/factory.dart';
 import 'injector.dart';
 
-class MutableInjector implements Injector {
+class MutableInjector extends Injector {
   MutableInjector([this._parent]);
 
   final Injector? _parent;
