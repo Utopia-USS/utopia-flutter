@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-12-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.21`](#utopia_hooks---v0421)
+ - [`utopia_arch` - `v0.5.1+16`](#utopia_arch---v05116)
+ - [`utopia_hooks_riverpod` - `v0.0.5+6`](#utopia_hooks_riverpod---v0056)
+ - [`utopia_connectivity` - `v0.1.0+57`](#utopia_connectivity---v01057)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+16`
+ - `utopia_hooks_riverpod` - `v0.0.5+6`
+ - `utopia_connectivity` - `v0.1.0+57`
+
+---
+
+#### `utopia_hooks` - `v0.4.21`
+
+ - **FEAT**(utopia_hooks): Remove usePreviousIfNull from usePersistedState; deprecate confusing hooks; improve performance of nested hooks with a single nested context.
+
+
 ## 2025-11-28
 
 ### Changes

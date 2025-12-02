@@ -1,3 +1,7 @@
+## 0.4.21
+
+ - **FEAT**(utopia_hooks): Remove usePreviousIfNull from usePersistedState; deprecate confusing hooks; improve performance of nested hooks with a single nested context.
+
 ## 0.4.20
 
  - **FEAT**(utopia_injector): Init package.
