@@ -10,7 +10,7 @@ class ConnectivityState implements HasInitialized {
   @override
   bool get isInitialized => result != null;
 
-  bool get hasConnection => !result!.contains(ConnectivityResult.none);
+  bool get hasConnection => result != null && !result!.contains(ConnectivityResult.none);
 }
 
 ConnectivityState useConnectivityState() {
