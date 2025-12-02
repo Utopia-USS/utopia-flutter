@@ -7,7 +7,6 @@ import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/use_computed_state.dart';
 import 'package:utopia_hooks/src/hook/complex/submit/use_submit_state.dart';
-import 'package:utopia_hooks/src/hook/misc/use_previous_if_null.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 import 'package:utopia_hooks/src/misc/has_initialized.dart';
 import 'package:utopia_utils/utopia_utils.dart';
@@ -38,7 +37,7 @@ PersistedState<T> usePersistedState<T extends Object>(
         unawaited(submitState.run(() => wrappedSet.value(value)));
       }
 
-      final wrappedValue = useValueWrapper(usePreviousIfNull(state.valueOrNull));
+      final wrappedValue = useValueWrapper(state.valueOrNull);
 
       return useMemoized(
         () => _DelegatePersistedState(

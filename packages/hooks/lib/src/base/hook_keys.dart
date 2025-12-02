@@ -32,7 +32,7 @@ abstract class KeyedHook<T> extends Hook<T> {
   const KeyedHook({required this.keys, super.debugLabel});
 
   @override
-  KeyedHookState<T, KeyedHook<T>> createState();
+  KeyedHookStateMixin<T, KeyedHook<T>> createState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -41,7 +41,9 @@ abstract class KeyedHook<T> extends Hook<T> {
   }
 }
 
-abstract class KeyedHookState<T, H extends KeyedHook<T>> extends HookState<T, H> {
+abstract class KeyedHookState<T, H extends KeyedHook<T>> extends HookState<T, H> with KeyedHookStateMixin<T, H> {}
+
+mixin KeyedHookStateMixin<T, H extends KeyedHook<T>> on HookState<T, H> {
   @mustCallSuper
   void didUpdateKeys() {}
 

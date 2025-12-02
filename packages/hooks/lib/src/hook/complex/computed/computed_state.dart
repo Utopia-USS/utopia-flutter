@@ -1,4 +1,5 @@
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
+import 'package:utopia_hooks/src/hook/misc/use_previous.dart';
 import 'package:utopia_hooks/src/misc/has_initialized.dart';
 
 class ComputedState<T> with ComputedStateMixin<T> {
@@ -51,4 +52,11 @@ mixin ComputedStateMixin<T> implements HasInitialized {
   bool get isInitialized => value is ComputedStateValueReady;
 
   T? get valueOrNull => value.valueOrNull;
+}
+
+extension ComputedStateX<T> on ComputedState<T> {
+  T? useValueOrPrevious() {
+    final prev = usePreviousValue(value.valueOrNull);
+    return value.maybeWhen(ready: (value) => value, orElse: () => prev);
+  }
 }

@@ -21,7 +21,7 @@ final class _MapHook<K extends Object, T> extends Hook<Map<K, T>> {
   }
 }
 
-final class _MapHookState<K extends Object, T> extends NestedHookState<Map<K, T>, _MapHook<K, T>> {
+final class _MapHookState<K extends Object, T> extends MultiNestedHookState<Map<K, T>, _MapHook<K, T>> {
   @override
   Map<K, T> buildInner() {
     return {

@@ -38,7 +38,6 @@ export 'src/hook/flutter/animation/use_single_ticker_provider.dart';
 export 'src/hook/flutter/misc/use_app_lifecycle_state.dart';
 export 'src/hook/misc/use_memoized_if.dart';
 export 'src/hook/misc/use_previous.dart';
-export 'src/hook/misc/use_previous_if_null.dart';
 export 'src/hook/nested/use_keyed.dart';
 export 'src/hook/nested/use_map.dart';
 export 'src/hook/reactive/use_listenable.dart';
