@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_connectivity` - `v0.1.1+1`](#utopia_connectivity---v0111)
+
+---
+
+#### `utopia_connectivity` - `v0.1.1+1`
+
+ - **FIX**(utopia_connectivity): Re-add root file.
+
+
+## 2025-12-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_connectivity` - `v0.1.1`](#utopia_connectivity---v011)
 
 ---

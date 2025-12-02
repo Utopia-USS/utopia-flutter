@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+ - **FIX**(utopia_connectivity): Re-add root file.
+
 ## 0.1.1
 
  - **FEAT**(utopia_connectivity): No null check when ConnectivityState isn't initialized.
