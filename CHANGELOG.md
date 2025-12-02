@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_connectivity` - `v0.1.1`](#utopia_connectivity---v011)
+
+---
+
+#### `utopia_connectivity` - `v0.1.1`
+
+ - **FEAT**(utopia_connectivity): No null check when ConnectivityState isn't initialized.
+
+
+## 2025-12-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.21`](#utopia_hooks---v0421)
  - [`utopia_arch` - `v0.5.1+16`](#utopia_arch---v05116)
  - [`utopia_hooks_riverpod` - `v0.0.5+6`](#utopia_hooks_riverpod---v0056)

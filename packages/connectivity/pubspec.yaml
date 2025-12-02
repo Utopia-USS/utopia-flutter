@@ -1,6 +1,6 @@
 name: utopia_connectivity
 description: Utopia USS libs - ConnectivityState
-version: 0.1.0+57
+version: 0.1.1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:

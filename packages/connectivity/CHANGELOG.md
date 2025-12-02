@@ -1,3 +1,7 @@
+## 0.1.1
+
+ - **FEAT**(utopia_connectivity): No null check when ConnectivityState isn't initialized.
+
 ## 0.1.0+57
 
  - Update a dependency to the latest release.
