@@ -128,7 +128,7 @@ sealed class UtopiaSaveFile {
     required String name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
   }) async {
-    final metadata = SaveFileMetadata(name: name, mime: mime);
+    final metadata = SaveFileMetadata(object: '<raw byte stream>', name: name, mime: mime);
     return _impl.fromByteStream(stream, ExtensionHelper.ensureValid(metadata, extensionBehavior));
   }
 
@@ -148,7 +148,7 @@ sealed class UtopiaSaveFile {
     required String name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
   }) async {
-    final metadata = SaveFileMetadata(name: name, mime: mime);
+    final metadata = SaveFileMetadata(object: '<raw bytes>', name: name, mime: mime);
     return _impl.fromBytes(bytes, ExtensionHelper.ensureValid(metadata, extensionBehavior));
   }
 }

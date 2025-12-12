@@ -5,8 +5,6 @@ import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 import 'package:utopia_save_file/src/util/byte_stream_extensions.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
-typedef FileMetadata = (String mime, String name);
-
 class SaveFileMetadataException implements Exception {
   final String object;
   final String? mime, name;
@@ -53,7 +51,7 @@ abstract class MetadataHelper {
 
   static SaveFileMetadata _buildMetadata(String object, String? mime, String? name) {
     if (mime == null || name == null) throw SaveFileMetadataException(object: object, mime: mime, name: name);
-    return SaveFileMetadata(mime: mime, name: name);
+    return SaveFileMetadata(object: object, mime: mime, name: name);
   }
 
   static Future<List<int>> _getHeaderBytes(XFile file) async =>

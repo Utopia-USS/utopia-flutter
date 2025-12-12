@@ -2,24 +2,35 @@ import 'package:mime/mime.dart';
 import 'package:utopia_save_file/src/model/save_file_extension_behavior.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
 
-class SaveFileExtensionException implements Exception {
-  final String mime, name;
+abstract class SaveFileExtensionException implements Exception {
+  final SaveFileMetadata metadata;
 
-  const SaveFileExtensionException({required this.mime, required this.name});
+  const SaveFileExtensionException(this.metadata);
+}
+
+class SaveFileInvalidExtensionException extends SaveFileExtensionException {
+  const SaveFileInvalidExtensionException(super.metadata);
 
   @override
-  String toString() => "Filename $name does not match mime type $mime";
+  String toString() => "Extension doesn't match for $metadata";
+}
+
+class SaveFileUnknownExtensionException extends SaveFileExtensionException {
+  const SaveFileUnknownExtensionException(super.metadata);
+
+  @override
+  String toString() => "Cannot infer extension for $metadata";
 }
 
 abstract class ExtensionHelper {
   static SaveFileMetadata ensureValid(SaveFileMetadata metadata, SaveFileExtensionBehavior behavior) {
     if (behavior == SaveFileExtensionBehavior.ignore || lookupMimeType(metadata.name) == metadata.mime) return metadata;
-    final extension = extensionFromMime(metadata.mime);
+    late final extension = extensionFromMime(metadata.mime) ?? (throw SaveFileUnknownExtensionException(metadata));
     final name = switch (behavior) {
-      SaveFileExtensionBehavior.replace => _replaceExtension(metadata.name, extension!),
+      SaveFileExtensionBehavior.replace => _replaceExtension(metadata.name, extension),
       SaveFileExtensionBehavior.append => _appendExtension(metadata.name, extension),
       SaveFileExtensionBehavior.ignore => throw StateError("Unreachable"),
-      SaveFileExtensionBehavior.fail => throw SaveFileExtensionException(mime: metadata.mime, name: metadata.mime),
+      SaveFileExtensionBehavior.fail => throw SaveFileInvalidExtensionException(metadata),
     };
     return metadata.copyWith(name: name);
   }
