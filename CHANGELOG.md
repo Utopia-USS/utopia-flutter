@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-12-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_save_file` - `v0.2.4+4`](#utopia_save_file---v0244)
+
+---
+
+#### `utopia_save_file` - `v0.2.4+4`
+
+ - **FIX**(utopia_save_file): Better exception handling.
+
+
 ## 2025-12-02
 
 ### Changes

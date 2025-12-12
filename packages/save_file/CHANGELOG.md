@@ -1,3 +1,7 @@
+## 0.2.4+4
+
+ - **FIX**(utopia_save_file): Better exception handling.
+
 ## 0.2.4+3
 
  - **FIX**(utopia_save_file): Fix WebAssembly support.
