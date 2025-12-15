@@ -134,7 +134,7 @@ class DartLocalizationBuilder {
           methodArguments.add(
             const ArgumentBuilder(
               name: "_value",
-              type: "Object?", // TODO typed?
+              type: "Object?", // TODO typed value?
               named: false,
             ),
           );
