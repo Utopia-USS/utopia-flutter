@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**(utopia_localization_builder): Force version bump.
+
 ## 0.0.4+2
 
  - **FIX**: Adjust utopia_lints.

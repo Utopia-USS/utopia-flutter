@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-12-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_builder` - `v0.0.5`](#utopia_localization_builder---v005)
+ - [`utopia_localization_generator` - `v0.0.4+3`](#utopia_localization_generator---v0043)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_localization_generator` - `v0.0.4+3`
+
+---
+
+#### `utopia_localization_builder` - `v0.0.5`
+
+ - **FEAT**(utopia_localization_builder): Force version bump.
+
+
 ## 2025-12-12
 
 ### Changes
