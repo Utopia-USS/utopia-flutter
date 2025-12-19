@@ -41,10 +41,10 @@ class MutableInjector extends Injector {
   /// ```dart
   /// injector.get<UserService>();
   /// ```
-  void _register<T>(Factory<T> factory, {Object? key}) {
+  void _register<T>(Factory<T> factory, {Object? key, bool override = false}) {
     _checkValidation<T>();
     final identity = _getIdentity<T>(key);
-    _checkForDuplicates<T>(identity);
+    if (!override) _checkForDuplicates<T>(identity);
     _factoryMap[identity] = factory;
   }
 
@@ -148,17 +148,24 @@ class MutableInjector extends Injector {
 
 class InjectorRegister {
   final MutableInjector _injector;
+  final bool _override;
 
-  const InjectorRegister._(this._injector);
+  const InjectorRegister._(this._injector, [this._override = false]);
+
+  InjectorRegister get override => InjectorRegister._(_injector, true);
 
   void singleton<T>(T Function(Injector) block, {Object? key}) =>
-      _injector._register(Factory.singleton(block), key: key);
+      _injector._register(Factory.singleton(block), key: key, override: _override);
 
-  void provider<T>(T Function(Injector) block, {Object? key}) => _injector._register(Factory.provider(block), key: key);
+  void provider<T>(T Function(Injector) block, {Object? key}) =>
+      _injector._register(Factory.provider(block), key: key, override: _override);
 
-  void instance<T>(T instance, {Object? key}) => _injector._register(Factory.instance(instance), key: key);
+  void instance<T>(T instance, {Object? key}) =>
+      _injector._register(Factory.instance(instance), key: key, override: _override);
 
   void noarg<T>(T Function() block, {Object? key}) => singleton((_) => block(), key: key);
 
   void call<T>(T Function(Injector) block, {Object? key}) => singleton(block, key: key);
+
+  void alias<T, T2 extends T>({Object? key}) => provider<T>((injector) => injector<T2>(key: key), key: key);
 }
