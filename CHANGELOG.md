@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-12-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_injector` - `v0.0.3`](#utopia_injector---v003)
+ - [`utopia_arch` - `v0.5.1+17`](#utopia_arch---v05117)
+ - [`utopia_connectivity` - `v0.1.1+2`](#utopia_connectivity---v0112)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+17`
+ - `utopia_connectivity` - `v0.1.1+2`
+
+---
+
+#### `utopia_injector` - `v0.0.3`
+
+ - **FEAT**(utopia_injector): Override and alias.
+
+
 ## 2025-12-15
 
 ### Changes
