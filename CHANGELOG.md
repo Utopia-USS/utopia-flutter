@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-01-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_generator` - `v0.0.4+4`](#utopia_localization_generator---v0044)
+
+---
+
+#### `utopia_localization_generator` - `v0.0.4+4`
+
+ - **FIX**(utopia_localization_generator): Update to analyzer:^9.0.0.
+
+
 ## 2025-12-19
 
 ### Changes

@@ -1,3 +1,7 @@
+## 0.0.4+4
+
+ - **FIX**(utopia_localization_generator): Update to analyzer:^9.0.0.
+
 ## 0.0.4+3
 
  - Update a dependency to the latest release.

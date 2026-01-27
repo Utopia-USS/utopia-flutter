@@ -1,6 +1,6 @@
 name: utopia_localization_generator
 description: Utopia USS libs - Localization - Google Sheet-based localization code generator.
-version: 0.0.4+3
+version: 0.0.4+4
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
