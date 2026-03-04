@@ -8,9 +8,9 @@ sealed class Condition extends Equatable {
 
   factory Condition.parse(String? value) {
     if (value == null) return const DefaultCondition();
-    value = value.trim();
-    if (value.isEmpty) return const DefaultCondition();
-    return ValueCondition(value);
+    final trimmedValue = value.trim();
+    if (trimmedValue.isEmpty) return const DefaultCondition();
+    return ValueCondition(trimmedValue);
   }
 }
 
