@@ -21,6 +21,8 @@ abstract class Hook<T> with Diagnosticable {
 }
 
 abstract class _HookStateBase<T, H extends Hook<T>> {
+  bool get mounted;
+
   H get hook;
 }
 
@@ -28,24 +30,70 @@ abstract class _HookStateBase<T, H extends Hook<T>> {
 abstract class HookState<T, H extends Hook<T>>
     with Diagnosticable, HookStateDiagnosticableMixin<T, H>
     implements _HookStateBase<T, H> {
+  H? _hook;
+  HookContext? _context;
+
+  /// Whether this [HookState] is currently mounted to a [HookContext].
+  ///
+  /// This will return `true` only between [init] and [dispose] calls.
+  @override
+  bool get mounted => _context != null;
+
   /// The current [Hook] of this [HookState].
   ///
-  /// This will be set at creation of the [HookState] and updated to a new instance of [Hook] every build.
-  /// This should only be set by implementations of [HookContext].
+  /// This is available only when [mounted]; calling will otherwise result in an error.
+  /// This is updated with a new [Hook] before [didUpdate] & [build] calls.
   @override
-  late H hook;
+  H get hook {
+    assert(() {
+      _debugCheckMounted(property: "HookState.hook");
+      return true;
+    }());
+    return _hook!;
+  }
 
   /// The [HookContext] in which this [HookState] is used.
   ///
-  /// This will be set once at creation of the [HookState].
-  /// This should only be set by implementations of [HookContext].
-  late final HookContext context;
+  /// This is available only when [mounted]; calling will otherwise result in an error.
+  HookContext get context {
+    assert(() {
+      _debugCheckMounted(property: "HookState.context");
+      return true;
+    }());
+    return _context!;
+  }
+
+  @internal
+  @nonVirtual
+  void mount(HookContext context, H hook) {
+    _context = context;
+    _hook = hook;
+    init();
+  }
+
+  @internal
+  @nonVirtual
+  void update(H hook) {
+    if (hook == _hook) return;
+    final oldHook = _hook!;
+    _hook = hook;
+    didUpdate(oldHook);
+  }
+
+  @internal
+  @nonVirtual
+  void unmount() {
+    dispose();
+    _hook = null;
+    _context = null;
+  }
 
   /// Initialize this [HookState].
   ///
   /// Implementations can place required initialization logic in this method.
   /// This will be called only once, before the first build.
   @mustCallSuper
+  @protected
   void init() {}
 
   /// Cleanup this [HookState].
@@ -53,6 +101,7 @@ abstract class HookState<T, H extends Hook<T>>
   /// Implementations can place required cleanup logic in this method.
   /// This will be called only once, when the [HookContext] is disposed.
   @mustCallSuper
+  @protected
   void dispose() {}
 
   /// Prepare this [HookState] for a build with new [hook].
@@ -60,6 +109,7 @@ abstract class HookState<T, H extends Hook<T>>
   /// This will be called before every build, except the first one.
   /// [oldHook] will be the [Hook] used during the previous build.
   @mustCallSuper
+  @protected
   void didUpdate(H oldHook) {}
 
   /// Build the current value of this [HookState].
@@ -73,6 +123,16 @@ abstract class HookState<T, H extends Hook<T>>
   /// This method won't be called in release mode.
   @mustCallSuper
   void debugMarkWillReassemble() {}
+
+  void _debugCheckMounted({required String property}) {
+    assert(() {
+      if (!mounted) {
+        throw FlutterError.fromParts(
+            [ErrorSummary("Tried to access $property after it's been unmounted"), ErrorDescription("$property ")]);
+      }
+      return true;
+    }());
+  }
 }
 
 /// A mixin that provides default implementation for [Diagnosticable] for [HookState].
@@ -83,12 +143,21 @@ mixin HookStateDiagnosticableMixin<T, H extends Hook<T>> on Diagnosticable imple
   // Given HookState should be uniquely identified by its Hook
   @override
   @nonVirtual
-  String toStringShort() => hook.toStringShort();
+  String toStringShort() {
+    if (mounted) {
+      return hook.toStringShort();
+    } else {
+      return "<unmounted> ${describeIdentity(this)}";
+    }
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    // Hook and its state are inherently linked, so there's no need to introduce additional nesting level
-    hook.debugFillProperties(properties);
+    properties.add(FlagProperty("mounted", value: mounted, ifTrue: "mounted", ifFalse: "unmounted"));
+    if (mounted) {
+      // Hook and its state are inherently linked, so there's no need to introduce additional nesting level
+      hook.debugFillProperties(properties);
+    }
   }
 }

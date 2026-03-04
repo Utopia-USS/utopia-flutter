@@ -16,6 +16,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   var _debugPostBuildCallbacksDirty = false;
   var _debugWillReassemble = false;
   var _debugDoingBuild = false;
+  Hook<dynamic>? _debugBuildingHook;
 
   @override
   @nonVirtual
@@ -27,64 +28,76 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
   @override
   @nonVirtual
   T use<T>(Hook<T> hook) {
-    if (_isFirstBuild) {
-      final state = _createState(hook);
-      _index++;
-      _hooks.add(state);
-      state.init();
-      return state.build();
-    } else {
-      var isUpdate = true;
+    assert(() {
+      if (_debugBuildingHook != null) {
+        throw FlutterError.fromParts([
+          ErrorSummary("Trying to use a hook from inside a hook"),
+          ErrorDescription("Tried to call HookContext.use() when another hook was already building"),
+          ErrorHint("Split your hooks into atomic parts and use composition"),
+          DiagnosticableNode(name: "hook", value: hook, style: null),
+          DiagnosticableNode(name: "building hook", value: hook, style: null),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+        ]);
+      }
+      _debugBuildingHook = hook;
+      return true;
+    }());
+    try {
+      if (_isFirstBuild) {
+        final state = _createState(hook);
+        _index++;
+        _hooks.add(state);
+        return state.build();
+      } else {
+        var isUpdate = true;
+        assert(() {
+          if (_index == _hooks.length) {
+            if (_debugWillReassemble) {
+              isUpdate = false;
+              _hooks.add(_createState(hook));
+            } else {
+              throw FlutterError.fromParts([
+                ErrorSummary("Trying to add a hook after the first build"),
+                ErrorDescription("New hooks cannot be added after the first build"),
+                ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
+                DiagnosticableNode(name: "hook", value: hook, style: null),
+                DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+              ]);
+            }
+          }
+          if (_hooks[_index].hook.runtimeType != hook.runtimeType) {
+            if (_debugWillReassemble) {
+              _hooks[_index].unmount();
+              _hooks[_index] = _createState(hook);
+              isUpdate = false;
+            } else {
+              throw FlutterError.fromParts([
+                ErrorSummary("Trying to change hook type after the first build"),
+                ErrorDescription("Hook types cannot be changed after the first build"),
+                ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
+                DiagnosticableNode(name: "old hook", value: _hooks[_index].hook, style: null),
+                DiagnosticableNode(name: "new hook", value: hook, style: null),
+                DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+              ]);
+            }
+          }
+          return true;
+        }());
+        final state = _hooks[_index++] as HookState<T, Hook<T>>;
+        if (isUpdate) {
+          state.update(hook);
+        }
+        return state.build();
+      }
+    } finally {
       assert(() {
-        if (_index == _hooks.length) {
-          if (_debugWillReassemble) {
-            isUpdate = false;
-            _hooks.add(_createState(hook));
-          } else {
-            throw FlutterError.fromParts([
-              ErrorSummary("Trying to add a hook after the first build"),
-              ErrorDescription("New hooks cannot be added after the first build"),
-              ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
-              DiagnosticableNode(name: "hook", value: hook, style: null),
-              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
-            ]);
-          }
-        }
-        if (_hooks[_index].hook.runtimeType != hook.runtimeType) {
-          if (_debugWillReassemble) {
-            _hooks[_index].dispose();
-            _hooks[_index] = _createState(hook);
-            isUpdate = false;
-          } else {
-            throw FlutterError.fromParts([
-              ErrorSummary("Trying to change hook type after the first build"),
-              ErrorDescription("Hook types cannot be changed after the first build"),
-              ErrorHint("To dynamically change hooks during build, use control flow hooks"), // TODO add article link
-              DiagnosticableNode(name: "old hook", value: _hooks[_index].hook, style: null),
-              DiagnosticableNode(name: "new hook", value: hook, style: null),
-              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
-            ]);
-          }
-        }
+        _debugBuildingHook = null;
         return true;
       }());
-      final state = _hooks[_index++] as HookState<T, Hook<T>>;
-      final oldHook = state.hook;
-      state.hook = hook;
-      if (isUpdate) {
-        state.didUpdate(oldHook);
-      } else {
-        state.init();
-      }
-      return state.build();
     }
   }
 
-  HookState<T, Hook<T>> _createState<T>(Hook<T> hook) {
-    return hook.createState()
-      ..hook = hook
-      ..context = this;
-  }
+  HookState<T, Hook<T>> _createState<T>(Hook<T> hook) => hook.createState()..mount(this, hook);
 
   @override
   @nonVirtual
@@ -124,7 +137,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
           if (_index < _hooks.length) {
             if (_debugWillReassemble) {
               while (_index++ < _hooks.length) {
-                _hooks.removeLast().dispose();
+                _hooks.removeLast().unmount();
               }
             } else {
               throw FlutterError.fromParts([
@@ -172,7 +185,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
     }());
 
     for (final state in _hooks) {
-      state.dispose();
+      state.unmount();
     }
     _mounted = false;
   }

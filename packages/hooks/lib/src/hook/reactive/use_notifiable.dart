@@ -3,12 +3,27 @@ import 'package:utopia_hooks/src/base/hook.dart';
 import 'package:utopia_hooks/src/base/hook_context.dart';
 import 'package:utopia_hooks/src/misc/notifiable.dart';
 
-ListenableNotifiable useNotifiable({bool listen = true}) => use(_NotifiableHook(listen: listen));
+NotifiableHookState useNotifiable({bool listen = true}) => use(_NotifiableHook(listen: listen));
 
-ListenableNotifiableValue<T> useNotifiableValue<T>(T Function() create, {bool listen = true}) =>
+NotifiableValueHookState<T> useNotifiableValue<T>(T Function() create, {bool listen = true}) =>
     use(_NotifiableValueHook(create, listen: listen));
 
-class _NotifiableHook extends _BaseNotifiableHook<ListenableNotifiable> {
+abstract class NotifiableHookState implements ListenableNotifiable, BaseNotifiableHookState {}
+
+abstract class NotifiableValueHookState<T> implements ListenableNotifiableValue<T>, BaseNotifiableHookState {}
+
+abstract class BaseNotifiableHookState implements Notifiable {
+  bool get mounted;
+}
+
+extension NotifiableHookStateX on BaseNotifiableHookState {
+  bool notifyIfMounted() {
+    notifyIf(mounted);
+    return mounted;
+  }
+}
+
+class _NotifiableHook extends _BaseNotifiableHook<NotifiableHookState> {
   const _NotifiableHook({required super.listen})
       : super(debugLabel: 'useNotifiable(${!listen ? "listen: false" : ""})');
 
@@ -16,7 +31,7 @@ class _NotifiableHook extends _BaseNotifiableHook<ListenableNotifiable> {
   _NotifiableHookState createState() => _NotifiableHookState();
 }
 
-class _NotifiableValueHook<T> extends _BaseNotifiableHook<ListenableNotifiableValue<T>> {
+class _NotifiableValueHook<T> extends _BaseNotifiableHook<NotifiableValueHookState<T>> {
   final T Function() create;
 
   const _NotifiableValueHook(this.create, {required super.listen})
@@ -44,14 +59,15 @@ abstract class _BaseNotifiableHook<T> extends Hook<T> {
   }
 }
 
-class _NotifiableHookState extends _BaseNotifiableHookState<ListenableNotifiable, _NotifiableHook> {
+class _NotifiableHookState extends _BaseNotifiableHookState<NotifiableHookState, _NotifiableHook>
+    implements NotifiableHookState {
   @override
-  ListenableNotifiable build() => this;
+  NotifiableHookState build() => this;
 }
 
 class _NotifiableValueHookState<T>
-    extends _BaseNotifiableHookState<ListenableNotifiableValue<T>, _NotifiableValueHook<T>>
-    implements ListenableNotifiableValue<T> {
+    extends _BaseNotifiableHookState<NotifiableValueHookState<T>, _NotifiableValueHook<T>>
+    implements NotifiableValueHookState<T> {
   @override
   late final T value;
 
@@ -62,7 +78,7 @@ class _NotifiableValueHookState<T>
   }
 
   @override
-  ListenableNotifiableValue<T> build() => this;
+  NotifiableValueHookState<T> build() => this;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -76,6 +92,16 @@ abstract class _BaseNotifiableHookState<T, H extends _BaseNotifiableHook<T>> ext
     implements ListenableNotifiable {
   @override
   void notify() {
+    assert(() {
+      if (!mounted) {
+        throw FlutterError.fromParts([
+          ErrorSummary("Tried to call notify() after hook has been unmounted"),
+          ErrorHint("Consider using notifyIfMounted() to explicitly check whether this hook is mounted"),
+          DiagnosticableNode(name: "hook", value: this, style: null),
+        ]);
+      }
+      return true;
+    }());
     super.notifyListeners();
     if (hook.listen) context.markNeedsBuild();
   }

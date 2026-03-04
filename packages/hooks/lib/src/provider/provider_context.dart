@@ -5,7 +5,7 @@ abstract interface class ProviderContext {
   /// Retrieves the value matching requested [key] and optionally watches for its change.
   ///
   /// Sentinel value [valueNotFound] is returned when the requested value can't be provided.
-  /// If [key] is an instance of [Type], will always be an instance of the requested type.
+  /// If [key] is an instance of [Type], the returned value will always be an instance of the requested type.
   /// {@template ProviderContext.watch}
   /// If [watch] is not set, implementation should perform an educated guess (e.g. based on whether it's called during
   /// a build).
