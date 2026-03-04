@@ -1,3 +1,7 @@
+## 0.4.22
+
+ - **FEAT**(utopia_hooks): Add explicit "mounted" handling for HookState's.
+
 ## 0.4.21
 
  - **FEAT**(utopia_hooks): Remove usePreviousIfNull from usePersistedState; deprecate confusing hooks; improve performance of nested hooks with a single nested context.
