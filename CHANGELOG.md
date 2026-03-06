@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-03-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`utopia_hooks_riverpod` - `v0.1.0`](#utopia_hooks_riverpod---v010)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `utopia_hooks_riverpod` - `v0.1.0`
+
+ - **BREAKING** **FEAT**(utopia_hooks_riverpod): Upgrade to Riverpod ^3.0.0.
+
+
 ## 2026-03-04
 
 ### Changes

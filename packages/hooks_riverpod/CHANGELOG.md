@@ -1,3 +1,9 @@
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(utopia_hooks_riverpod): Upgrade to Riverpod ^3.0.0.
+
 ## 0.0.5+7
 
  - Update a dependency to the latest release.
