@@ -13,7 +13,7 @@ dependencies:
 
   utopia_hooks: ^0.4.22
 
-  flutter_riverpod: ^2.3.0
+  flutter_riverpod: ^3.0.0
 
 dev_dependencies:
   flutter_test:
