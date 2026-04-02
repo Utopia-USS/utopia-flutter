@@ -1,3 +1,7 @@
+## 0.4.23
+
+ - **FEAT**(utopia_hooks): Add useState(keys:) and useStateLazy().
+
 ## 0.4.22
 
  - **FEAT**(utopia_hooks): Add explicit "mounted" handling for HookState's.
