@@ -1,3 +1,7 @@
+## 0.4.23+1
+
+ - **FIX**(utopia_hooks): Fix useState.
+
 ## 0.4.23
 
  - **FEAT**(utopia_hooks): Add useState(keys:) and useStateLazy().
