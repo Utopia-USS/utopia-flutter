@@ -69,7 +69,7 @@ abstract class _StateHookBase<T> extends KeyedHook<StateHookState<T>> {
   _StateHookState<T> createState() => _StateHookState<T>();
 }
 
-final class _StateHookState<T> extends KeyedHookState<StateHookState<T>, _StateHook<T>>
+final class _StateHookState<T> extends KeyedHookState<StateHookState<T>, _StateHookBase<T>>
     with ChangeNotifier
     implements StateHookState<T> {
   late T _value;
