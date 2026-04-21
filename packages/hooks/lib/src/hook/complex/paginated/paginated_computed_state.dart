@@ -75,7 +75,7 @@ final class MutablePaginatedComputedState<T, C> implements PaginatedComputedStat
   ///
   /// When `clear: true`, [items] drops to `null` before the reload (equivalent to
   /// [clear] followed by [loadMore]).
-  final Future<void> Function({bool clear}) refresh;
+  final Future<void> Function({bool clearCache}) refresh;
 
   /// Cancels any in-progress load and resets all fields to their initial state. Does
   /// not trigger a reload.

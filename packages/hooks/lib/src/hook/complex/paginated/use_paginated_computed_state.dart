@@ -135,7 +135,6 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
   final hasMoreState = useState<bool>(true);
   final errorState = useState<Object?>(null);
   final inFlightState = useState<CancelableOperation<void>?>(null);
-  final replaceOnNextLoadState = useState<bool>(false, listen: false);
   final computeWrapper = useValueWrapper(compute);
   final deduplicateWrapper = useValueWrapper(deduplicate);
   final isMounted = useIsMounted();
@@ -146,8 +145,8 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     inFlightState.value = null;
   }
 
-  List<T> mergeIncoming(PaginatedPage<T, C> page) {
-    if (replaceOnNextLoadState.value) return List.of(page.items, growable: false);
+  List<T> mergeIncoming(PaginatedPage<T, C> page, {required bool replace}) {
+    if (replace) return List.of(page.items, growable: false);
     final dedup = deduplicateWrapper.value;
     final existing = itemsState.value ?? const [];
     if (dedup == null) return [...existing, ...page.items];
@@ -155,7 +154,7 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     return [...existing, ...incoming];
   }
 
-  Future<void> loadMore() {
+  Future<void> load({required bool replace}) {
     if (!hasMoreState.value) return Future.value();
 
     final inFlight = inFlightState.value;
@@ -170,8 +169,7 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
       try {
         final page = await computeWrapper.value(cursor);
         if (!completer.isCanceled && isMounted()) {
-          itemsState.value = mergeIncoming(page);
-          replaceOnNextLoadState.value = false;
+          itemsState.value = mergeIncoming(page, replace: replace);
           if (page.nextCursor != null) {
             cursorState.value = page.nextCursor as C;
           } else {
@@ -192,25 +190,20 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     return completer.operation.value;
   }
 
-  void clearAll() {
+  void clear({bool clearCache = true}) {
     cancelInFlight();
-    itemsState.value = null;
     cursorState.value = initialCursor;
     hasMoreState.value = true;
-    errorState.value = null;
-    replaceOnNextLoadState.value = false;
+
+    if (clearCache) {
+      errorState.value = null;
+      itemsState.value = null;
+    }
   }
 
-  Future<void> refresh({bool clear = false}) {
-    if (clear) {
-      clearAll();
-    } else {
-      cancelInFlight();
-      cursorState.value = initialCursor;
-      hasMoreState.value = true;
-      replaceOnNextLoadState.value = true;
-    }
-    return loadMore();
+  Future<void> refresh({bool clearCache = false}) {
+    clear(clearCache: clearCache);
+    return load(replace: true);
   }
 
   return useMemoized(
@@ -220,9 +213,9 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
       getHasMore: () => hasMoreState.value,
       getIsLoading: () => inFlightState.value != null,
       getError: () => errorState.value,
-      loadMore: loadMore,
+      loadMore: () => load(replace: false),
       refresh: refresh,
-      clear: clearAll,
+      clear: clear,
     ),
   );
 }
