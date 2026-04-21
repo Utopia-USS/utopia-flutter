@@ -91,6 +91,7 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
   Future<PaginatedPage<T, C>> Function(C cursor) compute, {
   required C initialCursor,
   bool shouldCompute = true,
+  bool clearOnShouldComputeFalse = false,
   HookKeys keys = hookKeysEmpty,
   Duration debounceDuration = Duration.zero,
   bool Function(T a, T b)? deduplicate,
@@ -108,17 +109,15 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
 
       useEffect(() {
         if (!shouldCompute) {
-          state.clear();
-          return null;
-        }
-        if (debounceDuration == Duration.zero) {
+          if (clearOnShouldComputeFalse) state.clear();
+        } else if (debounceDuration == Duration.zero) {
           unawaited(state.refresh());
-          return null;
+        } else {
+          final timer = Timer(debounceDuration, () {
+            if (isMounted()) unawaited(state.refresh());
+          });
+          return timer.cancel;
         }
-        final timer = Timer(debounceDuration, () {
-          if (isMounted()) unawaited(state.refresh());
-        });
-        return timer.cancel;
       }, [shouldCompute, ...keys]);
 
       return state;
