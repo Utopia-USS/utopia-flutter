@@ -30,6 +30,8 @@ export 'src/hook/complex/computed/computed_state_value.dart';
 export 'src/hook/complex/computed/use_computed_state.dart';
 export 'src/hook/complex/field/field_state.dart';
 export 'src/hook/complex/initialization/combined_initialization_state.dart';
+export 'src/hook/complex/paginated/paginated_computed_state.dart';
+export 'src/hook/complex/paginated/use_paginated_computed_state.dart';
 export 'src/hook/complex/persisted/use_persisted_state.dart';
 export 'src/hook/complex/submit/submit_state.dart';
 export 'src/hook/complex/submit/use_submit_state.dart';

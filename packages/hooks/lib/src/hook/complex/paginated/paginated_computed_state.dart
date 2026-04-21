@@ -1,5 +1,4 @@
-import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
-import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
+import 'package:utopia_hooks/src/misc/has_initialized.dart';
 
 /// Result of loading a single page of paginated data.
 ///
@@ -14,59 +13,103 @@ class PaginatedPage<T, C> {
   const PaginatedPage.last({required this.items}) : nextCursor = null;
 }
 
-/// Snapshot of a paginated computation: collected [items], the state of the most
-/// recent page load, and whether more pages can be loaded.
+/// Snapshot of a paginated computation.
 ///
-/// [value] reflects only the **latest** page load — `inProgress` during a `loadMore` /
-/// `refresh`, `ready` when idle with data, `failed` when the last load threw,
-/// `notInitialized` before the first load or after a `clear`. [items] persist across
-/// consecutive page loads until [MutablePaginatedComputedState.clear] or
-/// [MutablePaginatedComputedState.refresh] is called.
-class PaginatedComputedState<T> with ComputedStateMixin<void> {
-  final List<T> items;
+/// [items] is `null` before the first successful load and after
+/// [MutablePaginatedComputedState.clear]. Once populated, it persists across consecutive
+/// `loadMore` calls, including while the next page is loading, and — when using
+/// `refresh(clear: false)` — across a refresh until the first page of the new load
+/// replaces it.
+///
+/// [cursor] is the cursor that will be passed to the next [MutablePaginatedComputedState.loadMore]
+/// call. Starts at `initialCursor` and advances through values returned as `nextCursor`
+/// in [PaginatedPage]. Stays at its last non-null value once the end is reached.
+///
+/// [isLoading] is `true` whenever any load (first page, `loadMore`, or `refresh`) is in
+/// flight.
+///
+/// [error] holds the exception from the most recent failed load. It is cleared when the
+/// next load starts.
+///
+/// [hasMore] is `false` once a page returns `nextCursor == null`.
+class PaginatedComputedState<T, C> implements HasInitialized {
+  final List<T>? items;
+  final C? cursor;
+  final bool hasMore;
+  final bool isLoading;
+  final Object? error;
+
+  const PaginatedComputedState({
+    required this.items,
+    required this.cursor,
+    required this.hasMore,
+    required this.isLoading,
+    required this.error,
+  });
 
   @override
-  final ComputedStateValue<void> value;
+  bool get isInitialized => items != null;
 
-  /// Whether more pages can be loaded. `false` once a page returns `nextCursor == null`.
-  final bool hasMore;
-
-  const PaginatedComputedState({required this.items, required this.value, required this.hasMore});
+  bool get hasError => error != null;
 }
 
-final class MutablePaginatedComputedState<T> with ComputedStateMixin<void> implements PaginatedComputedState<T> {
-  final List<T> Function() getItems;
-  final ComputedStateValue<void> Function() getValue;
+final class MutablePaginatedComputedState<T, C> implements PaginatedComputedState<T, C> {
+  final List<T>? Function() getItems;
+  final C Function() getCursor;
   final bool Function() getHasMore;
+  final bool Function() getIsLoading;
+  final Object? Function() getError;
 
-  /// Loads the next page using the cursor returned by the previous page (or the initial cursor).
+  /// Loads the next page using [cursor].
   ///
   /// If a load is already in progress, returns the operation in flight rather than
   /// starting a second concurrent load. No-op when [hasMore] is `false`.
   final Future<void> Function() loadMore;
 
-  /// Cancels any in-progress load, clears [items], resets the cursor, then loads the first page.
-  final Future<void> Function() refresh;
+  /// Cancels any in-progress load, resets the cursor, [hasMore] and clears [error],
+  /// then loads the first page.
+  ///
+  /// When `clear: false` (default), [items] stay visible and are replaced by the first
+  /// page of the new load — no flicker. Intended for keys-triggered reloads and
+  /// pull-to-refresh.
+  ///
+  /// When `clear: true`, [items] drops to `null` before the reload (equivalent to
+  /// [clear] followed by [loadMore]).
+  final Future<void> Function({bool clear}) refresh;
 
-  /// Cancels any in-progress load and resets [items], [hasMore], [value], and the cursor
-  /// to their initial state. Does not trigger a reload.
+  /// Cancels any in-progress load and resets all fields to their initial state. Does
+  /// not trigger a reload.
   final void Function() clear;
 
   const MutablePaginatedComputedState({
     required this.getItems,
-    required this.getValue,
+    required this.getCursor,
     required this.getHasMore,
+    required this.getIsLoading,
+    required this.getError,
     required this.loadMore,
     required this.refresh,
     required this.clear,
   });
 
   @override
-  List<T> get items => getItems();
+  List<T>? get items => getItems();
 
   @override
-  ComputedStateValue<void> get value => getValue();
+  C get cursor => getCursor();
 
   @override
   bool get hasMore => getHasMore();
+
+  @override
+  bool get isLoading => getIsLoading();
+
+  @override
+  Object? get error => getError();
+
+  @override
+  bool get isInitialized => items != null;
+
+  @override
+  bool get hasError => error != null;
 }

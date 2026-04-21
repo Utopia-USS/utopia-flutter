@@ -8,7 +8,6 @@ import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
 import 'package:utopia_hooks/src/hook/base/use_memoized.dart';
 import 'package:utopia_hooks/src/hook/base/use_state.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
-import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
 import 'package:utopia_hooks/src/hook/complex/paginated/paginated_computed_state.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 
@@ -24,11 +23,15 @@ import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 /// The cursor [C] is opaque to the hook and can model any pagination scheme. See
 /// examples below for offset-based, page-based, and token-based APIs.
 ///
-/// [shouldCompute] gates all loading. When `false`, state is cleared immediately and
-/// any in-progress load is cancelled. When it transitions back to `true`, the first
-/// page is re-loaded.
+/// [initialCursor] is captured on first build. For dynamic starting points, wrap the
+/// hook in `useKeyed` so the state is fully recreated.
 ///
-/// [keys] triggers a full reset and reload from [initialCursor] on every change.
+/// [shouldCompute] gates all loading. When `false`, state is cleared (items drop to
+/// `null`) and any in-progress load is cancelled. When it transitions back to `true`,
+/// the first page is loaded.
+///
+/// [keys] triggers a refresh from [initialCursor] on every change. Items stay visible
+/// until the first page of the new load replaces them — no flicker.
 ///
 /// [debounceDuration] delays the first-page load after [keys] change — useful for
 /// paginated search fields. Does not affect subsequent `loadMore` calls.
@@ -84,7 +87,7 @@ import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 ///   },
 /// );
 /// ```
-MutablePaginatedComputedState<T> usePaginatedComputedState<T, C>(
+MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
   Future<PaginatedPage<T, C>> Function(C cursor) compute, {
   required C initialCursor,
   bool shouldCompute = true,
@@ -101,25 +104,21 @@ MutablePaginatedComputedState<T> usePaginatedComputedState<T, C>(
       ..add(FlagProperty("deduplicate", value: deduplicate != null, ifTrue: "deduplicating")),
     () {
       final state = _usePaginatedComputedState(compute, initialCursor: initialCursor, deduplicate: deduplicate);
-      final timerState = useState<Timer?>(null);
       final isMounted = useIsMounted();
 
       useEffect(() {
-        state.clear();
-        timerState.value?.cancel();
-        timerState.value = null;
-        if (shouldCompute) {
-          if (debounceDuration == Duration.zero) {
-            unawaited(state.loadMore());
-          } else {
-            timerState.value = Timer(debounceDuration, () {
-              if (isMounted()) {
-                unawaited(state.loadMore());
-                timerState.value = null;
-              }
-            });
-          }
+        if (!shouldCompute) {
+          state.clear();
+          return null;
         }
+        if (debounceDuration == Duration.zero) {
+          unawaited(state.refresh());
+          return null;
+        }
+        final timer = Timer(debounceDuration, () {
+          if (isMounted()) unawaited(state.refresh());
+        });
+        return timer.cancel;
       }, [shouldCompute, ...keys]);
 
       return state;
@@ -127,53 +126,65 @@ MutablePaginatedComputedState<T> usePaginatedComputedState<T, C>(
   );
 }
 
-MutablePaginatedComputedState<T> _usePaginatedComputedState<T, C>(
+MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
   Future<PaginatedPage<T, C>> Function(C cursor) compute, {
   required C initialCursor,
   bool Function(T a, T b)? deduplicate,
 }) {
-  final itemsState = useState<List<T>>(const [], listen: false);
+  final itemsState = useState<List<T>?>(null);
   final cursorState = useState<C>(initialCursor, listen: false);
-  final hasMoreState = useState<bool>(true, listen: false);
-  final valueState = useState<ComputedStateValue<void>>(ComputedStateValue.notInitialized);
+  final hasMoreState = useState<bool>(true);
+  final errorState = useState<Object?>(null);
+  final inFlightState = useState<CancelableOperation<void>?>(null);
+  final replaceOnNextLoadState = useState<bool>(false, listen: false);
   final computeWrapper = useValueWrapper(compute);
   final deduplicateWrapper = useValueWrapper(deduplicate);
-  final initialCursorWrapper = useValueWrapper(initialCursor);
   final isMounted = useIsMounted();
+
+  void cancelInFlight() {
+    final inFlight = inFlightState.value;
+    if (inFlight != null) unawaited(inFlight.cancel());
+    inFlightState.value = null;
+  }
+
+  List<T> mergeIncoming(PaginatedPage<T, C> page) {
+    if (replaceOnNextLoadState.value) return List.of(page.items, growable: false);
+    final dedup = deduplicateWrapper.value;
+    final existing = itemsState.value ?? const [];
+    if (dedup == null) return [...existing, ...page.items];
+    final incoming = page.items.where((a) => !existing.any((b) => dedup(a, b)));
+    return [...existing, ...incoming];
+  }
 
   Future<void> loadMore() {
     if (!hasMoreState.value) return Future.value();
 
-    final inProgress = valueState.value.maybeWhen(
-      inProgress: (operation) => operation,
-      orElse: () => null,
-    );
-    if (inProgress != null) return inProgress.value;
+    final inFlight = inFlightState.value;
+    if (inFlight != null) return inFlight.value;
 
     final cursor = cursorState.value;
     final completer = CancelableCompleter<void>();
-    valueState.value = ComputedStateValue.inProgress(completer.operation);
+    inFlightState.value = completer.operation;
+    errorState.value = null;
 
     Future.sync(() async {
       try {
         final page = await computeWrapper.value(cursor);
         if (!completer.isCanceled && isMounted()) {
-          final dedup = deduplicateWrapper.value;
-          final incoming = dedup == null
-              ? page.items
-              : page.items.where((a) => !itemsState.value.any((b) => dedup(a, b))).toList(growable: false);
-          itemsState.value = [...itemsState.value, ...incoming];
+          itemsState.value = mergeIncoming(page);
+          replaceOnNextLoadState.value = false;
           if (page.nextCursor != null) {
             cursorState.value = page.nextCursor as C;
           } else {
             hasMoreState.value = false;
           }
-          valueState.value = const ComputedStateValue<void>.ready(null);
+          inFlightState.value = null;
           completer.complete(null);
         }
       } catch (e, s) {
         if (!completer.isCanceled && isMounted()) {
-          valueState.value = ComputedStateValue.failed(e);
+          errorState.value = e;
+          inFlightState.value = null;
           completer.completeError(e, s);
         }
       }
@@ -182,30 +193,37 @@ MutablePaginatedComputedState<T> _usePaginatedComputedState<T, C>(
     return completer.operation.value;
   }
 
-  void clear() {
-    valueState.value.maybeWhen<void>(
-      inProgress: (operation) => unawaited(operation.cancel()),
-      orElse: () {},
-    );
-    itemsState.value = const [];
-    cursorState.value = initialCursorWrapper.value;
+  void clearAll() {
+    cancelInFlight();
+    itemsState.value = null;
+    cursorState.value = initialCursor;
     hasMoreState.value = true;
-    valueState.value = ComputedStateValue.notInitialized;
+    errorState.value = null;
+    replaceOnNextLoadState.value = false;
   }
 
-  Future<void> refresh() {
-    clear();
+  Future<void> refresh({bool clear = false}) {
+    if (clear) {
+      clearAll();
+    } else {
+      cancelInFlight();
+      cursorState.value = initialCursor;
+      hasMoreState.value = true;
+      replaceOnNextLoadState.value = true;
+    }
     return loadMore();
   }
 
   return useMemoized(
-    () => MutablePaginatedComputedState<T>(
+    () => MutablePaginatedComputedState<T, C>(
       getItems: () => itemsState.value,
-      getValue: () => valueState.value,
+      getCursor: () => cursorState.value,
       getHasMore: () => hasMoreState.value,
+      getIsLoading: () => inFlightState.value != null,
+      getError: () => errorState.value,
       loadMore: loadMore,
       refresh: refresh,
-      clear: clear,
+      clear: clearAll,
     ),
   );
 }
