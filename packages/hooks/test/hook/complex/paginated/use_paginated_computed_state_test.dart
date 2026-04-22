@@ -17,7 +17,13 @@ void main() {
     late SimpleHookContext<_State> context;
 
     tearDown(() {
-      if (context.mounted) context.dispose();
+      // Some tests use a locally-typed SimpleHookContext and never assign `context` —
+      // reading a late-uninitialized field throws, so we guard with a try/catch.
+      try {
+        if (context.mounted) context.dispose();
+      } on Error {
+        // late var not initialized — nothing to dispose here.
+      }
     });
 
     group("initial load", () {
@@ -567,21 +573,24 @@ void main() {
 
     group("deduplicateBy", () {
       test("drops items whose identifier matches already-collected items", () async {
-        context = SimpleHookContext(
-          () => usePaginatedComputedState<int, int>(
+        final stringContext = SimpleHookContext<MutablePaginatedComputedState<String, int>>(
+          () => usePaginatedComputedState<String, int>(
             (c) async => PaginatedPage(
-              items: c == 0 ? [0, 1, 2] : [2, 3, 4],
+              items: c == 0 ? ["ab", "cde", "f"] : ["gh", "ijkl", "m"],
               nextCursor: c == 0 ? 1 : null,
             ),
             initialCursor: 0,
-            deduplicateBy: (item) => item,
+            deduplicateBy: (item) => item.length,
           ),
         );
+        addTearDown(stringContext.dispose);
 
-        await context.waitUntil((s) => s.items != null);
-        await context.value.loadMore();
+        await stringContext.waitUntil((s) => s.items != null);
+        await stringContext.value.loadMore();
 
-        expect(context.value.items, [0, 1, 2, 3, 4]);
+        // Lengths across pages: [2, 3, 1] then [2, 4, 1] → first-occurrence wins.
+        // "gh" (len 2) dropped by "ab"; "m" (len 1) dropped by "f"; "ijkl" (len 4) kept.
+        expect(stringContext.value.items, ["ab", "cde", "f", "ijkl"]);
       });
 
       test("without deduplicateBy, duplicates are kept", () async {
