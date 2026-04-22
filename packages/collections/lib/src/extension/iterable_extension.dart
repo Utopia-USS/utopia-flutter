@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 extension IterableExtension<T> on Iterable<T> {
   List<T> toSortedList([int Function(T a, T b)? compare]) {
     final result = toList();
@@ -24,6 +26,20 @@ extension IterableExtension<T> on Iterable<T> {
   T? findOrNull(bool Function(T) test) => cast<T?>().firstWhere((it) => test(it as T), orElse: () => null);
 
   T? firstOrNull([bool Function(T)? test]) => findOrNull(test ?? (_) => true);
+
+  /// Returns a new lazy [Iterable] containing only elements from the collection
+  /// having distinct keys returned by the given [selector] function.
+  ///
+  /// The elements in the resulting list are in the same order as they were in
+  /// the source collection.
+  Iterable<T> distinctBy<R>(R Function(T element) selector) sync* {
+    final existing = HashSet<R>();
+    for (final current in this) {
+      if (existing.add(selector(current))) {
+        yield current;
+      }
+    }
+  }
 }
 
 extension IterableExtensionNullable<T extends Object> on Iterable<T?> {
