@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-04-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_collections` - `v0.1.2`](#utopia_collections---v012)
+ - [`utopia_hooks` - `v0.4.24`](#utopia_hooks---v0424)
+ - [`utopia_arch` - `v0.5.1+21`](#utopia_arch---v05121)
+ - [`utopia_hooks_riverpod` - `v0.1.0+3`](#utopia_hooks_riverpod---v0103)
+ - [`utopia_connectivity` - `v0.1.1+6`](#utopia_connectivity---v0116)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+21`
+ - `utopia_hooks_riverpod` - `v0.1.0+3`
+ - `utopia_connectivity` - `v0.1.1+6`
+
+---
+
+#### `utopia_collections` - `v0.1.2`
+
+ - **FEAT**(utopia_hooks): Add usePaginatedState.
+
+#### `utopia_hooks` - `v0.4.24`
+
+ - **FEAT**(utopia_hooks): Add usePaginatedState.
+
+
 ## 2026-04-02
 
 ### Changes

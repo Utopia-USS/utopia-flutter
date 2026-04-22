@@ -1,3 +1,7 @@
+## 0.1.2
+
+ - **FEAT**(utopia_hooks): Add usePaginatedState.
+
 ## 0.1.1+1
 
  - **FIX**: Adjust utopia_lints.

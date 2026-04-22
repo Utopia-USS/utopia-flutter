@@ -1,3 +1,7 @@
+## 0.4.24
+
+ - **FEAT**(utopia_hooks): Add usePaginatedState.
+
 ## 0.4.23+1
 
  - **FIX**(utopia_hooks): Fix useState.
