@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
+import 'package:utopia_collections/utopia_collections.dart';
 import 'package:utopia_hooks/src/base/hook_keys.dart';
 import 'package:utopia_hooks/src/hook/base/use_effect.dart';
 import 'package:utopia_hooks/src/hook/base/use_is_mounted.dart';
@@ -36,9 +37,9 @@ import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 /// [debounceDuration] delays the first-page load after [keys] change — useful for
 /// paginated search fields. Does not affect subsequent `loadMore` calls.
 ///
-/// [deduplicate] is an optional equality comparator. When provided, items matching any
-/// already-collected item are dropped before being appended. Useful when adjacent pages
-/// may overlap due to concurrent writes on the backend.
+/// [deduplicateBy] is an optional identifier extractor. When provided, items whose
+/// identifier matches any already-collected item are dropped before being appended.
+/// Useful when adjacent pages may overlap due to concurrent writes on the backend.
 ///
 /// ## Example: offset-based pagination
 ///
@@ -94,7 +95,7 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
   bool clearOnShouldComputeFalse = false,
   HookKeys keys = hookKeysEmpty,
   Duration debounceDuration = Duration.zero,
-  bool Function(T a, T b)? deduplicate,
+  Object Function(T item)? deduplicateBy,
 }) {
   return useDebugGroup(
     debugLabel: 'usePaginatedComputedState<$T, $C>()',
@@ -102,9 +103,9 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
       ..add(DiagnosticsProperty("shouldCompute", shouldCompute, defaultValue: true))
       ..add(IterableProperty("keys", keys, defaultValue: hookKeysEmpty))
       ..add(DiagnosticsProperty("debounceDuration", debounceDuration, defaultValue: Duration.zero))
-      ..add(FlagProperty("deduplicate", value: deduplicate != null, ifTrue: "deduplicating")),
+      ..add(FlagProperty("deduplicateBy", value: deduplicateBy != null, ifTrue: "deduplicating")),
     () {
-      final state = _usePaginatedComputedState(compute, initialCursor: initialCursor, deduplicate: deduplicate);
+      final state = _usePaginatedComputedState(compute, initialCursor: initialCursor, deduplicateBy: deduplicateBy);
       final isMounted = useIsMounted();
 
       useEffect(() {
@@ -128,7 +129,7 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
 MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
   Future<PaginatedPage<T, C>> Function(C cursor) compute, {
   required C initialCursor,
-  bool Function(T a, T b)? deduplicate,
+  Object Function(T item)? deduplicateBy,
 }) {
   final itemsState = useState<List<T>?>(null);
   final cursorState = useState<C>(initialCursor, listen: false);
@@ -136,7 +137,7 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
   final errorState = useState<Object?>(null);
   final inFlightState = useState<CancelableOperation<void>?>(null);
   final computeWrapper = useValueWrapper(compute);
-  final deduplicateWrapper = useValueWrapper(deduplicate);
+  final deduplicateByWrapper = useValueWrapper(deduplicateBy);
   final isMounted = useIsMounted();
 
   void cancelInFlight() {
@@ -147,11 +148,10 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
 
   List<T> mergeIncoming(PaginatedPage<T, C> page, {required bool replace}) {
     if (replace) return List.of(page.items, growable: false);
-    final dedup = deduplicateWrapper.value;
+    final keyOf = deduplicateByWrapper.value;
     final existing = itemsState.value ?? const [];
-    if (dedup == null) return [...existing, ...page.items];
-    final incoming = page.items.where((a) => !existing.any((b) => dedup(a, b)));
-    return [...existing, ...incoming];
+    if (keyOf == null) return [...existing, ...page.items];
+    return [...existing, ...page.items].distinctBy(keyOf).toList();
   }
 
   Future<void> load({required bool replace}) {

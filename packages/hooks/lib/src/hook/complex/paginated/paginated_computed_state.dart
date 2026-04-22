@@ -74,7 +74,7 @@ final class MutablePaginatedComputedState<T, C> implements PaginatedComputedStat
   /// pull-to-refresh.
   ///
   /// When `clear: true`, [items] drops to `null` before the reload (equivalent to
-  /// [clear] followed by [loadMore]).
+  /// calling [clear] and then [refresh]).
   final Future<void> Function({bool clearCache}) refresh;
 
   /// Cancels any in-progress load and resets all fields to their initial state. Does

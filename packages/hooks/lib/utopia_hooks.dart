@@ -54,6 +54,7 @@ export 'src/provider/provider_widget.dart';
 export 'src/widget/coordinator/hook_coordinator.dart';
 export 'src/widget/wrapper/compute/computed_iterable_wrapper.dart';
 export 'src/widget/wrapper/compute/computed_state_wrapper.dart';
+export 'src/widget/wrapper/compute/paginated_computed_state_wrapper.dart';
 export 'src/widget/wrapper/compute/refreshable_computed_iterable_wrapper.dart';
 export 'src/widget/wrapper/compute/refreshable_computed_state_wrapper.dart';
 export 'src/widget/wrapper/controller/page_controller_wrapper.dart';
