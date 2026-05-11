@@ -31,7 +31,7 @@ class _HookWidgetState extends State<HookWidget>
 }
 
 mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, DiagnosticableTree, HookContextMixin {
-  bool _postBuildCallbacksScheduled = false, _isBeforeExtraBuild = false;
+  bool _postBuildCallbacksScheduled = false, _shouldIgnoreBuild = false;
 
   Widget performBuild(BuildContext context);
 
@@ -44,15 +44,16 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
       // we need to trigger it before this extraneous build.
       // markNeedsBuild() calls are ignored during that time, since the build will happen right after that.
       if (_postBuildCallbacksScheduled) {
-        _isBeforeExtraBuild = true;
+        _shouldIgnoreBuild = true;
         triggerPostBuildCallbacks();
-        _isBeforeExtraBuild = false;
+        _shouldIgnoreBuild = false;
       }
       return wrapBuild(() => performBuild(context));
     } finally {
       if (!_postBuildCallbacksScheduled) {
         _postBuildCallbacksScheduled = true;
         SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
           _postBuildCallbacksScheduled = false;
           triggerPostBuildCallbacks();
         });
@@ -69,12 +70,16 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
   @override
   void dispose() {
     super.dispose();
+    if (_postBuildCallbacksScheduled) {
+      _shouldIgnoreBuild = true;
+      triggerPostBuildCallbacks();
+    }
     disposeHooks();
   }
 
   @override
   void markNeedsBuild() {
-    if (!_isBeforeExtraBuild) {
+    if (!_shouldIgnoreBuild) {
       setState(() {});
     }
   }
@@ -96,7 +101,7 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
         ifTrue: "post-build callbacks dirty",
       ),
     );
-    properties.add(FlagProperty("before extra build", value: _isBeforeExtraBuild, ifTrue: "before extra build"));
+    properties.add(FlagProperty("before extra build", value: _shouldIgnoreBuild, ifTrue: "before extra build"));
   }
 }
 

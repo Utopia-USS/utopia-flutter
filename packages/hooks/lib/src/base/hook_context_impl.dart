@@ -123,6 +123,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
           if (_debugPostBuildCallbacksDirty) {
             throw FlutterError.fromParts([
               ErrorSummary("triggerPostBuildCallbacks has not been called after the previous build"),
+              ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
               DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
             ]);
           }
@@ -178,6 +179,13 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
         throw FlutterError.fromParts([
           ErrorSummary("disposeHooks has been called more than once"),
           ErrorDescription("disposeHooks must be called exactly once"),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+        ]);
+      }
+      if (_debugPostBuildCallbacksDirty) {
+        throw FlutterError.fromParts([
+          ErrorSummary("triggerPostBuildCallbacks has not been called after the last build before disposeHooks()"),
+          ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
           DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
