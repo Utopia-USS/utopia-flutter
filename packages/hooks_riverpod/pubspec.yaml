@@ -1,6 +1,6 @@
 name: utopia_hooks_riverpod
 description: Utopia Hooks - Riverpod interoperability
-version: 0.1.0+3
+version: 0.1.0+4
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  utopia_hooks: ^0.4.24
+  utopia_hooks: ^0.4.24+1
 
   flutter_riverpod: ^3.0.0
 

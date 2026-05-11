@@ -1,3 +1,7 @@
+## 0.4.24+1
+
+ - **FIX**(utopia_hooks): Fix post-build callbacks in HookWidget when dispose happens in the same frame as a build.
+
 ## 0.4.24
 
  - **FEAT**(utopia_hooks): Add usePaginatedState.
