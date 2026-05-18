@@ -1,3 +1,7 @@
+## 0.4.24+2
+
+ - **FIX**(utopia_hooks): Fix HookProviderContainer - allow changing dependencies during rebuilds.
+
 ## 0.4.24+1
 
  - **FIX**(utopia_hooks): Fix post-build callbacks in HookWidget when dispose happens in the same frame as a build.
