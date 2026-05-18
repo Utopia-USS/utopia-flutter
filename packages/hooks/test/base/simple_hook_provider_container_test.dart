@@ -19,6 +19,28 @@ void main() {
       await container.waitUntil<_State>((it) => it.xd.valueOrNull == 1);
     });
 
+    test("dependency accessed inside useIf is tracked after condition becomes true", () {
+      // On first build gate=false → useIf block skipped → MutableValue<int> never registered
+      // as a dependency of String. After gate flips true, changes to MutableValue<int> must
+      // propagate to String.
+      final container = SimpleHookProviderContainer({
+        MutableValue<bool>: () => useState(false),
+        MutableValue<int>: () => useState(0),
+        String: () {
+          final gate = useProvided<MutableValue<bool>>().value;
+          return useIf(gate, () => 'value=${useProvided<MutableValue<int>>().value}') ?? 'none';
+        },
+      });
+
+      expect(container.get<String>(), 'none');
+
+      container.get<MutableValue<bool>>().value = true;
+      expect(container.get<String>(), 'value=0');
+
+      container.get<MutableValue<int>>().value = 42;
+      expect(container.get<String>(), 'value=42');
+    });
+
     test("consistent state on exception", () async {
       var effectCount = 0;
 

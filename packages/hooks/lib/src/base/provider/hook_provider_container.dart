@@ -15,6 +15,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   final _listeners = <Object, Set<void Function(Object?)>>{};
 
   var _debugDoingRefresh = false;
+  var _dependentsDirty = false;
 
   @internal
   bool get debugDoingRefresh => _debugDoingRefresh;
@@ -22,10 +23,18 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
   HookProviderContainer({required this.schedule, this.alwaysNotifyDependents = true});
 
   void initialize(Map<Object, Object? Function()> providers) {
+    assert(() {
+      _debugDoingRefresh = true;
+      return true;
+    }());
     for (final entry in providers.entries) {
       _providers[entry.key] = _ProviderState(this, entry.key, entry.value);
     }
     _buildDependents();
+    assert(() {
+      _debugDoingRefresh = false;
+      return true;
+    }());
     _triggerPostBuildCallbacks();
   }
 
@@ -133,6 +142,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
         _debugDoingRefresh = false;
         return true;
       }());
+      if (_dependentsDirty) _buildDependents();
       final dirty = Set.of(_dirtyKeys);
       _dirtyKeys.clear();
       _triggerPostBuildCallbacks(dirty);
@@ -145,7 +155,13 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
     }
   }
 
+  void _markDependentsDirty() {
+    assert(_debugDoingRefresh, "_markDependentsDirty must only be called during a build pass");
+    _dependentsDirty = true;
+  }
+
   void _buildDependents() {
+    _dependentsDirty = false;
     _dependents.clear();
     for (final entry in _providers.entries) {
       for (final dependency in entry.value.dependencies) {
@@ -168,6 +184,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
         level: DiagnosticLevel.debug,
       ),
     );
+    properties.add(FlagProperty('dependents dirty', value: _dependentsDirty));
   }
 
   @override
@@ -214,10 +231,12 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
 
   _ProviderState(this.container, this.key, this.block) {
     refreshValue();
-    _isCollectingDependencies = false;
   }
 
   bool refreshValue() {
+    final oldDeps = Set.of(dependencies);
+    dependencies.clear();
+    _isCollectingDependencies = true;
     try {
       final oldValue = value;
       value = wrapBuild(block);
@@ -237,10 +256,8 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
       FlutterError.reportError(error);
       return false;
     } finally {
-      assert(() {
-        _isCollectingDependencies = false;
-        return true;
-      }());
+      _isCollectingDependencies = false;
+      if (!setEquals(dependencies, oldDeps)) container._markDependentsDirty();
     }
   }
 
@@ -249,18 +266,6 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   @override
   dynamic getUnsafe(Object key, {bool? watch}) {
     watch ??= _isCollectingDependencies;
-    assert(() {
-      if (watch! && !_isCollectingDependencies && debugDoingBuild && !dependencies.contains(key)) {
-        throw FlutterError.fromParts([
-          ErrorSummary('Trying to register a dependency after the first build'),
-          ErrorDescription('All dependencies must be registered during the first build of the provider'),
-          DiagnosticsProperty("key", key),
-          DiagnosticableTreeNode(name: 'provider', value: this, style: DiagnosticsTreeStyle.truncateChildren),
-          DiagnosticableTreeNode(name: 'container', value: container, style: DiagnosticsTreeStyle.truncateChildren),
-        ]);
-      }
-      return true;
-    }());
     if (watch && _isCollectingDependencies) dependencies.add(key);
     return container.getUnsafe(key);
   }
@@ -273,14 +278,7 @@ class _ProviderState with DiagnosticableTreeMixin, HookContextMixin {
   void triggerPostBuildCallbacks();
 
   @override
-  void debugMarkWillReassemble() {
-    super.debugMarkWillReassemble();
-    assert(() {
-      dependencies.clear();
-      _isCollectingDependencies = true;
-      return true;
-    }());
-  }
+  void debugMarkWillReassemble();
 
   @override
   String toStringShort() {
