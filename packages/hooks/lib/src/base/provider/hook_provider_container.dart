@@ -184,7 +184,7 @@ class HookProviderContainer with DiagnosticableTreeMixin implements ProviderCont
         level: DiagnosticLevel.debug,
       ),
     );
-    properties.add(FlagProperty('dependents dirty', value: _dependentsDirty));
+    properties.add(FlagProperty('dependents dirty', value: _dependentsDirty, ifTrue: 'dependents dirty'));
   }
 
   @override
