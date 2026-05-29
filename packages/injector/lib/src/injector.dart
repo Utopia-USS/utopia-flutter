@@ -13,4 +13,10 @@ abstract class Injector {
     block(injector.register);
     return injector;
   }
+
+  static Future<Injector> buildAsync(Future<void> Function(InjectorRegister register) block, {Injector? parent}) async {
+    final injector = MutableInjector(parent);
+    await block(injector.register);
+    return injector;
+  }
 }
