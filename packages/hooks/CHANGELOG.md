@@ -1,3 +1,7 @@
+## 0.4.24+3
+
+ - **FIX**(utopia_hooks): Fix HookProviderContainer diagnostic.
+
 ## 0.4.24+2
 
  - **FIX**(utopia_hooks): Fix HookProviderContainer - allow changing dependencies during rebuilds.

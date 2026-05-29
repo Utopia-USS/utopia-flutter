@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**(utopia_injector): Add Injector.buildAsync.
+
 ## 0.0.3
 
  - **FEAT**(utopia_injector): Override and alias.

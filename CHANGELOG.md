@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-05-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.24+3`](#utopia_hooks---v04243)
+ - [`utopia_injector` - `v0.0.4`](#utopia_injector---v004)
+ - [`utopia_arch` - `v0.5.1+24`](#utopia_arch---v05124)
+ - [`utopia_hooks_riverpod` - `v0.1.0+6`](#utopia_hooks_riverpod---v0106)
+ - [`utopia_connectivity` - `v0.1.1+9`](#utopia_connectivity---v0119)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+24`
+ - `utopia_hooks_riverpod` - `v0.1.0+6`
+ - `utopia_connectivity` - `v0.1.1+9`
+
+---
+
+#### `utopia_hooks` - `v0.4.24+3`
+
+ - **FIX**(utopia_hooks): Fix HookProviderContainer diagnostic.
+
+#### `utopia_injector` - `v0.0.4`
+
+ - **FEAT**(utopia_injector): Add Injector.buildAsync.
+
+
 ## 2026-05-18
 
 ### Changes
