@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftUtopiaPlatformUtilsPlugin: NSObject, FlutterPlugin {
+public class UtopiaPlatformUtilsPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "utopia_platform_utils", binaryMessenger: registrar.messenger())
-    let instance = SwiftUtopiaPlatformUtilsPlugin()
+    let instance = UtopiaPlatformUtilsPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

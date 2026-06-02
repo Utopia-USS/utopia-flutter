@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
 
-public class SwiftUtopiaSaveFilePlugin: NSObject, FlutterPlugin {
+public class UtopiaSaveFilePlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {}
 }
