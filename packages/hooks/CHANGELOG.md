@@ -1,3 +1,7 @@
+## 0.4.24+4
+
+ - **FIX**(utopia_hooks): Allow queuing post-build callbacks.
+
 ## 0.4.24+3
 
  - **FIX**(utopia_hooks): Fix HookProviderContainer diagnostic.

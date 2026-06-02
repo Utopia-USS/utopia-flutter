@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-06-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.24+4`](#utopia_hooks---v04244)
+ - [`utopia_platform_utils` - `v0.0.7`](#utopia_platform_utils---v007)
+ - [`utopia_save_file` - `v0.2.5`](#utopia_save_file---v025)
+ - [`utopia_arch` - `v0.5.1+25`](#utopia_arch---v05125)
+ - [`utopia_hooks_riverpod` - `v0.1.0+7`](#utopia_hooks_riverpod---v0107)
+ - [`utopia_connectivity` - `v0.1.1+10`](#utopia_connectivity---v01110)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_arch` - `v0.5.1+25`
+ - `utopia_hooks_riverpod` - `v0.1.0+7`
+ - `utopia_connectivity` - `v0.1.1+10`
+
+---
+
+#### `utopia_hooks` - `v0.4.24+4`
+
+ - **FIX**(utopia_hooks): Allow queuing post-build callbacks.
+
+#### `utopia_platform_utils` - `v0.0.7`
+
+ - **FEAT**(utopia_platform_utils,utopia_save_file): Migrate to Swift Package Manager.
+
+#### `utopia_save_file` - `v0.2.5`
+
+ - **FEAT**(utopia_platform_utils,utopia_save_file): Migrate to Swift Package Manager.
+
+
 ## 2026-05-29
 
 ### Changes

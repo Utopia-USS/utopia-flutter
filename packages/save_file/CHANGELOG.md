@@ -1,3 +1,7 @@
+## 0.2.5
+
+ - **FEAT**(utopia_platform_utils,utopia_save_file): Migrate to Swift Package Manager.
+
 ## 0.2.4+4
 
  - **FIX**(utopia_save_file): Better exception handling.

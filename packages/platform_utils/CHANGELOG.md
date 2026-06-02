@@ -1,3 +1,7 @@
+## 0.0.7
+
+ - **FEAT**(utopia_platform_utils,utopia_save_file): Migrate to Swift Package Manager.
+
 ## 0.0.6+1
 
  - **FIX**(utopia_platform_utils): Add Android namespace.
