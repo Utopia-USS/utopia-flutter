@@ -1,3 +1,8 @@
+## 0.4.25
+
+ - **FIX**(utopia_hooks): Strengthen useDebugGroup inlines.
+ - **FEAT**(utopia_hooks): Add Retryable support for ComputedState.
+
 ## 0.4.24+4
 
  - **FIX**(utopia_hooks): Allow queuing post-build callbacks.
