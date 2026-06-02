@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 @pragma('vm:prefer-inline')
-@pragma('dart2js:tryInline')
+@pragma('dart2js:prefer-inline')
+@pragma('wasm:prefer-inline')
 T useDebugGroup<T>(
   T Function() block, {
   String ? debugLabel,
