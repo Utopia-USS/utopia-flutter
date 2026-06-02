@@ -11,9 +11,22 @@ import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
-MutableComputedState<T> useComputedState<T>(Future<T> Function() compute) =>
-    useDebugGroup(debugLabel: 'useComputedState<$T>()', () => _useComputedState(compute));
+/// Returns a [MutableComputedState] driven by [compute], which is run on demand via [MutableComputedState.refresh].
+///
+/// Unlike [useAutoComputedState], [compute] is **not** called automatically — nothing runs until [MutableComputedState.refresh] is called.
+///
+/// If [isRetryable] is `true`, errors thrown by [compute] are made [Retryable] via [Retryable.make],
+/// allowing consumers to call [Retryable.tryGet] and [Retryable.retry] to re-run [compute].
+MutableComputedState<T> useComputedState<T>(Future<T> Function() compute, {bool isRetryable = false}) {
+  return useDebugGroup(
+    debugLabel: 'useComputedState<$T>()',
+    debugFillProperties: (properties) =>
+        properties.add(FlagProperty("isRetryable", value: isRetryable, ifTrue: 'retryable')),
+    () => _useComputedState(compute, isRetryable: isRetryable),
+  );
+}
 
 /// Allows for automatic refreshing of [ComputedState] in response to changes in [keys].
 /// Refreshes also on first call.
@@ -22,20 +35,26 @@ MutableComputedState<T> useComputedState<T>(Future<T> Function() compute) =>
 /// **If [shouldCompute] returns `false`, state is cleared immediately.**
 ///
 /// [debounceDuration] allows for setting a delay, which must pass between [keys] changes to trigger [compute].
+///
+/// If [isRetryable] is `true`, errors thrown by [compute] are made [Retryable] via [Retryable.make],
+/// allowing consumers to call [Retryable.tryGet] and [Retryable.retry] to re-run [compute].
+/// Note that [shouldCompute] can change in the meantime which can have unintended consequences when [Retryable.retry] is called later.
 MutableComputedState<T> useAutoComputedState<T>(
   Future<T> Function() compute, {
   bool shouldCompute = true,
   HookKeys keys = hookKeysEmpty,
   Duration debounceDuration = Duration.zero,
+  bool isRetryable = false,
 }) {
   return useDebugGroup(
     debugLabel: 'useAutoComputedState<$T>()',
     debugFillProperties: (properties) => properties
       ..add(DiagnosticsProperty("shouldCompute", shouldCompute, defaultValue: true))
       ..add(IterableProperty("keys", keys, defaultValue: hookKeysEmpty))
-      ..add(DiagnosticsProperty("debounceDuration", debounceDuration, defaultValue: Duration.zero)),
+      ..add(DiagnosticsProperty("debounceDuration", debounceDuration, defaultValue: Duration.zero))
+      ..add(FlagProperty("isRetryable", value: isRetryable, ifTrue: 'retryable')),
     () {
-      final state = _useComputedState(compute);
+      final state = _useComputedState(compute, isRetryable: isRetryable);
       final timerState = useState<Timer?>(null);
       final isMounted = useIsMounted();
 
@@ -62,12 +81,13 @@ MutableComputedState<T> useAutoComputedState<T>(
   );
 }
 
-MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute) {
+MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute, {bool isRetryable = false}) {
   final state = useState<ComputedStateValue<T>>(ComputedStateValue.notInitialized);
   final computeWrapper = useValueWrapper(compute);
   final isMounted = useIsMounted();
 
-  Future<T> refresh() {
+  late Future<T> Function() refresh;
+  refresh = () {
     final completer = CancelableCompleter<T>();
     state.value = ComputedStateValue.inProgress(completer.operation);
 
@@ -79,6 +99,7 @@ MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute) {
           completer.complete(result);
         }
       } catch (e, s) {
+        if (isRetryable) Retryable.make(e, refresh);
         if (!completer.isCanceled && isMounted()) {
           state.value = ComputedStateValue.failed(e);
           completer.completeError(e, s);
@@ -87,7 +108,7 @@ MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute) {
     }).ignore();
 
     return completer.operation.value;
-  }
+  };
 
   Future<T> refreshOrWait() async {
     return await state.value.maybeWhen(
