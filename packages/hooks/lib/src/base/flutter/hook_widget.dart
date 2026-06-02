@@ -39,17 +39,10 @@ mixin HookContextStateMixin<W extends StatefulWidget> on State<W>, Diagnosticabl
   @nonVirtual
   Widget build(BuildContext context) {
     try {
-      // In some circumstances, build() can be called multiple times per frame (e.g. when using LayoutBuilder).
-      // In such cases triggerPostBuildCallbacks() scheduled by addPostFrameCallback() has not been called yet, so
-      // we need to trigger it before this extraneous build.
-      // markNeedsBuild() calls are ignored during that time, since the build will happen right after that.
-      if (_postBuildCallbacksScheduled) {
-        _shouldIgnoreBuild = true;
-        triggerPostBuildCallbacks();
-        _shouldIgnoreBuild = false;
-      }
       return wrapBuild(() => performBuild(context));
     } finally {
+      // In some circumstances, build() can be called multiple times per frame (e.g. when using LayoutBuilder).
+      // In such cases triggerPostBuildCallbacks() scheduled by addPostFrameCallback() has not been called yet so no need to schedule it.
       if (!_postBuildCallbacksScheduled) {
         _postBuildCallbacksScheduled = true;
         SchedulerBinding.instance.addPostFrameCallback((_) {

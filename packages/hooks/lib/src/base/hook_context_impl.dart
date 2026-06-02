@@ -120,13 +120,6 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
     return HookContext.wrap(this, () {
       try {
         assert(() {
-          if (_debugPostBuildCallbacksDirty) {
-            throw FlutterError.fromParts([
-              ErrorSummary("triggerPostBuildCallbacks has not been called after the previous build"),
-              ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
-              DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
-            ]);
-          }
           _debugPostBuildCallbacksDirty = true;
           _debugDoingBuild = true;
           return true;
@@ -185,7 +178,7 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
       if (_debugPostBuildCallbacksDirty) {
         throw FlutterError.fromParts([
           ErrorSummary("triggerPostBuildCallbacks has not been called after the last build before disposeHooks()"),
-          ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
+          ErrorDescription("triggerPostBuildCallbacks must be called before disposeHooks()"),
           DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }
@@ -198,18 +191,31 @@ mixin HookContextMixin on DiagnosticableTree implements HookContext {
     _mounted = false;
   }
 
-  /// Triggers all callbacks registered in the previous build.
+  /// Triggers all registered post-build callbacks.
   ///
-  /// This method must be called once after every build, even if the build threw an exception.
-  /// Implementations can decide whether call this method immediately after [wrapBuild], or schedule it for later.
+  /// This method must be called **at most once** after every build and **exactly once** before [disposeHooks] is called.
+  /// If possible, implementations should try to call it after every build but can also opt to defer it after some future build if necessary.
   /// This method will catch any exceptions thrown by the callbacks.
   @protected
   void triggerPostBuildCallbacks() {
     assert(() {
+      if (!_mounted) {
+        throw FlutterError.fromParts([
+          ErrorSummary("triggerPostBuildCallbacks has been called after disposeHooks"),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+        ]);
+      }
+      if (_debugDoingBuild) {
+        throw FlutterError.fromParts([
+          ErrorSummary("triggerPostBuildCallbacks has been called during a build"),
+          ErrorDescription("triggerPostBuildCallbacks must be called after a build"),
+          DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
+        ]);
+      }
       if (!_debugPostBuildCallbacksDirty) {
         throw FlutterError.fromParts([
-          ErrorSummary("triggerPostBuildCallbacks has been called more than once"),
-          ErrorDescription("triggerPostBuildCallbacks must be called exactly once after every build"),
+          ErrorSummary("triggerPostBuildCallbacks has been called multiple times"),
+          ErrorDescription("triggerPostBuildCallbacks must be called at most once between builds"),
           DiagnosticableTreeNode(name: "context", value: this, style: DiagnosticsTreeStyle.truncateChildren),
         ]);
       }

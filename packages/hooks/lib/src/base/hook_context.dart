@@ -51,11 +51,17 @@ abstract interface class HookContext implements ProviderContext {
   /// if [markNeedsBuild] is called multiple times before the build is performed, it should be performed only once.
   void markNeedsBuild();
 
-  /// Registers [callback] to be called after the current build.
+  /// Registers [callback] to be called after the current build completes.
   ///
+  /// The callbacks are guaranteed to be called in order of registration and:
+  /// 1. AFTER the current build of this [HookContext]
+  /// 2. NOT during any future build of this context
+  /// 3. BEFORE this context is unmounted
+  /// This means, in particular, that implementations can "queue" callbacks from multiple builds before executing them.
+  ///
+  /// This method can only be called during build of this context, otherwise an exception will be thrown.
+  /// It is safe to call [markNeedsBuild] from the callback.
   /// This method should only be called from implementations of [HookState].
-  /// This method can only be called during build of this [HookContext], otherwise an exception will be thrown.
-  /// The callbacks will be called in the order they were registered.
   void addPostBuildCallback(void Function() callback);
 }
 
