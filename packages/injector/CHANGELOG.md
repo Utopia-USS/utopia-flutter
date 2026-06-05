@@ -1,3 +1,9 @@
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(utopia_injector): Allow registering raw factories & types via register.raw.
+
 ## 0.0.5
 
  - **FEAT**(utopia_injector): Add Injector.getRaw & Injector.existsRaw methods.
