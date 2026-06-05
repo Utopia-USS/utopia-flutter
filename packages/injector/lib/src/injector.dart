@@ -1,9 +1,15 @@
+import 'package:meta/meta.dart';
+
 import 'mutable_injector.dart';
 
 abstract class Injector {
-  T get<T>({Object? key});
+  dynamic getRaw(Type type, {Object? key});
 
-  bool exists<T>({Object? key});
+  T get<T>({Object? key}) => getRaw(T, key: key) as T;
+
+  bool existsRaw(Type type, {Object? key});
+
+  bool exists<T>({Object? key}) => existsRaw(T, key: key);
 
   // Do not move to an extension - importing doesn't work nicely
   T call<T>({Object? key}) => get(key: key);

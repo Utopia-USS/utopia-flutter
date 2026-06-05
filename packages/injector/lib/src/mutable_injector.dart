@@ -42,9 +42,9 @@ class MutableInjector extends Injector {
   /// injector.get<UserService>();
   /// ```
   void _register<T>(Factory<T> factory, {Object? key, bool override = false}) {
-    _checkValidation<T>();
-    final identity = _getIdentity<T>(key);
-    if (!override) _checkForDuplicates<T>(identity);
+    _checkValidation(T);
+    final identity = _getIdentity(T, key);
+    if (!override) _checkForDuplicates(T, identity);
     _factoryMap[identity] = factory;
   }
 
@@ -59,7 +59,7 @@ class MutableInjector extends Injector {
   /// but the same factory was called more than once
   final _factoryCallIds = <int>{};
 
-  /// Returns the registered dependencies with the signature of [T] and
+  /// Returns the registered dependencies with the signature of [type] and
   /// the optional [key].
   ///
   /// Throws [NotDefinedException] when the requested dependency has not been
@@ -68,29 +68,29 @@ class MutableInjector extends Injector {
   /// Throws [CircularDependencyException] when the injector detected a circular
   /// dependency setup.
   @override
-  T get<T>({Object? key}) {
-    _checkValidation<T>();
+  dynamic getRaw(Type type, {Object? key}) {
+    _checkValidation(type);
 
-    final identity = _getIdentity<T>(key);
+    final identity = _getIdentity(type, key);
 
     final factory = _factoryMap[identity];
 
     if (factory == null) {
-      if (_parent != null && _parent.exists<T>(key: key)) {
-        return _parent.get(key: key);
+      if (_parent != null && _parent.existsRaw(type, key: key)) {
+        return _parent.getRaw(type, key: key);
       }
-      throw NotDefinedException(type: T.toString());
+      throw NotDefinedException(type: type.toString());
     }
 
     final factoryId = factory.hashCode;
 
     final unique = _factoryCallIds.add(factoryId);
     if (!unique) {
-      throw CircularDependencyException(type: T.toString());
+      throw CircularDependencyException(type: type.toString());
     }
 
     try {
-      final instance = factory.call(this) as T;
+      final instance = factory.call(this);
       _factoryCallIds.remove(factoryId);
       return instance;
       // ignore: avoid_catches_without_on_clauses
@@ -103,20 +103,20 @@ class MutableInjector extends Injector {
     }
   }
 
-  /// Checks if the dependency with the signature of [T] and [key] exists.
+  /// Checks if the dependency with the signature of [type] and [key] exists.
   @override
-  bool exists<T>({Object? key}) {
-    _checkValidation<T>();
+  bool existsRaw(Type type, {Object? key}) {
+    _checkValidation(type);
 
-    final dependencyKey = _getIdentity<T>(key);
-    return _factoryMap.containsKey(dependencyKey) || (_parent?.exists<T>(key: key) ?? false);
+    final dependencyKey = _getIdentity(type, key);
+    return _factoryMap.containsKey(dependencyKey) || (_parent?.existsRaw(type, key: key) ?? false);
   }
 
   /// Removes the dependency with the signature of [T] and [key].
   void removeByKey<T>({Object? key}) {
-    _checkValidation<T>();
+    _checkValidation(T);
 
-    final dependencyKey = _getIdentity<T>(key);
+    final dependencyKey = _getIdentity(T, key);
     _factoryMap.remove(dependencyKey);
   }
 
@@ -126,24 +126,22 @@ class MutableInjector extends Injector {
     _factoryMap.clear();
   }
 
-  /// Checks if [T] is actually set.
-  void _checkValidation<T>() {
-    final type = T.toString();
-
-    if (T == dynamic) {
+  /// Checks if [type] is actually set.
+  void _checkValidation(Type type) {
+    if (type == dynamic) {
       throw Exception(
         'No type specified !\nCan not register dependencies for type "$type"',
       );
     }
   }
 
-  void _checkForDuplicates<T>(String identity) {
+  void _checkForDuplicates(Type type, String identity) {
     if (_factoryMap.containsKey(identity)) {
-      throw AlreadyDefinedException(type: T.toString());
+      throw AlreadyDefinedException(type: type.toString());
     }
   }
 
-  String _getIdentity<T>(Object? key) => "$key${T.hashCode}";
+  String _getIdentity(Type type, Object? key) => "$key${type.hashCode}";
 }
 
 class InjectorRegister {
