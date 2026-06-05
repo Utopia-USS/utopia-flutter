@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'mutable_injector.dart';
 
 abstract class Injector {

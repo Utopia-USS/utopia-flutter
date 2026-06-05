@@ -1,26 +1,26 @@
 import 'exception/already_defined_exception.dart';
 import 'exception/circular_dependency_exception.dart';
 import 'exception/not_defined_exception.dart';
-import 'factory/factory.dart';
 import 'injector.dart';
+import 'injector_factory.dart';
 
 class MutableInjector extends Injector {
   MutableInjector([this._parent]);
 
   final Injector? _parent;
 
-  /// Stores the all registered [Factory].
-  final _factoryMap = <String, Factory<dynamic>>{};
+  /// Stores the all registered [InjectorFactory].
+  final _factoryMap = <String, InjectorFactory<dynamic>>{};
 
-  /// Registers a dependency that will be created with the provided [Factory].
-  /// See [Factory.provider] or [Factory.singleton].
-  /// You can also create your custom factory by implementing [Factory].
+  /// Registers a dependency that will be created with the provided [InjectorFactory].
+  /// See [InjectorFactory.provider] or [InjectorFactory.singleton].
+  /// You can also create your custom factory by implementing [InjectorFactory].
   ///
   /// Overrides dependencies with the same signature when [override] is true.
   /// Uses [key] to differentiate between dependencies that have the
   /// same type.
   ///
-  /// The signature of a dependency consists of [T]
+  /// The signature of a dependency consists of [type]
   /// and the optional [key].
   ///
   /// ```dart
@@ -41,10 +41,10 @@ class MutableInjector extends Injector {
   /// ```dart
   /// injector.get<UserService>();
   /// ```
-  void _register<T>(Factory<T> factory, {Object? key, bool override = false}) {
-    _checkValidation(T);
-    final identity = _getIdentity(T, key);
-    if (!override) _checkForDuplicates(T, identity);
+  void _register(Type type, InjectorFactory factory, {Object? key, bool override = false}) {
+    _checkValidation(type);
+    final identity = _getIdentity(type, key);
+    if (!override) _checkForDuplicates(type, identity);
     _factoryMap[identity] = factory;
   }
 
@@ -152,18 +152,20 @@ class InjectorRegister {
 
   InjectorRegister get override => InjectorRegister._(_injector, true);
 
-  void singleton<T>(T Function(Injector) block, {Object? key}) =>
-      _injector._register(Factory.singleton(block), key: key, override: _override);
+  void call<T>(T Function(Injector) block, {Object? key}) => singleton(block, key: key);
 
-  void provider<T>(T Function(Injector) block, {Object? key}) =>
-      _injector._register(Factory.provider(block), key: key, override: _override);
+  void singleton<T>(T Function(Injector) block, {Object? key}) => factory(InjectorFactory.singleton(block), key: key);
 
-  void instance<T>(T instance, {Object? key}) =>
-      _injector._register(Factory.instance(instance), key: key, override: _override);
+  void provider<T>(T Function(Injector) block, {Object? key}) => factory(InjectorFactory.provider(block), key: key);
+
+  void instance<T>(T instance, {Object? key}) => factory(InjectorFactory.instance(instance), key: key);
 
   void noarg<T>(T Function() block, {Object? key}) => singleton((_) => block(), key: key);
 
-  void call<T>(T Function(Injector) block, {Object? key}) => singleton(block, key: key);
-
   void alias<T, T2 extends T>({Object? key}) => provider<T>((injector) => injector<T2>(key: key), key: key);
+
+  void factory<T>(InjectorFactory<T> factory, {Object? key}) => raw(T, factory, key: key);
+
+  void raw(Type type, InjectorFactory factory, {Object? key}) =>
+      _injector._register(type, factory, key: key, override: _override);
 }
