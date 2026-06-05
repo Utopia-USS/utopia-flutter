@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**(utopia_injector): Add Injector.getRaw & Injector.existsRaw methods.
+
 ## 0.0.4
 
  - **FEAT**(utopia_injector): Add Injector.buildAsync.
