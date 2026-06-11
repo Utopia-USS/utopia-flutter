@@ -27,9 +27,15 @@ import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
 /// [initialCursor] is captured on first build. For dynamic starting points, wrap the
 /// hook in `useKeyed` so the state is fully recreated.
 ///
-/// [shouldCompute] gates all loading. When `false`, state is cleared (items drop to
-/// `null`) and any in-progress load is cancelled. When it transitions back to `true`,
-/// the first page is loaded.
+/// [shouldCompute] gates only the automatic loads - the first page on mount and the
+/// refresh triggered by [keys] changes. When `false`, those loads are skipped, but
+/// already-loaded items stay visible and manual [MutablePaginatedComputedState.loadMore]
+/// and [MutablePaginatedComputedState.refresh] calls still work. When it transitions
+/// back to `true`, the first page is loaded.
+///
+/// [clearOnShouldComputeFalse] opts into clearing when [shouldCompute] becomes `false`:
+/// any in-flight load is cancelled and items and error are dropped (items return to
+/// `null`). Defaults to `false`, which leaves existing state untouched.
 ///
 /// [keys] triggers a refresh from [initialCursor] on every change. Items stay visible
 /// until the first page of the new load replaces them — no flicker.
