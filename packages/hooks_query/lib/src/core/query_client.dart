@@ -138,6 +138,50 @@ class QueryClient {
   @internal
   MutationCache get mutationCache => _mutationCache;
 
+  // --- Observer build-scope coordination ---
+  //
+  // While a hook applies build-time changes to its observer ([onMount] / an
+  // options change), that mutation can notify sibling observers sharing the
+  // same query key. Those siblings must not request a rebuild during the
+  // build, so they defer delivery to the initiating hook's post-build phase.
+  // This state, scoped to the client that owns the affected queries, tracks
+  // the active scope.
+
+  Object? _buildScopeOwner;
+  void Function(void Function())? _buildScopeScheduler;
+
+  /// Runs [body] as [owner]'s build-time mutation. Notifications it triggers on
+  /// sibling observers are routed through [scheduler] (the owner hook's
+  /// post-build callback); the owner's own notifications are suppressed. Scopes
+  /// nest and restore cleanly.
+  @internal
+  T runInBuildScope<T>(
+    Object owner,
+    void Function(void Function()) scheduler,
+    T Function() body,
+  ) {
+    final previousOwner = _buildScopeOwner;
+    final previousScheduler = _buildScopeScheduler;
+    _buildScopeOwner = owner;
+    _buildScopeScheduler = scheduler;
+    try {
+      return body();
+    } finally {
+      _buildScopeOwner = previousOwner;
+      _buildScopeScheduler = previousScheduler;
+    }
+  }
+
+  /// The active build scope's deferral scheduler, or `null` if no build scope
+  /// is currently running on this client.
+  @internal
+  void Function(void Function())? get buildScopeScheduler => _buildScopeScheduler;
+
+  /// Whether [observer] is the owner driving the active build scope.
+  @internal
+  bool isBuildScopeOwner(Object observer) =>
+      identical(_buildScopeOwner, observer);
+
   /// Removes all queries and mutations from the cache.
   void clear() {
     _cache.clear();

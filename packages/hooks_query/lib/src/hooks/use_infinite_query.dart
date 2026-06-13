@@ -1,6 +1,3 @@
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 import '../core/core.dart';
@@ -126,14 +123,6 @@ InfiniteQueryResult<TData, TError, TPageParam>
 }) {
   final effectiveClient = useQueryClient(client);
 
-  // Tracks whether we are currently inside this hook's build. Observer
-  // mutations performed during build (e.g. switching queries when the
-  // queryKey changes) synchronously notify subscribers; we must not turn
-  // those into setState calls, since the build already returns the current
-  // observer result. `listen: false` keeps writes from scheduling a rebuild.
-  final isBuilding = useState(true, listen: false);
-  isBuilding.value = true;
-
   // Create observer once per component instance
   final observer = useMemoized(
     () => InfiniteQueryObserver<TData, TError, TPageParam>(
@@ -164,6 +153,11 @@ InfiniteQueryResult<TData, TError, TPageParam>
     [effectiveClient],
   );
 
+  // Let the observer defer build-time notifications (its own, and those it
+  // triggers on sibling observers sharing the query key) to this hook's
+  // post-build phase, so a rebuild is never requested during a build.
+  observer.attachOwner(useContext().addPostBuildCallback);
+
   // Mount observer and cleanup on unmount — must be immediate so observer is
   // mounted before useState(observer.result) is called below.
   useImmediateEffect(() {
@@ -172,10 +166,7 @@ InfiniteQueryResult<TData, TError, TPageParam>
   }, [observer]);
 
   // Handle app lifecycle resume events
-  useEffect(() {
-    final listener = AppLifecycleListener(onResume: observer.onResume);
-    return listener.dispose;
-  }, [observer]);
+  useAppLifecycleStateListener(onResumed: observer.onResume);
 
   // Update options during render (before subscribing)
   observer.options = InfiniteQueryOptions(
@@ -201,34 +192,15 @@ InfiniteQueryResult<TData, TError, TPageParam>
     meta: meta,
   );
 
-  // Subscribe to observer and trigger rebuilds when result changes
-  // Uses useState with useEffect subscription for synchronous updates
+  // A rebuild trigger. The hook returns `observer.result` directly (always
+  // current), so this state exists only to schedule rebuilds when the result
+  // changes. The observer never delivers notifications during a build, so
+  // `setIfMounted` is always safe to call here.
   final result = useState(observer.result);
 
   useEffect(() {
-    final unsubscribe = observer.subscribe((newResult) {
-      // Notifications fired synchronously while this hook is building (e.g.
-      // from the `observer.options =` update above when the queryKey changes)
-      // are already reflected by the `observer.result` returned below.
-      // Scheduling a rebuild here would reenter the build and corrupt hook
-      // state, so skip them.
-      if (isBuilding.value) return;
-
-      // During another element's build phase, calling markNeedsBuild on this
-      // element is forbidden by Flutter. Defer to a post-frame callback so the
-      // update still lands in the next frame.
-      if (SchedulerBinding.instance.schedulerPhase ==
-          SchedulerPhase.persistentCallbacks) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          result.setIfMounted(newResult);
-        });
-      } else {
-        result.value = newResult;
-      }
-    });
-    return unsubscribe;
+    return observer.subscribe(result.setIfMounted);
   }, [observer]);
 
-  isBuilding.value = false;
   return observer.result;
 }

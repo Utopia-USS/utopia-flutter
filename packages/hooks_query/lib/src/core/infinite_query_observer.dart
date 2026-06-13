@@ -264,6 +264,11 @@ class InfiniteQueryObserver<TData, TError, TPageParam> {
     return result;
   }
 
+  /// Associates the underlying observer with the owning hook. See
+  /// [QueryObserver.attachOwner].
+  void attachOwner(void Function(void Function()) schedulePostBuild) =>
+      _inner.attachOwner(schedulePostBuild);
+
   void onMount() => _inner.onMount();
 
   void onResume() => _inner.onResume();

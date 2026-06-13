@@ -53,8 +53,7 @@ import 'use_query_client.dart';
 ///
 /// - [useQuery] for fetching data
 /// - [useInfiniteQuery] for paginated data
-MutationResult<TData, TError, TVariables, TOnMutateResult>
-    useMutation<TData, TError, TVariables, TOnMutateResult>(
+MutationResult<TData, TError, TVariables, TOnMutateResult> useMutation<TData, TError, TVariables, TOnMutateResult>(
   MutateFn<TData, TVariables> mutationFn, {
   MutationOnMutate<TVariables, TOnMutateResult>? onMutate,
   MutationOnSuccess<TData, TVariables, TOnMutateResult>? onSuccess,
@@ -97,8 +96,7 @@ MutationResult<TData, TError, TVariables, TOnMutateResult>
   }, [observer]);
 
   // Update options during render
-  observer.options =
-      MutationOptions<TData, TError, TVariables, TOnMutateResult>(
+  observer.options = MutationOptions<TData, TError, TVariables, TOnMutateResult>(
     mutationFn: mutationFn,
     mutationKey: mutationKey,
     networkMode: networkMode,
@@ -115,12 +113,7 @@ MutationResult<TData, TError, TVariables, TOnMutateResult>
   // Uses useState with useEffect subscription for synchronous updates
   final result = useState(observer.result);
 
-  useEffect(() {
-    final unsubscribe = observer.subscribe((newResult) {
-      result.value = newResult;
-    });
-    return unsubscribe;
-  }, [observer]);
+  useEffect(() => observer.subscribe(result.setIfMounted), [observer]);
 
   return result.value;
 }

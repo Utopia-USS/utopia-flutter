@@ -41,7 +41,24 @@ class QueryObserver<TData, TError> with Observer<QueryState<TData, TError>> {
 
   final Set<QueryResultListener<TData, TError>> _listeners = {};
 
+  /// Schedules a callback to run after the owning hook's current build.
+  ///
+  /// Set by [attachOwner] when this observer belongs to a `useQuery` hook.
+  /// `null` for bare observers (e.g. in tests), which notify synchronously.
+  void Function(void Function())? _schedulePostBuild;
+
+  /// Whether a deferred listener notification is already queued for the
+  /// current build pass — coalesces multiple synchronous result changes into
+  /// a single notification carrying the latest result.
+  bool _notificationQueued = false;
+
   QueryOptions<TData, TError> get options => _options;
+
+  /// Associates this observer with the hook that owns it, providing a way to
+  /// schedule work after that hook's build. See [_runBuildMutation].
+  void attachOwner(void Function(void Function()) schedulePostBuild) {
+    _schedulePostBuild = schedulePostBuild;
+  }
 
   QueryResult<TData, TError> get result {
     if (_result == null) {
@@ -53,7 +70,11 @@ class QueryObserver<TData, TError> with Observer<QueryState<TData, TError>> {
     return _result as QueryResult<TData, TError>;
   }
 
-  set options(QueryOptions<TData, TError> value) {
+  set options(QueryOptions<TData, TError> value) => _runBuildMutation(() {
+        _applyOptions(value);
+      });
+
+  void _applyOptions(QueryOptions<TData, TError> value) {
     final oldOptions = _options;
     final newOptions = value.withDefaults(_client.defaultQueryOptions);
     _options = newOptions;
@@ -123,37 +144,87 @@ class QueryObserver<TData, TError> with Observer<QueryState<TData, TError>> {
   set result(QueryResult<TData, TError> newResult) {
     if (newResult != _result) {
       _result = newResult;
-      for (final listener in _listeners) {
-        listener(newResult);
-      }
+      _notifyListeners();
     }
   }
 
-  void onMount() {
-    _query = Query.cached(
-      _client,
-      _options.queryKey,
-      gcDuration: _options.gcDuration,
-      seed: _options.seed,
-      seedUpdatedAt: _options.seedUpdatedAt,
-    );
-    _initialDataUpdateCount = _query.state.dataUpdateCount;
-    _initialErrorUpdateCount = _query.state.errorUpdateCount;
-    _query.addObserver(this);
+  /// Runs a build-time mutation ([onMount] or an options change), deferring the
+  /// listener notifications it triggers — on this observer and, through the
+  /// shared query, on sibling observers — to the owning hook's post-build
+  /// phase.
+  ///
+  /// Recomputing [result] stays synchronous, so the value is always current for
+  /// the build that reads it. Only delivery to hook subscribers is deferred,
+  /// keeping it out of the build that caused it (rebuilding during a build is
+  /// illegal). Bare observers (no owner) run fully synchronously.
+  void _runBuildMutation(void Function() body) {
+    final schedule = _schedulePostBuild;
+    if (schedule == null) {
+      body();
+      return;
+    }
+    _client.runInBuildScope(this, schedule, body);
+  }
 
-    final newResult = _buildResult(_options, _query.state, optimistic: true);
-    _result ??= newResult;
-    result = newResult;
+  void _notifyListeners() {
+    final scheduler = _client.buildScopeScheduler;
 
-    if (_shouldFetchOnMount(_options, _query.state)) {
-      _fetch().ignore();
+    // A build-time mutation is in progress on this client.
+    if (scheduler != null) {
+      // Our own owner's build caused this change — its build returns the
+      // current result directly, so notifying (and rebuilding) is redundant.
+      if (_client.isBuildScopeOwner(this)) return;
+
+      // A sibling observer's build caused it. Deliver after that build so we
+      // don't request a rebuild mid-build. Coalesce to one notification.
+      if (_notificationQueued) return;
+      _notificationQueued = true;
+      scheduler(() {
+        _notificationQueued = false;
+        _fireListeners();
+      });
+      return;
     }
 
-    _startRefetchInterval();
+    // No build in progress (async update, or a bare observer) — deliver now.
+    _fireListeners();
   }
+
+  void _fireListeners() {
+    final current = _result;
+    if (current == null) return;
+    for (final listener in _listeners.toList()) {
+      listener(current);
+    }
+  }
+
+  void onMount() => _runBuildMutation(() {
+        _query = Query.cached(
+          _client,
+          _options.queryKey,
+          gcDuration: _options.gcDuration,
+          seed: _options.seed,
+          seedUpdatedAt: _options.seedUpdatedAt,
+        );
+        _initialDataUpdateCount = _query.state.dataUpdateCount;
+        _initialErrorUpdateCount = _query.state.errorUpdateCount;
+        _query.addObserver(this);
+
+        final newResult =
+            _buildResult(_options, _query.state, optimistic: true);
+        _result ??= newResult;
+        result = newResult;
+
+        if (_shouldFetchOnMount(_options, _query.state)) {
+          _fetch().ignore();
+        }
+
+        _startRefetchInterval();
+      });
 
   void onUnmount() {
     _listeners.clear();
+    _notificationQueued = false;
     _cancelRefetchInterval();
     _query.removeObserver(this);
   }
