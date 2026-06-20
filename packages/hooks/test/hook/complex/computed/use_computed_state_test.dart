@@ -115,6 +115,25 @@ void main() {
         expect(_isReady(context.value), true);
       });
 
+      test("updateValue during in-flight refresh keeps the manual value", () async {
+        final completer = Completer<int>();
+        context = SimpleHookContext(() => useComputedState<int>(() => completer.future));
+
+        unawaited(context.value.refresh());
+        expect(context.value.value, isA<ComputedStateValueInProgress<int>>());
+
+        // Manually override while the compute is still running.
+        context.value.updateValue(99);
+        expect(context.value.valueOrNull, 99);
+        expect(_isReady(context.value), true);
+
+        // Resolving the now-cancelled compute must not clobber the manual value.
+        completer.complete(42);
+        await Future<void>.delayed(Duration.zero);
+        expect(context.value.valueOrNull, 99);
+        expect(_isReady(context.value), true);
+      });
+
       test("does not update state after context is disposed", () async {
         final completer = Completer<int>();
         context = SimpleHookContext(() => useComputedState<int>(() => completer.future));
