@@ -888,5 +888,65 @@ void main() {
         expect(context.value.items, [0, 2]);
       });
     });
+
+    group("itemsBuffer / cursorBuffer (raw handles)", () {
+      test("itemsBuffer.modify edits the buffer without cancelling an in-flight load", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+
+        final loadMore = context.value.loadMore();
+        expect(context.value.isLoading, true);
+
+        context.value.itemsBuffer.modify((it) => it!.where((e) => e != 1).toList());
+        expect(context.value.items, [0, 2]);
+        expect(context.value.isLoading, true); // not cancelled
+
+        completers.last.complete(_page(1)); // [3, 4, 5]
+        await loadMore;
+        expect(context.value.items, [0, 2, 3, 4, 5]);
+      });
+
+      test("cursorBuffer.modify cancels an in-flight load", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.cursor, 1);
+
+        unawaited(context.value.loadMore());
+        expect(context.value.isLoading, true);
+
+        context.value.cursorBuffer.modify((c) => c - 1);
+        expect(context.value.isLoading, false);
+        expect(context.value.cursor, 0);
+
+        // The cancelled load must not leak its page into state.
+        completers.last.complete(_page(1));
+        await Future<void>.delayed(Duration.zero);
+        expect(context.value.items, [0, 1, 2]);
+      });
+    });
   });
 }
