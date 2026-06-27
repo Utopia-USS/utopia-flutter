@@ -11,6 +11,7 @@ import 'package:utopia_hooks/src/hook/base/use_state.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/paginated/paginated_computed_state.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
+import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 
 /// Allows for cursor-based pagination with automatic loading of the first page and
 /// refreshing on [keys] changes.
@@ -112,10 +113,10 @@ MutablePaginatedComputedState<T, C> usePaginatedComputedState<T, C>(
         if (!shouldCompute) {
           if (clearOnShouldComputeFalse) state.clear();
         } else if (debounceDuration == Duration.zero) {
-          unawaited(state.refresh());
+          state.refresh().ignoreRefreshCancellation();
         } else {
           final timer = Timer(debounceDuration, () {
-            if (isMounted()) unawaited(state.refresh());
+            if (isMounted()) state.refresh().ignoreRefreshCancellation();
           });
           return timer.cancel;
         }
@@ -187,7 +188,7 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
       }
     }).ignore();
 
-    return completer.operation.value;
+    return completer.operation.valueOrThrowIfCancelled();
   }
 
   void clear({bool clearCache = true}) {

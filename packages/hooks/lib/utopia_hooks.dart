@@ -51,6 +51,7 @@ export 'src/misc/has_initialized.dart';
 export 'src/misc/listenable_value.dart';
 export 'src/misc/listenable_value_extensions.dart';
 export 'src/misc/notifiable.dart';
+export 'src/misc/refresh_cancellation.dart';
 export 'src/provider/provider_context.dart';
 export 'src/provider/provider_widget.dart';
 export 'src/widget/coordinator/hook_coordinator.dart';

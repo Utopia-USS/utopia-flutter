@@ -11,6 +11,7 @@ import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state_value.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
+import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 import 'package:utopia_utils/utopia_utils.dart';
 
 /// Returns a [MutableComputedState] driven by [compute], which is run on demand via [MutableComputedState.refresh].
@@ -64,11 +65,11 @@ MutableComputedState<T> useAutoComputedState<T>(
         timerState.value = null;
         if (shouldCompute) {
           if (debounceDuration == Duration.zero) {
-            unawaited(state.refresh());
+            state.refresh().ignoreRefreshCancellation();
           } else {
             timerState.value = Timer(debounceDuration, () {
               if (isMounted()) {
-                unawaited(state.refresh());
+                state.refresh().ignoreRefreshCancellation();
                 timerState.value = null;
               }
             });
@@ -107,12 +108,12 @@ MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute, {bool
       }
     }).ignore();
 
-    return completer.operation.value;
+    return completer.operation.valueOrThrowIfCancelled();
   };
 
   Future<T> refreshOrWait() async {
     return await state.value.maybeWhen(
-      inProgress: (operation) async => operation.value,
+      inProgress: (operation) => operation.valueOrThrowIfCancelled(),
       orElse: () async => refresh(),
     );
   }
