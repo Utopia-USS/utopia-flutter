@@ -81,6 +81,56 @@ final class MutablePaginatedComputedState<T, C> implements PaginatedComputedStat
   /// not trigger a reload.
   final void Function() clear;
 
+  /// Overrides the in-memory buffer, and optionally the next-`loadMore` cursor, in a
+  /// single atomic update. The paginated "value" is the coupled `(items, cursor)` pair,
+  /// so they are set together — this is the paginated analogue of
+  /// `MutableComputedState.updateValue`. Intended for optimistic edit/delete on a list
+  /// whose server mutation has been (or is being) confirmed.
+  ///
+  /// [items] receives the current buffer and returns its replacement.
+  ///
+  /// [cursor], when provided, receives the current next-page cursor and returns the
+  /// correction (e.g. `(offset) => offset - 1` after an offset-based delete, so the next
+  /// [loadMore] does not skip the element that shifted into the deleted slot). Omit it to
+  /// leave the cursor untouched — safe for in-place edits and for keyset deletes
+  /// (`WHERE id > cursor`), which are immune to the shift. A separate updater (rather than
+  /// a nullable value) keeps "leave unchanged" unambiguous even when [C] is itself
+  /// nullable (token-based pagination).
+  ///
+  /// Interaction with an in-flight load is asymmetric, by design:
+  ///   - Without [cursor], an in-flight load is **not** cancelled: it completes and
+  ///     appends its page on top of the updated buffer.
+  ///   - With [cursor], any in-flight load **is** cancelled, because it captured the old
+  ///     cursor when it started and on completion would overwrite the correction with its
+  ///     own `nextCursor`, silently re-introducing the drift.
+  ///
+  /// No-op (including the [cursor] part) when [items] is currently `null` — nothing has
+  /// loaded yet, so there is nothing to mutate, and writing a buffer would falsely flip
+  /// [isInitialized] and race the in-flight first load.
+  final void Function(
+    List<T> Function(List<T> current) items, {
+    C Function(C current)? cursor,
+  }) updateValues;
+
+  /// Convenience for the single-row optimistic edit: replaces the item at `index` in
+  /// place via `update`. Does not touch the cursor and does not cancel an in-flight load
+  /// (delegates to [updateValues] items-only). No-op when [items] is `null` or `index` is
+  /// out of range.
+  final void Function(int index, T Function(T current) update) updateAt;
+
+  /// Convenience for the single-row optimistic delete: removes the item at `index`.
+  ///
+  /// [cursor], when provided, corrects the next-`loadMore` cursor in the same atomic
+  /// update — pass `(offset) => offset - 1` for **offset/page** pagination so the next
+  /// page does not skip the element that shifted into the deleted slot. Omit it for
+  /// **keyset** pagination (`WHERE id > cursor`), which is immune to the shift.
+  ///
+  /// In-flight interaction matches [updateValues]: with [cursor] any in-flight load is
+  /// cancelled (it would otherwise overwrite the correction); without it the load is left
+  /// running and appends on top of the shortened buffer. No-op when [items] is `null` or
+  /// `index` is out of range.
+  final void Function(int index, {C Function(C current)? cursor}) deleteAt;
+
   const MutablePaginatedComputedState({
     required this.getItems,
     required this.getCursor,
@@ -90,6 +140,9 @@ final class MutablePaginatedComputedState<T, C> implements PaginatedComputedStat
     required this.loadMore,
     required this.refresh,
     required this.clear,
+    required this.updateValues,
+    required this.updateAt,
+    required this.deleteAt,
   });
 
   @override

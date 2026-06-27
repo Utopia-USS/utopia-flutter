@@ -610,5 +610,283 @@ void main() {
         expect(context.value.items, [0, 1, 2, 2, 3, 4]);
       });
     });
+
+    group("updateValues / updateAt / deleteAt", () {
+      test("updateAt replaces a single item in place", () async {
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>((c) async => _page(c), initialCursor: 0),
+        );
+
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+        final cursorBefore = context.value.cursor;
+
+        context.value.updateAt(1, (it) => it + 100);
+        expect(context.value.items, [0, 101, 2]);
+        expect(context.value.cursor, cursorBefore);
+        expect(context.value.hasMore, true);
+        expect(context.value.isLoading, false);
+      });
+
+      test("updateAt is a no-op before first load and when index is out of range", () async {
+        final completer = Completer<PaginatedPage<int, int>>();
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>((_) => completer.future, initialCursor: 0),
+        );
+
+        // Before the first load completes — nothing to target.
+        expect(context.value.items, null);
+        context.value.updateAt(0, (it) => it + 1);
+        expect(context.value.items, null);
+
+        completer.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+
+        // Out-of-range indices are ignored.
+        context.value.updateAt(5, (it) => it + 1);
+        context.value.updateAt(-1, (it) => it + 1);
+        expect(context.value.items, [0, 1, 2]);
+      });
+
+      test("items-only updateValues does not cancel an in-flight load", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+
+        // Hold a loadMore in flight, then optimistically remove an item.
+        final loadMore = context.value.loadMore();
+        expect(context.value.isLoading, true);
+
+        context.value.updateValues((items) => items.where((it) => it != 1).toList());
+        expect(context.value.items, [0, 2]);
+        expect(context.value.isLoading, true); // load NOT cancelled
+
+        // The in-flight page lands on top of the modified buffer.
+        completers.last.complete(_page(1)); // [3, 4, 5]
+        await loadMore;
+        expect(context.value.items, [0, 2, 3, 4, 5]);
+      });
+
+      test("offset-delete with cursor correction → next loadMore does not skip", () async {
+        // Server-side list, paginated by offset with limit 3.
+        final server = List.generate(9, (i) => i); // [0..8]
+        const limit = 3;
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (offset) async {
+              final slice = server.skip(offset).take(limit).toList();
+              final next = offset + slice.length;
+              return PaginatedPage(items: slice, nextCursor: next >= server.length ? null : next);
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+        expect(context.value.cursor, 3);
+
+        // Delete `1` on the server, mirror it optimistically, and fix the offset.
+        server.remove(1); // server is now [0, 2, 3, 4, 5, 6, 7, 8]
+        context.value.updateValues(
+          (items) => items.where((it) => it != 1).toList(),
+          cursor: (offset) => offset - 1,
+        );
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 2);
+
+        // Continues from the corrected offset — `2` is not skipped.
+        await context.value.loadMore();
+        expect(context.value.items, [0, 2, 3, 4, 5]);
+      });
+
+      test("offset-delete WITHOUT cursor correction skips an element (documents the drift)", () async {
+        final server = List.generate(9, (i) => i);
+        const limit = 3;
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (offset) async {
+              final slice = server.skip(offset).take(limit).toList();
+              final next = offset + slice.length;
+              return PaginatedPage(items: slice, nextCursor: next >= server.length ? null : next);
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.cursor, 3);
+
+        server.remove(1);
+        context.value.updateValues((items) => items.where((it) => it != 1).toList()); // no cursor fix
+        expect(context.value.cursor, 3);
+
+        await context.value.loadMore();
+        // `3` is skipped — exactly the bug the cursor correction prevents.
+        expect(context.value.items, [0, 2, 4, 5, 6]);
+      });
+
+      test("updateValues with cursor cancels an in-flight load", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+        expect(context.value.cursor, 1);
+
+        unawaited(context.value.loadMore());
+        expect(context.value.isLoading, true);
+
+        context.value.updateValues(
+          (items) => items.where((it) => it != 1).toList(),
+          cursor: (c) => c - 1,
+        );
+        expect(context.value.isLoading, false);
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 0);
+
+        // The cancelled load's completer can resolve, but must not leak into state.
+        completers.last.complete(_page(1));
+        await Future<void>.delayed(Duration.zero);
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 0);
+      });
+
+      test("updateValues is a full no-op when items is null (cursor untouched)", () async {
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) async => _page(c),
+            initialCursor: 5,
+            shouldCompute: false,
+          ),
+        );
+
+        await Future<void>.delayed(Duration.zero);
+        expect(context.value.items, null);
+        expect(context.value.cursor, 5);
+
+        context.value.updateValues(
+          (items) => [...items, 99],
+          cursor: (c) => c - 1,
+        );
+
+        expect(context.value.items, null);
+        expect(context.value.cursor, 5); // cursor part skipped too
+      });
+
+      test("deleteAt removes the item at index (cursor untouched)", () async {
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>((c) async => _page(c), initialCursor: 0),
+        );
+
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+        expect(context.value.cursor, 1);
+
+        context.value.deleteAt(1);
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 1); // untouched (items-only)
+      });
+
+      test("deleteAt is a no-op before first load and when index is out of range", () async {
+        final completer = Completer<PaginatedPage<int, int>>();
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>((_) => completer.future, initialCursor: 0),
+        );
+
+        expect(context.value.items, null);
+        context.value.deleteAt(0);
+        expect(context.value.items, null);
+
+        completer.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+
+        context.value.deleteAt(5);
+        context.value.deleteAt(-1);
+        expect(context.value.items, [0, 1, 2]);
+      });
+
+      test("deleteAt with cursor correction → next loadMore does not skip (offset)", () async {
+        final server = List.generate(9, (i) => i); // [0..8]
+        const limit = 3;
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (offset) async {
+              final slice = server.skip(offset).take(limit).toList();
+              final next = offset + slice.length;
+              return PaginatedPage(items: slice, nextCursor: next >= server.length ? null : next);
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.items, [0, 1, 2]);
+        expect(context.value.cursor, 3);
+
+        // Delete the row at index 1 on the server, mirror it, and fix the offset.
+        server.removeAt(1); // server is now [0, 2, 3, 4, 5, 6, 7, 8]
+        context.value.deleteAt(1, cursor: (offset) => offset - 1);
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 2);
+
+        await context.value.loadMore();
+        expect(context.value.items, [0, 2, 3, 4, 5]);
+      });
+
+      test("deleteAt with cursor cancels an in-flight load", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+        expect(context.value.cursor, 1);
+
+        unawaited(context.value.loadMore());
+        expect(context.value.isLoading, true);
+
+        context.value.deleteAt(1, cursor: (c) => c - 1);
+        expect(context.value.isLoading, false);
+        expect(context.value.items, [0, 2]);
+        expect(context.value.cursor, 0);
+
+        // The cancelled load's completer can resolve, but must not leak into state.
+        completers.last.complete(_page(1));
+        await Future<void>.delayed(Duration.zero);
+        expect(context.value.items, [0, 2]);
+      });
+    });
   });
 }

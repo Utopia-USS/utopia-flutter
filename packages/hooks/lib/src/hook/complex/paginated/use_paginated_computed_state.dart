@@ -212,6 +212,31 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     return load(replace: true);
   }
 
+  void updateValues(
+    List<T> Function(List<T> current) items, {
+    C Function(C current)? cursor,
+  }) {
+    final current = itemsState.value;
+    if (current == null) return; // nothing loaded yet — full no-op
+    if (cursor != null) cancelInFlight(); // its completion would overwrite the correction
+    itemsState.value = items(current);
+    if (cursor != null) cursorState.value = cursor(cursorState.value);
+  }
+
+  void updateAt(int index, T Function(T current) update) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    final next = List.of(current);
+    next[index] = update(current[index]);
+    itemsState.value = next;
+  }
+
+  void deleteAt(int index, {C Function(C current)? cursor}) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    updateValues((items) => List.of(items)..removeAt(index), cursor: cursor);
+  }
+
   return useMemoized(
     () => MutablePaginatedComputedState<T, C>(
       getItems: () => itemsState.value,
@@ -222,6 +247,9 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
       loadMore: () => load(replace: false),
       refresh: refresh,
       clear: clear,
+      updateValues: updateValues,
+      updateAt: updateAt,
+      deleteAt: deleteAt,
     ),
   );
 }
