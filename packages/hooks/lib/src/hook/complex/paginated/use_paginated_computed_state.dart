@@ -11,7 +11,6 @@ import 'package:utopia_hooks/src/hook/base/use_state.dart';
 import 'package:utopia_hooks/src/hook/base/use_value_wrapper.dart';
 import 'package:utopia_hooks/src/hook/complex/paginated/paginated_computed_state.dart';
 import 'package:utopia_hooks/src/hook/nested/use_debug_group.dart';
-import 'package:utopia_utils/utopia_utils.dart';
 
 /// Allows for cursor-based pagination with automatic loading of the first page and
 /// refreshing on [keys] changes.
@@ -207,25 +206,44 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     return load(replace: true);
   }
 
+  void updateValues(
+    List<T> Function(List<T> current) items, {
+    C Function(C current)? cursor,
+  }) {
+    final current = itemsState.value;
+    if (current == null) return; // nothing loaded yet — full no-op
+    if (cursor != null) cancelInFlight(); // its completion would overwrite the correction
+    itemsState.value = items(current);
+    if (cursor != null) cursorState.value = cursor(cursorState.value);
+  }
+
+  void updateAt(int index, T Function(T current) update) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    final next = List.of(current);
+    next[index] = update(current[index]);
+    itemsState.value = next;
+  }
+
+  void deleteAt(int index, {C Function(C current)? cursor}) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    updateValues((items) => List.of(items)..removeAt(index), cursor: cursor);
+  }
+
   return useMemoized(
     () => MutablePaginatedComputedState<T, C>(
-      itemsBuffer: itemsState,
-      // Mutating the cursor through this handle cancels any in-flight load — that load
-      // captured the old cursor and on completion would overwrite the manual correction.
-      // Normal pagination sets `cursorState` directly, so it is not affected.
-      cursorBuffer: MutableValue.computed(
-        () => cursorState.value,
-        (value) {
-          cancelInFlight();
-          cursorState.value = value;
-        },
-      ),
+      getItems: () => itemsState.value,
+      getCursor: () => cursorState.value,
       getHasMore: () => hasMoreState.value,
       getIsLoading: () => inFlightState.value != null,
       getError: () => errorState.value,
       loadMore: () => load(replace: false),
       refresh: refresh,
       clear: clear,
+      updateValues: updateValues,
+      updateAt: updateAt,
+      deleteAt: deleteAt,
     ),
   );
 }
