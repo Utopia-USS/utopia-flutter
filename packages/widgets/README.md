@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/widgets/docs/header.png" width="254" alt="Utopia Widgets"/>
+
 # utopia_widgets
 
 Miscellaneous, basic widgets.

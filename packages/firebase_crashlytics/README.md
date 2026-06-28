@@ -1,14 +1,20 @@
-# crashlytics
+<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/firebase_crashlytics/docs/header.png" width="375" alt="Utopia Firebase Crashlytics"/>
 
-A new Flutter project.
+# utopia_firebase_crashlytics
 
-## Getting Started
+Firebase Crashlytics integration for [utopia_reporter](https://github.com/Utopia-USS/utopia-flutter/tree/master/packages/reporter). Provides `CrashlyticsReporter`, a `Reporter` implementation that records errors to Crashlytics and logs warnings/info as Crashlytics log entries. Also exposes `UtopiaFirebaseCrashlytics.setup()` to disable collection in debug builds, and `UtopiaFirebaseCrashlytics.ensure()` for safe access to `FirebaseCrashlytics.instance` before Firebase finishes initialising.
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+## Usage
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Call `setup()` during app startup (after `Firebase.initializeApp`), then pass `CrashlyticsReporter` wherever a `Reporter` is expected:
+
+```dart
+await Firebase.initializeApp();
+await UtopiaFirebaseCrashlytics.setup();
+
+// Use directly or combine with other reporters
+final reporter = Reporter.combined([
+  CrashlyticsReporter(),
+  LoggerReporter(),
+]);
+```

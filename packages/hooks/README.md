@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/hooks_logo.png" height="160px" alt="Logo"/>
+<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/hooks_logo.png" width="230" alt="Utopia Hooks"/>
 
 Visit [hooks.utopiasoft.io](https://hooks.utopiasoft.io)
 
