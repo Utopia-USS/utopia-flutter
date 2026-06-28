@@ -1,5 +1,11 @@
 name: utopia_bytes
-description: Utopia libs - bytes
+description: Typed binary serialization for Dart - ByteReader and ByteWriter with codecs for ints, floats and every endianness over ByteData.
+topics:
+  - serialization
+  - bytes
+  - binary
+  - codec
+  - encoding
 version: 0.1.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

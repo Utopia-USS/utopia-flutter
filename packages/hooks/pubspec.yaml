@@ -1,10 +1,10 @@
 name: utopia_hooks
-description: A comprehensive but flexible state management solution inspired by React Hooks.
+description: Flutter hooks for state management - a comprehensive but flexible solution inspired by React Hooks, covering local and global state.
 version: 0.4.25
 repository: https://github.com/Utopia-USS/utopia-flutter/tree/master/packages/hooks
 documentation: https://hooks.utopiasoft.io
 topics:
-  - state
+  - hooks
   - state-management
   - flutter
   - architecture

@@ -1,5 +1,11 @@
 name: utopia_collections
-description: Utopia libs - collection utils
+description: Extension methods and helpers for Dart collections - groupBy, distinctBy, sorting and multi-key comparators over Iterable, List, Set and String.
+topics:
+  - collections
+  - extensions
+  - dart
+  - utils
+  - iterable
 version: 0.1.2
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

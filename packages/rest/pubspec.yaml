@@ -1,5 +1,11 @@
 name: utopia_rest
-description: Utopia USS libs - REST API support with Dio
+description: Dio interceptors and shared config for REST APIs - standard BaseOptions preset, token-injection auth interceptor and reporter-backed request logging.
+topics:
+  - rest
+  - http
+  - dio
+  - networking
+  - api
 version: 0.1.0+5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
