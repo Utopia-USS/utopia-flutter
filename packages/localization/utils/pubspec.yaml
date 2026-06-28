@@ -1,5 +1,11 @@
 name: utopia_localization_utils
-description: Utopia USS libs - Localization - Flutter utils for utopia_localization_generator.
+description: Flutter runtime helpers for utopia_localization_generator - the LocalizationsDelegate and utilities to wire generated i18n/l10n localization classes into your app.
+topics:
+  - localization
+  - i18n
+  - l10n
+  - intl
+  - flutter
 version: 0.0.2+3
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

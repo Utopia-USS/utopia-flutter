@@ -1,5 +1,11 @@
 name: utopia_reporter
-description: Utopia libs - Reporter architecture
+description: Lightweight reporting and error-logging abstraction for Dart and Flutter - define one Reporter and swap logging or crash-reporting backends freely.
+topics:
+  - logging
+  - error-handling
+  - crash-reporting
+  - flutter
+  - dart
 version: 0.1.0+5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

@@ -1,5 +1,11 @@
 name: utopia_firebase_crashlytics
-description: Utopia USS libs - firebase crashlytics setup and Reporter implementation
+description: Firebase Crashlytics reporter for utopia_reporter - records errors and logs to Crashlytics, with debug opt-out and safe pre-init access.
+topics:
+  - firebase
+  - crashlytics
+  - crash-reporting
+  - logging
+  - flutter
 version: 0.2.0+6
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

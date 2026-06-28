@@ -1,5 +1,11 @@
 name: utopia_lints
-description: Utopia USS libs - recommended lint rules
+description: Recommended lint rules for Utopia projects - extends flutter_lints with strict type-checking and a curated set of analyzer rules.
+topics:
+  - lints
+  - linter
+  - analysis
+  - flutter
+  - dart
 version: 0.0.5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

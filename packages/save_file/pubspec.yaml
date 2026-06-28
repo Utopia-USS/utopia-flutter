@@ -1,5 +1,11 @@
 name: utopia_save_file
-description: Utopia USS libs - unified and *correct* implementation of file saving
+description: Unified, correct file saving for Flutter across platforms - MIME and filename inference, extension handling and one API for bytes, streams and paths.
+topics:
+  - files
+  - download
+  - storage
+  - flutter
+  - cross-platform
 version: 0.2.5
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
