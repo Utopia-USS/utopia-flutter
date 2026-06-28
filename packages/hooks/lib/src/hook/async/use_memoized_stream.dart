@@ -9,7 +9,7 @@ AsyncSnapshot<T> useMemoizedStream<T>(
   bool preserveState = true,
   HookKeys keys = hookKeysEmpty,
 }) =>
-    // ignore: discarded_Streams
+    // ignore: discarded_futures
     useStream(useMemoized(block, keys), initialData: initialData, preserveState: preserveState);
 
 T? useMemoizedStreamData<T>(
@@ -19,5 +19,5 @@ T? useMemoizedStreamData<T>(
   void Function(Object, StackTrace)? onError,
   HookKeys keys = hookKeysEmpty,
 }) =>
-    // ignore: discarded_Streams
+    // ignore: discarded_futures
     useStreamData(useMemoized(block, keys), initialData: initialData, preserveState: preserveState, onError: onError);
