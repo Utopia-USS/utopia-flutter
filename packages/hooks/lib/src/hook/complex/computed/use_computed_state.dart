@@ -128,7 +128,13 @@ MutableComputedState<T> _useComputedState<T>(Future<T> Function() compute, {bool
         );
         state.value = ComputedStateValue.notInitialized;
       },
-      updateValue: (value) => state.value = ComputedStateValue.ready(value),
+      updateValue: (value) {
+        state.value.maybeWhen<void>(
+          inProgress: (operation) => unawaited(operation.cancel()),
+          orElse: () {},
+        );
+        state.value = ComputedStateValue.ready(value);
+      },
     ),
   );
 }

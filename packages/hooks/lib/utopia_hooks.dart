@@ -38,6 +38,8 @@ export 'src/hook/complex/submit/use_submit_state.dart';
 export 'src/hook/flutter/animation/use_animation_controller.dart';
 export 'src/hook/flutter/animation/use_single_ticker_provider.dart';
 export 'src/hook/flutter/misc/use_app_lifecycle_state.dart';
+export 'src/hook/flutter/misc/use_focus_node.dart';
+export 'src/hook/flutter/misc/use_scroll_controller.dart';
 export 'src/hook/misc/use_memoized_if.dart';
 export 'src/hook/misc/use_previous.dart';
 export 'src/hook/nested/use_keyed.dart';
