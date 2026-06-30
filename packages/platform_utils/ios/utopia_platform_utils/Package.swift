@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "utopia_platform_utils",
     platforms: [
-        .iOS("12.0")
+        .iOS("13.0")
     ],
     products: [
         .library(name: "utopia-platform-utils", targets: ["utopia_platform_utils"])
