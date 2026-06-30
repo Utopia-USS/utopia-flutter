@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-06-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_hooks` - `v0.4.26`](#utopia_hooks---v0426)
+ - [`utopia_hooks_query` - `v0.7.0+1`](#utopia_hooks_query---v0701)
+ - [`utopia_arch` - `v0.5.1+29`](#utopia_arch---v05129)
+ - [`utopia_hooks_riverpod` - `v0.1.0+9`](#utopia_hooks_riverpod---v0109)
+ - [`utopia_connectivity` - `v0.1.1+14`](#utopia_connectivity---v01114)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `utopia_hooks_query` - `v0.7.0+1`
+ - `utopia_arch` - `v0.5.1+29`
+ - `utopia_hooks_riverpod` - `v0.1.0+9`
+ - `utopia_connectivity` - `v0.1.1+14`
+
+---
+
+#### `utopia_hooks` - `v0.4.26`
+
+ - **FIX**(utopia_hooks): Clarify shouldCompute and clearOnShouldComputeFalse in usePaginatedComputedState.
+ - **FEAT**(utopia_hooks): Add updateValues, updateAt & deleteAt to MutablePaginatedComputedState.
+ - **FEAT**(utopia_hooks): Export useFocusNode and useScrollController.
+
+
 ## 2026-06-05
 
 ### Changes

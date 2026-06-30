@@ -1,3 +1,7 @@
+## 0.7.0+1
+
+ - Update a dependency to the latest release.
+
 ## 0.7.0 (2026-03-08)
 
 - Fixed crashes when multiple screens share the same query key ([#40](https://github.com/jezsung/query/issues/40)).
