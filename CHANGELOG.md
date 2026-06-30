@@ -15,6 +15,32 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`utopia_platform_utils` - `v0.0.7+1`](#utopia_platform_utils---v0071)
+ - [`utopia_save_file` - `v0.2.5+1`](#utopia_save_file---v0251)
+
+---
+
+#### `utopia_platform_utils` - `v0.0.7+1`
+
+ - **FIX**(utopia_platform_utils): Fix iOS platform version requirement.
+
+#### `utopia_save_file` - `v0.2.5+1`
+
+ - **FIX**(utopia_save_file): Fix iOS platform version requirement.
+
+
+## 2026-06-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`utopia_hooks` - `v0.4.26`](#utopia_hooks---v0426)
  - [`utopia_hooks_query` - `v0.7.0+1`](#utopia_hooks_query---v0701)
  - [`utopia_arch` - `v0.5.1+29`](#utopia_arch---v05129)

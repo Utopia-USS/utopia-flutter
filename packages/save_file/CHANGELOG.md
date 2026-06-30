@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**(utopia_save_file): Fix iOS platform version requirement.
+
 ## 0.2.5
 
  - **FEAT**(utopia_platform_utils,utopia_save_file): Migrate to Swift Package Manager.
