@@ -1,5 +1,11 @@
 name: utopia_injector
-description: Utopia libs - Injector
+description: Lightweight dependency injection container for Dart and Flutter - register singletons, factories and instances, resolve by type, with keys and scoped injectors.
+topics:
+  - dependency-injection
+  - di
+  - service-locator
+  - flutter
+  - dart
 version: 0.1.0
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

@@ -1,5 +1,11 @@
 name: utopia_platform_utils
-description: Utopia USS - Android and iOS platform code utils
+description: Shared Kotlin and Swift base classes for writing Flutter plugins - activity-aware lifecycle and coroutine scopes. No Dart-facing API.
+topics:
+  - plugin
+  - android
+  - ios
+  - flutter
+  - platform-channel
 version: 0.0.7
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

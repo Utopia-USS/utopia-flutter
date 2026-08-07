@@ -1,5 +1,11 @@
 name: utopia_hooks_riverpod
-description: Utopia Hooks - Riverpod interoperability
+description: Riverpod interoperability for utopia_hooks - consume and watch Riverpod providers inside hook-based Flutter screens via HookConsumerWidget.
+topics:
+  - hooks
+  - riverpod
+  - state-management
+  - flutter
+  - dependency-injection
 version: 0.1.0+8
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

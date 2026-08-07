@@ -1,5 +1,11 @@
 name: utopia_validation
-description: Utopia USS libs - generic architecture components
+description: Lightweight form validation primitives for Flutter - composable Validator and AsyncValidator types with localizable errors, built for useFieldState in utopia_hooks.
+topics:
+  - validation
+  - forms
+  - flutter
+  - hooks
+  - input
 version: 0.1.0+4
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

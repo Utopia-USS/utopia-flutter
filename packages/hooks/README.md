@@ -1,9 +1,9 @@
 
-<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/hooks_logo.png" height="160px" alt="Logo"/>
+<img src="https://raw.githubusercontent.com/Utopia-USS/utopia-flutter/master/packages/hooks/docs/hooks_logo.png" width="230" alt="Utopia Hooks"/>
 
 Visit [hooks.utopiasoft.io](https://hooks.utopiasoft.io)
 
-# Overview
+# Utopia Hooks - Flutter state management
 
 Goal of this package is to provide a comprehensive but flexible state management solution for Flutter apps. It's heavily
 inspired by React Hooks (and [Flutter Hooks](https://pub.dev/packages/flutter_hooks)), but takes a more holistic
@@ -296,3 +296,11 @@ class MyApp extends StatelessWidget {
 - [Search - Clean Architecture](example/lib/search/clean) - Dynamic list with search, based on Clean Architecture.
 - [Form Validation](example/lib/form_validation) - Complex form with validation,
   using [`utopia_validation`](https://pub.dev/packages/utopia_validation).
+
+# AI assistants
+
+This package ships agent rules and a skill - the Screen/State/View pattern, the
+hook catalog, async/pagination patterns, and anti-pattern guards - that work with
+any agentic coding tool (Claude, Codex, Cursor, and others) via `AGENTS.md` and
+the [Utopia skills marketplace](https://github.com/Utopia-USS/utopia-flutter-skills).
+Add them to a project with `utopia init agents` / `utopia init skills`.

@@ -1,5 +1,11 @@
 name: utopia_localization_template
-description: Utopia USS libs - Localization - Internal library used both by utopia_localization_annotation and utopia_localization_generator.
+description: Internal shared models for utopia_localization_annotation and utopia_localization_generator - Google Sheets-based i18n/l10n localization code generation.
+topics:
+  - localization
+  - i18n
+  - l10n
+  - codegen
+  - flutter
 version: 0.0.3
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

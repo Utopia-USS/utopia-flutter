@@ -1,5 +1,11 @@
 name: utopia_arch
-description: Utopia libs - complete architecture (including hooks, widgets, utils, reporter, collections, validation)
+description: All-in-one architecture bundle for Flutter apps - utopia_hooks, widgets, dependency injection, validation, reporting and collections in one dependency.
+topics:
+  - architecture
+  - flutter
+  - state-management
+  - hooks
+  - dependency-injection
 version: 0.5.1+28
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
