@@ -1,5 +1,11 @@
 name: utopia_localization_generator
-description: Utopia USS libs - Localization - Google Sheet-based localization code generator.
+description: Google Sheets-based localization (i18n/l10n) code generator for Flutter - turns a shared spreadsheet into type-safe generated localization classes via build_runner.
+topics:
+  - localization
+  - i18n
+  - l10n
+  - codegen
+  - build-runner
 version: 0.0.4+4
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

@@ -319,7 +319,9 @@ void main() {
         await context.waitUntil((s) => s.items != null);
         expect(context.value.cursor, 1);
 
-        unawaited(context.value.loadMore());
+        // loadMore() now throws ComputedStateRefreshCancelled when cancelled by the refresh
+        // below, so the fire-and-forget caller must swallow it.
+        context.value.loadMore().ignoreRefreshCancellation();
         expect(context.value.cursor, 1);
         expect(context.value.isLoading, true);
 
@@ -397,6 +399,37 @@ void main() {
         completer.complete(_page(0));
         await Future<void>.delayed(Duration.zero);
         expect(context.value.items, null);
+      });
+
+      test("loadMore() throws ComputedStateRefreshCancelled when its load is cancelled", () async {
+        final completers = <Completer<PaginatedPage<int, int>>>[];
+        context = SimpleHookContext(
+          () => usePaginatedComputedState<int, int>(
+            (c) {
+              final completer = Completer<PaginatedPage<int, int>>();
+              completers.add(completer);
+              return completer.future;
+            },
+            initialCursor: 0,
+          ),
+        );
+
+        completers.first.complete(_page(0));
+        await context.waitUntil((s) => s.items != null);
+
+        final loadMoreFuture = context.value.loadMore();
+        expect(context.value.isLoading, true);
+
+        context.value.clear();
+
+        // .timeout guards the suite: a regression (hang) fails fast as a TimeoutException
+        // rather than the expected ComputedStateRefreshCancelled.
+        await expectLater(
+          loadMoreFuture.timeout(const Duration(seconds: 5)),
+          throwsA(isA<ComputedStateRefreshCancelled>()),
+        );
+
+        completers.last.complete(_page(1)); // unwind the cancelled load body (no-ops)
       });
     });
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
+import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_iterable_wrapper.dart';
 
 typedef RefreshableComputedListWrapper<E> = RefreshableComputedIterableWrapper<List<E>>;
@@ -25,7 +26,7 @@ class RefreshableComputedIterableWrapper<I extends Iterable<dynamic>> extends St
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => state.refresh(),
+      onRefresh: () => state.refresh().swallowingRefreshCancellation(),
       child: ComputedIterableWrapper<I>(
         state: state,
         keepInProgress: keepInProgress,

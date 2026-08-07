@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/src/hook/complex/paginated/paginated_computed_state.dart';
+import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 
 /// Convenience wrapper around [MutablePaginatedComputedState] that adds
 /// pull-to-refresh and auto-triggers [MutablePaginatedComputedState.loadMore]
@@ -36,17 +35,17 @@ class PaginatedComputedStateWrapper<T, C> extends StatelessWidget {
       child: builder(context, state.items, state.items != null && state.isLoading),
     );
     if (!refreshable) return child;
-    return RefreshIndicator(onRefresh: state.refresh, child: child);
+    return RefreshIndicator(
+      onRefresh: () => state.refresh().swallowingRefreshCancellation(),
+      child: child,
+    );
   }
 
   bool _onScroll(ScrollNotification info) {
     final items = state.items;
     if (items == null || items.isEmpty) return false;
-    if (info.metrics.extentAfter < loadMoreThreshold &&
-        state.hasMore &&
-        !state.isLoading &&
-        !state.hasError) {
-      unawaited(state.loadMore());
+    if (info.metrics.extentAfter < loadMoreThreshold && state.hasMore && !state.isLoading && !state.hasError) {
+      state.loadMore().ignoreRefreshCancellation();
     }
     return false;
   }

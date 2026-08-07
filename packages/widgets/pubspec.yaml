@@ -1,5 +1,11 @@
 name: utopia_widgets
-description: Utopia USS libs - simple, generic widgets
+description: A collection of small, generic Flutter widgets - form and scroll layouts, CrossFadeIndexedStack, collapsibles, unfocus-on-tap and other reusable UI parts.
+topics:
+  - widgets
+  - flutter
+  - ui
+  - layout
+  - components
 version: 0.1.2+1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

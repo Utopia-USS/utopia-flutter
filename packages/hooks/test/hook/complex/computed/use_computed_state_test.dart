@@ -13,8 +13,7 @@ bool _hasError(_State s) => s.value is ComputedStateValueFailed;
 Object? _errorOf(_State s) => s.value.maybeWhen(failed: (e) => e, orElse: () => null);
 
 /// Awaits [future], returning the error it throws (or `null` if it completes).
-Future<Object?> _captureError(Future<void> future) =>
-    future.then<Object?>((_) => null).catchError((Object e) => e);
+Future<Object?> _captureError(Future<void> future) => future.then<Object?>((_) => null).catchError((Object e) => e);
 
 void main() {
   group("useComputedState", () {
@@ -95,7 +94,9 @@ void main() {
         final completer = Completer<int>();
         context = SimpleHookContext(() => useComputedState<int>(() => completer.future));
 
-        unawaited(context.value.refresh());
+        // refresh() now throws ComputedStateRefreshCancelled when cancelled, so the
+        // fire-and-forget caller must swallow it (see the "refresh cancellation" group).
+        context.value.refresh().ignoreRefreshCancellation();
         expect(context.value.value, isA<ComputedStateValueInProgress<int>>());
 
         context.value.clear();
@@ -105,6 +106,47 @@ void main() {
         completer.complete(42);
         await Future<void>.delayed(Duration.zero);
         expect(context.value.valueOrNull, null);
+      });
+
+      test("refresh() throws ComputedStateRefreshCancelled when cancelled by clear()", () async {
+        final completer = Completer<int>();
+        context = SimpleHookContext(() => useComputedState<int>(() => completer.future));
+
+        final refreshFuture = context.value.refresh();
+        expect(context.value.value, isA<ComputedStateValueInProgress<int>>());
+
+        context.value.clear();
+
+        // .timeout guards the suite: a regression (hang) fails fast as a TimeoutException
+        // rather than the expected ComputedStateRefreshCancelled.
+        await expectLater(
+          refreshFuture.timeout(const Duration(seconds: 5)),
+          throwsA(isA<ComputedStateRefreshCancelled>()),
+        );
+
+        completer.complete(0); // unwind the cancelled compute body (no-ops; op is cancelled)
+      });
+
+      test("a refresh() awaiting an in-flight op throws when that op is cancelled", () async {
+        final completer = Completer<int>();
+        context = SimpleHookContext(() => useComputedState<int>(() => completer.future));
+
+        final first = context.value.refresh(); // starts the compute (refresh path)
+        final second = context.value.refresh(); // awaits the in-flight op (refreshOrWait path)
+        expect(context.value.value, isA<ComputedStateValueInProgress<int>>());
+
+        context.value.clear();
+
+        await expectLater(
+          first.timeout(const Duration(seconds: 5)),
+          throwsA(isA<ComputedStateRefreshCancelled>()),
+        );
+        await expectLater(
+          second.timeout(const Duration(seconds: 5)),
+          throwsA(isA<ComputedStateRefreshCancelled>()),
+        );
+
+        completer.complete(0);
       });
 
       test("updateValue sets ready value explicitly", () async {

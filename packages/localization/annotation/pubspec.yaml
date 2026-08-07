@@ -1,5 +1,11 @@
 name: utopia_localization_annotation
-description: Utopia USS libs - Localization - Annotations for utopia_localization_generator.
+description: Localization annotations for utopia_localization_generator - marks classes for Google Sheets-based i18n/l10n code generation in Flutter.
+topics:
+  - localization
+  - i18n
+  - l10n
+  - codegen
+  - flutter
 version: 0.0.3+1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 

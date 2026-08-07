@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/src/hook/complex/computed/computed_state.dart';
+import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 import 'package:utopia_hooks/src/widget/wrapper/compute/computed_state_wrapper.dart';
 
 class RefreshableComputedStateWrapper<E> extends StatelessWidget {
@@ -21,7 +22,7 @@ class RefreshableComputedStateWrapper<E> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => state.refresh(),
+      onRefresh: () => state.refresh().swallowingRefreshCancellation(),
       child: ComputedStateWrapper<E>(
         state: state,
         keepInProgress: keepInProgress,

@@ -1,5 +1,11 @@
 name: utopia_utils
-description: Utopia USS libs - generic utils (including extensions, and Reporter architecture)
+description: Foundational Dart utilities for the Utopia ecosystem - Kotlin-style scope extensions (let/also/run), a Value/MutableValue abstraction and a Retryable wrapper.
+topics:
+  - utils
+  - extensions
+  - dart
+  - functional
+  - flutter
 version: 0.3.3
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
