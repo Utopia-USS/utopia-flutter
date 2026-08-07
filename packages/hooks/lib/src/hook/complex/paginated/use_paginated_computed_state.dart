@@ -28,9 +28,15 @@ import 'package:utopia_hooks/src/misc/refresh_cancellation.dart';
 /// [initialCursor] is captured on first build. For dynamic starting points, wrap the
 /// hook in `useKeyed` so the state is fully recreated.
 ///
-/// [shouldCompute] gates all loading. When `false`, state is cleared (items drop to
-/// `null`) and any in-progress load is cancelled. When it transitions back to `true`,
-/// the first page is loaded.
+/// [shouldCompute] gates only the automatic loads - the first page on mount and the
+/// refresh triggered by [keys] changes. When `false`, those loads are skipped, but
+/// already-loaded items stay visible and manual [MutablePaginatedComputedState.loadMore]
+/// and [MutablePaginatedComputedState.refresh] calls still work. When it transitions
+/// back to `true`, the first page is loaded.
+///
+/// [clearOnShouldComputeFalse] opts into clearing when [shouldCompute] becomes `false`:
+/// any in-flight load is cancelled and items and error are dropped (items return to
+/// `null`). Defaults to `false`, which leaves existing state untouched.
 ///
 /// [keys] triggers a refresh from [initialCursor] on every change. Items stay visible
 /// until the first page of the new load replaces them — no flicker.
@@ -207,6 +213,31 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
     return load(replace: true);
   }
 
+  void updateValues(
+    List<T> Function(List<T> current) items, {
+    C Function(C current)? cursor,
+  }) {
+    final current = itemsState.value;
+    if (current == null) return; // nothing loaded yet — full no-op
+    if (cursor != null) cancelInFlight(); // its completion would overwrite the correction
+    itemsState.value = items(current);
+    if (cursor != null) cursorState.value = cursor(cursorState.value);
+  }
+
+  void updateAt(int index, T Function(T current) update) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    final next = List.of(current);
+    next[index] = update(current[index]);
+    itemsState.value = next;
+  }
+
+  void deleteAt(int index, {C Function(C current)? cursor}) {
+    final current = itemsState.value;
+    if (current == null || index < 0 || index >= current.length) return;
+    updateValues((items) => List.of(items)..removeAt(index), cursor: cursor);
+  }
+
   return useMemoized(
     () => MutablePaginatedComputedState<T, C>(
       getItems: () => itemsState.value,
@@ -217,6 +248,9 @@ MutablePaginatedComputedState<T, C> _usePaginatedComputedState<T, C>(
       loadMore: () => load(replace: false),
       refresh: refresh,
       clear: clear,
+      updateValues: updateValues,
+      updateAt: updateAt,
+      deleteAt: deleteAt,
     ),
   );
 }

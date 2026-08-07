@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "utopia_save_file",
     platforms: [
-        .iOS("12.0")
+        .iOS("13.0")
     ],
     products: [
         .library(name: "utopia-save-file", targets: ["utopia_save_file"])

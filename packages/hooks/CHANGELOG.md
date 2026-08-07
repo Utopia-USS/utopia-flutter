@@ -1,3 +1,9 @@
+## 0.4.26
+
+ - **FIX**(utopia_hooks): Clarify shouldCompute and clearOnShouldComputeFalse in usePaginatedComputedState.
+ - **FEAT**(utopia_hooks): Add updateValues, updateAt & deleteAt to MutablePaginatedComputedState.
+ - **FEAT**(utopia_hooks): Export useFocusNode and useScrollController.
+
 ## 0.4.25
 
  - **FIX**(utopia_hooks): Strengthen useDebugGroup inlines.

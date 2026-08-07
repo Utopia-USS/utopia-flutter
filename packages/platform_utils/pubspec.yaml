@@ -6,7 +6,7 @@ topics:
   - ios
   - flutter
   - platform-channel
-version: 0.0.7
+version: 0.0.7+1
 homepage: https://github.com/Utopia-USS/utopia-flutter
 
 environment:
