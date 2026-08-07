@@ -8,19 +8,19 @@ the delegate and utilities needed to wire generated localization classes into a 
 
 ## What's included
 
-**`UtopiaLocalizationsDelegate<T>`** - a `LocalizationsDelegate` that wraps a
+**[`UtopiaLocalizationsDelegate<T>`][UtopiaLocalizationsDelegate]** - a `LocalizationsDelegate` that wraps a
 `UtopiaLocalizationData<T>` map (produced by the generator). Pass it to
 `MaterialApp.localizationsDelegates`.
 
-**`LocalizationMapLocaleExtensions`** - extension on `UtopiaLocalizationData<T>`:
-- `supportedLocales` - derives a `Set<Locale>` from the data map's language-tag keys
+**[`LocalizationMapLocaleExtensions`][LocalizationMapLocaleExtensions]** - extension on `UtopiaLocalizationData<T>`:
+- [`supportedLocales`][supportedLocales] - derives a `Set<Locale>` from the data map's language-tag keys
 - `operator []` - looks up a localization instance by `Locale`
 
-**`localeFromLanguageTag(String)`** - converts a BCP 47 language tag (e.g. `"en-US"`,
+**[`localeFromLanguageTag(String)`][localeFromLanguageTag]** - converts a BCP 47 language tag (e.g. `"en-US"`,
 `"zh-Hans-CN"`) into a `Locale`.
 
-**`BuildContextLocalizationsExtensions`** - extension on `BuildContext`:
-- `context.localizations<T>()` - shorthand for `Localizations.of<T>(context, T)!`
+**[`BuildContextLocalizationsExtensions`][BuildContextLocalizationsExtensions]** - extension on `BuildContext`:
+- [`context.localizations<T>()`][localizations] - shorthand for `Localizations.of<T>(context, T)!`
 
 ## Usage
 
@@ -38,3 +38,10 @@ MaterialApp(
 // In a widget:
 final strings = context.localizations<MyStrings>();
 ```
+
+[UtopiaLocalizationsDelegate]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/UtopiaLocalizationsDelegate-class.html
+[LocalizationMapLocaleExtensions]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/LocalizationMapLocaleExtensions.html
+[supportedLocales]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/LocalizationMapLocaleExtensions/supportedLocales.html
+[localeFromLanguageTag]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/localeFromLanguageTag.html
+[BuildContextLocalizationsExtensions]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/BuildContextLocalizationsExtensions.html
+[localizations]: https://pub.dev/documentation/utopia_localization_utils/latest/utopia_localization_utils/BuildContextLocalizationsExtensions/localizations.html

@@ -2,7 +2,7 @@
 
 # utopia_bytes
 
-Typed binary serialisation helpers for Dart. Provides `ByteReader` and `ByteWriter` for sequential reads and writes over `ByteData`, a `ByteType<T>` interface for typed codec descriptors, and the `Bytes` facade with pre-built constants for all common widths and endiannesses (uint8, uint16/32/64 LE/BE, int8, int16/32/64 LE/BE, float32/64 LE/BE).
+Typed binary serialisation helpers for Dart. Provides [`ByteReader`][ByteReader] and [`ByteWriter`][ByteWriter] for sequential reads and writes over `ByteData`, a [`ByteType<T>`][ByteType] interface for typed codec descriptors, and the [`Bytes`][Bytes] facade with pre-built constants for all common widths and endiannesses (uint8, uint16/32/64 LE/BE, int8, int16/32/64 LE/BE, float32/64 LE/BE).
 
 ```dart
 // Write two fields
@@ -18,3 +18,8 @@ final value = Bytes.read(bytes, (r) {
   return (id, temp);
 });
 ```
+
+[ByteReader]: https://pub.dev/documentation/utopia_bytes/latest/utopia_bytes/ByteReader-class.html
+[ByteWriter]: https://pub.dev/documentation/utopia_bytes/latest/utopia_bytes/ByteWriter-class.html
+[ByteType]: https://pub.dev/documentation/utopia_bytes/latest/utopia_bytes/ByteType-class.html
+[Bytes]: https://pub.dev/documentation/utopia_bytes/latest/utopia_bytes/Bytes-class.html

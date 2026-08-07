@@ -10,17 +10,17 @@ Bridges `utopia_hooks` and `flutter_riverpod` so that Riverpod providers can be 
 
 | Widget | Description |
 |---|---|
-| `HookConsumerWidget` | Drop-in replacement for `ConsumerStatefulWidget` that also supports hooks in `build(context, ref)`. |
-| `HookConsumer` | Inline builder variant - like `Consumer` but with full hook support. |
-| `HookConsumerProviderContainerWidget` | Variant of `HookProviderContainerWidget` (utopia_hooks) that reads Riverpod providers in its `providers` map. Requires `ProviderScope` above it in the tree. |
+| [`HookConsumerWidget`][HookConsumerWidget] | Drop-in replacement for `ConsumerStatefulWidget` that also supports hooks in `build(context, ref)`. |
+| [`HookConsumer`][HookConsumer] | Inline builder variant - like `Consumer` but with full hook support. |
+| [`HookConsumerProviderContainerWidget`][HookConsumerProviderContainerWidget] | Variant of [`HookProviderContainerWidget`][HookProviderContainerWidget] (utopia_hooks) that reads Riverpod providers in its `providers` map. Requires `ProviderScope` above it in the tree. |
 
 ## Hooks
 
 | Hook | Where available | Description |
 |---|---|---|
-| `useHookRef()` | All three widgets | Returns a `HookRef` - a safe interface over `WidgetRef` (`watch`, `read`, `listen`, `listenManual`, `refresh`, `invalidate`, `exists`). |
-| `useHookConsumerRef()` | `HookConsumer` / `HookConsumerWidget` only | Returns `HookConsumerRef`, which additionally exposes the underlying `WidgetRef` via `.widgetRef`. |
-| `useRefWatch(provider)` | All three widgets | Convenience shorthand for `useHookRef().watch(provider)`. |
+| [`useHookRef()`][useHookRef] | All three widgets | Returns a [`HookRef`][HookRef] - a safe interface over `WidgetRef` (`watch`, `read`, `listen`, `listenManual`, `refresh`, `invalidate`, `exists`). |
+| [`useHookConsumerRef()`][useHookConsumerRef] | `HookConsumer` / `HookConsumerWidget` only | Returns [`HookConsumerRef`][HookConsumerRef], which additionally exposes the underlying `WidgetRef` via `.widgetRef`. |
+| [`useRefWatch(provider)`][useRefWatch] | All three widgets | Convenience shorthand for `useHookRef().watch(provider)`. |
 
 ## Usage
 
@@ -51,3 +51,13 @@ HookConsumer(
   },
 )
 ```
+
+[HookConsumerWidget]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/HookConsumerWidget-class.html
+[HookConsumer]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/HookConsumer-class.html
+[HookConsumerProviderContainerWidget]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/HookConsumerProviderContainerWidget-class.html
+[HookProviderContainerWidget]: https://pub.dev/documentation/utopia_hooks/latest/utopia_hooks/HookProviderContainerWidget-class.html
+[useHookRef]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/useHookRef.html
+[HookRef]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/HookRef-class.html
+[useHookConsumerRef]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/useHookConsumerRef.html
+[HookConsumerRef]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/HookConsumerRef-class.html
+[useRefWatch]: https://pub.dev/documentation/utopia_hooks_riverpod/latest/utopia_hooks_riverpod/useRefWatch.html

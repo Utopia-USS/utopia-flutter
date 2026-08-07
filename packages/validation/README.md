@@ -2,15 +2,15 @@
 
 # utopia_validation
 
-Lightweight validation primitives for Flutter. Defines `Validator<T>` and `AsyncValidator<T>` function types that produce a context-aware error string (or `null` on success), plus a `Validatable<T>` interface for objects that carry their own validation state. Pairs naturally with `useFieldState` from `utopia_hooks`.
+Lightweight validation primitives for Flutter. Defines [`Validator<T>`][Validator] and [`AsyncValidator<T>`][AsyncValidator] function types that produce a context-aware error string (or `null` on success), plus a [`Validatable<T>`][Validatable] interface for objects that carry their own validation state. Pairs naturally with [`useFieldState`][useFieldState] from `utopia_hooks`.
 
 ## Core types
 
-- `Validator<T>` - a function `(T value) -> ValidatorResult?`
-- `AsyncValidator<T>` - same, but `FutureOr`
-- `ValidatorResult` - `String Function(BuildContext)`, so error messages can be localised
-- `Validatable<T>` - interface combining `Value<T>` and `HasErrorMessage`; exposes `validate` / `validateAsync` helpers that run a validator and store the result
-- `Validators` - static factory methods for common validators
+- [`Validator<T>`][Validator] - a function `(T value) -> ValidatorResult?`
+- [`AsyncValidator<T>`][AsyncValidator] - same, but `FutureOr`
+- [`ValidatorResult`][ValidatorResult] - `String Function(BuildContext)`, so error messages can be localised
+- [`Validatable<T>`][Validatable] - interface combining `Value<T>` and `HasErrorMessage`; exposes `validate` / `validateAsync` helpers that run a validator and store the result
+- [`Validators`][Validators] - static factory methods for common validators
 
 ## Validators
 
@@ -36,3 +36,10 @@ final combined = Validators.combine([required, noSpaces]);
 // Async variant
 final asyncCombined = Validators.combineAsync([checkLocal, checkRemote]);
 ```
+
+[Validator]: https://pub.dev/documentation/utopia_validation/latest/utopia_validation/Validator.html
+[AsyncValidator]: https://pub.dev/documentation/utopia_validation/latest/utopia_validation/AsyncValidator.html
+[ValidatorResult]: https://pub.dev/documentation/utopia_validation/latest/utopia_validation/ValidatorResult.html
+[Validatable]: https://pub.dev/documentation/utopia_validation/latest/utopia_validation/Validatable-class.html
+[Validators]: https://pub.dev/documentation/utopia_validation/latest/utopia_validation/Validators-class.html
+[useFieldState]: https://pub.dev/documentation/utopia_hooks/latest/utopia_hooks/useFieldState.html

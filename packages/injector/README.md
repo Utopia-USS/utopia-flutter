@@ -35,28 +35,45 @@ final injector = await Injector.buildAsync((register) async {
 });
 ```
 
-## `InjectorRegister` methods
+## [`InjectorRegister`][InjectorRegister] methods
 
 | Method | Behaviour |
 |---|---|
-| `singleton<T>(block)` | Lazy singleton - `block` is called once, same instance returned every time. Calling `register<T>(block)` is equivalent. |
-| `provider<T>(block)` | New instance on every resolution. |
-| `instance<T>(value)` | Registers a pre-built instance. |
-| `noarg<T>(block)` | Singleton where the builder takes no `Injector` argument. |
-| `alias<T, T2>()` | Makes `T` resolve to whatever `T2` resolves to. |
-| `factory<T>(factory)` | Registers a custom `InjectorFactory<T>`. |
-| `raw(type, factory)` | Type-erased registration for dynamic use-cases. |
+| [`singleton<T>(block)`][singleton] | Lazy singleton - `block` is called once, same instance returned every time. Calling `register<T>(block)` is equivalent. |
+| [`provider<T>(block)`][provider] | New instance on every resolution. |
+| [`instance<T>(value)`][instance] | Registers a pre-built instance. |
+| [`noarg<T>(block)`][noarg] | Singleton where the builder takes no `Injector` argument. |
+| [`alias<T, T2>()`][alias] | Makes `T` resolve to whatever `T2` resolves to. |
+| [`factory<T>(factory)`][factory] | Registers a custom [`InjectorFactory<T>`][InjectorFactory]. |
+| [`raw(type, factory)`][raw] | Type-erased registration for dynamic use-cases. |
 
 All methods accept an optional `key` parameter to distinguish multiple registrations of the same type.
 
-Use `register.override.<method>` to replace an existing registration without throwing.
+Use [`register.override.<method>`][override] to replace an existing registration without throwing.
 
-## `Injector` API
+## [`Injector`][Injector] API
 
-- `get<T>({Object? key})` - resolve a dependency by type (and optional key).
-- `call<T>({Object? key})` - callable shorthand for `get<T>()`.
-- `exists<T>({Object? key})` - check whether a type is registered.
-- `Injector.build(block, {Injector? parent})` - build a synchronous injector; pass `parent` for scoped child containers.
-- `Injector.buildAsync(block, {Injector? parent})` - async variant.
+- [`get<T>({Object? key})`][get] - resolve a dependency by type (and optional key).
+- [`call<T>({Object? key})`][call] - callable shorthand for `get<T>()`.
+- [`exists<T>({Object? key})`][exists] - check whether a type is registered.
+- [`Injector.build(block, {Injector? parent})`][build] - build a synchronous injector; pass `parent` for scoped child containers.
+- [`Injector.buildAsync(block, {Injector? parent})`][buildAsync] - async variant.
 
 Resolving an unregistered type throws `NotDefinedException`. Circular dependencies throw `CircularDependencyException`. Duplicate registrations (without `override`) throw `AlreadyDefinedException`.
+
+[Injector]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector-class.html
+[InjectorRegister]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister-class.html
+[InjectorFactory]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorFactory-class.html
+[singleton]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/singleton.html
+[provider]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/provider.html
+[instance]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/instance.html
+[noarg]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/noarg.html
+[alias]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/alias.html
+[factory]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/factory.html
+[raw]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/raw.html
+[override]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/InjectorRegister/override.html
+[get]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector/get.html
+[call]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector/call.html
+[exists]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector/exists.html
+[build]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector/build.html
+[buildAsync]: https://pub.dev/documentation/utopia_injector/latest/utopia_injector/Injector/buildAsync.html

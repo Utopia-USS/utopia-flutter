@@ -2,11 +2,11 @@
 
 # utopia_utils
 
-A small grab-bag of foundational Dart utilities used across the Utopia USS ecosystem. Provides Kotlin-style object scope extensions, a lightweight `Value`/`MutableValue` abstraction, and a `Retryable` error wrapper.
+A small grab-bag of foundational Dart utilities used across the Utopia USS ecosystem. Provides Kotlin-style object scope extensions, a lightweight [`Value`][Value]/[`MutableValue`][MutableValue] abstraction, and a [`Retryable`][Retryable] error wrapper.
 
 ## Highlights
 
-### Scope extensions on every object (`AnyExtensions`)
+### Scope extensions on every object ([`AnyExtensions`][AnyExtensions])
 
 Kotlin-style chaining helpers available on any type:
 
@@ -19,7 +19,7 @@ final user = User()
     ..also((u) => logger.log(u));  // side-effect, returns same object
 ```
 
-Also includes `cast<T>()` and `tryCast<T>()` for safe type narrowing.
+Also includes [`cast<T>()`][cast] and [`tryCast<T>()`][tryCast] for safe type narrowing.
 
 ### Value / MutableValue
 
@@ -41,11 +41,11 @@ final derived = MutableValue<String>.computed(
 );
 ```
 
-`ValueExtensions` adds `.get()` (useful as a tear-off) and `.call()` shorthand. `MutableValueExtensions` adds `.set()`, `.modify()`, and `.cast()`.
+[`ValueExtensions`][ValueExtensions] adds `.get()` (useful as a tear-off) and `.call()` shorthand. [`MutableValueExtensions`][MutableValueExtensions] adds `.set()`, `.modify()`, and `.cast()`.
 
 ### Retryable
 
-Attaches a retry callback to any existing object via an `Expando`, so error-handling code can call `Retryable.tryGet(error)?.retry()` without the original object implementing any interface.
+[`Retryable`][Retryable] attaches a retry callback to any existing object via an `Expando`, so error-handling code can call [`Retryable.tryGet(error)?.retry()`][tryGet] without the original object implementing any interface.
 
 ```dart
 // Wrap an error with a retry action
@@ -54,3 +54,13 @@ final retryable = Retryable.make(error, () => fetchData());
 // Later, in error UI or middleware
 Retryable.tryGet(caughtError)?.retry();
 ```
+
+[AnyExtensions]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/AnyExtensions.html
+[cast]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/AnyExtensions/cast.html
+[tryCast]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/AnyExtensions/tryCast.html
+[Value]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/Value-class.html
+[MutableValue]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/MutableValue-class.html
+[ValueExtensions]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/ValueExtensions.html
+[MutableValueExtensions]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/MutableValueExtensions.html
+[Retryable]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/Retryable-class.html
+[tryGet]: https://pub.dev/documentation/utopia_utils/latest/utopia_utils/Retryable/tryGet.html

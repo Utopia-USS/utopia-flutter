@@ -29,6 +29,11 @@ dio.get('/public', options: Options(extra: {AuthTokenInterceptor.enabled: false}
 
 ## API
 
-- `UtopiaRest.standardDioOptions` - `BaseOptions` that treats 2xx as success and everything else as an error.
-- `AuthTokenInterceptor` - injects a bearer token (or custom header value) on every request. Constructor parameters: `tokenProvider` (required), `headerName` (default `'Authorization'`), `headerValueBuilder` (optional; defaults to `'Bearer <token>'`). Set `options.extra[AuthTokenInterceptor.enabled] = false` to opt a single request out.
-- `ReporterInterceptor` - logs every request, response, and error via a `Reporter`. Pass `reportErrorsAsWarnings: true` to downgrade errors to warnings.
+- [`UtopiaRest.standardDioOptions`][standardDioOptions] - `BaseOptions` that treats 2xx as success and everything else as an error.
+- [`AuthTokenInterceptor`][AuthTokenInterceptor] - injects a bearer token (or custom header value) on every request. Constructor parameters: `tokenProvider` (required), `headerName` (default `'Authorization'`), `headerValueBuilder` (optional; defaults to `'Bearer <token>'`). Set `options.extra[AuthTokenInterceptor.enabled] = false` to opt a single request out.
+- [`ReporterInterceptor`][ReporterInterceptor] - logs every request, response, and error via a [`Reporter`][Reporter]. Pass `reportErrorsAsWarnings: true` to downgrade errors to warnings.
+
+[standardDioOptions]: https://pub.dev/documentation/utopia_rest/latest/utopia_rest/UtopiaRest/standardDioOptions.html
+[AuthTokenInterceptor]: https://pub.dev/documentation/utopia_rest/latest/utopia_rest/AuthTokenInterceptor-class.html
+[ReporterInterceptor]: https://pub.dev/documentation/utopia_rest/latest/utopia_rest/ReporterInterceptor-class.html
+[Reporter]: https://pub.dev/documentation/utopia_reporter/latest/utopia_reporter/Reporter-class.html
