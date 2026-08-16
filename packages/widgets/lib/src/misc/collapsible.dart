@@ -23,7 +23,7 @@ class Collapsible extends StatelessWidget {
     this.curve = Curves.decelerate,
     required this.isExpanded,
     required this.child,
-  })  : axis = Axis.vertical;
+  }) : axis = Axis.vertical;
 
   const Collapsible.horizontal({
     super.key,
@@ -31,14 +31,14 @@ class Collapsible extends StatelessWidget {
     this.curve = Curves.decelerate,
     required this.isExpanded,
     required this.child,
-  })  : axis = Axis.horizontal;
+  }) : axis = Axis.horizontal;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedAlign(
       alignment: Alignment.topLeft,
       duration: duration,
-      curve: Curves.decelerate,
+      curve: curve,
       heightFactor: (isExpanded ? 1.0 : 0.0).takeIf((_) => axis == Axis.vertical),
       widthFactor: (isExpanded ? 1.0 : 0.0).takeIf((_) => axis == Axis.horizontal),
       child: ClipRect(child: child),
