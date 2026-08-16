@@ -18,7 +18,7 @@ class MultiWidget extends StatefulWidget {
   final List<MapEntry<Object?, Widget Function(Widget child)>> widgets;
 
   MultiWidget(List<Widget Function(Widget child)> widgets, {super.key})
-      : widgets = widgets.map((it) => MapEntry(null, it)).toList();
+    : widgets = widgets.map((it) => MapEntry(null, it)).toList();
 
   const MultiWidget.keyed(this.widgets, {super.key});
 
