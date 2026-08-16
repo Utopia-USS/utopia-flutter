@@ -6,5 +6,5 @@ export 'src/layout/top_bottom_layout.dart';
 export 'src/misc/collapsible.dart';
 export 'src/misc/cross_fade_indexed_stack.dart';
 export 'src/misc/multi_widget.dart';
-export 'src/misc/un_focus_on_tap.dart';
+export 'src/misc/unfocus_on_tap.dart';
 export 'src/wrapper/loader_wrapper_layout.dart';
