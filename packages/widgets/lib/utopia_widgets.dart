@@ -1,3 +1,6 @@
+export 'src/dialog/adaptive_dialog.dart';
+export 'src/dialog/dialog_actions.dart';
+export 'src/dialog/form_dialog.dart';
 export 'src/layout/constrained_aspect_ratio.dart';
 export 'src/layout/fill_viewport_scroll_view.dart';
 export 'src/layout/form_layout.dart';
