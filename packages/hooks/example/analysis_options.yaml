@@ -1,1 +1,5 @@
+analyzer:
+  exclude:
+    - build/**
+    - web/**
 include: package:utopia_lints/lints.yaml
