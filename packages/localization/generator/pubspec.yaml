@@ -19,7 +19,7 @@ dependencies:
   csv: ^6.0.0
   source_gen: ^4.0.0
   build: ^4.0.0
-  analyzer: ^9.0.0
+  analyzer: ^13.0.0
 
 dev_dependencies:
   build_runner: ^2.0.2
