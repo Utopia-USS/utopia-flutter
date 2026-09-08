@@ -15,11 +15,10 @@ class _StatefulItemState extends State<StatefulItem> {
   @override
   void initState() {
     super.initState();
+    final snackBar = SnackBar(duration: const Duration(seconds: 1), content: Text("Initialized item ${widget.index}"));
     Future.microtask(
       // ignore: use_build_context_synchronously
-      () => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(duration: const Duration(seconds: 1), content: Text("Initialized item ${widget.index}")),
-      ),
+      () => ScaffoldMessenger.of(context).showSnackBar(snackBar),
     );
   }
 

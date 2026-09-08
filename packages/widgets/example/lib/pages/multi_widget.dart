@@ -21,9 +21,9 @@ class _MultiWidgetPageState extends State<MultiWidgetPage> {
           ElevatedButton(onPressed: () => setState(() => _enabled = !_enabled), child: const Text("Toggle")),
           MultiWidget.keyed([
             MapEntry("1", (child) => _buildChild(child, 1)),
-            if(_enabled) MapEntry("2", (child) => _buildChild(child, 2)),
+            if (_enabled) MapEntry("2", (child) => _buildChild(child, 2)),
             MapEntry("3", (child) => _buildChild(child, 3)),
-          ])
+          ]),
         ],
       ),
     );

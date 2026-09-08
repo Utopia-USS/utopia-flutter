@@ -2,12 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class OverflowTransformBox extends SingleChildRenderObjectWidget {
-  const OverflowTransformBox({
-    super.key,
-    this.alignment = Alignment.center,
-    required this.transform,
-    super.child,
-  });
+  const OverflowTransformBox({super.key, this.alignment = Alignment.center, required this.transform, super.child});
 
   final AlignmentGeometry alignment;
 
@@ -23,21 +18,28 @@ class OverflowTransformBox extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, RenderAligningShiftedBox renderObject) {
+  // ignore: library_private_types_in_public_api
+  void updateRenderObject(BuildContext context, _RenderOverflowTransformBox renderObject) {
     renderObject
       ..alignment = alignment
+      ..transform = transform
       ..textDirection = Directionality.maybeOf(context);
   }
 }
 
 class _RenderOverflowTransformBox extends RenderAligningShiftedBox {
-  _RenderOverflowTransformBox({
-    required this.transform,
-    super.alignment,
-    super.textDirection,
-  });
+  _RenderOverflowTransformBox({required BoxConstraintsTransform transform, super.alignment, super.textDirection})
+    : _transform = transform;
 
-  final BoxConstraintsTransform transform;
+  BoxConstraintsTransform _transform;
+
+  BoxConstraintsTransform get transform => _transform;
+
+  set transform(BoxConstraintsTransform value) {
+    if (_transform == value) return;
+    _transform = value;
+    markNeedsLayout();
+  }
 
   @override
   bool get sizedByParent => true;
