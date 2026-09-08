@@ -2,7 +2,7 @@ name: utopia_hooks_query_example
 description: A simple example demonstrating utopia_hooks_query usage.
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
   flutter: '>=3.32.0'
 
 dependencies:
@@ -13,6 +13,8 @@ dependencies:
     path: ../../hooks
   utopia_hooks_query:
     path: ../
+
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:

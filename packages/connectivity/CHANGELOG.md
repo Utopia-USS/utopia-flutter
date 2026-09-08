@@ -1,3 +1,7 @@
+## 0.1.1+15
+
+ - **FIX**(utopia_connectivity): Bump connectivity_plus to 7.x.x.
+
 ## 0.1.1+14
 
  - Update a dependency to the latest release.

@@ -1,3 +1,7 @@
+## 0.4.26+1
+
+ - **FIX**(utopia_hooks): Catch exceptions from useEffect dispose callbacks.
+
 ## 0.4.26
 
  - **FIX**(utopia_hooks): Clarify shouldCompute and clearOnShouldComputeFalse in usePaginatedComputedState.

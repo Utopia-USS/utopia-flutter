@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**(utopia_localization_generator): Update analyzer to 13.x.x.
+
 ## 0.0.4+4
 
  - **FIX**(utopia_localization_generator): Update to analyzer:^9.0.0.

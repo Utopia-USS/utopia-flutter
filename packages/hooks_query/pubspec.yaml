@@ -1,18 +1,18 @@
 name: utopia_hooks_query
 description: Fetch, cache, and sync server data with automatic state management and background updates, inspired by TanStack Query.
-version: 0.7.0+1
+version: 0.7.0+2
 repository: https://github.com/jezsung/query/tree/main/packages/utopia_hooks_query
 documentation: https://flutterquery.com
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
   flutter: '>=3.32.0'
 
 dependencies:
   flutter:
     sdk: flutter
-    
-  utopia_hooks: ^0.4.26
+
+  utopia_hooks: ^0.4.26+1
 
   clock: ^1.1.2
   collection: ^1.19.1

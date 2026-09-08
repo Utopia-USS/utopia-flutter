@@ -1,3 +1,7 @@
+## 0.7.0+2
+
+ - Update a dependency to the latest release.
+
 ## 0.7.0+1
 
  - Update a dependency to the latest release.
@@ -6,11 +10,14 @@
 
 - Fixed crashes when multiple screens share the same query key ([#40](https://github.com/jezsung/query/issues/40)).
 
-- Added `ensureQueryData` method to `QueryClient`. This method returns cached data if available (even if stale) or fetches it if missing. It also supports a `revalidateIfStale` option to trigger a background refetch if the cached data is stale.
+- Added `ensureQueryData` method to `QueryClient`. This method returns cached data if available (even if stale) or
+  fetches it if missing. It also supports a `revalidateIfStale` option to trigger a background refetch if the cached
+  data is stale.
 
 - Exposed `MutateFn` typedef.
 
-- **BREAKING**: Restored `RefetchType` enum. `invalidateQueries()` is now async again and accepts a `refetchType` parameter (defaults to `RefetchType.active`) to control which queries are automatically refetched after invalidation.
+- **BREAKING**: Restored `RefetchType` enum. `invalidateQueries()` is now async again and accepts a `refetchType`
+  parameter (defaults to `RefetchType.active`) to control which queries are automatically refetched after invalidation.
 
   ```dart
   // Invalidate and refetch active queries (default)
@@ -27,7 +34,8 @@
 
 This release contains breaking changes to improve API consistency and usability.
 
-- Added `useMutationState` hook that returns mutation states from the mutation cache. Useful for tracking mutation progress across your application.
+- Added `useMutationState` hook that returns mutation states from the mutation cache. Useful for tracking mutation
+  progress across your application.
 
   ```dart
   // Get all mutation states
@@ -42,16 +50,18 @@ This release contains breaking changes to improve API consistency and usability.
   );
   ```
 
-- Added `networkMode` option to `useQuery`, `useInfiniteQuery`, and `useMutation` for controlling behavior based on network connectivity. Requires passing a `connectivityChanges` stream to `QueryClient`.
-  - `NetworkMode.online` (default): Pauses when offline, resumes when online
-  - `NetworkMode.always`: Never pauses, ignores network state
-  - `NetworkMode.offlineFirst`: First execution runs regardless of network, retries pause when offline
+- Added `networkMode` option to `useQuery`, `useInfiniteQuery`, and `useMutation` for controlling behavior based on
+  network connectivity. Requires passing a `connectivityChanges` stream to `QueryClient`.
+    - `NetworkMode.online` (default): Pauses when offline, resumes when online
+    - `NetworkMode.always`: Never pauses, ignores network state
+    - `NetworkMode.offlineFirst`: First execution runs regardless of network, retries pause when offline
 
 - Added `useIsFetching` hook that returns the count of queries currently fetching.
 
 - Added `useIsMutating` hook that returns the count of mutations currently pending.
 
-- **BREAKING**: The `mutate` function returned by `useMutation` is now fire-and-forget. It returns `void` and does not throw errors. Use `mutateAsync` to await the result or handle errors directly.
+- **BREAKING**: The `mutate` function returned by `useMutation` is now fire-and-forget. It returns `void` and does not
+  throw errors. Use `mutateAsync` to await the result or handle errors directly.
 
   ```dart
   // Before
@@ -73,11 +83,14 @@ This release contains breaking changes to improve API consistency and usability.
   }
   ```
 
-- Added `refetchOnReconnect` option to `useQuery` and `useInfiniteQuery` for controlling refetch behavior when network connectivity is restored. Requires passing a `connectivityChanges` stream to `QueryClient`.
+- Added `refetchOnReconnect` option to `useQuery` and `useInfiniteQuery` for controlling refetch behavior when network
+  connectivity is restored. Requires passing a `connectivityChanges` stream to `QueryClient`.
 
-- Added `meta` property to `DefaultQueryOptions` and `DefaultMutationOptions` for setting default metadata across all queries and mutations. This metadata is deep-merged with query/mutation-specific meta and observer meta.
+- Added `meta` property to `DefaultQueryOptions` and `DefaultMutationOptions` for setting default metadata across all
+  queries and mutations. This metadata is deep-merged with query/mutation-specific meta and observer meta.
 
-- **BREAKING**: Simplified `getQueryData<TData>()` and `getInfiniteQueryData<TData, TPageParam>()` signatures by removing the `TError` generic type parameter. The error type is not needed when retrieving cached data.
+- **BREAKING**: Simplified `getQueryData<TData>()` and `getInfiniteQueryData<TData, TPageParam>()` signatures by
+  removing the `TError` generic type parameter. The error type is not needed when retrieving cached data.
 
   ```dart
   // Before
@@ -89,7 +102,8 @@ This release contains breaking changes to improve API consistency and usability.
   final infiniteData = client.getInfiniteQueryData<String, int>(const ['key']);
   ```
 
-- **BREAKING**: `QueryCache` and `MutationCache` are no longer part of the public API. The `cache` and `mutationCache` constructor parameters have been removed from `QueryClient`. The caches are now created and managed internally.
+- **BREAKING**: `QueryCache` and `MutationCache` are no longer part of the public API. The `cache` and `mutationCache`
+  constructor parameters have been removed from `QueryClient`. The caches are now created and managed internally.
 
 - **BREAKING**: `Query`, `Mutation`, `QueryObserver`, and `MutationObserver` are no longer part of the public API.
 
@@ -97,15 +111,22 @@ This release contains breaking changes to improve API consistency and usability.
 
 - Fixed gc timer to start after fetch completes rather than at query creation time.
 
-- Added `resetQueries` method on `QueryClient` for resetting queries to their initial state. Unlike `invalidateQueries` (which marks queries as stale), `resetQueries` completely resets the query state - queries with seed data are reset to that seed, while queries without seed have their data cleared. Active queries are automatically refetched after reset.
+- Added `resetQueries` method on `QueryClient` for resetting queries to their initial state. Unlike
+  `invalidateQueries` (which marks queries as stale), `resetQueries` completely resets the query state - queries with
+  seed data are reset to that seed, while queries without seed have their data cleared. Active queries are automatically
+  refetched after reset.
 
-- Added `removeQueries` method on `QueryClient` for removing queries from the cache. Unlike `invalidateQueries`, removed queries are completely discarded and must be fetched from scratch when accessed again.
+- Added `removeQueries` method on `QueryClient` for removing queries from the cache. Unlike `invalidateQueries`, removed
+  queries are completely discarded and must be fetched from scratch when accessed again.
 
-- Added `getQueryState` method on `QueryClient` for retrieving the full query state (status, error, dataUpdatedAt, etc.) instead of just the data.
+- Added `getQueryState` method on `QueryClient` for retrieving the full query state (status, error, dataUpdatedAt, etc.)
+  instead of just the data.
 
-- Added `setQueryData` method on `QueryClient` for imperatively setting or updating cached query data. Useful for optimistic updates in mutation callbacks.
+- Added `setQueryData` method on `QueryClient` for imperatively setting or updating cached query data. Useful for
+  optimistic updates in mutation callbacks.
 
-- **BREAKING**: `fetchQuery`, `prefetchQuery`, `fetchInfiniteQuery`, and `prefetchInfiniteQuery` now take `queryKey` and `queryFn` as positional parameters instead of named parameters.
+- **BREAKING**: `fetchQuery`, `prefetchQuery`, `fetchInfiniteQuery`, and `prefetchInfiniteQuery` now take `queryKey` and
+  `queryFn` as positional parameters instead of named parameters.
 
   ```dart
   // Before
@@ -121,7 +142,8 @@ This release contains breaking changes to improve API consistency and usability.
   );
   ```
 
-- **BREAKING**: Predicate callbacks now receive immutable `QueryState` and `MutationState` objects instead of `Query` and `Mutation` instances, with the key passed as a separate first parameter.
+- **BREAKING**: Predicate callbacks now receive immutable `QueryState` and `MutationState` objects instead of `Query`
+  and `Mutation` instances, with the key passed as a separate first parameter.
 
   ```dart
   // Before
@@ -131,11 +153,14 @@ This release contains breaking changes to improve API consistency and usability.
   client.invalidateQueries(predicate: (key, state) => key.first == 'users');
   ```
 
-- **BREAKING**: `MutationFunctionContext.meta` is now a non-nullable `Map<String, dynamic>` (defaults to an empty map when not provided in options).
+- **BREAKING**: `MutationFunctionContext.meta` is now a non-nullable `Map<String, dynamic>` (defaults to an empty map
+  when not provided in options).
 
-- **BREAKING**: The `queryClient` parameter on `useQuery`, `useMutation`, and `useInfiniteQuery` hooks has been renamed to `client` for simplicity.
+- **BREAKING**: The `queryClient` parameter on `useQuery`, `useMutation`, and `useInfiniteQuery` hooks has been renamed
+  to `client` for simplicity.
 
-- **BREAKING**: `QueryClientProvider` API changed. The `client` parameter has been replaced with a `create` factory function. Use `QueryClientProvider.value()` for existing clients.
+- **BREAKING**: `QueryClientProvider` API changed. The `client` parameter has been replaced with a `create` factory
+  function. Use `QueryClientProvider.value()` for existing clients.
 
   ```dart
   // Before
@@ -158,7 +183,8 @@ This release contains breaking changes to improve API consistency and usability.
   ```
 
 - `QueryClientProvider` now supports lazy initialization via the `lazy` parameter
-- `QueryClientProvider` now automatically clears the `QueryClient` when removed from the widget tree (when using the default constructor)
+- `QueryClientProvider` now automatically clears the `QueryClient` when removed from the widget tree (when using the
+  default constructor)
 
 ## 0.5.1 (2026-01-14)
 
