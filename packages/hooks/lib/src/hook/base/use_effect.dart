@@ -59,8 +59,24 @@ final class _EffectHookState extends KeyedHookState<void, _EffectHook> {
   }
 
   void _callDispose() {
-    if (_dispose is void Function()) {
-      (_dispose as void Function())();
+    final dispose = _dispose;
+    _dispose = null;
+    try {
+      if (dispose is void Function()) {
+        dispose();
+      }
+    } catch (e, s) {
+      final error = FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'utopia_hooks',
+        context: ErrorDescription('while executing effect dispose callback'),
+        informationCollector: () => [
+          DiagnosticsProperty('callback', dispose),
+          DiagnosticableNode(name: 'hook', value: this, style: DiagnosticsTreeStyle.shallow),
+        ],
+      );
+      FlutterError.reportError(error);
     }
   }
 
