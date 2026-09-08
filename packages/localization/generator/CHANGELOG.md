@@ -1,3 +1,7 @@
+## 0.0.5+1
+
+ - **FIX**(utopia_localization_generator): Allow analyzer 14.x.
+
 ## 0.0.5
 
  - **FEAT**(utopia_localization_generator): Update analyzer to 13.x.x.
