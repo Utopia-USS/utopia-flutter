@@ -3,6 +3,7 @@
 library;
 
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:cross_file/cross_file.dart';
 import 'package:mime/mime.dart';
@@ -23,7 +24,13 @@ sealed class UtopiaSaveFile {
   ///
   /// {@template utopia_save_file.return}
   /// Returns `true` if the file has been saved and `false` if user has cancelled the action
-  /// (can happen only on Android). Throws if there's been an error.
+  /// (Android and macOS save dialogs, iOS share sheet). Throws if there's been an error.
+  /// {@endtemplate}
+  ///
+  /// {@template utopia_save_file.sharePositionOrigin}
+  /// On iOS the file is presented in the system share sheet. On iPad the sheet is a popover anchored to
+  /// [sharePositionOrigin] (in global logical coordinates, e.g. the tapped button's rect); when omitted it is
+  /// centered on the screen without an arrow. Ignored on other platforms.
   /// {@endtemplate}
   ///
   /// If [mime] or [name] parameters are not provided, they will be inferred using the following methods, in order:
@@ -52,15 +59,22 @@ sealed class UtopiaSaveFile {
     String? mime,
     String? name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+    Rect? sharePositionOrigin,
   }) async {
     final metadata = await MetadataHelper.fromFile(file, mime: mime, name: name);
-    return _impl.fromFile(file, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+    return _impl.fromFile(
+      file,
+      ExtensionHelper.ensureValid(metadata, extensionBehavior),
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 
   /// Downloads file from the provided [url] and saves it to a location where it's accessible by the user.
   ///
   /// The [url] will be downloaded by executing a GET request without any additional headers.
   /// {@macro utopia_save_file.return}
+  ///
+  /// {@macro utopia_save_file.sharePositionOrigin}
   ///
   /// If [mime] or [name] parameters are not provided, they will be inferred using the following methods, in order:
   /// For [mime]:
@@ -86,14 +100,21 @@ sealed class UtopiaSaveFile {
     String? name,
     String? mime,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+    Rect? sharePositionOrigin,
   }) async {
     final metadata = await MetadataHelper.fromUrl(url, mime: mime, name: name);
-    return _impl.fromUrl(url, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+    return _impl.fromUrl(
+      url,
+      ExtensionHelper.ensureValid(metadata, extensionBehavior),
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 
   /// Copies asset at [key] to a location where it's accessible by the user.
   ///
   /// {@macro utopia_save_file.return}
+  ///
+  /// {@macro utopia_save_file.sharePositionOrigin}
   ///
   /// If [mime] or [name] parameters are not provided, they will be inferred using the following methods:
   /// For [mime]: [lookupMimeType] function (using file extension).
@@ -107,14 +128,21 @@ sealed class UtopiaSaveFile {
     String? mime,
     String? name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+    Rect? sharePositionOrigin,
   }) async {
     final metadata = await MetadataHelper.fromAsset(key, mime: mime, name: name);
-    return _impl.fromAsset(key, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+    return _impl.fromAsset(
+      key,
+      ExtensionHelper.ensureValid(metadata, extensionBehavior),
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 
   /// Saves provided byte [stream] to file in a location accessible by the user.
   ///
   /// {@macro utopia_save_file.return}
+  ///
+  /// {@macro utopia_save_file.sharePositionOrigin}
   ///
   /// {@template utopia_save_file.noInference}
   /// Both [mime] and [name] parameters must be provided. To allow for automatic inference,
@@ -127,14 +155,21 @@ sealed class UtopiaSaveFile {
     required String mime,
     required String name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+    Rect? sharePositionOrigin,
   }) async {
     final metadata = SaveFileMetadata(object: '<raw byte stream>', name: name, mime: mime);
-    return _impl.fromByteStream(stream, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+    return _impl.fromByteStream(
+      stream,
+      ExtensionHelper.ensureValid(metadata, extensionBehavior),
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 
   /// Saves provided [bytes] to file in a location accessible by the user.
   ///
   /// {@macro utopia_save_file.return}
+  ///
+  /// {@macro utopia_save_file.sharePositionOrigin}
   ///
   /// {@macro utopia_save_file.noInference}
   ///
@@ -147,8 +182,13 @@ sealed class UtopiaSaveFile {
     required String mime,
     required String name,
     SaveFileExtensionBehavior extensionBehavior = SaveFileExtensionBehavior.replace,
+    Rect? sharePositionOrigin,
   }) async {
     final metadata = SaveFileMetadata(object: '<raw bytes>', name: name, mime: mime);
-    return _impl.fromBytes(bytes, ExtensionHelper.ensureValid(metadata, extensionBehavior));
+    return _impl.fromBytes(
+      bytes,
+      ExtensionHelper.ensureValid(metadata, extensionBehavior),
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 }

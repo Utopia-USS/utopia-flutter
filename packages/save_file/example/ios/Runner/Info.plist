@@ -47,9 +47,5 @@
 	<true/>
 	<key>NSAllowsArbitraryLoads</key>
     <true/>
-    <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/>
-    <key>UIFileSharingEnabled</key>
-    <true/>
 </dict>
 </plist>

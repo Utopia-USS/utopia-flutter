@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:cross_file/cross_file.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
@@ -8,13 +9,13 @@ import 'impl.stub.dart' if (dart.library.io) 'impl.native.dart' if (dart.library
 abstract interface class SaveFileImpl {
   static final instance = SaveFileTargetImpl.instance;
 
-  Future<bool> fromFile(XFile file, SaveFileMetadata metadata);
+  Future<bool> fromFile(XFile file, SaveFileMetadata metadata, {Rect? sharePositionOrigin});
 
-  Future<bool> fromUrl(String url, SaveFileMetadata metadata);
+  Future<bool> fromUrl(String url, SaveFileMetadata metadata, {Rect? sharePositionOrigin});
 
-  Future<bool> fromAsset(String key, SaveFileMetadata metadata);
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata, {Rect? sharePositionOrigin});
 
-  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata);
+  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata, {Rect? sharePositionOrigin});
 
-  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata);
+  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata, {Rect? sharePositionOrigin});
 }

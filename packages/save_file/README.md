@@ -28,22 +28,32 @@ needed.
 
 ### iOS
 
-On iOS, saves to application documents directory, but files will be visible in system "Files" app (due to
-the [`UIFileSharingEnabled` property](https://developer.apple.com/documentation/bundleresources/information_property_list/uifilesharingenabled))
-Does not require any user interaction, so `fromX` methods will always return `true`.
+On iOS, writes the file to a private temporary directory and presents the system share sheet
+([`UIActivityViewController`](https://developer.apple.com/documentation/uikit/uiactivityviewcontroller)), where
+the user picks the destination ("Save to Files", AirDrop, Mail, ...). The temporary copy is deleted once the sheet is
+dismissed; nothing is left in the app's Documents directory.
+`fromX` methods complete with `true` when the user completed an action and `false` when the sheet was dismissed.
 
-#### Configuration
+On iPad the share sheet is a popover. Pass `sharePositionOrigin` (global logical coordinates, usually the rect of the
+tapped button) to anchor it; when omitted it is centered on the screen without an arrow:
 
-Add to `Info.plist`:
-
+```dart
+final box = context.findRenderObject() as RenderBox;
+await UtopiaSaveFile.fromBytes(
+  bytes,
+  name: 'report.pdf',
+  mime: 'application/pdf',
+  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+);
 ```
-<key>NSAllowsArbitraryLoads</key>
-<true/>
-<key>LSSupportsOpeningDocumentsInPlace</key>
-<true/>
-<key>UIFileSharingEnabled</key>
-<true/>
-```
+
+No `Info.plist` configuration is needed. Versions before 0.3.0 saved to the Documents directory and required
+`UIFileSharingEnabled` and `LSSupportsOpeningDocumentsInPlace`; these keys can be removed (they expose the whole
+Documents directory in the Files app).
+
+### macOS
+
+On macOS, shows a save panel (`NSSavePanel`). Cancelling it completes the `fromX` methods with `false`.
 
 ### Web
 

@@ -35,11 +35,6 @@ abstract class ExtensionHelper {
     return metadata.copyWith(name: name);
   }
 
-  static String addCounter(String name, int counter) {
-    final (basename, extension) = _splitExtension(name);
-    return _appendExtension("$basename ($counter)", extension);
-  }
-
   static String _replaceExtension(String name, String extension) =>
       _appendExtension(_splitExtension(name).$1, extension);
 

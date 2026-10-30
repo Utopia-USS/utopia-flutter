@@ -16,7 +16,6 @@ dependencies:
   utopia_utils: ^0.3.3
   utopia_platform_utils: ^0.0.7+1
   path: ^1.8.0
-  path_provider: ^2.0.5
   cross_file: ^0.3.3+4
   mime: ^2.0.0
   http: ^1.1.0
@@ -24,6 +23,8 @@ dependencies:
 
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
   utopia_lints: ^0.0.5
 
 flutter:

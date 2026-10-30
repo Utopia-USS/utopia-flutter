@@ -3,57 +3,65 @@ import 'dart:io';
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 import 'package:utopia_save_file/src/impl/impl.native.dart';
 import 'package:utopia_save_file/src/model/save_file_metadata.dart';
-import 'package:utopia_save_file/src/util/extension_helper.dart';
 
+/// Writes the file to a private temporary directory and presents the system share sheet with it, so the user picks
+/// the destination ("Save to Files", AirDrop, Mail, ...). The temporary copy is deleted once the sheet is dismissed.
 class SaveFileIosImpl implements SaveFileNativeImpl {
+  static const _channel = MethodChannel('utopia_save_file');
+
   static const instance = SaveFileIosImpl._();
 
   const SaveFileIosImpl._();
 
   @override
-  Future<bool> fromFile(XFile file, SaveFileMetadata metadata) async => _save(file.openRead(), metadata);
+  Future<bool> fromFile(XFile file, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
+      _share(file.openRead(), metadata, sharePositionOrigin);
 
   @override
-  Future<bool> fromUrl(String url, SaveFileMetadata metadata) async => _save(await _fetch(url), metadata);
+  Future<bool> fromUrl(String url, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
+      _share(await _fetch(url), metadata, sharePositionOrigin);
 
   @override
-  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata) async => _save(Stream.value(bytes), metadata);
+  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
+      _share(Stream.value(bytes), metadata, sharePositionOrigin);
 
   @override
-  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata) async => _save(stream, metadata);
+  Future<bool> fromByteStream(
+    Stream<List<int>> stream,
+    SaveFileMetadata metadata, {
+    Rect? sharePositionOrigin,
+  }) async =>
+      _share(stream, metadata, sharePositionOrigin);
 
   @override
-  Future<bool> fromAsset(String name, SaveFileMetadata metadata) async =>
-      _save(Stream.value((await rootBundle.load(name)).buffer.asUint8List()), metadata);
+  Future<bool> fromAsset(String name, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
+      _share(Stream.value((await rootBundle.load(name)).buffer.asUint8List()), metadata, sharePositionOrigin);
 
   Future<Stream<List<int>>> _fetch(String url) async {
     final request = await HttpClient().getUrl(Uri.parse(url));
     return request.close();
   }
 
-  static Future<bool> _save(Stream<List<int>> stream, SaveFileMetadata metadata) async {
-    final file = await _buildFile(metadata.name);
-    final sink = file.openWrite();
+  static Future<bool> _share(Stream<List<int>> stream, SaveFileMetadata metadata, Rect? origin) async {
+    final directory = await Directory.systemTemp.createTemp('utopia_save_file_');
     try {
-      // Cast needed because of Dart type system issue: IOSink is not a subtype of StreamConsumer<Uint8List>
-      await stream.cast<List<int>>().pipe(sink);
-      return true;
+      final file = File(path.join(directory.path, metadata.name));
+      final sink = file.openWrite();
+      try {
+        // Cast needed because of Dart type system issue: IOSink is not a subtype of StreamConsumer<Uint8List>
+        await stream.cast<List<int>>().pipe(sink);
+      } finally {
+        await sink.close();
+      }
+      final result = await _channel.invokeMethod<bool>('share', {
+        'path': file.path,
+        if (origin != null) 'origin': [origin.left, origin.top, origin.width, origin.height],
+      });
+      return result!;
     } finally {
-      await sink.close();
+      await directory.delete(recursive: true);
     }
-  }
-
-  static Future<File> _buildFile(String name) async {
-    final directory = await getApplicationDocumentsDirectory();
-    var file = File(path.join(directory.path, name));
-    var counter = 0;
-    while (file.existsSync()) {
-      counter++;
-      file = File(path.join(directory.path, ExtensionHelper.addCounter(name, counter)));
-    }
-    return file;
   }
 }

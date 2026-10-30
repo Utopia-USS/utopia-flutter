@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'dart:ui_web';
 
 import 'package:cross_file/cross_file.dart';
@@ -14,10 +15,11 @@ class SaveFileWebImpl implements SaveFileImpl {
   const SaveFileWebImpl._();
 
   @override
-  Future<bool> fromFile(XFile file, SaveFileMetadata metadata) async => fromUrl(file.path, metadata);
+  Future<bool> fromFile(XFile file, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
+      fromUrl(file.path, metadata);
 
   @override
-  Future<bool> fromUrl(String url, SaveFileMetadata metadata) async {
+  Future<bool> fromUrl(String url, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async {
     HTMLAnchorElement()
       ..href = url
       ..download = metadata.name
@@ -26,13 +28,14 @@ class SaveFileWebImpl implements SaveFileImpl {
   }
 
   @override
-  Future<bool> fromAsset(String key, SaveFileMetadata metadata) => fromUrl(assetManager.getAssetUrl(key), metadata);
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) =>
+      fromUrl(assetManager.getAssetUrl(key), metadata);
 
   @override
-  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata) async =>
+  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       fromUrl(Uri.dataFromBytes(bytes, mimeType: metadata.mime).toString(), metadata);
 
   @override
-  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata) async =>
+  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       fromBytes(await stream.toBytes(), metadata);
 }

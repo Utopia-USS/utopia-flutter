@@ -13,24 +13,24 @@ class SaveFileMethodChannelImpl implements SaveFileNativeImpl {
   const SaveFileMethodChannelImpl._();
 
   @override
-  Future<bool> fromFile(XFile file, SaveFileMetadata metadata) async =>
+  Future<bool> fromFile(XFile file, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       _execute('fromFile', SaveFileDto.fromFile(metadata, path: file.path));
 
   @override
-  Future<bool> fromUrl(String url, SaveFileMetadata metadata) async =>
+  Future<bool> fromUrl(String url, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       _execute('fromUrl', SaveFileDto.fromUrl(metadata, url: url));
 
   @override
-  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata) async =>
+  Future<bool> fromBytes(List<int> bytes, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       _execute('fromBytes', SaveFileDto.fromBytes(metadata, bytes: bytes));
 
   // TODO implement streaming
   @override
-  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata) async =>
+  Future<bool> fromByteStream(Stream<List<int>> stream, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       fromBytes(await stream.toBytes(), metadata);
 
   @override
-  Future<bool> fromAsset(String key, SaveFileMetadata metadata) async =>
+  Future<bool> fromAsset(String key, SaveFileMetadata metadata, {Rect? sharePositionOrigin}) async =>
       _execute('fromAsset', SaveFileDto.fromAsset(metadata, key: key));
 
   static Future<bool> _execute(String method, SaveFileDto dto) async =>
