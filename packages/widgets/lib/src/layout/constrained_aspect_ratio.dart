@@ -8,8 +8,8 @@ class ConstrainedAspectRatio extends SingleChildRenderObjectWidget {
   final Alignment? alignment;
 
   const ConstrainedAspectRatio({super.key, this.min = 0, this.max = double.infinity, this.alignment, super.child})
-      : assert(min >= 0),
-        assert(min <= max);
+    : assert(min >= 0),
+      assert(min <= max);
 
   @override
   RenderObject createRenderObject(BuildContext context) =>
@@ -30,10 +30,10 @@ extension on _RatioRange {
 
 class _RenderConstrainedAspectRatio extends RenderShiftedBox {
   _RenderConstrainedAspectRatio({required _RatioRange range, Alignment? alignment})
-      : assert(range.isValid),
-        _range = range,
-        _alignment = alignment,
-        super(null);
+    : assert(range.isValid),
+      _range = range,
+      _alignment = alignment,
+      super(null);
 
   _RatioRange _range;
 
@@ -87,7 +87,7 @@ class _RenderConstrainedAspectRatio extends RenderShiftedBox {
   @override
   @protected
   Size computeDryLayout(BoxConstraints constraints) {
-    if(alignment != null) return constraints.biggest;
+    if (alignment != null) return constraints.biggest;
     return _getChildSize(constraints);
   }
 

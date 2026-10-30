@@ -25,10 +25,7 @@ class LoaderWrapperLayout extends StatelessWidget {
           IgnorePointer(ignoring: isLoaderVisible, child: child),
           if (isLoaderVisible)
             BlockSemantics(
-              child: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: loaderUiOverlayStyle,
-                child: loaderBuilder(context),
-              ),
+              child: AnnotatedRegion<SystemUiOverlayStyle>(value: loaderUiOverlayStyle, child: loaderBuilder(context)),
             ),
         ],
       ),
