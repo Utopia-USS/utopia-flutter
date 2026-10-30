@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-10-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`utopia_localization_generator` - `v0.0.5+2`](#utopia_localization_generator---v0052)
+ - [`utopia_save_file` - `v0.2.6`](#utopia_save_file---v026)
+
+---
+
+#### `utopia_localization_generator` - `v0.0.5+2`
+
+ - **FIX**(utopia_localization_generator): Allow analyzer 14.x.
+ - **FIX**(utopia_localization_generator): allow analyzer 14.x.
+
+#### `utopia_save_file` - `v0.2.6`
+
+ - **FEAT**(utopia_save_file): Use share sheet on iOS.
+
+
 ## 2026-09-08
 
 ### Changes

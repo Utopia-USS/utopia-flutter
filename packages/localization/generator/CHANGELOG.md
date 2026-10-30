@@ -1,3 +1,8 @@
+## 0.0.5+2
+
+ - **FIX**(utopia_localization_generator): Allow analyzer 14.x.
+ - **FIX**(utopia_localization_generator): allow analyzer 14.x.
+
 ## 0.0.5+1
 
  - **FIX**(utopia_localization_generator): Allow analyzer 14.x.

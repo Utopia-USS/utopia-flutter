@@ -1,3 +1,7 @@
+## 0.2.6
+
+ - **FEAT**(utopia_save_file): Use share sheet on iOS.
+
 ## 0.2.5+1
 
  - **FIX**(utopia_save_file): Fix iOS platform version requirement.
